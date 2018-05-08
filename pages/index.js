@@ -1,5 +1,6 @@
 import Layout from '../components/Layout'
 import Head from '../components/Head'
+import { nextConnect } from '../redux/store'
 
 const Dashboard = props =>
   <Layout>
@@ -9,4 +10,4 @@ const Dashboard = props =>
     </div>
   </Layout>
 
-export default Dashboard
+export default nextConnect((state, res) => state)(Dashboard);

@@ -45,12 +45,12 @@ function ConfigureExpress(server) {
   server.use(bodyParser.json());
   server.use(bodyParser.urlencoded({ extended: true }));
   // noindex, nofollow on non-production sites.
-  if (process.env.SITE !== 'washington-trails-production') {
-    server.use('*', (req, res, next) => {
-      res.header('X-Robots-Tag', 'noindex, nofollow');
-      next();
-    });
-  }
+  // if (process.env.SITE !== 'washington-trails-production') {
+  //   server.use('*', (req, res, next) => {
+  //     res.header('X-Robots-Tag', 'noindex, nofollow');
+  //     next();
+  //   });
+  // }
   // // Add Redirects
   // // Redirect herokuapp url & force www
   // if (process.env.NODE_ENV === 'production') {
@@ -68,6 +68,6 @@ function ConfigureExpress(server) {
   //   });
   // }
   // Static Files
-  server.get('/robots.txt', (req, res) => res.status(200).sendFile('robots.txt', staticFileOptions));
-  server.get('/sitemap.xml', (req, res) => res.status(200).sendFile('sitemap.xml', staticFileOptions));
+  // server.get('/robots.txt', (req, res) => res.status(200).sendFile('robots.txt', staticFileOptions));
+  // server.get('/sitemap.xml', (req, res) => res.status(200).sendFile('sitemap.xml', staticFileOptions));
 }
