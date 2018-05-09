@@ -24,6 +24,8 @@ app
     server.use(router);
     // Handle All Routes
     server.get('/', (req, res) => app.render(req, res, '/'));
+    server.get('/trail-systems/:system', (req, res) => app.render(req, res, '/trail-systems/trailsystem'));
+    server.get('/trails/:trail', (req, res) => app.render(req, res, '/trails/trail'));
     server.get('*', (req, res) => handle(req, res));
     // Start Server
     server.listen(port, err => {

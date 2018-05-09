@@ -27,7 +27,7 @@ Router.onRouteChangeError = () => removeLoader()
 
 const Layout = props => (
   <div>
-    <Header />
+    {props.nav == true ? <Header /> : null}
     <main>
       {props.children}
     </main>

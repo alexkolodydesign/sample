@@ -1,8 +1,10 @@
+import Link from 'next/link'
+
 const TrailSystemGuide = props =>
   <div>
-    <button>Zion National Park</button>
-    <button>Snow Canyon State Park</button>
-    <button>Gooseberry Mesa</button>
+    <Link href="/trail-systems/trailsystem" as="/trail-systems/zion-national-park"><button>Zion National Park</button></Link>
+    <Link href="/trail-systems/trailsystem" as="/trail-systems/snow-canyon-state-park"><button>Snow Canyon State Park</button></Link>
+    <Link href="/trail-systems/trailsystem" as="/trail-systems/gooseberry-mesa"><button>Gooseberry Mesa</button></Link>
     <style jsx>{`
       div {
         position: absolute;
