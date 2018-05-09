@@ -37,10 +37,10 @@ const Layout = props => (
         font-size: 62.5%;
         padding: 0;
         margin: 0;
-        overflow-x: hidden;
+        overflow: hidden;
       }
       body {
-        font-family: 'Flama', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 1.4rem;
         padding: 0;
         margin: 0;
@@ -54,7 +54,7 @@ const Layout = props => (
         margin: 0 auto;
       }
 
-      @media(min-width: 768px) {
+      @media(max-width: 768px) {
         .wrapper {
           max-width: 90%;
         }

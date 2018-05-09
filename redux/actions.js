@@ -7,8 +7,8 @@ export const defaultState = {
   map: {
     view: 'region'
   }
-};
+}
 
 export const initStore = (initialState = defaultState) => {
   return createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)));
-};
+}
