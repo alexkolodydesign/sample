@@ -14,6 +14,8 @@ const handle = app.getRequestHandler();
 const staticFileOptions = { root: __dirname + '/static/', headers: { 'Content-Type': 'text/plain;charset=UTF-8' } };
 // Error catching
 const catchErrors = fn => (req, res, next) => fn(req, res, next).catch(next);
+// Trails API
+const trails = require('./controllers/trails');
 
 app
   .prepare()
@@ -22,6 +24,8 @@ app
     ConfigureExpress(server);
     const router = require('express-promise-router')();
     server.use(router);
+    // Mock API
+    router.get("/api/trail/:trail", trails.getTrailData);
     // Handle All Routes
     server.get('/', (req, res) => app.render(req, res, '/'));
     server.get('/trail-systems/:system', (req, res) => app.render(req, res, '/trail-systems/trailsystem'));

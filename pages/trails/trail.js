@@ -1,6 +1,7 @@
 import Layout from '../../components/layout/Layout'
 import Head from '../../components/layout/Head'
 import Link from 'next/link'
+import fetch from 'isomorphic-unfetch';
 import { nextConnect } from '../../redux/store'
 import TrailMap from '../../components/maps/TrailMap'
 import TrailSystemGuide from '../../components/menu/TrailSystemGuide'
@@ -17,7 +18,7 @@ const Trail = props =>
       <h1>Trail Map</h1>
     </div>
     <div className="wrapper trail">
-      <TrailSidebar />
+      <TrailSidebar data={props.trail} />
       <TrailMap/>
     </div>
     <div className="wrapper more_trails">
@@ -41,5 +42,21 @@ const Trail = props =>
       }
     `}</style>
   </Layout>
+
+Trail.getInitialProps = async props => {
+  const hostUrl = props.req ? `${props.req.protocol}://${props.req.get('Host')}` : '';
+  const slug = props.asPath.split('/')[2];
+  try {
+    const res = await fetch(hostUrl + '/api/trail/' + slug);
+    const data = await res.json();
+    return {
+      trail: data
+    };
+  } catch (e) {
+    return {
+      error: true
+    };
+  }
+};
 
 export default nextConnect((state, res) => state)(Trail);

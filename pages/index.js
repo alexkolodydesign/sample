@@ -8,7 +8,7 @@ import MainMenu from '../components/menu/MainMenu'
 const Dashboard = props =>
   <Layout>
     <Head/>
-    <RegionMap/>
+    <RegionMap map={props.map} />
     <TrailSystemGuide/>
     <MainMenu/>
   </Layout>
