@@ -23,6 +23,8 @@ const TrailSidebar = props =>
     <button>Back to Map</button>
     <style jsx>{`
       .sidebar {
+        background: #fff;
+        padding: 3rem;
         display: flex;
         flex-direction: column;
       }

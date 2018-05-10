@@ -1,5 +1,5 @@
-import SelectTrailType from './filters/SelectTrailType'
-import FilterTrails from './filters/FilterTrails'
+import SelectTrailType from '../filters/SelectTrailType'
+import FilterTrails from '../filters/FilterTrails'
 import TrailList from './TrailList'
 import GPS from './GPS'
 import Settings from './Settings'

@@ -4,8 +4,8 @@ const TrailSystemMap = props =>
   <div className="map">
     <div className="wrapper">
       <h2>Trail System Map</h2>
-      <p><Link href="/">…back to Region View</Link></p>
-      <p><Link href="/trails/trail" as="/trails/emerald-pools">View Trail</Link></p>
+      <p><Link href="/"><a>…back to Region View</a></Link></p>
+      <p><Link href="/trails/trail" as="/trails/emerald-pools"><a>View Trail</a></Link></p>
     </div>
     <style jsx>{`
       .map {

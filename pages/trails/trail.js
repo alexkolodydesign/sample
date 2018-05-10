@@ -2,18 +2,19 @@ import Layout from '../../components/layout/Layout'
 import Head from '../../components/layout/Head'
 import Link from 'next/link'
 import { nextConnect } from '../../redux/store'
-import TrailMap from '../../components/TrailMap'
-import TrailSystemGuide from '../../components/TrailSystemGuide'
-import TrailSidebar from '../../components/TrailSidebar'
-import SimilarTrails from '../../components/SimilarTrails'
-import TrailsNearby from '../../components/TrailsNearby'
-import TrailMedia from '../../components/TrailMedia'
+import TrailMap from '../../components/maps/TrailMap'
+import TrailSystemGuide from '../../components/menu/TrailSystemGuide'
+import TrailSidebar from '../../components/trails/TrailSidebar'
+import SimilarTrails from '../../components/trails/SimilarTrails'
+import TrailsNearby from '../../components/trails/TrailsNearby'
+import TrailMedia from '../../components/trails/TrailMedia'
 
 const Trail = props =>
-  <Layout nav={true}>
+  <Layout nav={true} background="#f2f2f2" overflow={true}>
     <Head/>
     <div className="wrapper">
-      <p><Link href="/">…back to Region View</Link></p>
+      <p><Link href="/"><a>…back to Region View</a></Link></p>
+      <h1>Trail Map</h1>
     </div>
     <div className="wrapper trail">
       <TrailSidebar />
@@ -25,6 +26,9 @@ const Trail = props =>
     </div>
     <TrailMedia />
     <style jsx>{`
+      h1 {
+        text-transform: uppercase;
+      }
       .trail {
         display: grid;
         grid-template-columns: 30rem 1fr;

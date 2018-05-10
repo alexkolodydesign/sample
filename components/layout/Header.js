@@ -3,7 +3,7 @@ import Link from 'next/link'
 const Header = props =>
   <header>
     <nav className="wrapper">
-      <div className="logo"><Link><a>Logo</a></Link></div>
+      <div className="logo"><Link href="/"><a>Logo</a></Link></div>
       <div className="links">
         <Link href="#"><a>Link</a></Link>
         <Link href="#"><a>Link</a></Link>

@@ -2,28 +2,28 @@ import Header from './Header'
 import Footer from './Footer'
 import Router from 'next/router'
 
-Router.onRouteChangeStart = url => {
-  let loader = document.createElement('img')
-  loader.src = '/static/images/ajax-loader.gif'
-  loader.id = 'page-loader'
-  loader.style.position = 'fixed'
-  loader.style.top = '0'
-  loader.style.bottom = '0'
-  loader.style.right = '0'
-  loader.style.left = '0'
-  loader.style.margin = 'auto'
-  document.body.appendChild(loader)
-  document.getElementsByTagName('main')[0].style.opacity = '0'
-};
+// Router.onRouteChangeStart = url => {
+//   let loader = document.createElement('img')
+//   loader.src = '/static/images/ajax-loader.gif'
+//   loader.id = 'page-loader'
+//   loader.style.position = 'fixed'
+//   loader.style.top = '0'
+//   loader.style.bottom = '0'
+//   loader.style.right = '0'
+//   loader.style.left = '0'
+//   loader.style.margin = 'auto'
+//   document.body.appendChild(loader)
+//   document.getElementsByTagName('main')[0].style.opacity = '0'
+// };
 
-function removeLoader() {
-  let loader = document.getElementById('page-loader')
-  document.body.removeChild(loader)
-  document.getElementsByTagName('main')[0].style.opacity = '1'
-}
+// function removeLoader() {
+//   let loader = document.getElementById('page-loader')
+//   document.body.removeChild(loader)
+//   document.getElementsByTagName('main')[0].style.opacity = '1'
+// }
 
-Router.onRouteChangeComplete = () => removeLoader()
-Router.onRouteChangeError = () => removeLoader()
+// Router.onRouteChangeComplete = () => removeLoader()
+// Router.onRouteChangeError = () => removeLoader()
 
 const Layout = props => (
   <div>
@@ -37,14 +37,14 @@ const Layout = props => (
         font-size: 62.5%;
         padding: 0;
         margin: 0;
-        overflow: hidden;
+        ${props.overflow ? "overflow-x: hidden;" : "overflow: hidden;"}
+        background: ${props.background};
       }
       body {
         font-family: 'Lato', sans-serif;
         font-size: 1.4rem;
         padding: 0;
         margin: 0;
-        background: #fff;
       }
       main {
         min-height: calc(100vh - 74.4rem)
