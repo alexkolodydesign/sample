@@ -6,7 +6,13 @@ import reducer from './reducers'
 export const defaultState = {
   map: {
     view: 'region',
-    metricType: "miles"
+    metricType: "miles",
+    filter: {
+      hiking: true,
+      biking: true,
+      atv: true,
+      horseback: true
+    }
   }
 }
 
