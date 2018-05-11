@@ -5,7 +5,8 @@ import reducer from './reducers'
 
 export const defaultState = {
   map: {
-    view: 'region'
+    view: 'region',
+    metricType: "miles"
   }
 }
 

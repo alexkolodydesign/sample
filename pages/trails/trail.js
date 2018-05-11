@@ -18,14 +18,14 @@ const Trail = props =>
       <h1>Trail Map</h1>
     </div>
     <div className="wrapper trail">
-      <TrailSidebar data={props.trail} />
+      <TrailSidebar trail={props.trail} />
       <TrailMap/>
     </div>
     <div className="wrapper more_trails">
       <SimilarTrails />
       <TrailsNearby />
     </div>
-    <TrailMedia />
+    <TrailMedia media={props.trail.media} />
     <style jsx>{`
       h1 {
         text-transform: uppercase;
@@ -50,7 +50,7 @@ Trail.getInitialProps = async props => {
     const res = await fetch(hostUrl + '/api/trail/' + slug);
     const data = await res.json();
     return {
-      trail: data
+      trail: data.trail
     };
   } catch (e) {
     return {

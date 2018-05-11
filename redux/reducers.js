@@ -2,7 +2,8 @@ import { combineReducers } from 'redux'
 
 export const defaultState = {
   map: {
-    view: 'region'
+    view: 'region',
+    metricType: "miles"
   }
 }
 

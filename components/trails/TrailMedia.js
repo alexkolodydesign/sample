@@ -5,31 +5,18 @@ const TrailMedia = props =>
       <h3>Videos</h3>
       <hr/>
       <div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        {props.media.videos.map((video, k) => {
+          return <div key={k}></div>
+        })}
       </div>
     </div>
     <div className="photos">
       <h3>Pictures</h3>
       <hr/>
       <div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        {props.media.pictures.map((picture, k) => {
+          return <div  key={k}></div>
+        })}
       </div>
     </div>
     <style jsx>{`
