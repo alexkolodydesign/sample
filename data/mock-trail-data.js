@@ -50,7 +50,7 @@ const trail = {
       region: "Canyon"
     }
   ],
-  nearbyTrails: [
+  trailsNearby: [
     {
       title: "Alpine Mountain Hike",
       length: "2.3 miles",

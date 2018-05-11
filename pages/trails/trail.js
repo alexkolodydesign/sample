@@ -22,8 +22,8 @@ const Trail = props =>
       <TrailMap/>
     </div>
     <div className="wrapper more_trails">
-      <SimilarTrails />
-      <TrailsNearby />
+      <SimilarTrails similarTrails={props.trail.similarTrails} />
+      <TrailsNearby trailsNearby={props.trail.trailsNearby} />
     </div>
     <TrailMedia media={props.trail.media} />
     <style jsx>{`
@@ -36,6 +36,7 @@ const Trail = props =>
         grid-gap: 3rem;
       }
       .more_trails {
+        margin-top: 3rem;
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 3rem;
