@@ -2,9 +2,15 @@ import Link from 'next/link'
 
 const TrailSystemGuide = props =>
   <div>
-    <Link href="/trail-systems/trailsystem" as="/trail-systems/zion-national-park"><a>Zion National Park</a></Link>
-    <Link href="/trail-systems/trailsystem" as="/trail-systems/snow-canyon-state-park"><a>Snow Canyon State Park</a></Link>
-    <Link href="/trail-systems/trailsystem" as="/trail-systems/gooseberry-mesa"><a>Gooseberry Mesa</a></Link>
+    <Link href="/trail-systems/trailsystem" as="/trail-systems/zion-national-park">
+      <a className={props.system == "zion-national-park" ? "active" : null}>Zion National Park</a>
+    </Link>
+    <Link href="/trail-systems/trailsystem" as="/trail-systems/snow-canyon-state-park">
+      <a className={props.system == "snow-canyon-state-park" ? "active" : null}>Snow Canyon State Park</a>
+    </Link>
+    <Link href="/trail-systems/trailsystem" as="/trail-systems/gooseberry-mesa">
+      <a className={props.system == "gooseberry-mesa" ? "active" : null}>Gooseberry Mesa</a>
+    </Link>
     <style jsx>{`
       div {
         position: absolute;
@@ -29,6 +35,12 @@ const TrailSystemGuide = props =>
         }
         &:hover {
           background: #262727;
+        }
+        &.active {
+          background: #3fa9f5;
+          &:hover {
+            background: #0d93f2;
+          }
         }
       }
     `}</style>

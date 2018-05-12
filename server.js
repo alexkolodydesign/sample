@@ -26,6 +26,7 @@ app
     server.use(router);
     // Mock API
     router.get("/api/trail/:trail", trails.getTrailData);
+    router.get("/api/trailsystem/:trailsystem", trails.getTrailSystemData);
     // Handle All Routes
     server.get('/', (req, res) => app.render(req, res, '/'));
     server.get('/trail-systems/:system', (req, res) => app.render(req, res, '/trail-systems/trailsystem'));
@@ -45,7 +46,10 @@ app
 
 // Configure Server
 function ConfigureExpress(server) {
-  server.use(compression());
+  // Having compression on in dev makes header issues appear in console
+  if (process.env.NODE_ENV === "production") {
+    server.use(compression());
+  }
   server.use(cookieParser());
   // Make form data avaiable on req.body
   server.use(bodyParser.json());
