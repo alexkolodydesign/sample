@@ -52,7 +52,9 @@ const TrailSystemGuide = props =>
         text-decoration: none;
         border: none;
         background: #4d4e4e;
-        padding: 1rem 6rem;
+        padding: 1rem 0;
+        width: 30rem;
+        text-align: center;
         color: #fff;
         text-transform: uppercase;
         cursor: pointer;
@@ -66,6 +68,9 @@ const TrailSystemGuide = props =>
             background: #262727;
             .background {
               background-size: 110% auto;
+            }
+            p {
+              transform: scale(1);
             }
           }
         }
@@ -97,9 +102,13 @@ const TrailSystemGuide = props =>
             max-width: 100%;
             height: 15rem;
             background-image: url(https://placehold.it/300x150);
-            background-size: 100% auto;
+            background-size: 70% auto;
             background-position: center;
-            transition: all 1000ms;
+            transition: all 500ms;
+          }
+          p {
+            transform: scale(.25);
+            transition: all 500ms;
           }
         }
       }
