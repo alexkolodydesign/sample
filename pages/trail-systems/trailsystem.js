@@ -11,7 +11,7 @@ const TrailSystem = props =>
     <Head/>
     <TrailSystemMap/>
     <TrailSystemGuide system={props.trailSystem.handle} />
-    <MainMenu/>
+    <MainMenu system={props.trailSystem} />
   </Layout>
 
 TrailSystem.getInitialProps = async props => {

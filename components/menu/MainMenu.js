@@ -15,7 +15,7 @@ const MainMenu = props =>
     <div className="wrapper">
       <SelectTrailType />
       <FilterTrails />
-      <TrailList />
+      <TrailList system={props.system} />
       <GPS />
       <Settings />
     </div>
@@ -33,6 +33,7 @@ const MainMenu = props =>
           grid-template-columns: 1fr 28rem repeat(2, 15rem) repeat(2, 6rem);
           align-items: center;
           justify-items: center;
+          position: relative;
         }
       }
 

@@ -16,10 +16,7 @@ export const defaultState = {
 export const map = (state = defaultState, action) => {
   switch (action.type) {
     case 'CHANGE_TRAIL_TYPE':
-      const filterState = Object.assign({
-        map: { filter: action.filter }
-      }, ...state)
-      return filterState
+      return { map: { ...state.map, filter: action.filter } }
     default:
       return state
   }
