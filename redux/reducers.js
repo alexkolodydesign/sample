@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+// import { combineReducers } from 'redux'
 
 export const defaultState = {
   map: {
@@ -15,6 +15,11 @@ export const defaultState = {
 
 export const map = (state = defaultState, action) => {
   switch (action.type) {
+    case 'CHANGE_TRAIL_TYPE':
+      const filterState = Object.assign({
+        map: { filter: action.filter }
+      }, ...state)
+      return filterState
     default:
       return state
   }
