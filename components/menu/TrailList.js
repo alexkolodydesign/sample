@@ -7,16 +7,21 @@ export default class TrailList extends React.Component {
     this.toggleMenu = this.toggleMenu.bind(this)
   }
   toggleMenu() {
-    this.setState({menu: !this.state.menu})
+    if (this.state.menu == true) {
+      this.setState({menu: "exiting"});
+      setTimeout( () => this.setState({menu: !this.state.menu}), 500)
+    } else {
+      this.setState({menu: !this.state.menu})
+    }
   }
   render() {
     return (
       <React.Fragment>
-        <button onClick={this.toggleMenu}>
+        <button onClick={this.toggleMenu} className={this.state.menu ? "active" : null}>
           <img src="/static/images/menu/trail-list.svg" alt="Trail List"/>
           <p>Trail List</p>
         </button>
-        {this.state.menu ? <TrailListMenu trails={this.props.system.trails} /> : null}
+        {this.state.menu ? <TrailListMenu trails={this.props.system.trails} toggleMenu={this.toggleMenu} menuState={this.state.menu} /> : null}
         <style jsx>{`
           button {
             background: #4d4e4e;
@@ -31,6 +36,12 @@ export default class TrailList extends React.Component {
             position: relative;
             &:hover {
               background: #262727;
+              &.active {
+                background: #3fa9f5;
+              }
+            }
+            &.active {
+              background: #3fa9f5;
             }
           }
           img {

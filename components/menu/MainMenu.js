@@ -12,6 +12,7 @@ const MainMenu = props =>
       <div className="purple"></div>
       <div className="aqua"></div>
     </div>
+    <div className="background"></div>
     <div className="wrapper">
       <SelectTrailType />
       <FilterTrails />
@@ -49,6 +50,14 @@ const MainMenu = props =>
       .orange { background: #ff5a00; }
       .purple { background: #662f8e; }
       .aqua { background: #00a89c; }
+
+      .background {
+        position: absolute;
+        top: 1rem;
+        width: 100%;
+        height: calc(100% - 1rem);
+        background: #fff;
+      }
     `}</style>
   </div>
 
