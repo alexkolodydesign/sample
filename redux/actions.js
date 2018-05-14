@@ -6,7 +6,7 @@ import reducer from './reducers'
 export const defaultState = {
   map: {
     view: 'region',
-    metricType: "miles",
+    metricType: "imperial",
     filter: {
       hiking: true,
       biking: true,
@@ -17,4 +17,5 @@ export const defaultState = {
 }
 
 export const changeTrailType = filter => async dispatch => dispatch({ type: 'CHANGE_TRAIL_TYPE', filter })
+export const changeMetricType = option => async dispatch => dispatch({ type: 'CHANGE_METRIC_TYPE', option })
 export const initStore = (initialState = defaultState) => createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))
