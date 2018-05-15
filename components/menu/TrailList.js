@@ -37,7 +37,7 @@ export default class TrailList extends React.Component {
             &:hover {
               background: #262727;
               &.active {
-                background: #3fa9f5;
+                background: #0d93f2;
               }
             }
             &.active {

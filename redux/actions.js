@@ -8,14 +8,42 @@ export const defaultState = {
     view: 'region',
     metricType: "imperial",
     filter: {
-      hiking: true,
-      biking: true,
-      atv: true,
-      horseback: true
+      trailType: {
+        hiking: true,
+        biking: true,
+        atv: true,
+        horseback: true
+      },
+      season: {
+        spring: true,
+        summer: true,
+        fall: true,
+        winter: true
+      },
+      difficulty: {
+        easy: true,
+        moderate: true,
+        hard: true
+      },
+      trailLength: {
+        short: true,
+        moderate: true,
+        long: true
+      },
+      trailTraffic: {
+        sparse: true,
+        comfortable: true,
+        crowded: true
+      },
+      routeType: {
+        loop: true,
+        nonLoop: true
+      }
     }
   }
 }
 
 export const changeTrailType = filter => async dispatch => dispatch({ type: 'CHANGE_TRAIL_TYPE', filter })
+export const changeSeason = filter => async dispatch => dispatch({ type: 'CHANGE_SEASON', filter })
 export const changeMetricType = option => async dispatch => dispatch({ type: 'CHANGE_METRIC_TYPE', option })
 export const initStore = (initialState = defaultState) => createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))

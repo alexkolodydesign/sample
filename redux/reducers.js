@@ -5,10 +5,37 @@ export const defaultState = {
     view: 'region',
     metricType: "imperial",
     filter: {
-      hiking: true,
-      biking: true,
-      atv: true,
-      horseback: true
+      trailType: {
+        hiking: true,
+        biking: true,
+        atv: true,
+        horseback: true
+      },
+      season: {
+        spring: true,
+        summer: true,
+        fall: true,
+        winter: true
+      },
+      difficulty: {
+        easy: true,
+        moderate: true,
+        hard: true
+      },
+      trailLength: {
+        short: true,
+        moderate: true,
+        long: true
+      },
+      trailTraffic: {
+        sparse: true,
+        comfortable: true,
+        crowded: true
+      },
+      routeType: {
+        loop: true,
+        nonLoop: true
+      }
     }
   }
 }
@@ -16,9 +43,10 @@ export const defaultState = {
 export const map = (state = defaultState, action) => {
   switch (action.type) {
     case 'CHANGE_TRAIL_TYPE':
-      return { map: { ...state.map, filter: action.filter } }
+      return { map: { ...state.map, filter: { trailType: action.filter } } }
+    case 'CHANGE_SEASON':
+      return { map: { ...state.map, filter: { season: action.filter } } }
     case 'CHANGE_METRIC_TYPE':
-      console.log("Reducer: ", action)
       return { map: { ...state.map, metricType: action.option } }
     default:
       return state

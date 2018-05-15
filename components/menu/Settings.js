@@ -32,7 +32,7 @@ export default class Settings extends React.Component {
               fill: #262727;
             }
             &.active:hover .st0 {
-              fill: #3fa9f5;
+              fill: #0d93f2;
             }
             &.active .st0 {
               fill: #3fa9f5;
