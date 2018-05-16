@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { changeSeason, changeDifficulty, changeTrailLength } from '../../redux/actions'
+import { changeSeason, changeDifficulty, changeTrailLength, changeTrailTraffic } from '../../redux/actions'
 
 const FilterTrailsMenu = props =>
   <div className={props.menuState == "exiting" ? "exiting menu" : "menu"}>
@@ -21,7 +21,7 @@ const FilterTrailsMenu = props =>
         options={["Easy", "Moderate", "Hard"]}
         action={props.changeDifficulty} />
       <Option title="Length of Trail" selected="" range={true} action={props.changeTrailLength} />
-      <Option title="Traffic Density" selected="" options={["Sparse", "Comfortable", "Long"]} />
+      <Option title="Traffic Density" selected={props.map.filter.trailTraffic} options={["Light", "Medium", "Heavy", "Clear"]} action={props.changeTrailTraffic} />
       <Option title="Route Type" selected="" options={["Loop", "Non-Loop"]} />
       <Option title="Trail Type" selected="" options={["Hiking", "Biking", "Horseback", "ATV"]} />
       <Option title="Exclude" selected="" options="" />
@@ -85,6 +85,9 @@ const mapDispatchToProps = dispatch => {
   return {
     changeSeason: (season) => {
       dispatch(changeSeason(season));
+    },
+    changeTrailTraffic: (trailTraffic) => {
+      dispatch(changeTrailTraffic(trailTraffic));
     },
     changeDifficulty: (difficulty) => {
       dispatch(changeDifficulty(difficulty));
