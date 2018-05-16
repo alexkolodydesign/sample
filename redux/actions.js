@@ -22,15 +22,12 @@ export const defaultState = {
       },
       trailLength: null,
       trailTraffic: "",
-      routeType: {
-        loop: true,
-        nonLoop: true
-      }
+      routeType: ""
     }
   }
 }
 
-export const changeTrailType = filter => async dispatch => dispatch({ type: 'CHANGE_TRAIL_TYPE', filter })
+export const changeTrailType = trailType => async dispatch => dispatch({ type: 'CHANGE_TRAIL_TYPE', trailType })
 export const changeTrailTraffic = trailTraffic => async dispatch => {
   if (trailTraffic == "clear") trailTraffic = ""
   return dispatch({ type: 'CHANGE_TRAIL_TRAFFIC', trailTraffic })
@@ -38,6 +35,10 @@ export const changeTrailTraffic = trailTraffic => async dispatch => {
 export const changeSeason = filter => async dispatch => {
   if (filter == "clear") filter = ""
   return dispatch({ type: 'CHANGE_SEASON', filter })
+}
+export const changeRouteType = routeType => async dispatch => {
+  if (routeType == "clear") routeType = ""
+  return dispatch({ type: 'CHANGE_ROUTE_TYPE', routeType })
 }
 export const changeDifficulty = difficulty => async dispatch => dispatch({ type: 'CHANGE_DIFFICULTY', difficulty })
 export const changeTrailLength = trailLength => async dispatch => dispatch({ type: 'CHANGE_TRAIL_LENGTH', trailLength })

@@ -5,19 +5,19 @@ const SelectTrailType = props =>
   <div className="trails">
     <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails"
       className={props.map.filter.trailType.hiking ? null : "inactive"}
-      onClick={ () => props.changeTrailType(props.map.filter.trailType, "hiking") }
+      onClick={ () => props.changeTrailType("hiking") }
     />
     <img src="/static/images/menu/biking.svg" alt="Select Biking Trails"
       className={props.map.filter.trailType.biking ? null : "inactive"}
-      onClick={ () => props.changeTrailType(props.map.filter.trailType, "biking") }
+      onClick={ () => props.changeTrailType("biking") }
     />
     <img src="/static/images/menu/horse.svg" alt="Select Horseback Trails"
       className={props.map.filter.trailType.horseback ? null : "inactive"}
-      onClick={ () => props.changeTrailType(props.map.filter.trailType, "horseback") }
+      onClick={ () => props.changeTrailType("horseback") }
     />
     <img src="/static/images/menu/atv.svg" alt="Select ATV Trails"
       className={props.map.filter.trailType.atv ? null : "inactive"}
-      onClick={ () => props.changeTrailType(props.map.filter.trailType, "atv") }
+      onClick={ () => props.changeTrailType("atv") }
     />
     <style jsx>{`
       .trails {
@@ -44,10 +44,8 @@ const SelectTrailType = props =>
 const mapStateToProps = (state, ownProps) => ({ map: state.map });
 const mapDispatchToProps = dispatch => {
   return {
-    changeTrailType: (filter, filterType) => {
-      if (filter[filterType] == true) {filter[filterType] = false}
-      else {filter[filterType] = true}
-      dispatch(changeTrailType(filter));
+    changeTrailType: (trailType) => {
+      dispatch(changeTrailType(trailType));
     }
   };
 };
