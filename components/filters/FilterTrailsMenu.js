@@ -24,7 +24,16 @@ const FilterTrailsMenu = props =>
       <Option title="Length of Trail" selected="" range={true} action={props.changeTrailLength} />
       <Option title="Traffic Density" selected={props.map.filter.trailTraffic} options={["Light", "Medium", "Heavy", "Clear"]} action={props.changeTrailTraffic} />
       <Option title="Route Type" selected={props.map.filter.routeType} options={["Loop", "Loop", "Clear"]} action={props.changeRouteType} />
-      <Option title="Trail Type" selected="" options={["Hiking", "Biking", "Horseback", "ATV"]} action={props.changeTrailType} />
+      <Option title="Trail Type"
+        selected={
+          Object.keys(props.map.filter.trailType).filter( (key) => {
+            if (props.map.filter.trailType[key] == true) return key
+            else return null
+          }).join(" ")
+        }
+        object={props.map.filter.trailType}
+        options={["Hiking", "Biking", "Horseback", "ATV"]}
+        action={props.changeTrailType} />
       <Option title="Exclude" selected="" options="" />
     </div>
     <style jsx>{`
