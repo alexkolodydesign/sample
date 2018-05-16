@@ -43,5 +43,6 @@ export const changeSeason = filter => async dispatch => {
   if (filter == "Clear") filter = ""
   return dispatch({ type: 'CHANGE_SEASON', filter })
 }
+export const changeDifficulty = difficulty => async dispatch => dispatch({ type: 'CHANGE_DIFFICULTY', difficulty })
 export const changeMetricType = option => async dispatch => dispatch({ type: 'CHANGE_METRIC_TYPE', option })
 export const initStore = (initialState = defaultState) => createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))

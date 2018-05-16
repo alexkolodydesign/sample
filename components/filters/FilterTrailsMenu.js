@@ -1,13 +1,25 @@
 import { connect } from 'react-redux';
-import { changeSeason } from '../../redux/actions'
+import { changeSeason, changeDifficulty } from '../../redux/actions'
 
 const FilterTrailsMenu = props =>
   <div className={props.menuState == "exiting" ? "exiting menu" : "menu"}>
     <h3>Filter Trails</h3>
     <div className="close" onClick={props.toggleFilterMenu}>X</div>
     <div className="options">
-      <Option title="Season of Hike" selected={props.map.filter.season} options={["Spring", "Summer", "Fall", "Winter", "Clear"]} action={props.changeSeason} />
-      <Option title="Difficulty" selected="" options={["Easy", "Moderate", "Hard"]} />
+      <Option title="Season of Hike"
+        selected={props.map.filter.season}
+        options={["Spring", "Summer", "Fall", "Winter", "Clear"]}
+        action={props.changeSeason} />
+      <Option title="Difficulty"
+        selected={
+          Object.keys(props.map.filter.difficulty).filter( (key) => {
+            if (props.map.filter.difficulty[key] == true) return key
+            else return null
+          }).join(" ")
+        }
+        object={props.map.filter.difficulty}
+        options={["Easy", "Moderate", "Hard"]}
+        action={props.changeDifficulty} />
       <Option title="Length of Trail" selected="" options={["Short", "Moderate", "Long"]} />
       <Option title="Traffic Density" selected="" options={["Sparse", "Comfortable", "Long"]} />
       <Option title="Route Type" selected="" options={["Loop", "Non-Loop"]} />
@@ -73,6 +85,9 @@ const mapDispatchToProps = dispatch => {
   return {
     changeSeason: (season) => {
       dispatch(changeSeason(season));
+    },
+    changeDifficulty: (difficulty) => {
+      dispatch(changeDifficulty(difficulty));
     }
   };
 };
@@ -90,14 +105,29 @@ class Option extends React.Component {
     return (
       <div className="option">
         <div className="title" onClick={this.toggleMenu}>
-          <h4><span className={this.state.menu ? "active" : null}>{this.props.title}</span></h4>
-          <p><span>{this.props.selected}</span></p>
+          <h4><span className={this.state.menu && "active"}>{this.props.title}</span></h4>
+          <p><span>
+            {this.props.object ?
+              this.props.selected.split(" ").map((select, k) => <span key={k}>{select}<br/></span>)
+              : this.props.selected}
+          </span></p>
         </div>
         {this.state.menu ?
           <div className="options">
             {this.props.options && this.props.options.map((option, k) => {
               if (this.props.action) {
-                return <div key={k} onClick={ () => this.props.action(option) } className={this.props.selected == option ? "active" : null}>{option}</div>
+                return (
+                  <div key={k}
+                    onClick={ () => this.props.action(option.toLowerCase(), ) }
+                    className={
+                      this.props.object ?
+                        this.props.object[option.toLowerCase()] == true ? "active" : null
+                      : this.props.selected.toLowerCase() == option.toLowerCase() ? "active" : null
+                    }
+                  >
+                    {option}
+                  </div>
+                )
               }
               return <div key={k}>{option}</div>
             })}

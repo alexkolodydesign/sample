@@ -94,7 +94,7 @@ class Option extends React.Component {
           <div className="options">
             {this.props.options && this.props.options.map((option, k) => {
               if (this.props.action) {
-                return <div key={k} onClick={ () => this.props.action(option) } className={this.props.selected == option ? "active" : null}>{option}</div>
+                return <div key={k} onClick={ () => this.props.action(option) } className={this.props.selected.toLowerCase() == option.toLowerCase() ? "active" : null}>{option}</div>
               }
               return <div key={k}>{option}</div>
             })}
