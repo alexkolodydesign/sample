@@ -20,11 +20,7 @@ export const defaultState = {
         moderate: true,
         hard: true
       },
-      trailLength: {
-        short: true,
-        moderate: true,
-        long: true
-      },
+      trailLength: null,
       trailTraffic: {
         sparse: true,
         comfortable: true,
@@ -44,5 +40,6 @@ export const changeSeason = filter => async dispatch => {
   return dispatch({ type: 'CHANGE_SEASON', filter })
 }
 export const changeDifficulty = difficulty => async dispatch => dispatch({ type: 'CHANGE_DIFFICULTY', difficulty })
+export const changeTrailLength = trailLength => async dispatch => dispatch({ type: 'CHANGE_TRAIL_LENGTH', trailLength })
 export const changeMetricType = option => async dispatch => dispatch({ type: 'CHANGE_METRIC_TYPE', option })
 export const initStore = (initialState = defaultState) => createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))

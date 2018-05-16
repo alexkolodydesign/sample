@@ -17,11 +17,7 @@ export const defaultState = {
         moderate: true,
         hard: true
       },
-      trailLength: {
-        short: true,
-        moderate: true,
-        long: true
-      },
+      trailLength: null,
       trailTraffic: {
         sparse: true,
         comfortable: true,
@@ -45,6 +41,8 @@ export const map = (state = defaultState, action) => {
       const difficulty = Object.assign({},state.map.filter.difficulty)
       difficulty[action.difficulty] = !difficulty[action.difficulty]
       return { map: { ...state.map, filter: { ...state.map.filter, difficulty: difficulty } } }
+    case 'CHANGE_TRAIL_LENGTH':
+      return { map: { ...state.map, filter: { ...state.map.filter, trailLength: action.trailLength } } }
     case 'CHANGE_METRIC_TYPE':
       return { map: { ...state.map, metricType: action.option } }
     default:
