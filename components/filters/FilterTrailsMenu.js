@@ -6,7 +6,7 @@ const FilterTrailsMenu = props =>
     <h3>Filter Trails</h3>
     <div className="close" onClick={props.toggleFilterMenu}>X</div>
     <div className="options">
-      <Option title="Season of Hike" selected="" options={["Spring", "Summer", "Fall", "Winter"]} />
+      <Option title="Season of Hike" selected={props.map.filter.season} options={["Spring", "Summer", "Fall", "Winter", "Clear"]} action={props.changeSeason} />
       <Option title="Difficulty" selected="" options={["Easy", "Moderate", "Hard"]} />
       <Option title="Length of Trail" selected="" options={["Short", "Moderate", "Long"]} />
       <Option title="Traffic Density" selected="" options={["Sparse", "Comfortable", "Long"]} />
@@ -127,6 +127,11 @@ class Option extends React.Component {
               animation-name: slideUp;
               animation-duration: 500ms;
               animation-delay: 300ms;
+            }
+            &:nth-child(5) {
+              animation-name: slideUp;
+              animation-duration: 500ms;
+              animation-delay: 400ms;
             }
           }
           .title {

@@ -11,12 +11,7 @@ export const defaultState = {
         atv: true,
         horseback: true
       },
-      season: {
-        spring: true,
-        summer: true,
-        fall: true,
-        winter: true
-      },
+      season: "",
       difficulty: {
         easy: true,
         moderate: true,
@@ -43,9 +38,9 @@ export const defaultState = {
 export const map = (state = defaultState, action) => {
   switch (action.type) {
     case 'CHANGE_TRAIL_TYPE':
-      return { map: { ...state.map, filter: { trailType: action.filter } } }
+      return { map: { ...state.map, filter: { ...state.map.filter, trailType: action.filter } } }
     case 'CHANGE_SEASON':
-      return { map: { ...state.map, filter: { season: action.filter } } }
+      return { map: { ...state.map, filter: { ...state.map.filter, season: action.filter } } }
     case 'CHANGE_METRIC_TYPE':
       return { map: { ...state.map, metricType: action.option } }
     default:

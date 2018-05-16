@@ -14,12 +14,7 @@ export const defaultState = {
         atv: true,
         horseback: true
       },
-      season: {
-        spring: true,
-        summer: true,
-        fall: true,
-        winter: true
-      },
+      season: "",
       difficulty: {
         easy: true,
         moderate: true,
@@ -44,6 +39,9 @@ export const defaultState = {
 }
 
 export const changeTrailType = filter => async dispatch => dispatch({ type: 'CHANGE_TRAIL_TYPE', filter })
-export const changeSeason = filter => async dispatch => dispatch({ type: 'CHANGE_SEASON', filter })
+export const changeSeason = filter => async dispatch => {
+  if (filter == "Clear") filter = ""
+  return dispatch({ type: 'CHANGE_SEASON', filter })
+}
 export const changeMetricType = option => async dispatch => dispatch({ type: 'CHANGE_METRIC_TYPE', option })
 export const initStore = (initialState = defaultState) => createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))
