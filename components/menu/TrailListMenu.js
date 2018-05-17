@@ -51,7 +51,7 @@ const TrailListMenu = props =>
         }
       }
       .trails {
-        background: #f2f2f2;
+        background-image: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)), url(/static/images/background-pattern.svg);
         padding: 0 0.5rem;
         height: calc(100% - 5rem);
         overflow-y: scroll;

@@ -28,7 +28,6 @@ const MainMenu = props =>
         z-index: 2;
         width: 100%;
         padding: 4rem 0;
-        background: #fff;
         .wrapper {
           display: grid;
           grid-template-columns: 1fr 28rem repeat(2, 15rem) repeat(2, 6rem);
@@ -56,7 +55,9 @@ const MainMenu = props =>
         top: 1rem;
         width: 100%;
         height: calc(100% - 1rem);
-        background: #fff;
+        background-image: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)), url(/static/images/background-pattern.svg);
+        background-position: center;
+        background-size: 29rem auto;
       }
     `}</style>
   </div>
