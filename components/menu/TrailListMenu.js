@@ -79,7 +79,7 @@ const TrailListMenu = props =>
 
 const Trail = props =>
   <div className="trail">
-    <img src="https://placehold.it/75x75" alt=""/>
+    <img src={props.trail.image ? props.trail.image : "https://placehold.it/75x75?text=coming-soon"} alt=""/>
     <div className="details">
       <h4>{props.trail.title}</h4>
       <p>Length: <span>{props.trail.length}</span></p>
@@ -88,10 +88,10 @@ const Trail = props =>
       <p>Region: <span>{props.trail.region}</span></p>
     </div>
     <div className="trail_type">
-      <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" />
-      <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" />
-      <img src="/static/images/menu/horse.svg" alt="Select Horseback Trails" />
-      <img src="/static/images/menu/atv.svg" alt="Select ATV Trails" />
+      <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!props.trail.recommendedUse.hiking && "inactive"} />
+      <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" className={!props.trail.recommendedUse.biking && "inactive"} />
+      <img src="/static/images/menu/horse.svg" alt="Select Horseback Trails" className={!props.trail.recommendedUse.horseback && "inactive"} />
+      <img src="/static/images/menu/atv.svg" alt="Select ATV Trails" className={!props.trail.recommendedUse.atv && "inactive"} />
     </div>
     <style jsx>{`
       .trail {
@@ -127,6 +127,10 @@ const Trail = props =>
         grid-template: 4rem 4rem / 4rem 4rem;
         align-items: center;
         img {width: 3.5rem;}
+      }
+      .inactive {
+        opacity: 0.25;
+        filter: grayscale();
       }
       @keyframes slideUp {
         from {transform: translateY(25rem);opacity: 0;}
