@@ -8,14 +8,10 @@ class TrailListMenu extends React.Component {
   }
   search(searchTerm) {
     const value = searchTerm.target.value.toLowerCase()
-    console.log(value)
-    const trails = this.state.trails
-    trails.filter( (trail) => {
+    const trails = this.props.trails.filter( (trail) => {
       if (trail.title.toLowerCase().includes(value)) {
-        console.log('match found')
         return true
       }
-      console.log('no match found')
       return false
     })
     this.setState({trails: trails})
@@ -31,8 +27,7 @@ class TrailListMenu extends React.Component {
           </form>
         </div>
         <div className="trails">
-          {this.state.trails[0].title}
-          {/*this.state.trails.map( (trail, k) => <Trail trail={trail} key={k} /> )} */}
+          {this.state.trails.map( (trail, k) => <Trail trail={trail} key={k} /> )}
         </div>
         <style jsx>{`
           h3 {text-transform: uppercase; margin: 0 0 0 1rem; color: #fff;}
