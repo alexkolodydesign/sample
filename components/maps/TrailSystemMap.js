@@ -6,6 +6,9 @@ const TrailSystemMap = props =>
       <h2>Trail System Map</h2>
       <p><Link href="/"><a>…back to Region View</a></Link></p>
       <p><Link href="/trails/trail" as="/trails/emerald-pools"><a>View Trail</a></Link></p>
+      <h3>Trails Displaying</h3>
+      <hr/>
+      {props.system.trails.map((trail, k) => <Trail key={k} trail={trail} /> )}
     </div>
     <style jsx>{`
       .map {
@@ -20,6 +23,12 @@ const TrailSystemMap = props =>
         z-index: 1;
       }
     `}</style>
+  </div>
+
+
+const Trail = props =>
+  <div>
+    <p>{props.trail.title} | {props.trail.length} miles</p>
   </div>
 
   export default TrailSystemMap

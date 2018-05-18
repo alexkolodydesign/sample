@@ -2,17 +2,31 @@ import Layout from '../../components/layout/Layout'
 import Head from '../../components/layout/Head'
 import fetch from 'isomorphic-unfetch';
 import { nextConnect } from '../../redux/store'
+import { filterAction } from '../../redux/filterAction'
 import TrailSystemMap from '../../components/maps/TrailSystemMap'
 import TrailSystemGuide from '../../components/menu/TrailSystemGuide'
 import MainMenu from '../../components/menu/MainMenu'
 
-const TrailSystem = props =>
-  <Layout>
-    <Head/>
-    <TrailSystemMap/>
-    <TrailSystemGuide system={props.trailSystem.handle} />
-    <MainMenu system={props.trailSystem} />
-  </Layout>
+class TrailSystem extends React.Component {
+  constructor(props) {
+    super(props)
+    this.filterTrails = this.filterTrails.bind(this)
+  }
+  filterTrails() {
+    return filterAction(this.props.trailSystem, this.props.map.filter)
+  }
+  render() {
+    const trailSystem = this.filterTrails(this.props.trailSystem)
+    return (
+      <Layout>
+        <Head/>
+        <TrailSystemMap system={trailSystem}/>
+        <TrailSystemGuide system={this.props.trailSystem.handle} />
+        <MainMenu system={trailSystem} />
+      </Layout>
+    )
+  }
+}
 
 TrailSystem.getInitialProps = async props => {
   const hostUrl = props.req ? `${props.req.protocol}://${props.req.get('Host')}` : '';

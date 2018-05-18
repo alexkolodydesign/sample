@@ -7,7 +7,7 @@ const TrailSystemGuide = props =>
         <a className={props.system == "zion-national-park" ? "active" : null}>
           Zion National Park
           <div className="dropdown">
-            <div className="background"></div>
+            <div className="background" style={{backgroundImage: "url(https://placehold.it/300x150?text=Zion-National-Park)"}}></div>
             <p>View Trail System</p>
           </div>
         </a>
@@ -18,7 +18,7 @@ const TrailSystemGuide = props =>
         <a className={props.system == "snow-canyon-state-park" ? "active" : null}>
           Snow Canyon State Park
           <div className="dropdown">
-            <div className="background"></div>
+            <div className="background" style={{backgroundImage: "url(https://placehold.it/300x150?text=Snow-Canyon-State-Park)"}}></div>
             <p>View Trail System</p>
           </div>
         </a>
@@ -29,7 +29,7 @@ const TrailSystemGuide = props =>
         <a className={props.system == "gooseberry-mesa" ? "active" : null}>
           Gooseberry Mesa
           <div className="dropdown">
-            <div className="background"></div>
+            <div className="background" style={{backgroundImage: "url(https://placehold.it/300x150?text=Gooseberry-Mesa)"}}></div>
             <p>View Trail System</p>
           </div>
         </a>
@@ -101,7 +101,6 @@ const TrailSystemGuide = props =>
           .background {
             max-width: 100%;
             height: 15rem;
-            background-image: url(https://placehold.it/300x150);
             background-size: 70% auto;
             background-position: center;
             transition: all 500ms;
