@@ -44,6 +44,7 @@ const Trail = props =>
     `}</style>
   </Layout>
 
+
 Trail.getInitialProps = async props => {
   const hostUrl = props.req ? `${props.req.protocol}://${props.req.get('Host')}` : '';
   const slug = props.asPath.split('/')[2];

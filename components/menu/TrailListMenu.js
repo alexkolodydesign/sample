@@ -1,81 +1,107 @@
-const TrailListMenu = props =>
-  <div className={props.menuState == "exiting" ? "exiting menu" : "menu"}>
-    <h3>Trail List</h3>
-    <div className="close" onClick={props.toggleMenu}>X</div>
-    <div className="search">
-      <form action="">
-        <input type="text" placeholder="Search here…" />
-      </form>
-    </div>
-    <div className="trails">
-      {props.trails.map( (trail, k) => <Trail trail={trail} key={k} /> )}
-    </div>
-    <style jsx>{`
-      h3 {text-transform: uppercase; margin: 0 0 0 1rem; color: #fff;}
-      .menu {
-        padding: 1rem 0.5rem 2rem 0.5rem;
-        border-top-left-radius: 1rem;
-        border-top-right-radius: 1rem;
-        background: #3fa9f5;
-        width: 40rem;
-        height: 40rem;
-        position: absolute;
-        right: 0;
-        top: -47rem;
-        z-index: -1;
-        overflow: hidden;
-        animation-name: slideUp;
-        animation-duration: 500ms;
-        &.exiting {
-          transition: 500ms;
-          transform: translateY(25rem);
-          opacity: 0;
-        }
+class TrailListMenu extends React.Component {
+  constructor(props) {
+    super(props)
+    this.search = this.search.bind(this)
+    this.state = {
+      trails: this.props.trails
+    }
+  }
+  search(searchTerm) {
+    const value = searchTerm.target.value.toLowerCase()
+    console.log(value)
+    const trails = this.state.trails
+    trails.filter( (trail) => {
+      if (trail.title.toLowerCase().includes(value)) {
+        console.log('match found')
+        return true
       }
-      @keyframes slideUp {
-        from {transform: translateY(25rem);opacity: 0;}
-        to {transform: translateY(0); opacity: 1;}
-      }
-      .search {
-        margin-top: 1rem;
-        background: #f2f2f2;
-        form {
-          display: flex;
-          padding: 0.5rem;
-          input {
-            width: 100%;
-            background: #fff;
-            border: none;
-            padding: 1rem 0.5rem;
+      console.log('no match found')
+      return false
+    })
+    this.setState({trails: trails})
+  }
+  render() {
+    return (
+      <div className={this.props.menuState == "exiting" ? "exiting menu" : "menu"}>
+        <h3>Trail List</h3>
+        <div className="close" onClick={this.props.toggleMenu}>X</div>
+        <div className="search">
+          <form onChange={this.search}>
+            <input type="text" placeholder="Search here…" />
+          </form>
+        </div>
+        <div className="trails">
+          {this.state.trails[0].title}
+          {/*this.state.trails.map( (trail, k) => <Trail trail={trail} key={k} /> )} */}
+        </div>
+        <style jsx>{`
+          h3 {text-transform: uppercase; margin: 0 0 0 1rem; color: #fff;}
+          .menu {
+            padding: 1rem 0.5rem 2rem 0.5rem;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            background: #3fa9f5;
+            width: 40rem;
+            height: 40rem;
+            position: absolute;
+            right: 0;
+            top: -47rem;
+            z-index: -1;
+            overflow: hidden;
+            animation-name: slideUp;
+            animation-duration: 500ms;
+            &.exiting {
+              transition: 500ms;
+              transform: translateY(25rem);
+              opacity: 0;
+            }
           }
-        }
-      }
-      .trails {
-        background-image: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)), url(/static/images/background-pattern.svg);
-        padding: 0 0.5rem;
-        height: calc(100% - 5rem);
-        overflow-y: scroll;
-      }
-      .close {
-        color: #3fa9f5;
-        background: #fff;
-        position: absolute;
-        right: 3rem;
-        top: 1rem;
-        padding: .5rem 0.5rem;
-        border-radius: 100%;
-        line-height: 1.0rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 500ms;
-        opacity: 0.5;
-        &:hover {
-          opacity: 1;
-        }
-      }
-    `}</style>
-  </div>
-
+          @keyframes slideUp {
+            from {transform: translateY(25rem);opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
+          }
+          .search {
+            margin-top: 1rem;
+            background: #f2f2f2;
+            form {
+              display: flex;
+              padding: 0.5rem;
+              input {
+                width: 100%;
+                background: #fff;
+                border: none;
+                padding: 1rem 0.5rem;
+              }
+            }
+          }
+          .trails {
+            background-image: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)), url(/static/images/background-pattern.svg);
+            padding: 0 0.5rem;
+            height: calc(100% - 5rem);
+            overflow-y: scroll;
+          }
+          .close {
+            color: #3fa9f5;
+            background: #fff;
+            position: absolute;
+            right: 3rem;
+            top: 1rem;
+            padding: .5rem 0.5rem;
+            border-radius: 100%;
+            line-height: 1.0rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 500ms;
+            opacity: 0.5;
+            &:hover {
+              opacity: 1;
+            }
+          }
+        `}</style>
+      </div>
+    )
+  }
+}
 
 const Trail = props =>
   <div className="trail">
@@ -138,5 +164,7 @@ const Trail = props =>
       }
     `}</style>
   </div>
+
+
 
 export default TrailListMenu
