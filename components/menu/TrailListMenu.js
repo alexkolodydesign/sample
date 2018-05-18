@@ -8,12 +8,7 @@ class TrailListMenu extends React.Component {
   }
   search(searchTerm) {
     const value = searchTerm.target.value.toLowerCase()
-    const trails = this.props.trails.filter( (trail) => {
-      if (trail.title.toLowerCase().includes(value)) {
-        return true
-      }
-      return false
-    })
+    const trails = this.props.trails.filter( (trail) => trail.title.toLowerCase().includes(value) ? true : false)
     this.setState({trails: trails})
   }
   render() {
