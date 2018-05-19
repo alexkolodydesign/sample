@@ -7,7 +7,6 @@ export default class RegionMap extends React.Component {
       <div className="map">
         <div className="wrapper">
           <h2>Region Map</h2>
-          <p>{this.props.map.view}</p>
         </div>
         <style jsx>{`
           .map {

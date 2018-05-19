@@ -27,6 +27,7 @@ app
     // Mock API
     router.get("/api/trail/:trail", trails.getTrailData);
     router.get("/api/trailsystem/:trailsystem", trails.getTrailSystemData);
+    router.get("/api/region", trails.getRegionData);
     // Handle All Routes
     server.get('/', (req, res) => app.render(req, res, '/'));
     server.get('/trail-systems/:system', (req, res) => app.render(req, res, '/trail-systems/trailsystem'));

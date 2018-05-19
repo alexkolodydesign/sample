@@ -3,13 +3,18 @@ class TrailListMenu extends React.Component {
     super(props)
     this.search = this.search.bind(this)
     this.state = {
-      trails: this.props.trails
+      trails: this.props.trails,
+      filteredTrails: this.props.trails
     }
+  }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const state = {...prevState, trails: nextProps.trails, filteredTrails: nextProps.trails}
+    return state
   }
   search(searchTerm) {
     const value = searchTerm.target.value.toLowerCase()
-    const trails = this.props.trails.filter( (trail) => trail.title.toLowerCase().includes(value) ? true : false)
-    this.setState({trails: trails})
+    const trails = this.state.trails.filter( (trail) => trail.title.toLowerCase().includes(value) ? true : false)
+    this.setState({filteredTrails: trails})
   }
   render() {
     return (
@@ -22,7 +27,7 @@ class TrailListMenu extends React.Component {
           </form>
         </div>
         <div className="trails">
-          {this.state.trails.map( (trail, k) => <Trail trail={trail} key={k} /> )}
+          {this.state.filteredTrails.map( (trail, k) => <Trail trail={trail} key={k} /> )}
         </div>
         <style jsx>{`
           h3 {text-transform: uppercase; margin: 0 0 0 1rem; color: #fff;}
