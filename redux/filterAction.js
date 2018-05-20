@@ -15,8 +15,14 @@ export const filterAction = (trailSystem, mapState) => {
     // Filter by Seasons
     .filter((trail) => {
       if (!mapState.season) return true
-      const trailSeaons = Object.keys(trail.seasons).filter((season) => trail.seasons[season] ? true : false)
-      if (trailSeaons.includes(mapState.season)) return true
+      const trailSeasons = Object.keys(trail.seasons).filter((season) => trail.seasons[season] ? true : false)
+      if (trailSeasons.includes(mapState.season)) return true
+      return false
+    })
+    // Filter by Trail Length
+    .filter((trail) => {
+      if (!mapState.trailLength) return true
+      if (Number(trail.length) >= Number(mapState.trailLength) ) return true
       return false
     })
     // Filter by Difficulty
