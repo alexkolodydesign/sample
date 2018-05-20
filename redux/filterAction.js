@@ -25,6 +25,12 @@ export const filterAction = (trailSystem, mapState) => {
       if (Number(trail.length) >= Number(mapState.trailLength) ) return true
       return false
     })
+    // Filter by Route Type
+    .filter((trail) => {
+      if (!mapState.routeType) return true
+      if (trail.routeType == mapState.routeType) return true
+      return false
+    })
     // Filter by Difficulty
     // .filter((trail) => {
     //   const trailTypes = Object.keys(trail.recommendedUse).filter((trailType) => trail.recommendedUse[trailType] ? true : false)

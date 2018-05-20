@@ -31,6 +31,7 @@ const Trail = props =>
     <p>
       {props.trail.title}&nbsp;
       | {props.trail.length} miles
+      | {props.trail.routeType}&nbsp;
       | {Object.keys(props.trail.seasons).filter((season) => props.trail.seasons[season] == true ? true : false).map((season) => season + " ")}</p>
   </div>
 

@@ -26,6 +26,7 @@ const trailSystem = {
         biking: true,
         atv: true
       },
+      routeType: "loop",
       image: "https://placehold.it/75x75?text=Zion"
     },
     {
@@ -51,6 +52,7 @@ const trailSystem = {
         biking: true,
         atv: false
       },
+      routeType: "connector",
       image: "https://placehold.it/75x75?text=Bear"
     },
     {
@@ -76,6 +78,7 @@ const trailSystem = {
         fall: false,
         winter: false
       },
+      routeType: "in and back",
       image: "https://placehold.it/75x75?text=Cinder"
     },
     {
@@ -101,6 +104,7 @@ const trailSystem = {
         biking: false,
         atv: true
       },
+      routeType: "loop",
       image: "https://placehold.it/75x75?text=Deer"
     },
     {
@@ -126,6 +130,7 @@ const trailSystem = {
         biking: false,
         atv: true
       },
+      routeType: "connector",
       image: "https://placehold.it/75x75?text=Echo"
     }
   ]
