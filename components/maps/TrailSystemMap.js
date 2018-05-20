@@ -28,7 +28,10 @@ const TrailSystemMap = props =>
 
 const Trail = props =>
   <div>
-    <p>{props.trail.title} | {props.trail.length} miles</p>
+    <p>
+      {props.trail.title}&nbsp;
+      | {props.trail.length} miles
+      | {Object.keys(props.trail.seasons).filter((season) => props.trail.seasons[season] == true ? true : false).map((season) => season + " ")}</p>
   </div>
 
   export default TrailSystemMap

@@ -12,6 +12,13 @@ export const filterAction = (trailSystem, mapState) => {
       if (match) return true
       return false
     })
+    // Filter by Seasons
+    .filter((trail) => {
+      if (!mapState.season) return true
+      const trailSeaons = Object.keys(trail.seasons).filter((season) => trail.seasons[season] ? true : false)
+      if (trailSeaons.includes(mapState.season)) return true
+      return false
+    })
     // Filter by Difficulty
     // .filter((trail) => {
     //   const trailTypes = Object.keys(trail.recommendedUse).filter((trailType) => trail.recommendedUse[trailType] ? true : false)

@@ -13,6 +13,12 @@ const trailSystem = {
         biking: "Moderate",
         horseback: "Moderate"
       },
+      seasons: {
+        spring: true,
+        summer: true,
+        fall: true,
+        winter: true
+      },
       region: "Canyon",
       recommendedUse: {
         hiking: true,
@@ -31,6 +37,12 @@ const trailSystem = {
         hiking: "Moderate",
         biking: "Moderate",
         horseback: "Moderate"
+      },
+      seasons: {
+        spring: true,
+        summer: true,
+        fall: true,
+        winter: false
       },
       region: "Alpine",
       recommendedUse: {
@@ -58,6 +70,12 @@ const trailSystem = {
         biking: false,
         atv: false
       },
+      seasons: {
+        spring: true,
+        summer: true,
+        fall: false,
+        winter: false
+      },
       image: "https://placehold.it/75x75?text=Cinder"
     },
     {
@@ -69,6 +87,12 @@ const trailSystem = {
         hiking: "Moderate",
         biking: "Moderate",
         horseback: "Moderate"
+      },
+      seasons: {
+        spring: true,
+        summer: false,
+        fall: false,
+        winter: false
       },
       region: "Mesa",
       recommendedUse: {
@@ -88,6 +112,12 @@ const trailSystem = {
         hiking: "Moderate",
         biking: "Moderate",
         horseback: "Moderate"
+      },
+      seasons: {
+        spring: false,
+        summer: true,
+        fall: true,
+        winter: false
       },
       region: "Mesa",
       recommendedUse: {

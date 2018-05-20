@@ -1,4 +1,4 @@
-const region = {
+const regionData = {
   handle: '',
   title: '',
   region: '',
@@ -101,4 +101,4 @@ const region = {
   ]
 }
 
-exports.region = region;
+exports.regionData = regionData;
