@@ -8,18 +8,27 @@ const regionData = {
       length: "2.3",
       highlights: "wide open, wastelands",
       difficulty: {
-        default: "Easy",
-        hiking: "Moderate",
-        biking: "Moderate",
-        horseback: "Moderate"
+        default: "easy",
+        hiking: "moderate",
+        biking: "moderate",
+        horseback: "moderate",
+        atv: ""
+      },
+      seasons: {
+        spring: true,
+        summer: true,
+        fall: true,
+        winter: true
       },
       region: "Canyon",
       recommendedUse: {
         hiking: true,
-        horseback: true,
         biking: true,
-        atv: true
+        atv: true,
+        horseback: true
       },
+      trailTraffic: "heavy",
+      routeType: "loop",
       image: "https://placehold.it/75x75?text=Zion"
     },
     {
@@ -27,18 +36,27 @@ const regionData = {
       length: "2.1",
       highlights: "high altitude, forest",
       difficulty: {
-        default: "Easiest",
-        hiking: "Moderate",
-        biking: "Moderate",
-        horseback: "Moderate"
+        default: "easy",
+        hiking: "moderate",
+        biking: "moderate",
+        horseback: "moderate",
+        atv: "easy"
+      },
+      seasons: {
+        spring: true,
+        summer: true,
+        fall: true,
+        winter: false
       },
       region: "Alpine",
       recommendedUse: {
         hiking: true,
-        horseback: true,
         biking: true,
-        atv: false
+        atv: false,
+        horseback: true
       },
+      trailTraffic: "medium",
+      routeType: "connector",
       image: "https://placehold.it/75x75?text=Bear"
     },
     {
@@ -46,18 +64,27 @@ const regionData = {
       length: "1.3",
       highlights: "creeks, red rocks, sand",
       difficulty: {
-        default: "Challenging",
-        hiking: "Moderate",
-        biking: "Moderate",
-        horseback: "Moderate"
+        default: "challenging",
+        hiking: "moderate",
+        biking: "moderate",
+        horseback: "moderate",
+        atv: ""
       },
       region: "Canyon",
       recommendedUse: {
         hiking: true,
-        horseback: false,
         biking: false,
-        atv: false
+        atv: false,
+        horseback: false
       },
+      seasons: {
+        spring: true,
+        summer: true,
+        fall: false,
+        winter: false
+      },
+      trailTraffic: "medium",
+      routeType: "in and back",
       image: "https://placehold.it/75x75?text=Cinder"
     },
     {
@@ -65,18 +92,27 @@ const regionData = {
       length: "6.9",
       highlights: "creeks, red rocks, sand",
       difficulty: {
-        default: "Very Difficult",
-        hiking: "Moderate",
-        biking: "Moderate",
-        horseback: "Moderate"
+        default: "challenging",
+        hiking: "moderate",
+        biking: "moderate",
+        horseback: "moderate",
+        atv: ""
+      },
+      seasons: {
+        spring: true,
+        summer: false,
+        fall: false,
+        winter: false
       },
       region: "Mesa",
       recommendedUse: {
         hiking: true,
-        horseback: true,
         biking: false,
-        atv: true
+        atv: true,
+        horseback: true
       },
+      trailTraffic: "light",
+      routeType: "loop",
       image: "https://placehold.it/75x75?text=Deer"
     },
     {
@@ -84,18 +120,27 @@ const regionData = {
       length: "5.4",
       highlights: "creeks, red rocks, sand",
       difficulty: {
-        default: "Moderate",
-        hiking: "Moderate",
-        biking: "Moderate",
-        horseback: "Moderate"
+        default: "moderate",
+        hiking: "moderate",
+        biking: "moderate",
+        horseback: "moderate",
+        atv: "easy"
+      },
+      seasons: {
+        spring: false,
+        summer: true,
+        fall: true,
+        winter: false
       },
       region: "Mesa",
       recommendedUse: {
         hiking: true,
-        horseback: true,
         biking: false,
-        atv: true
+        atv: true,
+        horseback: true
       },
+      trailTraffic: "light",
+      routeType: "connector",
       image: "https://placehold.it/75x75?text=Echo"
     }
   ]
