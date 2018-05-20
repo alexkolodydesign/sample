@@ -16,9 +16,11 @@ export const defaultState = {
       },
       season: "",
       difficulty: {
-        easy: true,
-        moderate: true,
-        hard: true
+        default: "",
+        biking: "",
+        hiking: "",
+        atv: "",
+        horseback: ""
       },
       trailLength: null,
       trailTraffic: "",
@@ -45,7 +47,10 @@ export const changeExclude = exclude => async dispatch => {
   const value = exclude == "on" ? true : false
   return dispatch({ type: 'CHANGE_EXCLUDE', value })
 }
-export const changeDifficulty = difficulty => async dispatch => dispatch({ type: 'CHANGE_DIFFICULTY', difficulty })
+export const changeDifficulty = difficulty => async dispatch => {
+  if (difficulty == "clear") difficulty = ""
+  return dispatch({ type: 'CHANGE_DIFFICULTY', difficulty })
+}
 export const changeTrailLength = trailLength => async dispatch => dispatch({ type: 'CHANGE_TRAIL_LENGTH', trailLength })
 export const changeMetricType = option => async dispatch => dispatch({ type: 'CHANGE_METRIC_TYPE', option })
 export const initStore = (initialState = defaultState) => createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))

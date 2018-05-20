@@ -28,6 +28,12 @@ export const filterAction = (trailSystem, mapState) => {
       if (Number(trail.length) >= Number(mapState.trailLength) ) return true
       return false
     })
+    // Filter by Trail Traffic
+    .filter((trail) => {
+      if (!mapState.trailTraffic) return true
+      if (trail.trailTraffic == mapState.trailTraffic) return true
+      return false
+    })
     // Filter by Route Type
     .filter((trail) => {
       if (!mapState.routeType) return true
@@ -35,15 +41,12 @@ export const filterAction = (trailSystem, mapState) => {
       return false
     })
     // Filter by Difficulty
-    // .filter((trail) => {
-    //   const trailTypes = Object.keys(trail.recommendedUse).filter((trailType) => trail.recommendedUse[trailType] ? true : false)
-    //   let match = false
-    //   for (var i = 0; i < recommendedUseFilter.length; i++) {
-    //     if (trailTypes.includes(recommendedUseFilter[i]) ) match = true
-    //   }
-    //   if (match) return true
-    //   return false
-    // })
+    .filter((trail) => {
+      if (!mapState.difficulty.default) return true
+      if (trail.difficulty.default == mapState.difficulty.default) return true
+      return false
+    })
+
 
   const newTrailSystem = {...trailSystem, trails: trails}
   return newTrailSystem

@@ -13,9 +13,11 @@ export const defaultState = {
       },
       season: "",
       difficulty: {
-        easy: true,
-        moderate: true,
-        hard: true
+        default: "",
+        biking: "",
+        hiking: "",
+        atv: "",
+        horseback: ""
       },
       trailLength: null,
       trailTraffic: "",
@@ -38,9 +40,7 @@ export const map = (state = defaultState, action) => {
     case 'CHANGE_ROUTE_TYPE':
       return { map: { ...state.map, filter: { ...state.map.filter, routeType: action.routeType } } }
     case 'CHANGE_DIFFICULTY':
-      const difficulty = Object.assign({},state.map.filter.difficulty)
-      difficulty[action.difficulty] = !difficulty[action.difficulty]
-      return { map: { ...state.map, filter: { ...state.map.filter, difficulty: difficulty } } }
+      return { map: { ...state.map, filter: { ...state.map.filter, difficulty: { ...state.map.filter.difficulty, default: action.difficulty } } } }
     case 'CHANGE_TRAIL_LENGTH':
       return { map: { ...state.map, filter: { ...state.map.filter, trailLength: action.trailLength } } }
     case 'CHANGE_METRIC_TYPE':

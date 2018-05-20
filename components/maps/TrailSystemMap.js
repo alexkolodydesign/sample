@@ -34,6 +34,7 @@ const Trail = props =>
       | {props.trail.routeType}&nbsp;
       | {Object.keys(props.trail.seasons).filter((season) => props.trail.seasons[season] == true ? true : false).map((season) => season + " ")}
       | {Object.keys(props.trail.recommendedUse).filter((use) => props.trail.recommendedUse[use] == true ? true : false).map((use) => use + " ")}
+      | {props.trail.difficulty.default}
     </p>
   </div>
 

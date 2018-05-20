@@ -12,14 +12,8 @@ const FilterTrailsMenu = props =>
         options={["Spring", "Summer", "Fall", "Winter", "Clear"]}
         action={props.changeSeason} />
       <Option title="Difficulty"
-        selected={
-          Object.keys(props.map.filter.difficulty).filter( (key) => {
-            if (props.map.filter.difficulty[key] == true) return key
-            else return null
-          }).join(" ")
-        }
-        object={props.map.filter.difficulty}
-        options={["Easy", "Moderate", "Challenging", "Extreme"]}
+        selected={props.map.filter.difficulty.default}
+        options={["Easy", "Moderate", "Challenging", "Extreme", "Clear"]}
         action={props.changeDifficulty} />
       <Option title="Length of Trail" selected="" range={true} action={props.changeTrailLength} />
       <Option title="Traffic Density" selected={props.map.filter.trailTraffic} options={["Light", "Medium", "Heavy", "Clear"]} action={props.changeTrailTraffic} />
@@ -134,7 +128,7 @@ class Option extends React.Component {
                     if (this.props.action) {
                       return (
                         <div key={k}
-                          onClick={ () => this.props.action(option.toLowerCase(), ) }
+                          onClick={ () => this.props.action(option.toLowerCase()) }
                           className={
                             this.props.object ?
                               this.props.object[option.toLowerCase()] == true ? "active" : null
