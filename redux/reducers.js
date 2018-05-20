@@ -19,7 +19,8 @@ export const defaultState = {
       },
       trailLength: null,
       trailTraffic: "",
-      routeType: ""
+      routeType: "",
+      exclude: ""
     }
   }
 }
@@ -44,6 +45,8 @@ export const map = (state = defaultState, action) => {
       return { map: { ...state.map, filter: { ...state.map.filter, trailLength: action.trailLength } } }
     case 'CHANGE_METRIC_TYPE':
       return { map: { ...state.map, metricType: action.option } }
+    case 'CHANGE_EXCLUDE':
+      return { map: { ...state.map, filter: { ...state.map.filter, exclude: action.value } } }
     default:
       return state
   }

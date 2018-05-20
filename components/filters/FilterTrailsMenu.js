@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { changeSeason, changeDifficulty, changeTrailLength, changeTrailTraffic, changeRouteType, changeTrailType } from '../../redux/actions'
+import { changeSeason, changeDifficulty, changeTrailLength, changeTrailTraffic, changeRouteType, changeTrailType, changeExclude } from '../../redux/actions'
 import RangeSlider from './RangeSlider'
 
 const FilterTrailsMenu = props =>
@@ -34,7 +34,7 @@ const FilterTrailsMenu = props =>
         object={props.map.filter.trailType}
         options={["Hiking", "Biking", "Horseback", "ATV"]}
         action={props.changeTrailType} />
-      <Option title="Exclude" selected="" options="" />
+      <Option title="Exclude" selected={props.map.filter.exclude ? "On" : "Off"} options={["On", "Off"]} action={props.changeExclude} />
     </div>
     <style jsx>{`
       h3 {text-transform: uppercase; margin: 0 0 0 1rem; color: #fff;}
@@ -95,24 +95,13 @@ const FilterTrailsMenu = props =>
 const mapStateToProps = (state, ownProps) => ({ map: state.map });
 const mapDispatchToProps = dispatch => {
   return {
-    changeSeason: (season) => {
-      dispatch(changeSeason(season));
-    },
-    changeRouteType: (routeType) => {
-      dispatch(changeRouteType(routeType));
-    },
-    changeTrailTraffic: (trailTraffic) => {
-      dispatch(changeTrailTraffic(trailTraffic));
-    },
-    changeTrailType: (trailType) => {
-      dispatch(changeTrailType(trailType));
-    },
-    changeDifficulty: (difficulty) => {
-      dispatch(changeDifficulty(difficulty));
-    },
-    changeTrailLength: (trailLength) => {
-      dispatch(changeTrailLength(trailLength));
-    }
+    changeSeason: (season) => dispatch(changeSeason(season)),
+    changeRouteType: (routeType) => dispatch(changeRouteType(routeType)),
+    changeTrailTraffic: (trailTraffic) => dispatch(changeTrailTraffic(trailTraffic)),
+    changeTrailType: (trailType) => dispatch(changeTrailType(trailType)),
+    changeDifficulty: (difficulty) => dispatch(changeDifficulty(difficulty)),
+    changeTrailLength: (trailLength) => dispatch(changeTrailLength(trailLength)),
+    changeExclude: (exclude) => dispatch(changeExclude(exclude))
   };
 };
 

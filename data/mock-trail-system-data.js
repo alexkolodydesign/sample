@@ -22,9 +22,9 @@ const trailSystem = {
       region: "Canyon",
       recommendedUse: {
         hiking: true,
-        horseback: true,
         biking: true,
-        atv: true
+        atv: true,
+        horseback: true
       },
       routeType: "loop",
       image: "https://placehold.it/75x75?text=Zion"
@@ -48,9 +48,9 @@ const trailSystem = {
       region: "Alpine",
       recommendedUse: {
         hiking: true,
-        horseback: true,
         biking: true,
-        atv: false
+        atv: false,
+        horseback: true
       },
       routeType: "connector",
       image: "https://placehold.it/75x75?text=Bear"
@@ -68,9 +68,9 @@ const trailSystem = {
       region: "Canyon",
       recommendedUse: {
         hiking: true,
-        horseback: false,
         biking: false,
-        atv: false
+        atv: false,
+        horseback: false
       },
       seasons: {
         spring: true,
@@ -100,9 +100,9 @@ const trailSystem = {
       region: "Mesa",
       recommendedUse: {
         hiking: true,
-        horseback: true,
         biking: false,
-        atv: true
+        atv: true,
+        horseback: true
       },
       routeType: "loop",
       image: "https://placehold.it/75x75?text=Deer"
@@ -126,9 +126,9 @@ const trailSystem = {
       region: "Mesa",
       recommendedUse: {
         hiking: true,
-        horseback: true,
         biking: false,
-        atv: true
+        atv: true,
+        horseback: true
       },
       routeType: "connector",
       image: "https://placehold.it/75x75?text=Echo"

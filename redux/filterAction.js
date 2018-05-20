@@ -9,6 +9,9 @@ export const filterAction = (trailSystem, mapState) => {
       for (var i = 0; i < recommendedUseFilter.length; i++) {
         if (trailTypes.includes(recommendedUseFilter[i]) ) match = true
       }
+      if (mapState.exclude) {
+        if (trailTypes.join("") != recommendedUseFilter.join("")) match = false
+      }
       if (match) return true
       return false
     })

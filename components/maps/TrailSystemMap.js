@@ -32,7 +32,9 @@ const Trail = props =>
       {props.trail.title}&nbsp;
       | {props.trail.length} miles
       | {props.trail.routeType}&nbsp;
-      | {Object.keys(props.trail.seasons).filter((season) => props.trail.seasons[season] == true ? true : false).map((season) => season + " ")}</p>
+      | {Object.keys(props.trail.seasons).filter((season) => props.trail.seasons[season] == true ? true : false).map((season) => season + " ")}
+      | {Object.keys(props.trail.recommendedUse).filter((use) => props.trail.recommendedUse[use] == true ? true : false).map((use) => use + " ")}
+    </p>
   </div>
 
   export default TrailSystemMap
