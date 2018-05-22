@@ -11,11 +11,9 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props)
   }
-  filterTrails() {
-    return filterAction(this.props.region, this.props.map.filter)
-  }
   render() {
-    const region = this.filterTrails(this.props.region)
+    const region = filterAction(this.props.region, this.props.map.filter)
+    // const region = ""
     return (
       <Layout>
         <Head/>
@@ -34,7 +32,7 @@ Dashboard.getInitialProps = async props => {
     const res = await fetch(hostUrl + '/api/region' );
     const data = await res.json();
     return {
-      region: data.region
+      region: data.regionData
     };
   } catch (e) {
     return {
