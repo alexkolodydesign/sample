@@ -1,4 +1,4 @@
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon } from "react-google-maps"
 
 export default class RegionMap extends React.Component {
   constructor(props) {
@@ -12,6 +12,7 @@ export default class RegionMap extends React.Component {
           containerElement={<div style={{ height: `100%` }} />}
           mapElement={<div style={{ height: `100%` }} />}
           googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+          regionData={this.props.regionData}
         />
         <style jsx>{`
           .map {
@@ -31,11 +32,28 @@ export default class RegionMap extends React.Component {
   }
 }
 
-const Map = withScriptjs(withGoogleMap( (props) =>
-  <GoogleMap
-    defaultZoom={8}
-    defaultCenter={{ lat: -34.397, lng: 150.644 }}
-  >
-    <Marker position={{ lat: -34.397, lng: 150.644 }} />
-  </GoogleMap>
-))
+const Map = withScriptjs(withGoogleMap( (props) => {
+  return (
+    <GoogleMap
+      defaultZoom={11}
+      defaultCenter={{ lat: 37.141, lng: -113.432 }}
+    >
+      {props.regionData.regions.map((region, k) => {
+        return (
+          <Polygon
+            paths={region}
+            strokeColor="#ff0000"
+            strokeOpacity={0.8}
+            strokeWeight={2}
+            fillColor="#ff0000"
+            fillOpacity={0.35}
+            onMouseOver={function () { this.setOptions({fillOpacity: 0.5}) }}
+            onMouseOut={function () { this.setOptions({fillOpacity: 0.35}) }}
+          />
+        )
+      })}
+      {/*<Marker position={{ lat: 37.141, lng: -113.432 }} />*/}
+    </GoogleMap>
+  )
+}))
+

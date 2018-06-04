@@ -1,7 +1,14 @@
 const regionData = {
   handle: '',
   title: '',
-  region: '',
+  regions: [
+    [
+      { lat: 37.141, lng: -113.432 },
+      { lat: 37.35, lng: -113.432 },
+      { lat: 37.35, lng: -113 },
+      { lat: 37.141, lng: -113 }
+    ]
+  ],
   trails: [
     {
       title: "Alpine Mountain Hike",

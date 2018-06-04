@@ -17,7 +17,7 @@ class Dashboard extends React.Component {
     return (
       <Layout>
         <Head/>
-        <RegionMap region={region} />
+        <RegionMap regionData={region} />
         <TrailSystemGuide/>
         <MainMenu system={region} />
       </Layout>
