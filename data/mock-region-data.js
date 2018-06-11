@@ -2,12 +2,17 @@ const regionData = {
   handle: '',
   title: '',
   regions: [
-    [
-      { lat: 37.141, lng: -113.432 },
-      { lat: 37.35, lng: -113.432 },
-      { lat: 37.35, lng: -113 },
-      { lat: 37.141, lng: -113 }
-    ]
+    {
+      regionName: "Canyon",
+      markerIcon: "https://placehold.it/100x100?text=canyon",
+      markerCoordinates: { lat: 37.2, lng: -113.2 },
+      coordinates: [
+        { lat: 37.141, lng: -113.432 },
+        { lat: 37.35, lng: -113.432 },
+        { lat: 37.35, lng: -113 },
+        { lat: 37.141, lng: -113 }
+      ]
+    }
   ],
   trails: [
     {
