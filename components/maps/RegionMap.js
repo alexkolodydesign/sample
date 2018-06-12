@@ -44,15 +44,16 @@ class Map extends React.Component {
     this.setState({zoom, center})
   }
   render() {
+    const zoomState = this.zoom
     return (
       <GoogleMap
-        ref={this.map}
+        ref={() => this.map = React.createRef()}
         zoom={this.state.zoom}
         center={this.state.center}
-        onZoomChanged={function(e) {
+        onZoomChanged={ function(e) {
           const zoom = this.getZoom()
+          zoomState(zoom, {lat: 37.141, lng: -113.432})
         }}
-        onCenteredChanged={(e) => console.log("Center", e)}
       >
         {this.props.regionData.regions.map((region, k) => {
           return <Region region={region} key={k} zoom={this.zoom} />
