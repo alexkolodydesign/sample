@@ -1,4 +1,4 @@
-import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon, InfoWindow  } from "react-google-maps"
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon, InfoWindow, Polyline  } from "react-google-maps"
 
 export default class RegionMap extends React.Component {
   constructor(props) {
@@ -33,7 +33,6 @@ export default class RegionMap extends React.Component {
 }
 
 const MapContainer = withScriptjs(withGoogleMap( (props) => <Map regionData={props.regionData} /> ))
-
 class Map extends React.Component {
   constructor(props) {
     super(props)
@@ -46,8 +45,15 @@ class Map extends React.Component {
   render() {
     const zoomState = this.zoom
     return (
-      <GoogleMap zoom={this.state.zoom} center={this.state.center} onZoomChanged={function(e){zoomState(this.getZoom(),null)}} >
+      <GoogleMap
+        zoom={this.state.zoom}
+        center={this.state.center}
+        onZoomChanged={function(e) {
+          zoomState(this.getZoom(), null)
+        }}
+      >
         {this.props.regionData.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.state.zoom} /> )}
+        {this.props.regionData.trails.map((trail, k) => <Trail trail={trail} key={k} zoomLevel={this.state.zoom} />)}
       </GoogleMap>
     )
   }
@@ -73,8 +79,8 @@ class Region extends React.Component {
           strokeWeight={2}
           fillColor="#ff0000"
           fillOpacity={0.35}
-          onMouseOver={function () { this.setOptions({fillOpacity: 0.5}) }}
-          onMouseOut={function () { this.setOptions({fillOpacity: 0.35}) }}
+          onMouseOver={function() { this.setOptions({fillOpacity: 0.5}) }}
+          onMouseOut={function() { this.setOptions({fillOpacity: 0.35}) }}
           onClick={() => this.props.zoom( 13, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}
         />
         {this.props.zoomLevel < 13 &&
@@ -92,6 +98,26 @@ class Region extends React.Component {
             }
           </Marker>
         }
+      </React.Fragment>
+    )
+  }
+}
+
+class Trail extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    const trail = this.props.trail
+    if (!trail.coordinates) return null
+    return (
+      <React.Fragment>
+        <Polyline
+          path={trail.coordinates.map( trail => ({lat: trail[0], lng: trail[1]}) )}
+          strokeColor="#ff0000"
+          strokeWeight={10}
+          strokeOpacity={1.0}
+        />
       </React.Fragment>
     )
   }
