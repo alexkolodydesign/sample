@@ -4,6 +4,7 @@ import TrailList from './TrailList'
 import GPS from './GPS'
 import Settings from './Settings'
 
+
 const MainMenu = props =>
   <div className="menu">
     <div className="colors">
@@ -19,6 +20,7 @@ const MainMenu = props =>
       <TrailList system={props.system} />
       <GPS />
       <Settings />
+
     </div>
     <style jsx>{`
       .menu {

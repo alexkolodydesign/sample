@@ -31,6 +31,7 @@ const Layout = props => (
     <main>
       {props.children}
     </main>
+
     <Footer />
     <style global jsx>{`
       html {
