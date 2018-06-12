@@ -46,16 +46,8 @@ class Map extends React.Component {
   render() {
     const zoomState = this.zoom
     return (
-      <GoogleMap
-        zoom={this.state.zoom}
-        center={this.state.center}
-        onZoomChanged={ function(e) {
-          zoomState(this.getZoom(), null)
-        }}
-      >
-        {this.props.regionData.regions.map((region, k) => {
-          return <Region region={region} key={k} zoom={this.zoom} />
-        })}
+      <GoogleMap zoom={this.state.zoom} center={this.state.center} onZoomChanged={function(e){zoomState(this.getZoom(),null)}} >
+        {this.props.regionData.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.state.zoom} /> )}
       </GoogleMap>
     )
   }
@@ -85,19 +77,21 @@ class Region extends React.Component {
           onMouseOut={function () { this.setOptions({fillOpacity: 0.35}) }}
           onClick={() => this.props.zoom( 13, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}
         />
-        <Marker
-          position={{lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng}}
-          icon={region.markerIcon}
-          onClick={this.toggleMenu}
-        >
-          {this.state.menu &&
-            <InfoWindow onCloseClick={this.props.toggleMenu}>
-              <div>
-                <h3>{region.regionName}</h3>
-              </div>
-            </InfoWindow>
-          }
-        </Marker>
+        {this.props.zoomLevel < 13 &&
+          <Marker
+            position={{lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng}}
+            icon={region.markerIcon}
+            onClick={this.toggleMenu}
+          >
+            {this.state.menu &&
+              <InfoWindow onCloseClick={this.props.toggleMenu}>
+                <div>
+                  <h3>{region.regionName}</h3>
+                </div>
+              </InfoWindow>
+            }
+          </Marker>
+        }
       </React.Fragment>
     )
   }
