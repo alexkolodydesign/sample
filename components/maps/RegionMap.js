@@ -36,7 +36,7 @@ const MapContainer = withScriptjs(withGoogleMap( (props) => <Map regionData={pro
 class Map extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { zoom: 11, center: {lat: 37.141, lng: -113.432} }
+    this.state = { zoom: 10, center: {lat: 37.2, lng: -113.432} }
     this.zoom = this.zoom.bind(this)
   }
   zoom(zoom, center) {
@@ -52,10 +52,6 @@ class Map extends React.Component {
           zoomState(this.getZoom(), null)
         }}
       >
-        <KmlLayer
-          url="http://192.241.222.22/washington-trails/regions.kml"
-          options={{ preserveViewport: true }}
-        />
         {this.props.regionData.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.state.zoom} /> )}
         {this.props.regionData.trails.map((trail, k) => <Trail trail={trail} key={k} zoomLevel={this.state.zoom} />)}
       </GoogleMap>
@@ -76,6 +72,10 @@ class Region extends React.Component {
     const region = this.props.region
     return (
       <React.Fragment>
+        <KmlLayer
+          url={region.kmlUrl}
+          options={{ preserveViewport: true }}
+        />
         <Polygon
           paths={region.coordinates}
           strokeColor="#ff0000"

@@ -3,15 +3,34 @@ const regionData = {
   title: '',
   regions: [
     {
+      regionName: "Alpine",
+      markerIcon: "https://placehold.it/100x100?text=alpine",
+      markerCoordinates: { lat: 37.4, lng: -113.63 },
+      kmlUrl: "http://192.241.222.22/washington-trails/alpine.kml"
+    },
+    {
+      regionName: "Mesa",
+      markerIcon: "https://placehold.it/100x100?text=mesa",
+      markerCoordinates: { lat: 37.03, lng: -113.2 },
+      kmlUrl: "http://192.241.222.22/washington-trails/mesa.kml"
+    },
+    {
+      regionName: "Urban",
+      markerIcon: "https://placehold.it/100x100?text=urban",
+      markerCoordinates: { lat: 37.07, lng: -113.6 },
+      kmlUrl: "http://192.241.222.22/washington-trails/urban.kml"
+    },
+    {
       regionName: "Canyon",
       markerIcon: "https://placehold.it/100x100?text=canyon",
-      markerCoordinates: { lat: 37.2, lng: -113.2 },
-      coordinates: [
-        { lat: 37.141, lng: -113.432 },
-        { lat: 37.35, lng: -113.432 },
-        { lat: 37.35, lng: -113 },
-        { lat: 37.141, lng: -113 }
-      ]
+      markerCoordinates: { lat: 37.25, lng: -113.05 },
+      kmlUrl: "http://192.241.222.22/washington-trails/canyon.kml"
+    },
+    {
+      regionName: "Desert",
+      markerIcon: "https://placehold.it/100x100?text=desert",
+      markerCoordinates: { lat: 37.1, lng: -113.9 },
+      kmlUrl: "http://192.241.222.22/washington-trails/desert.kml"
     }
   ],
   trails: [
