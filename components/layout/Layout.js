@@ -1,29 +1,5 @@
 import Header from './Header'
 import Footer from './Footer'
-import Router from 'next/router'
-
-// Router.onRouteChangeStart = url => {
-//   let loader = document.createElement('img')
-//   loader.src = '/static/images/ajax-loader.gif'
-//   loader.id = 'page-loader'
-//   loader.style.position = 'fixed'
-//   loader.style.top = '0'
-//   loader.style.bottom = '0'
-//   loader.style.right = '0'
-//   loader.style.left = '0'
-//   loader.style.margin = 'auto'
-//   document.body.appendChild(loader)
-//   document.getElementsByTagName('main')[0].style.opacity = '0'
-// };
-
-// function removeLoader() {
-//   let loader = document.getElementById('page-loader')
-//   document.body.removeChild(loader)
-//   document.getElementsByTagName('main')[0].style.opacity = '1'
-// }
-
-// Router.onRouteChangeComplete = () => removeLoader()
-// Router.onRouteChangeError = () => removeLoader()
 
 const Layout = props => (
   <div>
@@ -115,11 +91,5 @@ const Layout = props => (
     </style>
   </div>
 );
-
-Layout.getInitialProps = props => {
-  return {
-
-  }
-}
 
 export default Layout

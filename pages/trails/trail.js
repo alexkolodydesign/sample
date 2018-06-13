@@ -9,9 +9,7 @@ import TrailSidebar from '../../components/trails/TrailSidebar'
 import SimilarTrails from '../../components/trails/SimilarTrails'
 import TrailsNearby from '../../components/trails/TrailsNearby'
 import TrailMedia from '../../components/trails/TrailMedia'
-import ScrollUp from '../../components/layout/ScrollUp'
-import ScrollToTop from 'react-scroll-up';
-
+import ScrollToTop from 'react-scroll-up'
 
 const Trail = props =>
   <Layout nav={false} background="#f2f2f2" overflow={true}>
@@ -30,7 +28,7 @@ const Trail = props =>
     </div>
     <TrailMedia media={props.trail.media} />
     <ScrollToTop showUnder={160} style={{background: '#4d4e4e', padding: '0.75rem'}}>
-      <img width="20" height="20" src="/static/images/scrollup.svg" alt="" className="" />
+      <img width="20" height="20" src="/static/images/scrollup.svg" alt="scroll to top" />
     </ScrollToTop>
 
     <style jsx>{`
