@@ -113,7 +113,10 @@ class Region extends React.Component {
         {this.props.zoomLevel < 13 &&
           <Marker
             position={{lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng}}
-            icon={region.markerIcon}
+            icon={{
+              url: region.markerIcon,
+              scaledSize: new google.maps.Size(55,55)
+            }}
             onClick={this.toggleMenu}
           >
             {this.state.menu &&
