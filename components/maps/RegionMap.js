@@ -1,4 +1,4 @@
-import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon, InfoWindow, Polyline  } from "react-google-maps"
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon, InfoWindow, Polyline, KmlLayer  } from "react-google-maps"
 
 export default class RegionMap extends React.Component {
   constructor(props) {
@@ -52,6 +52,10 @@ class Map extends React.Component {
           zoomState(this.getZoom(), null)
         }}
       >
+        <KmlLayer
+          url="http://192.241.222.22/washington-trails/regions.kml"
+          options={{ preserveViewport: true }}
+        />
         {this.props.regionData.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.state.zoom} /> )}
         {this.props.regionData.trails.map((trail, k) => <Trail trail={trail} key={k} zoomLevel={this.state.zoom} />)}
       </GoogleMap>
