@@ -1,4 +1,9 @@
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon, InfoWindow, Polyline, KmlLayer  } from "react-google-maps"
+import alpineCoordinates from '../../data/alpine-coordinates'
+import desertCoordinates from '../../data/desert-coordinates'
+import canyonCoordinates from '../../data/canyon-coordinates'
+import mesaCoordinates from '../../data/mesa-coordinates'
+import urbanCoordinates from '../../data/urban-coordinates'
 
 export default class RegionMap extends React.Component {
   constructor(props) {
@@ -70,19 +75,37 @@ class Region extends React.Component {
   }
   render() {
     const region = this.props.region
+    let coordinates
+    switch(region.regionName) {
+      case 'Alpine':
+        coordinates = alpineCoordinates
+        break
+      case 'Desert':
+        coordinates = desertCoordinates
+        break
+      case 'Canyon':
+        coordinates = canyonCoordinates
+        break
+      case 'Mesa':
+        coordinates = mesaCoordinates
+        break
+      case 'Urban':
+        coordinates = urbanCoordinates
+        break
+      default:
+        coordinates = []
+    }
     return (
       <React.Fragment>
-        <KmlLayer
-          url={region.kmlUrl}
-          options={{ preserveViewport: true }}
-        />
         <Polygon
-          paths={region.coordinates}
-          strokeColor="#ff0000"
-          strokeOpacity={0.8}
-          strokeWeight={2}
-          fillColor="#ff0000"
-          fillOpacity={0.35}
+          paths={coordinates}
+          options={{
+            strokeColor:"#000000",
+            strokeOpacity:0.8,
+            strokeWeight:1,
+            fillColor:"#000000",
+            fillOpacity:0.35
+          }}
           onMouseOver={function() { this.setOptions({fillOpacity: 0.5}) }}
           onMouseOut={function() { this.setOptions({fillOpacity: 0.35}) }}
           onClick={() => this.props.zoom( 13, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}
@@ -122,6 +145,10 @@ class Trail extends React.Component {
           strokeWeight={10}
           strokeOpacity={1.0}
         />
+        {/*<KmlLayer
+          url={region.kmlUrl}
+          options={{ preserveViewport: true }}
+        />*/}
       </React.Fragment>
     )
   }
