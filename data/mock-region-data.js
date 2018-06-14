@@ -6,31 +6,36 @@ const regionData = {
       regionName: "Alpine",
       markerIcon: "/static/images/regions/alpine-region.svg",
       markerCoordinates: { lat: 37.4, lng: -113.63 },
-      kmlUrl: "http://192.241.222.22/washington-trails/alpine.kml"
+      kmlUrl: "http://192.241.222.22/washington-trails/alpine.kml",
+      regionImage: ""
     },
     {
       regionName: "Mesa",
       markerIcon: "/static/images/regions/mesa-region.svg",
       markerCoordinates: { lat: 37.03, lng: -113.2 },
-      kmlUrl: "http://192.241.222.22/washington-trails/mesa.kml"
+      kmlUrl: "http://192.241.222.22/washington-trails/mesa.kml",
+      regionImage: ""
     },
     {
       regionName: "Urban",
       markerIcon: "/static/images/regions/urban-region.svg",
       markerCoordinates: { lat: 37.07, lng: -113.6 },
-      kmlUrl: "http://192.241.222.22/washington-trails/urban.kml"
+      kmlUrl: "http://192.241.222.22/washington-trails/urban.kml",
+      regionImage: ""
     },
     {
       regionName: "Canyon",
       markerIcon: "/static/images/regions/canyon-region.svg",
       markerCoordinates: { lat: 37.25, lng: -113.05 },
-      kmlUrl: "http://192.241.222.22/washington-trails/canyon.kml"
+      kmlUrl: "http://192.241.222.22/washington-trails/canyon.kml",
+      regionImage: ""
     },
     {
       regionName: "Desert",
       markerIcon: "/static/images/regions/desert-region.svg",
       markerCoordinates: { lat: 37.1, lng: -113.9 },
-      kmlUrl: "http://192.241.222.22/washington-trails/desert.kml"
+      kmlUrl: "http://192.241.222.22/washington-trails/desert.kml",
+      regionImage: ""
     }
   ],
   trails: [

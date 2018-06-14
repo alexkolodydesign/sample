@@ -123,6 +123,7 @@ class Region extends React.Component {
               <InfoWindow onCloseClick={this.props.toggleMenu}>
                 <div>
                   <h3>{region.regionName}</h3>
+
                 </div>
               </InfoWindow>
             }

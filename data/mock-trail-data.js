@@ -2,6 +2,7 @@ const trail = {
   handle: 'bearclaw-loop',
   title: 'Bearclaw Loop',
   region: 'Canyon',
+  zoomThreshold: "",
   availableSeasons: {
     spring: true,
     summer: true,
@@ -145,7 +146,8 @@ const trail = {
         thumbnailUrl: ""
       }
     ]
-  }
+  },
+  kmlUrlL: ""
 }
 
 exports.trail = trail;
