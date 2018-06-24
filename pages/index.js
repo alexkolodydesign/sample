@@ -13,7 +13,6 @@ class Dashboard extends React.Component {
   }
   render() {
     const region = filterAction(this.props.region, this.props.map.filter)
-    // const region = ""
     return (
       <Layout>
         <Head/>

@@ -1,3 +1,4 @@
+import axios from "axios"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, Polygon, InfoWindow, Polyline, KmlLayer  } from "react-google-maps"
 import alpineCoordinates from '../../data/alpine-coordinates'
 import desertCoordinates from '../../data/desert-coordinates'
@@ -137,22 +138,39 @@ class Region extends React.Component {
 class Trail extends React.Component {
   constructor(props) {
     super(props)
+    this.state = { coordinates: []}
+    this.setCoordinates = this.setCoordinates.bind(this)
+  }
+  async setCoordinates() {
+    if (!this.props.trail.custom_data.jsonCoordinates) return null
+    try {
+      const {data: {trail: {coordinates: coordinates}}} = await axios.get('/api/coordinates', {params: {url: encodeURI(this.props.trail.custom_data.jsonCoordinates)} } )
+      this.setState({coordinates})
+    } catch(e) {
+      console.log("Issue with Url: ", e)
+    }
   }
   render() {
     const trail = this.props.trail
-    if (!trail.coordinates) return null
+    if (this.props.zoomLevel < trail.custom_data.zoomThreshold) {
+      return null
+    } else {
+      if (this.state.coordinates === undefined || this.state.coordinates.length == 0) {
+        this.setCoordinates()
+        return null
+      }
+    }
+    const coordinates = this.state.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng)}))
     return (
       <React.Fragment>
         <Polyline
-          path={trail.coordinates.map( trail => ({lat: trail[0], lng: trail[1]}) )}
-          strokeColor="#ff0000"
-          strokeWeight={10}
-          strokeOpacity={1.0}
+          path={coordinates}
+          options={{
+            strokeColor:"#ff0000",
+            strokeOpacity:1,
+            strokeWeight:3,
+          }}
         />
-        {/*<KmlLayer
-          url={region.kmlUrl}
-          options={{ preserveViewport: true }}
-        />*/}
       </React.Fragment>
     )
   }

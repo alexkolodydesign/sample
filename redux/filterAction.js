@@ -36,7 +36,7 @@ export const filterAction = (data, mapState) => {
     // Filter by Difficulty
     .filter((trail) => {
       if (!mapState.difficulty.default) return true
-      if (trail.custom_data.difficulty.defaultDifficulty == mapState.difficulty.default) return true
+      if (trail.custom_data.difficulty.defaultDifficulty.value == mapState.difficulty.default) return true
       return false
     })
 

@@ -10,9 +10,19 @@ function run() {
     const placemarks = json.kml.Document.Folder.Placemark;
     for (var i = 0; i < placemarks.length; i++) {
       const placemark = placemarks[i];
-      const name = placemark.name.toLowerCase().replace(/ /g, "_")
-      fs.writeFile(`./trails/${name}.json`, JSON.stringify(placemark), 'utf8', () => {
-        console.log(`Wrote ${name} into a new file!`)
+      const name = placemark.name;
+      const filename = placemark.name.toLowerCase().replace(/ /g, "_");
+      const trailCoordinates = String(placemark.MultiGeometry.LineString.coordinates).replace(/,0 /g, "\n").replace(/,0/g, "").split("\n");
+      const coordinates = trailCoordinates.map(coordinates => {
+        const mapCoordinates = coordinates.split(",");
+        return {
+          lng: mapCoordinates[0],
+          lat: mapCoordinates[1],
+        }
+      })
+      const trail = JSON.stringify({ name, filename, coordinates })
+      fs.writeFile(`./trails/${filename}.json`, trail, 'utf8', () => {
+        console.log(`Wrote ${filename} into a new file!`)
       });
     }
    });

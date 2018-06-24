@@ -14,7 +14,7 @@ class TrailListMenu extends React.Component {
   }
   search(searchTerm) {
     const value = searchTerm.target.value.toLowerCase()
-    const trails = this.state.trails.filter( (trail) => trail.title.toLowerCase().includes(value) ? true : false)
+    const trails = this.state.trails.filter( (trail) => trail.title.rendered.toLowerCase().includes(value) ? true : false)
     this.setState({filteredTrails: trails})
   }
   render() {
@@ -105,7 +105,7 @@ const Trail = props =>
     <div className="details">
       <h4>{props.trail.title.rendered}</h4>
       <p>Length: <span>{props.trail.custom_data.length}</span></p>
-      <p>Highlights: {props.trail.custom_data.highlights.map((highlight, k) => <span key={k}>{highlight.label}</span>)}</p>
+      <p>Highlights: {props.trail.custom_data.highlights && props.trail.custom_data.highlights.map((highlight, k) => <span key={k}>{highlight.label}</span>)}</p>
       <p>Difficulty: <span>{props.trail.custom_data.difficulty.defaultDifficulty.value}</span></p>
       <p>Region: <span>{props.trail.custom_data.region}</span></p>
     </div>
