@@ -32,7 +32,7 @@ Dashboard.getInitialProps = async props => {
     const res = await fetch(hostUrl + '/api/region' );
     const data = await res.json();
     return {
-      region: data.regionData
+      region: data
     };
   } catch (e) {
     return {

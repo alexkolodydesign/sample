@@ -103,17 +103,17 @@ const Trail = props =>
   <div className="trail">
     <img src={props.trail.image ? props.trail.image : "https://placehold.it/75x75?text=coming-soon"} alt=""/>
     <div className="details">
-      <h4>{props.trail.title}</h4>
-      <p>Length: <span>{props.trail.length}</span></p>
-      <p>Highlights: <span>{props.trail.highlights}</span></p>
-      <p>Difficulty: <span>{props.trail.difficulty.default}</span></p>
-      <p>Region: <span>{props.trail.region}</span></p>
+      <h4>{props.trail.title.rendered}</h4>
+      <p>Length: <span>{props.trail.custom_data.length}</span></p>
+      <p>Highlights: {props.trail.custom_data.highlights.map((highlight, k) => <span key={k}>{highlight.label}</span>)}</p>
+      <p>Difficulty: <span>{props.trail.custom_data.difficulty.defaultDifficulty.value}</span></p>
+      <p>Region: <span>{props.trail.custom_data.region}</span></p>
     </div>
     <div className="trail_type">
-      <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!props.trail.recommendedUse.hiking && "inactive"} />
-      <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" className={!props.trail.recommendedUse.biking && "inactive"} />
-      <img src="/static/images/menu/horse.svg" alt="Select Horseback Trails" className={!props.trail.recommendedUse.horseback && "inactive"} />
-      <img src="/static/images/menu/atv.svg" alt="Select ATV Trails" className={!props.trail.recommendedUse.atv && "inactive"} />
+      <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!props.trail.custom_data.recommendedUse.some((el) => el.value == 'hiking') && "inactive"} />
+      <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" className={!props.trail.custom_data.recommendedUse.some((el) => el.value == 'biking') && "inactive"} />
+      <img src="/static/images/menu/horse.svg" alt="Select Horseback Trails" className={!props.trail.custom_data.recommendedUse.some((el) => el.value == 'horseback') && "inactive"} />
+      <img src="/static/images/menu/atv.svg" alt="Select ATV Trails" className={!props.trail.custom_data.recommendedUse.some((el) => el.value == 'atv') && "inactive"} />
     </div>
     <style jsx>{`
       .trail {

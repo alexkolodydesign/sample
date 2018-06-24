@@ -1,10 +1,10 @@
-export const filterAction = (trailSystem, mapState) => {
+export const filterAction = (data, mapState) => {
   const recommendedUseFilter = Object.keys(mapState.trailType).filter((trailType) => mapState.trailType[trailType] ? true : false)
   const difficultyFilter = Object.keys(mapState.difficulty).filter((difficulty) => mapState.difficulty[difficulty] ? true : false)
-  const trails = trailSystem.trails
+  const trails = data.trails
     // Filter by Recommended Use
     .filter((trail) => {
-      const trailTypes = Object.keys(trail.recommendedUse).filter((trailType) => trail.recommendedUse[trailType] ? true : false)
+      const trailTypes = trail.custom_data.recommendedUse.map(type => type.value)
       let match = false
       for (var i = 0; i < recommendedUseFilter.length; i++) {
         if (trailTypes.includes(recommendedUseFilter[i]) ) match = true
@@ -15,39 +15,32 @@ export const filterAction = (trailSystem, mapState) => {
       if (match) return true
       return false
     })
-    // Filter by Seasons
-    .filter((trail) => {
-      if (!mapState.season) return true
-      const trailSeasons = Object.keys(trail.seasons).filter((season) => trail.seasons[season] ? true : false)
-      if (trailSeasons.includes(mapState.season)) return true
-      return false
-    })
     // Filter by Trail Length
     .filter((trail) => {
       if (!mapState.trailLength) return true
-      if (Number(trail.length) >= Number(mapState.trailLength) ) return true
+      if (Number(trail.custom_data.length) >= Number(mapState.trailLength) ) return true
       return false
     })
     // Filter by Trail Traffic
     .filter((trail) => {
       if (!mapState.trailTraffic) return true
-      if (trail.trailTraffic == mapState.trailTraffic) return true
+      if (trail.custom_data.trailTraffic.value == mapState.trailTraffic) return true
       return false
     })
     // Filter by Route Type
     .filter((trail) => {
       if (!mapState.routeType) return true
-      if (trail.routeType == mapState.routeType) return true
+      if (trail.custom_data.routeType.value == mapState.routeType) return true
       return false
     })
     // Filter by Difficulty
     .filter((trail) => {
       if (!mapState.difficulty.default) return true
-      if (trail.difficulty.default == mapState.difficulty.default) return true
+      if (trail.custom_data.difficulty.defaultDifficulty == mapState.difficulty.default) return true
       return false
     })
 
 
-  const newTrailSystem = {...trailSystem, trails: trails}
+  const newTrailSystem = {...data, trails: trails}
   return newTrailSystem
 }

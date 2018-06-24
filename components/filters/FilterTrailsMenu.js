@@ -7,10 +7,6 @@ const FilterTrailsMenu = props =>
     <h3>Filter Trails</h3>
     <div className="close" onClick={props.toggleFilterMenu}>X</div>
     <div className="options">
-      <Option title="Season of Hike"
-        selected={props.map.filter.season}
-        options={["Spring", "Summer", "Fall", "Winter", "Clear"]}
-        action={props.changeSeason} />
       <Option title="Difficulty"
         selected={props.map.filter.difficulty.default}
         options={["Easy", "Moderate", "Challenging", "Extreme", "Clear"]}
