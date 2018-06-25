@@ -7,24 +7,28 @@ const TrailMedia = props =>
       <div style={{background: "#00a89c"}}></div>
     </div>
     <div className="wrapper media">
-      <div className="videos">
-        <h3>Videos</h3>
-        <hr/>
-        <div>
-          {props.media.videos.map((video, k) => {
-            return <div key={k}></div>
-          })}
+      {props.media.videos &&
+        <div className="videos">
+          <h3>Videos</h3>
+          <hr/>
+          <div>
+            {props.media.videos.map((video, k) => {
+              return <div key={k}></div>
+            })}
+          </div>
         </div>
-      </div>
-      <div className="photos">
-        <h3>Pictures</h3>
-        <hr/>
-        <div>
-          {props.media.pictures.map((picture, k) => {
-            return <div  key={k}></div>
-          })}
+      }
+      {props.media.pictures &&
+        <div className="photos">
+          <h3>Pictures</h3>
+          <hr/>
+          <div>
+            {props.media.pictures.map((picture, k) => {
+              return <div  key={k}></div>
+            })}
+          </div>
         </div>
-      </div>
+      }
       <style jsx>{`
         h3 {
           text-transform: uppercase;

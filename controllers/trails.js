@@ -4,12 +4,13 @@ const mockTrailData = require('../data/mock-trail-data');
 const mockTrailSystemData = require('../data/mock-trail-system-data');
 const { regions } = require('../data/regions');
 
-exports.getTrailData = function(req, res) {
+exports.getTrailData = async (req, res) => {
   try {
     const trailHandle = req.params.trail;
-    res.json(mockTrailData);
+    const { data: [trail] } = await axios.get(`http://washcotrails.flitchbeta.com/wp-json/wp/v2/trails?slug=${trailHandle}`);
+    res.json(trail);
   } catch(e) {
-    console.log("Issue arose.");
+    console.log("Issue arose.", e);
     res.status(500).send("Error")
   }
 }

@@ -23,10 +23,10 @@ const Trail = props =>
       <TrailMap/>
     </div>
     <div className="wrapper more_trails">
-      <SimilarTrails similarTrails={props.trail.similarTrails} />
-      <TrailsNearby trailsNearby={props.trail.trailsNearby} />
+      {props.trail.custom_data.similarTrails && <SimilarTrails similarTrails={props.trail.custom_data.similarTrails} />}
+      {props.trail.custom_data.trailsNearby && <TrailsNearby trailsNearby={props.trail.custom_data.trailsNearby} />}
     </div>
-    <TrailMedia media={props.trail.media} />
+    <TrailMedia media={props.trail.custom_data.media} />
     <ScrollToTop showUnder={160} style={{background: '#4d4e4e', padding: '0.75rem'}}>
       <img width="20" height="20" src="/static/images/scrollup.svg" alt="scroll to top" />
     </ScrollToTop>
@@ -57,7 +57,7 @@ Trail.getInitialProps = async props => {
     const res = await fetch(hostUrl + '/api/trail/' + slug);
     const data = await res.json();
     return {
-      trail: data.trail
+      trail: data
     };
   } catch (e) {
     return {
