@@ -1,3 +1,6 @@
+import ReactHtmlParser from 'react-html-parser'
+import sanitizeHtml from 'sanitize-html-react'
+
 const TrailSidebar = props => {
   const trail = props.trail.custom_data
   return (
@@ -19,7 +22,7 @@ const TrailSidebar = props => {
         <div><p>Recommended Use<br/><span>{
           trail.recommendedUse.map( (use, k) => <span key={k}>{use.label} </span> )
         }</span></p></div>
-        <div><p>Description<br/><span>{trail.description}</span></p></div>
+        <div><p>Description<br/><span>{ReactHtmlParser(sanitizeHtml(props.trail.content.rendered))}</span></p></div>
         <div className="accessibility">{
           Object.keys(trail.accessability).map( (thing, k) => {
             if (trail.accessability[thing] == true) {

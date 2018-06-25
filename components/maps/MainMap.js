@@ -14,7 +14,7 @@ export default class MainMap extends React.Component {
           loadingElement={<div style={{ height: `100%` }} />}
           containerElement={<div style={{ height: `100%` }} id="washington_map" />}
           mapElement={<div style={{ height: `100%` }} />}
-          googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&v=3.exp&libraries=geometry,drawing,places"
           regionData={this.props.regionData}
         />
         <style jsx>{`

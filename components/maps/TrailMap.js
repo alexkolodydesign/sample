@@ -1,9 +1,16 @@
+import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps"
 import ElevationChart from './ElevationChart'
 
 const TrailMap = props =>
   <div>
     <div className="map_container">
-      <div className="map"></div>
+      <MapContainer
+        loadingElement={<div style={{ height: `100%` }} />}
+        containerElement={<div style={{ height: `100%` }} />}
+        mapElement={<div style={{ height: `100%` }} />}
+        googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+        trailData={props.trailData}
+      />
       <ElevationChart />
     </div>
     <div className="buttons">
@@ -40,5 +47,33 @@ const TrailMap = props =>
       }
     `}</style>
   </div>
+
+const MapContainer = withScriptjs(withGoogleMap( (props) => <Map regionData={props.regionData} /> ))
+class Map extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { zoom: 10, center: {lat: 37.2, lng: -113.432} }
+    this.zoom = this.zoom.bind(this)
+  }
+  zoom(zoom, center) {
+    this.setState({zoom, center})
+  }
+  render() {
+    const zoomState = this.zoom
+    return (
+      <GoogleMap
+        zoom={this.state.zoom}
+        center={this.state.center}
+        onZoomChanged={function(e) {
+          zoomState(this.getZoom(), null)
+        }}
+      >
+
+      </GoogleMap>
+    )
+  }
+}
+
+
 
 export default TrailMap

@@ -25,11 +25,11 @@ app
     const router = require('express-promise-router')();
     server.use(router);
     // Mock API
-    router.get("/api/trail/:trail", trails.getTrailData);
     router.get("/api/trailsystem/:trailsystem", trails.getTrailSystemData);
     // API
     router.get("/api/region", trails.getRegionData);
     router.get("/api/coordinates", trails.getCoordinates);
+    router.get("/api/trail/:trail", trails.getTrailData);
     // Handle All Routes
     server.get('/', (req, res) => app.render(req, res, '/'));
     server.get('/trail-systems/:system', (req, res) => app.render(req, res, '/trail-systems/trailsystem'));

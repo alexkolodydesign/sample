@@ -20,7 +20,7 @@ const Trail = props =>
     </div>
     <div className="wrapper trail">
       <TrailSidebar trail={props.trail} />
-      <TrailMap/>
+      <TrailMap trail={props.trail} />
     </div>
     <div className="wrapper more_trails">
       {props.trail.custom_data.similarTrails && <SimilarTrails similarTrails={props.trail.custom_data.similarTrails} />}
