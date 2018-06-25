@@ -139,7 +139,7 @@ const Trail = props =>
         }
       }
       .details {
-        padding: 0rem 2rem 0rem 1rem;
+        padding: 1rem 2rem 1rem 1rem;
         h4 {margin: 0; font-weight: 700;}
         p {margin: 0; font-weight: 500;}
         p span {font-weight: 100;}

@@ -40,10 +40,8 @@ exports.getRegionData = async (req, res) => {
 exports.getCoordinates = async (req, res) => {
   const url = req.query.url
   if (!url) return res.status(500)
-  console.log(req.query)
   try {
     const { data: trail } = await axios.get(url);
-    console.log(trail)
     return res.json({ trail });
   } catch(e) {
     console.log("Issue arose.");

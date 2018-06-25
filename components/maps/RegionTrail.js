@@ -1,0 +1,74 @@
+import { Polyline } from "react-google-maps"
+
+export default class RegionTrail extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { coordinates: []}
+    this.setCoordinates = this.setCoordinates.bind(this)
+  }
+  async setCoordinates() {
+    if (!this.props.trail.custom_data.jsonCoordinates) return null
+    try {
+      const {data: { trail }} = await axios.get('/api/coordinates', {params: {url: encodeURI(this.props.trail.custom_data.jsonCoordinates)} } )
+      // Store this data so we don't make extra calls when zooming
+      const trailStorage = localStorage.getItem('trails')
+      if (!trailStorage) {
+        localStorage.setItem('trails', JSON.stringify([{
+          slug: this.props.trail.slug,
+          coordinates: trail.coordinates
+        }]))
+      } else {
+        const trailStorageJSON = JSON.parse(trailStorage)
+        trailStorageJSON.push({
+          slug: this.props.trail.slug,
+          coordinates: trail.coordinates
+        })
+        localStorage.removeItem('trails')
+        localStorage.setItem('trails', JSON.stringify(trailStorageJSON))
+      }
+      this.setState({coordinates: trail.coordinates})
+    } catch(e) {
+      console.log("Issue with Url: ", e)
+    }
+  }
+  render() {
+    const trail = this.props.trail
+    let coordinates
+    // Zoom threshold is not great enough for trail to show
+    if (this.props.zoomLevel < trail.custom_data.zoomThreshold) {
+      return null
+    } else {
+      // Check localstorage for data before sending fetch
+      const trailStorage = localStorage.getItem('trails')
+      // No localstorage so send fetch
+      if (!trailStorage) {
+        if (this.state.coordinates === undefined || this.state.coordinates.length == 0) {
+          this.setCoordinates()
+          return null
+        }
+      } else {
+        // Check if localstorage has this trail in it
+        const trailStorageJSON = JSON.parse(trailStorage)
+        const match = trailStorageJSON.find(storedTrail => trail.slug === storedTrail.slug)
+        if (match) coordinates = match.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng)}))
+        else {
+          this.setCoordinates()
+          return null
+        }
+      }
+    }
+    if (!coordinates) coordinates = this.state.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng)}))
+    return (
+      <React.Fragment>
+        <Polyline
+          path={coordinates}
+          options={{
+            strokeColor:"#ff0000",
+            strokeOpacity:1,
+            strokeWeight:3,
+          }}
+        />
+      </React.Fragment>
+    )
+  }
+}

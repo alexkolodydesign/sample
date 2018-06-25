@@ -3,7 +3,7 @@ import Head from '../components/layout/Head'
 import { nextConnect } from '../redux/store'
 import fetch from 'isomorphic-unfetch';
 import { filterAction } from '../redux/filterAction'
-import RegionMap from '../components/maps/RegionMap'
+import MainMap from '../components/maps/MainMap'
 import TrailSystemGuide from '../components/menu/TrailSystemGuide'
 import MainMenu from '../components/menu/MainMenu'
 
@@ -16,7 +16,7 @@ class Dashboard extends React.Component {
     return (
       <Layout>
         <Head/>
-        <RegionMap regionData={region} />
+        <MainMap regionData={region} />
         <TrailSystemGuide/>
         <MainMenu system={region} />
       </Layout>
