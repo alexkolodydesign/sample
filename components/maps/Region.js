@@ -43,13 +43,13 @@ export default class Region extends React.Component {
             paths={coordinates}
             options={{
               strokeColor:"#000000",
-              strokeOpacity:0.8,
+              strokeOpacity:0.25,
               strokeWeight:1,
-              fillColor:"#000000",
-              fillOpacity:0.35
+              fillColor:"#ffffff",
+              fillOpacity:0.85
             }}
-            onMouseOver={function() { this.setOptions({fillOpacity: 0.5}) }}
-            onMouseOut={function() { this.setOptions({fillOpacity: 0.35}) }}
+            onMouseOver={function() { this.setOptions({fillOpacity: 0.35}) }}
+            onMouseOut={function() { this.setOptions({fillOpacity: 0.85}) }}
             onClick={() => this.props.zoom( 13, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}
           />
         }
