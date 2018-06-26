@@ -63,7 +63,7 @@ export default class Region extends React.Component {
             onClick={this.toggleMenu}
           >
             {this.state.menu &&
-              <InfoWindow onCloseClick={this.props.toggleMenu}>
+              <InfoWindow onCloseClick={() => this.setState({menu: false})}>
                 <div>
                   <h3>{region.regionName}</h3>
 

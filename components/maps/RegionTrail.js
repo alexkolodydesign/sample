@@ -1,10 +1,14 @@
-import { Polyline } from "react-google-maps"
+import { Polyline, InfoWindow, Marker } from "react-google-maps"
 
 export default class RegionTrail extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { coordinates: []}
+    this.state = { coordinates: [], menu: false}
     this.setCoordinates = this.setCoordinates.bind(this)
+    this.toggleMenu = this.toggleMenu.bind(this)
+  }
+  toggleMenu() {
+    this.setState({menu: !this.state.menu})
   }
   async setCoordinates() {
     if (!this.props.trail.custom_data.jsonCoordinates) return null
@@ -67,7 +71,17 @@ export default class RegionTrail extends React.Component {
             strokeOpacity:1,
             strokeWeight:3,
           }}
+          onClick={this.toggleMenu}
         />
+        {this.state.menu &&
+          <Marker position={{lat: coordinates[0].lat, lng: coordinates[0].lng}} icon={{url: ""}} >
+            <InfoWindow onCloseClick={() => this.setState({menu: false})}>
+              <div>
+                <h3>{trail.title.rendered}</h3>
+              </div>
+            </InfoWindow>
+          </Marker>
+        }
       </React.Fragment>
     )
   }
