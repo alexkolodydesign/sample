@@ -22,7 +22,7 @@ const TrailSidebar = props => {
         <div><p>Recommended Use<br/><span>{
           trail.recommendedUse.map( (use, k) => <span key={k}>{use.label} </span> )
         }</span></p></div>
-        <div><p>Description<br/><span>{ReactHtmlParser(sanitizeHtml(props.trail.content.rendered))}</span></p></div>
+        <div><p>Description</p><div className="description">{ReactHtmlParser(sanitizeHtml(props.trail.content.rendered))}</div></div>
         <div className="accessibility">{
           Object.keys(trail.accessability).map( (thing, k) => {
             if (trail.accessability[thing] == true) {
@@ -50,6 +50,9 @@ const TrailSidebar = props => {
               text-transform: initial;
             }
           }
+        }
+        .description {
+          font-weight: 100;
         }
         .buttons {
           margin-top: 3rem;
