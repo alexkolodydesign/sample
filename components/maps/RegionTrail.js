@@ -1,4 +1,5 @@
 import { Polyline, InfoWindow, Marker } from "react-google-maps"
+import Link from 'next/link'
 
 export default class RegionTrail extends React.Component {
   constructor(props) {
@@ -78,6 +79,7 @@ export default class RegionTrail extends React.Component {
             <InfoWindow onCloseClick={() => this.setState({menu: false})}>
               <div>
                 <h3>{trail.title.rendered}</h3>
+                <Link href={`/trails/${trail.slug}`}><a>Go to Trail ></a></Link>
               </div>
             </InfoWindow>
           </Marker>

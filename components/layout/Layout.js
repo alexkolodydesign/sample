@@ -1,9 +1,30 @@
 import Header from './Header'
 import Footer from './Footer'
+import LoadingScreen from './LoadingScreen'
+import Router from 'next/router'
+
+// Loader icon
+Router.onRouteChangeStart = url => {
+  document.getElementById("loader").style.display = "flex";
+  document.documentElement.style.overflow = "hidden";
+  document.getElementsByTagName('main')[0].style.opacity = '0.1';
+}
+function removeLoader() {
+  let loader = document.getElementById('loader');
+  document.getElementById("loader").style = "none";
+  document.documentElement.style.overflow = "inherit";
+  const main = document.getElementsByTagName('main');
+  if (main && main[0]) {
+    main[0].style.opacity = '1';
+  }
+}
+Router.onRouteChangeComplete = () => removeLoader();
+Router.onRouteChangeError = () => removeLoader();
 
 const Layout = props => (
   <div>
     {props.nav == true ? <Header /> : null}
+    <LoadingScreen />
     <main>
       {props.children}
     </main>
