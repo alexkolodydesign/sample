@@ -63,12 +63,30 @@ export default class RegionTrail extends React.Component {
       }
     }
     if (!coordinates) coordinates = this.state.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng)}))
+    // Change Trail Color Based on the First Value of Recommended Use Array
+    let trailColor
+    switch(trail.custom_data.recommendedUse[0].value) {
+      case 'hiking':
+        trailColor = '#ed264c'
+        break
+      case 'biking':
+        trailColor = '#ff5a00'
+        break
+      case 'horseback':
+        trailColor = '#662f8e'
+        break
+      case 'atv':
+        trailColor = '#00a89c'
+        break
+      default:
+        trailColor = '#ff0000'
+    }
     return (
       <React.Fragment>
         <Polyline
           path={coordinates}
           options={{
-            strokeColor:"#ff0000",
+            strokeColor: trailColor,
             strokeOpacity:1,
             strokeWeight:3,
           }}
