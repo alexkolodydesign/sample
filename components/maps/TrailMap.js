@@ -52,6 +52,7 @@ const MapContainer = withScriptjs(withGoogleMap( (props) => <Map trail={props.tr
 class Map extends React.Component {
   constructor(props) {
     super(props)
+    this.state = { zoom: 18, center: {lat: 37.2, lng: -113.432} }
     this.setCoordinates = this.setCoordinates.bind(this)
   }
   async setCoordinates() {
@@ -119,9 +120,11 @@ class Map extends React.Component {
       default:
         trailColor = '#ff0000'
     }
+    const center = Math.round(coordinates.length / 2)
     return (
       <GoogleMap
-        center={{lat: 37.2, lng: -113.432}}
+        zoom={this.state.zoom}
+        center={{lat: coordinates[center].lat, lng: coordinates[center].lng}}
       >
         <Polyline
           path={coordinates}
