@@ -1,4 +1,5 @@
 import { Polyline, InfoWindow, Marker } from "react-google-maps"
+import axios from 'axios'
 import Link from 'next/link'
 
 export default class RegionTrail extends React.Component {
