@@ -6,12 +6,11 @@ const TrailMap = props =>
     <div className="map_container">
       <MapContainer
         loadingElement={<div style={{ height: `40rem` }} />}
-        containerElement={<div style={{ height: `40rem` }} id="washington_map" />}
+        containerElement={<div style={{ height: `100%` }} id="washington_map" />}
         mapElement={<div style={{ height: `40rem` }} />}
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&v=3.exp&libraries=geometry,drawing,places"
         trail={props.trail}
       />
-      <ElevationChart />
     </div>
     <div className="buttons">
       <button>Download Printable Map</button>
@@ -122,19 +121,22 @@ class Map extends React.Component {
     }
     const center = Math.round(coordinates.length / 2)
     return (
-      <GoogleMap
-        zoom={this.state.zoom}
-        center={{lat: coordinates[center].lat, lng: coordinates[center].lng}}
-      >
-        <Polyline
-          path={coordinates}
-          options={{
-            strokeColor: trailColor,
-            strokeOpacity:1,
-            strokeWeight:3,
-          }}
-        />
-      </GoogleMap>
+      <React.Fragment>
+        <GoogleMap
+          zoom={this.state.zoom}
+          center={{lat: coordinates[center].lat, lng: coordinates[center].lng}}
+        >
+          <Polyline
+            path={coordinates}
+            options={{
+              strokeColor: trailColor,
+              strokeOpacity:1,
+              strokeWeight:3,
+            }}
+          />
+        </GoogleMap>
+        <ElevationChart coordinates={coordinates} />
+      </React.Fragment>
     )
   }
 }
