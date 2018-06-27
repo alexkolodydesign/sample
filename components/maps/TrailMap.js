@@ -135,7 +135,7 @@ class Map extends React.Component {
             }}
           />
         </GoogleMap>
-        <ElevationChart coordinates={coordinates} />
+        <ElevationChart coordinates={coordinates} trail={this.props.trail} />
       </React.Fragment>
     )
   }

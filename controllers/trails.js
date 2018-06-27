@@ -49,3 +49,23 @@ exports.getCoordinates = async (req, res) => {
     return res.status(500).send("Error: ", e)
   }
 }
+
+exports.getElevation = async (req, res) => {
+  // Locations query needs to be structured for Google Maps Elevation API
+  const locations = req.query.locations.replace(/%7C/g, "|").replace(/\|,/g, "|").replace(/.$/,"")
+  try {
+    const {data: {results: elevations} } = await axios.get(
+      'https://maps.googleapis.com/maps/api/elevation/json',
+      {
+        params: {
+          locations: locations,
+          key: 'AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ'
+        }
+      }
+    )
+    return res.status(200).json({elevations})
+  } catch(e) {
+    console.log("Issue arose.", e);
+    return res.status(500).send("Error:")
+  }
+}

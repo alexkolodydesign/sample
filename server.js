@@ -29,6 +29,7 @@ app
     // API
     router.get("/api/region", trails.getRegionData);
     router.get("/api/coordinates", trails.getCoordinates);
+    router.get("/api/elevation", trails.getElevation);
     router.get("/api/trail/:trail", trails.getTrailData);
     // Handle All Routes
     server.get('/', (req, res) => app.render(req, res, '/'));

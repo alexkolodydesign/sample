@@ -1,17 +1,42 @@
+import axios from 'axios'
+
 class ElevationChart extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {loading: true}
+    this.fetchData = this.fetchData.bind(this)
+  }
+  async fetchData() {
+    const {data: {elevations}} = await axios.get(
+      '/api/elevation',
+      {
+        params: {
+          locations: this.props.coordinates.map(point => `${Number(point.lat)},${Number(point.lng)}|`).toString(),
+        }
+      }
+    )
+    this.setState({
+      loading: false,
+      elevations: elevations
+    })
+  }
+  componentDidMount() {
+    this.fetchData()
   }
   render() {
+    if (this.state.loading) return null
+    const totalDistance = this.props.trail.custom_data.length
+    const maxElevation = Math.max(...this.state.elevations.map(o => o.elevation));
+    const minElevation = Math.min(...this.state.elevations.map(o => o.elevation));
     return (
       <div>
         <h2>Elevation</h2>
         <div className="chart"></div>
         <div className="details">
           <div className="stats">
-            <p>Total Distance: <span></span></p>
-            <p>Max Elevation: <span></span></p>
-            <p>Min Elevation: <span></span></p>
+            <p>Total Distance: <span>{totalDistance}</span></p>
+            <p>Max Elevation: <span>{maxElevation}</span></p>
+            <p>Min Elevation: <span>{minElevation}</span></p>
           </div>
           <div className="map_type">
             <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" />
