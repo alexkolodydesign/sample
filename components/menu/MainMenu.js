@@ -25,7 +25,7 @@ const MainMenu = props =>
     <style jsx>{`
       .menu {
         position: absolute;
-        bottom: 3rem;
+        bottom: 0;
         left: 0;
         z-index: 2;
         width: 100%;

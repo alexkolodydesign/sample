@@ -6,10 +6,6 @@ const TrailSystemGuide = props =>
       <Link href="/trail-systems/trailsystem" as="/trail-systems/zion-national-park">
         <a className={props.system == "zion-national-park" ? "active" : null}>
           Zion National Park
-          <div className="dropdown">
-            <div className="background" style={{backgroundImage: "url(https://placehold.it/300x150?text=Zion-National-Park)"}}></div>
-            <p>View Trail System</p>
-          </div>
         </a>
       </Link>
     </div>
@@ -17,10 +13,6 @@ const TrailSystemGuide = props =>
       <Link href="/trail-systems/trailsystem" as="/trail-systems/snow-canyon-state-park">
         <a className={props.system == "snow-canyon-state-park" ? "active" : null}>
           Snow Canyon State Park
-          <div className="dropdown">
-            <div className="background" style={{backgroundImage: "url(https://placehold.it/300x150?text=Snow-Canyon-State-Park)"}}></div>
-            <p>View Trail System</p>
-          </div>
         </a>
       </Link>
     </div>
@@ -28,10 +20,6 @@ const TrailSystemGuide = props =>
       <Link href="/trail-systems/trailsystem" as="/trail-systems/gooseberry-mesa">
         <a className={props.system == "gooseberry-mesa" ? "active" : null}>
           Gooseberry Mesa
-          <div className="dropdown">
-            <div className="background" style={{backgroundImage: "url(https://placehold.it/300x150?text=Gooseberry-Mesa)"}}></div>
-            <p>View Trail System</p>
-          </div>
         </a>
       </Link>
     </div>
@@ -51,9 +39,9 @@ const TrailSystemGuide = props =>
       a {
         text-decoration: none;
         border: none;
-        background: #4d4e4e;
-        padding: 1rem 0;
-        width: 30rem;
+        background: #aaa;
+        padding: 0.5rem 0;
+        width: 25rem;
         text-align: center;
         color: #fff;
         text-transform: uppercase;
@@ -63,51 +51,11 @@ const TrailSystemGuide = props =>
         display: block;
         &:hover {
           background: #262727;
-          .dropdown {
-            transform: translateY(0);
-            background: #262727;
-            .background {
-              background-size: 110% auto;
-            }
-            p {
-              transform: scale(1);
-            }
-          }
         }
         &.active {
           background: #3fa9f5;
           &:hover {
             background: #0d93f2;
-            .dropdown {
-              background: #0d93f2;
-            }
-          }
-          .dropdown {
-            background: #3fa9f5;
-          }
-        }
-        .dropdown {
-          position: absolute;
-          left: 0;
-          top: 2rem;
-          z-index: -1;
-          width: 100%;
-          background: #4d4e4e;
-          padding: 2rem 1.5rem 0rem 1.5rem;
-          text-align: center;
-          box-sizing: border-box;
-          transition: all 500ms;
-          transform: translateY(-100%);
-          .background {
-            max-width: 100%;
-            height: 15rem;
-            background-size: 70% auto;
-            background-position: center;
-            transition: all 500ms;
-          }
-          p {
-            transform: scale(.25);
-            transition: all 500ms;
           }
         }
       }
