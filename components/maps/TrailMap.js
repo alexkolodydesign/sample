@@ -1,4 +1,4 @@
-import { withScriptjs, withGoogleMap, GoogleMap, Polyline } from "react-google-maps"
+import { withScriptjs, withGoogleMap, GoogleMap, Polyline, Marker } from "react-google-maps"
 import ElevationChart from './ElevationChart'
 
 const TrailMap = props =>
@@ -53,6 +53,7 @@ class Map extends React.Component {
     super(props)
     this.state = { zoom: 18, center: {lat: 37.2, lng: -113.432} }
     this.setCoordinates = this.setCoordinates.bind(this)
+    this.pathMarker = this.pathMarker.bind(this)
   }
   async setCoordinates() {
     if (!this.props.trail.custom_data.jsonCoordinates) return null
@@ -78,6 +79,13 @@ class Map extends React.Component {
     } catch(e) {
       console.log("Issue with Url: ", e)
     }
+  }
+  pathMarker(location) {
+    this.setState({marker: location})
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state === nextState) return false
+    else return true
   }
   render() {
     const trail = this.props.trail
@@ -134,8 +142,13 @@ class Map extends React.Component {
               strokeWeight:3,
             }}
           />
+          {this.state.marker &&
+            <Marker
+              position={this.state.marker}
+            />
+          }
         </GoogleMap>
-        <ElevationChart coordinates={coordinates} trail={this.props.trail} />
+        <ElevationChart coordinates={coordinates} trail={this.props.trail} pathMarker={this.pathMarker} />
       </React.Fragment>
     )
   }
