@@ -51,7 +51,7 @@ const MapContainer = withScriptjs(withGoogleMap( (props) => <Map trail={props.tr
 class Map extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { zoom: parseInt(this.props.trail.custom_data.zoomThreshold), center: {lat: 37.2, lng: -113.432} }
+    this.state = { zoom: Number(this.props.trail.custom_data.defaultZoom), center: {lat: 37.2, lng: -113.432} }
     this.setCoordinates = this.setCoordinates.bind(this)
     this.pathMarker = this.pathMarker.bind(this)
   }
