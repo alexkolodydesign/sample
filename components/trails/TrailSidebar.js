@@ -7,29 +7,48 @@ const TrailSidebar = props => {
     <div className="sidebar">
       <div className="details">
         <div><p>Region<br/><span>{trail.region}</span></p></div>
+
         <div><p>Difficulty<br/><span>{trail.difficulty.defaultDifficulty.label}</span></p></div>
+
         <div><p>Length<br/><span>{trail.length}</span></p></div>
+
         <div><p>Trail Traffic<br/><span>{trail.trailTraffic.label}</span></p></div>
+
         <div><p>Entrance Fee<br/><span>{trail.entranceFee}</span></p></div>
+
         <div><p>Route Type<br/><span>{trail.routeType.label}</span></p></div>
+
         <div><p>Highlights<br/>
           {trail.highlights.map((highlight, k) => <span key={k}>{highlight.label}</span>)}
         </p></div>
+
         <div><p>Trail Surface<br/><span>{trail.trailSurface}</span></p></div>
-        <div><p>Suitability<br/>
-          {trail.suitability.map((thing, k) => <span key={k}>{thing.label}</span>)}
-        </p></div>
+
+        {trail.accessibility &&
+          <div className="accessibility"><p>Accessibility<br/>{
+            trail.accessibility.map( (thing, k) => {
+              if (trail.accessibility) {
+                return <span key={k}>{thing.label} </span>
+              } else { return null }
+            })
+          }</p></div>
+        }
+
+        <div className="suitability"><p>Suitability<br/>{
+          trail.suitability && trail.suitability.map( (thing, k) => {
+            if (trail.suitability) {
+              return <span key={k}>{thing.label} </span>
+            } else { return null }
+          })
+        }</p></div>
+
         <div><p>Recommended Use<br/><span>{
           trail.recommendedUse.map( (use, k) => <span key={k}>{use.label} </span> )
         }</span></p></div>
+
         <div><p>Description</p><div className="description">{ReactHtmlParser(sanitizeHtml(props.trail.content.rendered))}</div></div>
-        <div className="accessibility">{
-          trail.accessability && trail.accessability.map( (thing, k) => {
-            if (trail.accessability[thing] == true) {
-              return <span key={k}>{thing} </span>;
-            } else { return null }
-          })
-        }</div>
+
+
       </div>
       <div className="buttons">
         <button>Directions to Trail Head</button>

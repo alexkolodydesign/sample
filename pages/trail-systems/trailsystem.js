@@ -16,6 +16,13 @@ class TrailSystem extends React.Component {
     return filterAction(this.props.trailSystem, this.props.map.filter)
   }
   render() {
+    if (this.props.error) return (
+      <Layout>
+        <div className="wrapper">
+          An Error has occured.
+        </div>
+      </Layout>
+    )
     const trailSystem = this.filterTrails(this.props.trailSystem)
     return (
       <Layout>
