@@ -51,20 +51,6 @@ const trail = {
       region: "Canyon"
     }
   ],
-  trailsNearby: [
-    {
-      title: "Alpine Mountain Hike",
-      length: "2.3 miles",
-      highlights: "wide open, wastelands",
-      difficulty: {
-        default: "Moderate",
-        hiking: "Moderate",
-        biking: "Moderate",
-        horseback: "Moderate"
-      },
-      region: "Canyon"
-    }
-  ],
   media: {
     videos: [
       {
