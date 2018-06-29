@@ -30,7 +30,7 @@ class ElevationChart extends React.Component {
     const elevation = data.payload && data.payload[0] ? Number(data.payload[0].payload.elevation).toFixed(0) : false
     if (!elevation) return null
     return (
-      <div>
+      <div className="custom-tooltip">
         <p>Elevation <span>{elevation}</span></p>
         <style jsx>{`
           div {
@@ -55,14 +55,15 @@ class ElevationChart extends React.Component {
     const totalDistance = Number(this.props.trail.custom_data.length).toFixed(2)
     const maxElevation = Number(Math.max(...this.state.elevations.map(o => o.elevation)) ).toFixed(0)
     const minElevation = Number(Math.min(...this.state.elevations.map(o => o.elevation)) ).toFixed(0)
-    return (
+    console.log(maxElevation, minElevation)
+      return (
       <div>
         <h2>Elevation</h2>
         <div className="chart">
           <AreaChart width={820} height={250} data={this.state.elevations} onMouseMove={this.mouseMove}
             margin={{top: 10, right: 30, left: 0, bottom: 0}}>
             <CartesianGrid strokeDasharray="3 3"/>
-            <YAxis/>
+            <YAxis unit=" ft" interval={0} domain={[Math.round(minElevation/10)*10, Math.ceil(maxElevation/10)*10]} />
             <Tooltip content={this.renderTooltip} />
             <Area type='monotone' dataKey='elevation' stroke='#0967aa' fill='#3fa9f5' />
           </AreaChart>
@@ -109,6 +110,9 @@ class ElevationChart extends React.Component {
             img {
               width: 5rem;
             }
+          }
+          .recharts-surface {
+            overflow-y: visible;
           }
         `}</style>
       </div>
