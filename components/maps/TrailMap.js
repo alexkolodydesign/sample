@@ -53,6 +53,7 @@ class Map extends React.Component {
     super(props)
     this.state = { zoom: Number(this.props.trail.custom_data.defaultZoom), center: {lat: 37.2, lng: -113.432} }
     this.setCoordinates = this.setCoordinates.bind(this)
+    this.setCenterAndZoom = this.setCenterAndZoom.bind(this)
     this.pathMarker = this.pathMarker.bind(this)
   }
   async setCoordinates() {
@@ -86,6 +87,15 @@ class Map extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state === nextState) return false
     else return true
+  }
+  setCenterAndZoom(coords) {
+    const bounds = new window.google.maps.LatLngBounds()
+    coords.forEach(bound => bounds.extend(new window.google.maps.LatLng(bound.point.lat, bound.point.lng)))
+    this.refs.map.fitBounds(bounds)
+    console.log(coords)
+  }
+  componentDidMount() {
+    // center map on bounds here?
   }
   render() {
     const trail = this.props.trail
@@ -133,6 +143,7 @@ class Map extends React.Component {
         <GoogleMap
           zoom={this.state.zoom}
           center={{lat: coordinates[center].lat, lng: coordinates[center].lng}}
+          onTilesLoaded={() => this.setCenterAndZoom(coordinates)}
         >
           <Polyline
             path={coordinates}
@@ -148,7 +159,7 @@ class Map extends React.Component {
             />
           }
         </GoogleMap>
-        <ElevationChart coordinates={coordinates} trail={this.props.trail} pathMarker={this.pathMarker} />
+        <ElevationChart coordinates={coordinates.slice(0).reverse()} trail={this.props.trail} pathMarker={this.pathMarker} />
       </React.Fragment>
     )
   }
