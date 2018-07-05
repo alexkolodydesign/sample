@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts'
 
-class ElevationChart extends React.Component {
+export default class ElevationChart extends React.Component {
   constructor(props) {
     super(props)
     this.state = {loading: true}
@@ -55,7 +55,7 @@ class ElevationChart extends React.Component {
     const totalDistance = Number(this.props.trail.custom_data.length).toFixed(2)
     const maxElevation = Number(Math.max(...this.state.elevations.map(o => o.elevation)) ).toFixed(0)
     const minElevation = Number(Math.min(...this.state.elevations.map(o => o.elevation)) ).toFixed(0)
-      return (
+    return (
       <div>
         <h2>Elevation</h2>
         <div className="chart">
@@ -118,5 +118,3 @@ class ElevationChart extends React.Component {
     )
   }
 }
-
-export default ElevationChart

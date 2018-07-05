@@ -1,11 +1,10 @@
 import Layout from '../../components/layout/Layout'
+import { nextConnect } from '../../redux/store'
 import Head from '../../components/layout/Head'
 import Link from 'next/link'
-import fetch from 'isomorphic-unfetch';
-import { nextConnect } from '../../redux/store'
-import TrailMap from '../../components/maps/TrailMap'
-import TrailSystemGuide from '../../components/menu/TrailSystemGuide'
+import fetch from 'isomorphic-unfetch'
 import TrailSidebar from '../../components/trails/TrailSidebar'
+import TrailMap from '../../components/maps/TrailMap'
 import SimilarTrails from '../../components/trails/SimilarTrails'
 import TrailMedia from '../../components/trails/TrailMedia'
 import ScrollToTop from 'react-scroll-up'
@@ -18,8 +17,6 @@ const Trail = props => {
       </div>
     </Layout>
   )
-    // To Do: Come up with a plan for errors. Red idicator along the top
-    // of the site and it returns them to the main map?
   return (
     <Layout nav={false} background="#f2f2f2" overflow={true}>
       <Head/>
