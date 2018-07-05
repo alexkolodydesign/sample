@@ -8,6 +8,7 @@ import TrailMap from '../../components/maps/TrailMap'
 import SimilarTrails from '../../components/trails/SimilarTrails'
 import TrailMedia from '../../components/trails/TrailMedia'
 import ScrollToTop from 'react-scroll-up'
+import { BarLoader } from 'react-spinners'
 
 const Trail = props => {
   if (props.error) return (

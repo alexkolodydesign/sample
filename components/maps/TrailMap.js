@@ -1,6 +1,10 @@
 import { withScriptjs, withGoogleMap, GoogleMap, Polyline, Marker } from "react-google-maps"
 import ElevationChart from './ElevationChart'
 
+import { fitBounds } from 'google-map-react/utils';
+import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js';
+import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js';
+
 const TrailMap = props =>
   <div>
     <div className="map_container">
@@ -55,6 +59,7 @@ class Map extends React.Component {
     this.setCoordinates = this.setCoordinates.bind(this)
     this.setCenterAndZoom = this.setCenterAndZoom.bind(this)
     this.pathMarker = this.pathMarker.bind(this)
+    this.mapLoaded = React.createRef()
   }
   async setCoordinates() {
     if (!this.props.trail.custom_data.jsonCoordinates) return null
@@ -89,13 +94,17 @@ class Map extends React.Component {
     else return true
   }
   setCenterAndZoom(coords) {
-    const bounds = new window.google.maps.LatLngBounds()
-    coords.forEach(bound => bounds.extend(new window.google.maps.LatLng(bound.point.lat, bound.point.lng)))
-    this.refs.map.fitBounds(bounds)
-    console.log(coords)
-  }
-  componentDidMount() {
-    // center map on bounds here?
+    // Make new bounds
+    let newBounds = new LatLngBounds()
+    // Add LatLng points to the new bounding area
+    coords.forEach(bound => newBounds.extend(new LatLng(bound.lat, bound.lng)))
+    // Get the new center and zoom from new bounds
+    const fit = fitBounds(
+      {nw: newBounds.getNorthWest(), se: newBounds.getSouthEast()},
+      {width: 820, height: 400}
+    );
+    // Update state for map
+    this.setState({zoom: fit.zoom, center: fit.center, mapIsCentered: true})
   }
   render() {
     const trail = this.props.trail
@@ -141,9 +150,11 @@ class Map extends React.Component {
     return (
       <React.Fragment>
         <GoogleMap
+          ref={this.mapLoaded}
           zoom={this.state.zoom}
           center={{lat: coordinates[center].lat, lng: coordinates[center].lng}}
-          onTilesLoaded={() => this.setCenterAndZoom(coordinates)}
+          // Only do this once. (TODO: look for a better event for this function like map loaded or something)
+          onTilesLoaded={() => !this.state.mapIsCentered ? this.setCenterAndZoom(coordinates) : null}
         >
           <Polyline
             path={coordinates}
