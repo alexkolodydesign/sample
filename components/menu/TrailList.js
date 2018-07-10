@@ -28,7 +28,7 @@ export default class TrailList extends React.Component {
             color: #fff;
             border: none;
             border-radius: 0.5rem;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             cursor: pointer;
@@ -50,6 +50,11 @@ export default class TrailList extends React.Component {
           p {
             margin: 0;
             padding-right: 2.5rem;
+          }
+          @media screen and (min-width: 768px) {
+            button {
+              display:flex;
+            }
           }
         `}</style>
       </React.Fragment>

@@ -5,49 +5,70 @@ const TrailSidebar = props => {
   const trail = props.trail.custom_data
   return (
     <div className="sidebar">
-      <div className="details">
-        <div><p>Region<br/><span>{trail.region}</span></p></div>
+      <div className="details background">
+        {trail.region &&
+          <div><p>Region<br/><span>{trail.region}</span></p></div>
+        }
 
-        <div><p>Difficulty<br/><span>{trail.difficulty.defaultDifficulty.label}</span></p></div>
+        {trail.difficulty && trail.difficulty.defaultDifficulty &&
+          <div><p>Difficulty<br/><span>{trail.difficulty.defaultDifficulty.label}</span></p></div>
+        }
 
-        <div><p>Length<br/><span>{trail.length}</span></p></div>
+        {trail.length &&
+          <div><p>Length<br/><span>{trail.length}</span></p></div>
+        }
 
-        <div><p>Trail Traffic<br/><span>{trail.trailTraffic.label}</span></p></div>
+        {trail.trailTraffic &&
+          <div><p>Trail Traffic<br/><span>{trail.trailTraffic.label}</span></p></div>
+        }
 
-        <div><p>Entrance Fee<br/><span>{trail.entranceFee}</span></p></div>
+        {trail.enteranceFee &&
+          <div><p>Entrance Fee<br/><span>{trail.entranceFee}</span></p></div>
+        }
 
-        <div><p>Route Type<br/><span>{trail.routeType.label}</span></p></div>
+        {trail.routeType &&
+          <div><p>Route Type<br/><span>{trail.routeType.label}</span></p></div>
+        }
 
-        <div><p>Highlights<br/>
-          {trail.highlights.map((highlight, k) => <span key={k}>{highlight.label}</span>)}
-        </p></div>
+        {trail.highlights &&
+          <div><p>Highlights<br/>
+            {trail.highlights.map((highlight, k) => <span key={k}>{highlight.label}<br /></span>)}
+          </p></div>
+        }
 
-        <div><p>Trail Surface<br/><span>{trail.trailSurface}</span></p></div>
+        {trail.trailSurface &&
+          <div><p>Trail Surface<br/><span>{trail.trailSurface}</span></p></div>
+        }
 
         {trail.accessibility &&
           <div className="accessibility"><p>Accessibility<br/>{
             trail.accessibility.map( (thing, k) => {
               if (trail.accessibility) {
-                return <span key={k}>{thing.label} </span>
+                return <span key={k}>{thing.label} <br /></span>
               } else { return null }
             })
           }</p></div>
         }
 
+      {trail.suitability &&
         <div className="suitability"><p>Suitability<br/>{
-          trail.suitability && trail.suitability.map( (thing, k) => {
+          trail.suitability.map( (thing, k) => {
             if (trail.suitability) {
               return <span key={k}>{thing.label} </span>
             } else { return null }
           })
         }</p></div>
+      }
 
+      {trail.recommendedUse &&
         <div><p>Recommended Use<br/><span>{
-          trail.recommendedUse.map( (use, k) => <span key={k}>{use.label} </span> )
+          trail.recommendedUse.map( (use, k) => <span key={k}>{use.label} <br /></span> )
         }</span></p></div>
+      }
 
+      {props.trail.content && props.trail.content.rendered &&
         <div><p>Description</p><div className="description">{ReactHtmlParser(sanitizeHtml(props.trail.content.rendered))}</div></div>
-
+      }
 
       </div>
       <div className="buttons">
@@ -55,18 +76,23 @@ const TrailSidebar = props => {
         <button>Back to Trail System</button>
       </div>
       <style jsx>{`
-        .details {
+        .background {
           background: #fff;
-          padding: 3rem;
-          display: flex;
-          flex-direction: column;
-          p {
-            margin: 0 0 2rem 0;
-            text-transform: uppercase;
-            font-weight: 500;
-            span {
-              font-weight: 100;
-              text-transform: initial;
+          background-image: linear-gradient(rgba(255,255,255,0.95),rgba(255,255,255,0.95)),url(/static/images/background-pattern.svg);
+          background-position: center;
+          background-size: 29rem auto;
+          &.details {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            p {
+              margin: 0 0 2rem 0;
+              text-transform: uppercase;
+              font-weight: 500;
+              span {
+                font-weight: 100;
+                text-transform: initial;
+              }
             }
           }
         }

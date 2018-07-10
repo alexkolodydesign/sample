@@ -8,6 +8,7 @@ const GPS = props =>
     </svg>
     <style jsx>{`
       svg {
+        display:none;
         width: 5.5rem;
         cursor: pointer;
         &:hover .st0 {
@@ -19,6 +20,11 @@ const GPS = props =>
         transition: all 500ms;
       }
       .st1{fill:#FFFFFF;}
+      @media screen and (min-width: 768px) {
+        svg {
+          display:block;
+        }
+      }
     `}</style>
   </React.Fragment>
 

@@ -23,7 +23,12 @@ const TrailMap = props =>
       <button>Save this Trail</button>
     </div>
     <style jsx>{`
-      .map_container {background: #fff; padding:3rem;}
+      .map_container {background: #fff;
+          background-image: linear-gradient(rgba(255,255,255,0.95),rgba(255,255,255,0.95)),url(/static/images/background-pattern.svg);
+          background-position: center;
+          background-size: 29rem auto;
+          padding:3rem;
+      }
       .map {
         background: #eee;
         width: 100%;

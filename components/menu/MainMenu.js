@@ -32,7 +32,7 @@ const MainMenu = props =>
         padding: 4rem 0;
         .wrapper {
           display: grid;
-          grid-template-columns: 1fr 28rem repeat(2, 15rem) repeat(2, 6rem);
+          grid-template-columns: 1fr 25rem repeat(2, 11rem);
           align-items: center;
           justify-items: center;
           position: relative;
@@ -60,6 +60,14 @@ const MainMenu = props =>
         background-image: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)), url(/static/images/background-pattern.svg);
         background-position: center;
         background-size: 29rem auto;
+      }
+
+      @media screen and (min-width: 768px) {
+        .menu {
+          .wrapper {
+            grid-template-columns: 1fr 28rem repeat(2, 15rem) repeat(2, 6rem);
+          }
+        }
       }
     `}</style>
   </div>
