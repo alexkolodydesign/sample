@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 class TrailListMenu extends React.Component {
   constructor(props) {
     super(props)
@@ -101,11 +103,23 @@ class TrailListMenu extends React.Component {
 
 const Trail = props =>
   <div className="trail">
-    <img src={props.trail.image ? props.trail.image : "https://placehold.it/75x75?text=coming-soon"} alt=""/>
+    <Link href={`/trails/${props.trail.slug}`}><a>
+      <img src={props.trail.image ? props.trail.image : "https://placehold.it/75x75?text=coming-soon"} alt=""/>
+    </a></Link>
     <div className="details">
-      <h4>{props.trail.title.rendered}</h4>
-      <p>Length: <span>{props.trail.custom_data.length}</span></p>
-      <p>Highlights: {props.trail.custom_data.highlights && props.trail.custom_data.highlights.map((highlight, k) => <span key={k}>{highlight.label}</span>)}</p>
+      <h4><Link href={`/trails/${props.trail.slug}`}><a>{props.trail.title.rendered}</a></Link></h4>
+      <p>Length: <span>{props.trail.custom_data.length} Miles</span></p>
+      {props.trail.custom_data.highlights &&
+        <p>Highlights:
+          {props.trail.custom_data.highlights.map((highlight, index, k) => {
+            if(index < props.trail.custom_data.highlights.length - 1) {
+              return <span key={k}> {highlight.label},</span>
+            } else {
+              return <span key={k}> {highlight.label}</span>
+            }
+          }
+        )}</p>
+      }
       <p>Difficulty: <span>{props.trail.custom_data.difficulty.defaultDifficulty.value}</span></p>
       <p>Region: <span>{props.trail.custom_data.region}</span></p>
     </div>
@@ -139,8 +153,14 @@ const Trail = props =>
         }
       }
       .details {
-        padding: 1rem 2rem 1rem 1rem;
-        h4 {margin: 0; font-weight: 700;}
+        padding: 0.25rem 2rem 1rem 1rem;
+        h4 {
+          margin: 0; font-weight: 700;
+          a {
+            text-decoration: none;
+            color: inherit;
+          }
+        }
         p {margin: 0; font-weight: 500;}
         p span {font-weight: 100;}
       }

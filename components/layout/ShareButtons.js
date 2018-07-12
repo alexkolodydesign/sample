@@ -26,37 +26,47 @@ class ShareButtons extends React.Component {
   }
   render() {
     return (
-      <div>
-        <FacebookShareButton url={this.props.router.asPath}>
-          <FacebookIcon size={32} round={true}/>
-        </FacebookShareButton>
-        <TwitterShareButton url={this.props.router.asPath}>
-          <TwitterIcon size={32} round={true}/>
-        </TwitterShareButton>
-        <GooglePlusShareButton url={this.props.router.asPath}>
+      <div className="share-buttons-wrapper">
+      {console.log(this.props.router)}
+        <div className="sub-wrapper">
+          <FacebookShareButton className="share-button" url={this.props.router.asPath}>
+            <FacebookIcon size={32} round={true}/>
+          </FacebookShareButton>
+          <TwitterShareButton className="share-button" url={this.props.router.asPath}>
+            <TwitterIcon size={32} round={true}/>
+          </TwitterShareButton>
+        </div>
+        <GooglePlusShareButton className="share-button" url={this.props.router.asPath}>
           <GooglePlusIcon size={32} round={true}/>
         </GooglePlusShareButton>
-        <LinkedinShareButton url={this.props.router.asPath}>
+        <LinkedinShareButton className="share-button" url={this.props.router.asPath}>
           <LinkedinIcon size={32} round={true}/>
         </LinkedinShareButton>
-        <WhatsappShareButton url={this.props.router.asPath}>
+        <WhatsappShareButton className="share-button" url={this.props.router.asPath}>
           <WhatsappIcon size={32} round={true}/>
         </WhatsappShareButton>
-        <PinterestShareButton url={this.props.router.asPath}>
+        <PinterestShareButton className="share-button" url={this.props.router.asPath}>
           <PinterestIcon size={32} round={true}/>
         </PinterestShareButton>
-        <RedditShareButton url={this.props.router.asPath}>
+        <RedditShareButton className="share-button" url={this.props.router.asPath}>
           <RedditIcon size={32} round={true}/>
         </RedditShareButton>
-        <EmailShareButton url={this.props.router.asPath}>
+        <EmailShareButton className="share-button" url={this.props.router.asPath}>
           <EmailIcon size={32} round={true}/>
         </EmailShareButton>
         <style jsx>{`
-          .SocialMediaShareButton {
+          .share-buttons-wrapper {
+            display: block;
+            .share-button {
+              float: left;
+            }
+          }
+          .sub-wrapper > * {
             float: left;
           }
-          `}</style>
-        </div>
+          `}
+        </style>
+      </div>
 
     )}
 }
