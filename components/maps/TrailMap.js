@@ -4,11 +4,13 @@ import { fitBounds } from 'google-map-react/utils';
 import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js';
 import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js';
 import ShareButtons from '../layout/ShareButtons'
+// REVIEW: Moved Your Print Styles to Separate Folder
+import printStyle from './mapstyles/print'
 
 export default class TrailMap extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {mapStyle: [], shareButtons: false}
+    this.state = {mapStyle: false, shareButtons: false}
     this.toggleMapStyle = this.toggleMapStyle.bind(this)
     this.toggleShareButtons = this.toggleShareButtons.bind(this)
   }
@@ -16,51 +18,11 @@ export default class TrailMap extends React.Component {
     this.setState({shareButtons: !this.state.shareButtons})
   }
   toggleMapStyle() {
-    if (this.state.mapStyle == []) {
-      this.setState({mapStyle: [
-          {
-            "featureType": "poi.park",
-            "elementType": "geometry.fill",
-            "stylers": [
-              {
-                "color": "#fefcff"
-              }
-            ]
-          },
-          {
-            "featureType": "road.local",
-            "elementType": "geometry",
-            "stylers": [
-              {
-                "color": "#000000"
-              },
-              {
-                "visibility": "on"
-              }
-            ]
-          },
-          {
-            "featureType": "road.local",
-            "elementType": "labels.text.fill",
-            "stylers": [
-              {
-                "color": "#060606"
-              }
-            ]
-          },
-          {
-            "featureType": "road.local",
-            "elementType": "labels.text.stroke",
-            "stylers": [
-              {
-                "color": "#fcfffe"
-              }
-            ]
-          }
-        ]
-      })
+    if (!this.state.mapStyle) {
+      // REVIEW: Moved Your Print Styles to Separate Folder
+      this.setState({mapStyle: printStyle })
     } else {
-      this.setState({mapStyle: []})
+      this.setState({mapStyle: false})
     }
   }
   render() {
@@ -73,6 +35,8 @@ export default class TrailMap extends React.Component {
             mapElement={<div style={{ height: `40rem` }} />}
             googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&v=3.exp&libraries=geometry,drawing,places"
             trail={this.props.trail}
+            // REVIEW: You forgot to pass this state down from this component
+            mapStyle={this.state.mapStyle}
           />
         </div>
         <div className="buttons">
@@ -125,15 +89,20 @@ export default class TrailMap extends React.Component {
   }
 }
 
-const MapContainer = withScriptjs(withGoogleMap( (props) => <Map trail={props.trail} /> ))
+// REVIEW: You forgot to pass the mapStyle prop down from this component
+const MapContainer = withScriptjs(withGoogleMap( (props) => <Map trail={props.trail} mapStyle={props.mapStyle} /> ))
 class Map extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { zoom: Number(this.props.trail.custom_data.defaultZoom), center: {lat: 37.2, lng: -113.432} }
+    this.state = { zoom: Number(this.props.trail.custom_data.defaultZoom), center: {lat: 37.2, lng: -113.432}, mapStyle: false }
     this.setCoordinates = this.setCoordinates.bind(this)
     this.setCenterAndZoom = this.setCenterAndZoom.bind(this)
     this.pathMarker = this.pathMarker.bind(this)
     this.mapLoaded = React.createRef()
+  }
+  // REVIEW: When the props change after clicking download printable map, we need to catch this change here and return a new state
+  static getDerivedStateFromProps(props, state) {
+    return state.mapStyle = props.mapStyle
   }
   async setCoordinates() {
     if (!this.props.trail.custom_data.jsonCoordinates) return null
@@ -229,7 +198,10 @@ class Map extends React.Component {
           center={{lat: coordinates[center].lat, lng: coordinates[center].lng}}
           // Only do this once. (TODO: look for a better event for this function like map loaded or something)
           onTilesLoaded={() => !this.state.mapIsCentered ? this.setCenterAndZoom(coordinates) : null}
-          defaultOptions = {{styles: this.state.mapStyle}}
+          // REVIEW: You were using defaultOptions which probably worked the same as this, but the main difference here is that I'm now using state which is being updated by getDerivedStateFromProps based on what props are being passed down to this component
+          options={{
+            styles: this.state.mapStyle
+          }}
         >
           <Polyline
             path={coordinates}
