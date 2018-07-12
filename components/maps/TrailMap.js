@@ -1,60 +1,125 @@
 import { withScriptjs, withGoogleMap, GoogleMap, Polyline, Marker } from "react-google-maps"
 import ElevationChart from './ElevationChart'
-
 import { fitBounds } from 'google-map-react/utils';
 import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js';
 import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js';
+import ShareButtons from '../layout/ShareButtons'
+import {withRouter} from 'next/router'
 
-const TrailMap = props =>
-  <div>
-    <div className="map_container">
-      <MapContainer
-        loadingElement={<div style={{ height: `40rem` }} />}
-        containerElement={<div style={{ height: `100%` }} id="washington_map" />}
-        mapElement={<div style={{ height: `40rem` }} />}
-        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&v=3.exp&libraries=geometry,drawing,places"
-        trail={props.trail}
-      />
-    </div>
-    <div className="buttons">
-      <button>Download Printable Map</button>
-      <button>Download GPS for Offline</button>
-      <button>Share this Trail</button>
-      <button>Save this Trail</button>
-    </div>
-    <style jsx>{`
-      .map_container {background: #fff;
-          background-image: linear-gradient(rgba(255,255,255,0.95),rgba(255,255,255,0.95)),url(/static/images/background-pattern.svg);
-          background-position: center;
-          background-size: 29rem auto;
-          padding:3rem;
-      }
-      .map {
-        background: #eee;
-        width: 100%;
-        height: 50rem;
-      }
-      .buttons {
-        margin-top: 3rem;
-        display: grid;
-        grid-template: 1fr 1fr / 1fr 1fr;
-        grid-gap: 3rem 6rem;
-      }
-      button {
-        border: none;
-        border-radius: 1rem;
-        background: #3fa9f5;
-        padding: 1.5rem 3rem;
-        color: #fff;
-        font-size: 1.8rem;
-        cursor: pointer;
-        transition: all 500ms;
-        &:hover {
-          background: #0d93f2;
-        }
-      }
-    `}</style>
-  </div>
+export default class TrailMap extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {mapStyle: []}
+    this.toggleMapStyle = this.toggleMapStyle.bind(this)
+  }
+  toggleMapStyle() {
+    if (this.state.mapStyle == []) {
+      this.setState({mapStyle: [
+          {
+            "featureType": "poi.park",
+            "elementType": "geometry.fill",
+            "stylers": [
+              {
+                "color": "#fefcff"
+              }
+            ]
+          },
+          {
+            "featureType": "road.local",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#000000"
+              },
+              {
+                "visibility": "on"
+              }
+            ]
+          },
+          {
+            "featureType": "road.local",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#060606"
+              }
+            ]
+          },
+          {
+            "featureType": "road.local",
+            "elementType": "labels.text.stroke",
+            "stylers": [
+              {
+                "color": "#fcfffe"
+              }
+            ]
+          }
+        ]
+      })
+    } else {
+      this.setState({mapStyle: []})
+    }
+  }
+  render() {
+    return (
+      <div>
+        <div className="map_container">
+          <MapContainer
+            loadingElement={<div style={{ height: `40rem` }} />}
+            containerElement={<div style={{ height: `100%` }} id="washington_map" />}
+            mapElement={<div style={{ height: `40rem` }} />}
+            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&v=3.exp&libraries=geometry,drawing,places"
+            trail={this.props.trail}
+          />
+        </div>
+        <div className="buttons">
+          <button onClick={this.toggleMapStyle}>Download Printable Map</button>
+          <button>Download GPS for Offline</button>
+          <button>Share this Trail</button>
+          <button>Save this Trail</button>
+        </div>
+        <div className="share_buttons">
+          <ShareButtons />
+        </div>
+        <style jsx>{`
+          .map_container {background: #fff;
+              background-image: linear-gradient(rgba(255,255,255,0.95),rgba(255,255,255,0.95)),url(/static/images/background-pattern.svg);
+              background-position: center;
+              background-size: 29rem auto;
+              padding:3rem;
+          }
+          .map {
+            background: #eee;
+            width: 100%;
+            height: 50rem;
+          }
+          .buttons {
+            margin-top: 3rem;
+            display: grid;
+            grid-template: 1fr 1fr / 1fr 1fr;
+            grid-gap: 3rem 6rem;
+          }
+          .share_buttons {
+            margin-top: 3rem;
+          }
+          button {
+            border: none;
+            border-radius: 1rem;
+            background: #3fa9f5;
+            padding: 1.5rem 3rem;
+            color: #fff;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 500ms;
+            &:hover {
+              background: #0d93f2;
+            }
+          }
+        `}</style>
+      </div>
+    )
+  }
+}
 
 const MapContainer = withScriptjs(withGoogleMap( (props) => <Map trail={props.trail} /> ))
 class Map extends React.Component {
@@ -160,6 +225,7 @@ class Map extends React.Component {
           center={{lat: coordinates[center].lat, lng: coordinates[center].lng}}
           // Only do this once. (TODO: look for a better event for this function like map loaded or something)
           onTilesLoaded={() => !this.state.mapIsCentered ? this.setCenterAndZoom(coordinates) : null}
+          defaultOptions = {{styles: this.state.mapStyle}}
         >
           <Polyline
             path={coordinates}
@@ -183,4 +249,3 @@ class Map extends React.Component {
 
 
 
-export default TrailMap
