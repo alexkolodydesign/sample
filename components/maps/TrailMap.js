@@ -4,13 +4,16 @@ import { fitBounds } from 'google-map-react/utils';
 import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js';
 import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js';
 import ShareButtons from '../layout/ShareButtons'
-import {withRouter} from 'next/router'
 
 export default class TrailMap extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {mapStyle: []}
+    this.state = {mapStyle: [], shareButtons: false}
     this.toggleMapStyle = this.toggleMapStyle.bind(this)
+    this.toggleShareButtons = this.toggleShareButtons.bind(this)
+  }
+  toggleShareButtons() {
+    this.setState({shareButtons: !this.state.shareButtons})
   }
   toggleMapStyle() {
     if (this.state.mapStyle == []) {
@@ -75,11 +78,12 @@ export default class TrailMap extends React.Component {
         <div className="buttons">
           <button onClick={this.toggleMapStyle}>Download Printable Map</button>
           <button>Download GPS for Offline</button>
-          <button>Share this Trail</button>
+          {/* TODO: Give this class some styles for when it's active or not */}
+          <button onClick={this.toggleShareButtons} className={this.state.shareButtons && "active"}>Share this Trail</button>
           <button>Save this Trail</button>
         </div>
         <div className="share_buttons">
-          <ShareButtons />
+          {this.state.shareButtons && <ShareButtons />}
         </div>
         <style jsx>{`
           .map_container {background: #fff;
