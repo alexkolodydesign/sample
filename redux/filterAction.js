@@ -4,15 +4,18 @@ export const filterAction = (data, mapState) => {
   const trails = data.trails
     // Filter by Recommended Use
     .filter((trail) => {
-      const trailTypes = trail.custom_data.recommendedUse.map(type => type.value)
-      let match = false
-      for (var i = 0; i < recommendedUseFilter.length; i++) {
-        if (trailTypes.includes(recommendedUseFilter[i]) ) match = true
+      if (trail.recommendedUse && trail.recommendedUse !== "") {
+        const trailTypes = trail.custom_data.recommendedUse.map(type => type.value)
+        let match = false
+        for (var i = 0; i < recommendedUseFilter.length; i++) {
+          if (trailTypes.includes(recommendedUseFilter[i]) ) match = true
+        }
+        if (mapState.exclude) {
+          if (trailTypes.join("") != recommendedUseFilter.join("")) match = false
+        }
+        if (match) return true
+        return false
       }
-      if (mapState.exclude) {
-        if (trailTypes.join("") != recommendedUseFilter.join("")) match = false
-      }
-      if (match) return true
       return false
     })
     // Filter by Trail Length
