@@ -10,6 +10,7 @@ import TrailMedia from '../../components/trails/TrailMedia'
 import ScrollToTop from 'react-scroll-up'
 import { BarLoader } from 'react-spinners'
 
+
 const Trail = props => {
   if (props.error) return (
     <Layout nav={false} background="#f2f2f2" overflow={true}>

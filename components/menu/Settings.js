@@ -26,6 +26,7 @@ export default class Settings extends React.Component {
         {this.state.menu ? <Options toggleOptions={this.toggleOptions} menuState={this.state.menu} /> : null}
         <style jsx>{`
           svg {
+            display:none;
             width: 5.5rem;
             cursor: pointer;
             &:hover .st0 {
@@ -41,6 +42,11 @@ export default class Settings extends React.Component {
           .st0{
             fill:#4D4E4E;
             transition: all 500ms;
+          }
+          @media screen and (min-width: 768px) {
+            svg {
+              display:block;
+            }
           }
         `}</style>
       </React.Fragment>

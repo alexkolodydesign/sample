@@ -19,7 +19,7 @@ export default class FilterTrails extends React.Component {
       <React.Fragment>
         <button onClick={this.toggleFilterMenu} className={this.state.menu ? "active" : null}>
           <img src="/static/images/menu/filter.svg" alt="Filter Trails"/>
-          <p>Filter Trails</p>
+          <p className='filter-trails-title'>Filter Trails</p>
         </button>
         {this.state.menu ? <FilterTrailsMenu toggleFilterMenu={this.toggleFilterMenu} menuState={this.state.menu} /> : null}
         <style jsx>{`
@@ -42,6 +42,9 @@ export default class FilterTrails extends React.Component {
             &.active {
               background: #3fa9f5;
             }
+            .filter-trails-title {
+              display: none;
+            }
           }
           img {
             width: 4.5rem;
@@ -49,6 +52,13 @@ export default class FilterTrails extends React.Component {
           p {
             margin: 0;
             padding-right: 2.5rem;
+          }
+          @media screen and (min-width: 768px) {
+            button {
+              .filter-trails-title {
+                display:block;
+              }
+            }
           }
         `}</style>
       </React.Fragment>
