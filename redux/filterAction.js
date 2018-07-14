@@ -4,7 +4,7 @@ export const filterAction = (data, mapState) => {
   const trails = data.trails
     // Filter by Recommended Use
     .filter((trail) => {
-      if (trail.recommendedUse && trail.recommendedUse !== "") {
+      if (trail.custom_data.recommendedUse && trail.custom_data.recommendedUse !== "") {
         const trailTypes = trail.custom_data.recommendedUse.map(type => type.value)
         let match = false
         for (var i = 0; i < recommendedUseFilter.length; i++) {
