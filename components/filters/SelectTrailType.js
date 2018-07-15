@@ -11,20 +11,20 @@ const SelectTrailType = props =>
       className={props.map.filter.trailType.biking ? null : "inactive"}
       onClick={ () => props.changeTrailType("biking") }
     />
-    <img src="/static/images/menu/horse.svg" alt="Select Horseback Trails"
-      className={props.map.filter.trailType.horseback ? null : "inactive"}
-      onClick={ () => props.changeTrailType("horseback") }
+    <img src="/static/images/menu/horse.svg" alt="Select Equestrian Trails"
+      className={props.map.filter.trailType.equestrian ? null : "inactive"}
+      onClick={ () => props.changeTrailType("equestrian") }
     />
-    <img src="/static/images/menu/atv.svg" alt="Select ATV Trails"
-      className={props.map.filter.trailType.atv ? null : "inactive"}
-      onClick={ () => props.changeTrailType("atv") }
+    <img src="/static/images/menu/atv.svg" alt="Select OHV Trails"
+      className={props.map.filter.trailType.ohv ? null : "inactive"}
+      onClick={ () => props.changeTrailType("ohv") }
     />
     <style jsx>{`
       .trails {
         grid-column-start: 2;
       }
       img {
-        width: 5.5rem;
+        width: 4rem;
         cursor: pointer;
         transition: all 500ms;
         &:not(:last-child) {
@@ -33,8 +33,16 @@ const SelectTrailType = props =>
         &:hover {
           transform: scale(1.1);
         }
+        &:focus, &:active {
+          transform: scale(1);
+        }
         &.inactive {
           opacity: 0.5;
+        }
+      }
+      @media screen and (min-width: 768px) {
+        img {
+          width: 5.5rem;
         }
       }
     `}</style>

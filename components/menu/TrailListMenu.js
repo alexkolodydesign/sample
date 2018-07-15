@@ -43,7 +43,7 @@ class TrailListMenu extends React.Component {
             height: 40rem;
             position: absolute;
             right: 0;
-            top: -47rem;
+            top: -43rem;
             z-index: -1;
             overflow: hidden;
             animation-name: slideUp;
@@ -126,8 +126,8 @@ const Trail = props =>
     <div className="trail_type">
       <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!props.trail.custom_data.recommendedUse.some((el) => el.value == 'hiking') && "inactive"} />
       <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" className={!props.trail.custom_data.recommendedUse.some((el) => el.value == 'biking') && "inactive"} />
-      <img src="/static/images/menu/horse.svg" alt="Select Horseback Trails" className={!props.trail.custom_data.recommendedUse.some((el) => el.value == 'horseback') && "inactive"} />
-      <img src="/static/images/menu/atv.svg" alt="Select ATV Trails" className={!props.trail.custom_data.recommendedUse.some((el) => el.value == 'atv') && "inactive"} />
+      <img src="/static/images/menu/horse.svg" alt="Select Equestrian Trails" className={!props.trail.custom_data.recommendedUse.some((el) => el.value == 'equestrian') && "inactive"} />
+      <img src="/static/images/menu/atv.svg" alt="Select OHV Trails" className={!props.trail.custom_data.recommendedUse.some((el) => el.value == 'ohv') && "inactive"} />
     </div>
     <style jsx>{`
       .trail {

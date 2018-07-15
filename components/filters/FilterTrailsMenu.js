@@ -22,23 +22,25 @@ const FilterTrailsMenu = props =>
           }).join(" ")
         }
         object={props.map.filter.trailType}
-        options={["Hiking", "Biking", "Horseback", "ATV"]}
+        options={["Hiking", "Biking", "Equestrian", "OHV"]}
         action={props.changeTrailType} />
       <Option title="Exclude" selected={props.map.filter.exclude ? "On" : "Off"} options={["On", "Off"]} action={props.changeExclude} />
     </div>
     <style jsx>{`
       h3 {text-transform: uppercase; margin: 0 0 0 1rem; color: #fff;}
       .menu {
+        left: -2rem;
+        right: -2rem;
+        bottom: -2rem;
+        top: initial;
+        z-index: 10;
         padding: 1rem 0.5rem 2rem 0.5rem;
         border-top-left-radius: 1rem;
         border-top-right-radius: 1rem;
         background: #3fa9f5;
-        width: 30rem;
+
         height: 40rem;
         position: absolute;
-        left: 0;
-        top: -47rem;
-        z-index: -1;
         overflow: hidden;
         animation-name: slideUp;
         animation-duration: 500ms;
@@ -76,6 +78,14 @@ const FilterTrailsMenu = props =>
         opacity: 0.5;
         &:hover {
           opacity: 1;
+        }
+      }
+      @media screen and (min-width: 768px) {
+        .menu {
+          left: 0;
+          top: -43rem;
+          z-index: -1;
+          width: 30rem;
         }
       }
     `}</style>

@@ -8,16 +8,16 @@ export const defaultState = {
       trailType: {
         hiking: true,
         biking: true,
-        atv: true,
-        horseback: true
+        ohv: true,
+        equestrian: true
       },
       season: "",
       difficulty: {
         default: "",
         biking: "",
         hiking: "",
-        atv: "",
-        horseback: ""
+        ohv: "",
+        equestrian: ""
       },
       trailLength: null,
       trailTraffic: "",

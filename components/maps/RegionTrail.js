@@ -56,7 +56,8 @@ export default class RegionTrail extends React.Component {
         // Check if localstorage has this trail in it
         const trailStorageJSON = JSON.parse(trailStorage)
         const match = trailStorageJSON.find(storedTrail => trail.slug === storedTrail.slug)
-        if (match) coordinates = match.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng)}))
+        console.log('match, ', match)
+        if (match != undefined) coordinates = match.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng)}))
         else {
           this.setCoordinates()
           return null
@@ -73,10 +74,10 @@ export default class RegionTrail extends React.Component {
       case 'biking':
         trailColor = '#ff5a00'
         break
-      case 'horseback':
+      case 'equestrian':
         trailColor = '#662f8e'
         break
-      case 'atv':
+      case 'ohv':
         trailColor = '#00a89c'
         break
       default:

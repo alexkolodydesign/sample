@@ -180,10 +180,10 @@ class Map extends React.Component {
       case 'biking':
         trailColor = '#ff5a00'
         break
-      case 'horseback':
+      case 'equestrian':
         trailColor = '#662f8e'
         break
-      case 'atv':
+      case 'ohv':
         trailColor = '#00a89c'
         break
       default:

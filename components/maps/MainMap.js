@@ -20,14 +20,23 @@ export default class MainMap extends React.Component {
         <style jsx>{`
           .map {
             background: #eee;
-            border: 0.1rem solid #333;
             position: fixed;
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: calc(100% - 11.5rem);
             z-index: 1;
+          }
+          @media screen and (min-width: 768px) {
+            .map {
+              height: calc(100% - 9.75rem);
+            }
+          }
+          @media screen and (min-width: 992px) {
+            .map {
+              height: calc(100% - 10.75rem);
+            }
           }
         `}</style>
       </div>
@@ -53,6 +62,10 @@ class Map extends React.Component {
         center={this.state.center}
         onZoomChanged={function(e) {
           zoomState(this.getZoom(), null)
+        }}
+        defaultOptions={{
+          streetViewControl: false,
+          mapTypeControl: false
         }}
       >
         {this.props.regionData.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.state.zoom} /> )}

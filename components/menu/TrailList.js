@@ -24,11 +24,11 @@ export default class TrailList extends React.Component {
         {this.state.menu ? <TrailListMenu trails={this.props.system.trails} toggleMenu={this.toggleMenu} menuState={this.state.menu} /> : null}
         <style jsx>{`
           button {
+            padding: 4px 5px;
             background: #4d4e4e;
             color: #fff;
             border: none;
             border-radius: 0.5rem;
-            display: none;
             align-items: center;
             justify-content: center;
             cursor: pointer;
@@ -45,15 +45,27 @@ export default class TrailList extends React.Component {
             }
           }
           img {
-            width: 4.5rem;
+            width: 3rem;
+            height: 3rem;
+            padding: 3px;
           }
           p {
+            display: none;
             margin: 0;
-            padding-right: 2.5rem;
+            padding-right: 1rem;
           }
           @media screen and (min-width: 768px) {
             button {
               display:flex;
+            }
+            p {display: block;}
+            img {
+              width: 4rem;
+            }
+          }
+          @media screen and (min-width: 992px) {
+            img {
+              width: 4.5rem;
             }
           }
         `}</style>
