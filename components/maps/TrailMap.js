@@ -1,10 +1,10 @@
+import axios from 'axios'
 import { withScriptjs, withGoogleMap, GoogleMap, Polyline, Marker } from "react-google-maps"
 import ElevationChart from './ElevationChart'
-import { fitBounds } from 'google-map-react/utils';
-import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js';
-import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js';
+import { fitBounds } from 'google-map-react/utils'
+import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js'
+import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js'
 import ShareButtons from '../layout/ShareButtons'
-// REVIEW: Moved Your Print Styles to Separate Folder
 import printStyle from './mapstyles/print'
 
 export default class TrailMap extends React.Component {
@@ -19,7 +19,6 @@ export default class TrailMap extends React.Component {
   }
   toggleMapStyle() {
     if (!this.state.mapStyle) {
-      // REVIEW: Moved Your Print Styles to Separate Folder
       this.setState({mapStyle: printStyle })
     } else {
       this.setState({mapStyle: false})
@@ -35,7 +34,6 @@ export default class TrailMap extends React.Component {
             mapElement={<div style={{ height: `40rem` }} />}
             googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&v=3.exp&libraries=geometry,drawing,places"
             trail={this.props.trail}
-            // REVIEW: You forgot to pass this state down from this component
             mapStyle={this.state.mapStyle}
           />
         </div>
@@ -89,7 +87,6 @@ export default class TrailMap extends React.Component {
   }
 }
 
-// REVIEW: You forgot to pass the mapStyle prop down from this component
 const MapContainer = withScriptjs(withGoogleMap( (props) => <Map trail={props.trail} mapStyle={props.mapStyle} /> ))
 class Map extends React.Component {
   constructor(props) {
@@ -100,7 +97,6 @@ class Map extends React.Component {
     this.pathMarker = this.pathMarker.bind(this)
     this.mapLoaded = React.createRef()
   }
-  // REVIEW: When the props change after clicking download printable map, we need to catch this change here and return a new state
   static getDerivedStateFromProps(props, state) {
     return state.mapStyle = props.mapStyle
   }
@@ -198,7 +194,6 @@ class Map extends React.Component {
           center={{lat: coordinates[center].lat, lng: coordinates[center].lng}}
           // Only do this once. (TODO: look for a better event for this function like map loaded or something)
           onTilesLoaded={() => !this.state.mapIsCentered ? this.setCenterAndZoom(coordinates) : null}
-          // REVIEW: You were using defaultOptions which probably worked the same as this, but the main difference here is that I'm now using state which is being updated by getDerivedStateFromProps based on what props are being passed down to this component
           options={{
             styles: this.state.mapStyle
           }}

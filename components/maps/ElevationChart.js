@@ -10,18 +10,18 @@ export default class ElevationChart extends React.Component {
     this.mouseMove = this.mouseMove.bind(this)
   }
   async fetchData() {
-    const {data: {elevations}} = await axios.get(
-      '/api/elevation',
-      {
-        params: {
-          locations: this.props.coordinates.map(point => `${Number(point.lat)},${Number(point.lng)}|`).toString(),
-        }
-      }
-    )
-    this.setState({
-      loading: false,
-      elevations: elevations
-    })
+    // const {data: {elevations}} = await axios.get(
+    //   '/api/elevation',
+    //   {
+    //     params: {
+    //       locations: this.props.coordinates.map(point => `${Number(point.lat)},${Number(point.lng)}|`).toString(),
+    //     }
+    //   }
+    // )
+    // this.setState({
+    //   loading: false,
+    //   elevations: elevations
+    // })
   }
   componentDidMount() {
     this.fetchData()

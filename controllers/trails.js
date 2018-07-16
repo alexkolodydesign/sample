@@ -7,8 +7,12 @@ const { regions } = require('../data/regions');
 exports.getTrailData = async (req, res) => {
   try {
     const trailHandle = req.params.trail;
+    if (!trailHandle) {
+      res.statusMessage = "Missing Trail Handle"
+      res.status(422)
+    }
     const { data: [trail] } = await axios.get(`http://washcotrails.flitchbeta.com/wp-json/wp/v2/trails?slug=${trailHandle}`);
-    res.json(trail);
+    res.status(200).json(trail);
   } catch(e) {
     console.log("Issue arose.", e);
     res.status(500).send("Error")
