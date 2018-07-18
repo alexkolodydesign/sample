@@ -39,12 +39,14 @@ class TrailListMenu extends React.Component {
             border-top-left-radius: 1rem;
             border-top-right-radius: 1rem;
             background: #3fa9f5;
-            width: 40rem;
             height: 40rem;
             position: absolute;
-            right: 0;
-            top: -43rem;
-            z-index: -1;
+            left: -2rem;
+            right: -2rem;
+            bottom: -1.5rem;
+            top: initial;
+
+            z-index: 10;
             overflow: hidden;
             animation-name: slideUp;
             animation-duration: 500ms;
@@ -95,6 +97,14 @@ class TrailListMenu extends React.Component {
               opacity: 1;
             }
           }
+          @media screen and (min-width: 768px) {
+            .menu {
+              left: 0;
+              top: -43rem;
+              z-index: -1;
+              width: 30rem;
+            }
+          }
         `}</style>
       </div>
     )
@@ -104,7 +114,7 @@ class TrailListMenu extends React.Component {
 const Trail = props =>
   <div className="trail">
     <Link href={`/trails/${props.trail.slug}`}><a>
-      <img src={props.trail.image ? props.trail.image : "https://placehold.it/75x75?text=coming-soon"} alt=""/>
+      <img src={props.trail.custom_data.media.pictures[0] ? props.trail.custom_data.media.pictures[0].file.sizes.medium : "https://placehold.it/75x75?text=coming-soon"} alt=""/>
     </a></Link>
     <div className="details">
       <h4><Link href={`/trails/${props.trail.slug}`}><a>{props.trail.title.rendered}</a></Link></h4>
@@ -150,6 +160,10 @@ const Trail = props =>
           animation-name: slideUp;
           animation-duration: 500ms;
           animation-delay: 200ms;
+        }
+        img {
+          max-width: 100%;
+          height: auto;
         }
       }
       .details {

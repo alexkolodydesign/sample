@@ -31,8 +31,9 @@ const FilterTrailsMenu = props =>
       .menu {
         left: -2rem;
         right: -2rem;
-        bottom: -2rem;
+        bottom: -1.5rem;
         top: initial;
+
         z-index: 10;
         padding: 1rem 0.5rem 2rem 0.5rem;
         border-top-left-radius: 1rem;
