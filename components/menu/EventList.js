@@ -21,7 +21,7 @@ export default class EventList extends React.Component {
         <button onClick={this.toggleMenu} className={this.state.menu ? "active" : null}>
           <img src="/static/images/menu/event_calendar.svg" alt="Event List"/>
         </button>
-        {this.state.menu ? <EventListMenu events={this.props.events} toggleMenu={this.toggleMenu} menuState={this.state.menu} /> : null}
+        {this.state.menu && this.props.events ? <EventListMenu events={this.props.events} toggleMenu={this.toggleMenu} menuState={this.state.menu} /> : null}
         <style jsx>{`
           button {
             padding: 2px;

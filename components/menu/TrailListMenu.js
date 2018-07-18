@@ -75,7 +75,7 @@ class TrailListMenu extends React.Component {
             }
           }
           .trails {
-            background-image: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)), url(/static/images/background-pattern.svg);
+            background-image: linear-gradient(rgba(255,255,255,0.98), rgba(255,255,255,0.98)), url(/static/images/background-pattern.svg);
             padding: 0 0.5rem;
             height: calc(100% - 5rem);
             overflow-y: scroll;

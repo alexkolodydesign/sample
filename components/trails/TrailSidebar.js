@@ -71,10 +71,6 @@ const TrailSidebar = props => {
       }
 
       </div>
-      <div className="buttons">
-        <button>Directions to Trail Head</button>
-        <button>Back to Trail System</button>
-      </div>
       <style jsx>{`
         .background {
           background: #fff;

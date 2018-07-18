@@ -38,21 +38,30 @@ export default class TrailMap extends React.Component {
           />
         </div>
         <div className="buttons">
-          <button onClick={this.toggleMapStyle}>Download Printable Map</button>
-          <button>Download GPS for Offline</button>
-          {/* TODO: Give this class some styles for when it's active or not */}
-          <button onClick={this.toggleShareButtons} className={this.state.shareButtons && "active"}>Share this Trail</button>
-          <button>Save this Trail</button>
+          <button onClick={this.toggleShareButtons} className={this.state.shareButtons && "active"}>
+            <img src="/static/images/trail/share.svg" alt="Event List"/>
+            <span>Share Trail</span>
+          </button>
+          <button>
+            <img src="/static/images/trail/download.svg" alt="Event List"/>
+            <span>Download GPS</span>
+          </button>
+          <button onClick={this.toggleMapStyle}><img src="/static/images/trail/print.svg" alt="Print Map"/> Print Map</button>
+          <button>
+            <img src="/static/images/menu/gps.svg" alt="Directions"/>
+            <span>Directions to Trail Head</span>
+          </button>
         </div>
         <div className="share_buttons">
           {this.state.shareButtons && <ShareButtons />}
         </div>
         <style jsx>{`
-          .map_container {background: #fff;
-              background-image: linear-gradient(rgba(255,255,255,0.98),rgba(255,255,255,0.98)),url(/static/images/background-pattern.svg);
-              background-position: center;
-              background-size: 29rem auto;
-              padding:3rem;
+          .map_container {
+            background: #fff;
+            background-image: linear-gradient(rgba(255,255,255,0.98),rgba(255,255,255,0.98)),url(/static/images/background-pattern.svg);
+            background-position: center;
+            background-size: 29rem auto;
+            padding: 3rem;
           }
           .map {
             background: #eee;
@@ -60,25 +69,51 @@ export default class TrailMap extends React.Component {
             height: 50rem;
           }
           .buttons {
-            margin-top: 3rem;
+            margin-top: 1.5rem;
             display: grid;
             grid-template: 1fr 1fr / 1fr 1fr;
-            grid-gap: 3rem 6rem;
+            grid-gap: 1.5rem
           }
           .share_buttons {
-            margin-top: 3rem;
+            margin-top: 1.5rem;
           }
           button {
             border: none;
             border-radius: 1rem;
             background: #3fa9f5;
-            padding: 1.5rem 3rem;
+            padding: 1rem 2rem;
             color: #fff;
             font-size: 1.8rem;
             cursor: pointer;
             transition: all 500ms;
             &:hover {
               background: #0d93f2;
+            }
+            &:last-of-type {
+              background: #262727;
+              &:hover {
+                background: #666666;
+              }
+
+            }
+            &.active {
+              background-color: #00a89c;
+            }
+            img {
+              width: 3rem;
+              height: 3rem;
+              margin-right: 1rem
+            }
+          }
+          @media screen and (min-width: 768px) {
+            .buttons {
+              grid-template: 1fr 1fr / 1fr 1fr 1fr;
+              button {
+                &:last-of-type {
+                  grid-column: 1 / span 3;
+                  grid-row: 2;
+                }
+              }
             }
           }
         `}</style>

@@ -48,11 +48,20 @@ const MapContainer = withScriptjs(withGoogleMap( (props) => <Map regionData={pro
 class Map extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { zoom: 10, center: {lat: 37.2, lng: -113.432} }
+    this.state = { zoom: 8, center: {lat: 37.327059, lng: -113.445826} }
     this.zoom = this.zoom.bind(this)
   }
   zoom(zoom, center) {
     this.setState({zoom, center})
+  }
+  componentDidMount() {
+    if (window.innerWidth >= 768 && window.innerWidth < 991) {
+      this.setState({zoom: 9})
+    } else if (window.innerWidth >= 992 && window.innerWidth < 1500) {
+      this.setState({zoom: 10})
+    } else if (window.innerWidth > 1500) {
+      this.setState({zoom: 11})
+    }
   }
   render() {
     const zoomState = this.zoom

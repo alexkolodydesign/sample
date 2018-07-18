@@ -14,7 +14,7 @@ const regions = [
   {
     regionName: "Urban",
     markerIcon: "/static/images/regions/urban-region.svg",
-    markerCoordinates: { lat: 37.15101953, lng: -113.5643335 },
+    markerCoordinates: { lat: 37.109891, lng: -113.583317 },
     regionImage: ""
   },
   {

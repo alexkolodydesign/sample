@@ -23,8 +23,14 @@ const Trail = props => {
     <Layout nav={false} background="#f2f2f2" overflow={true}>
       <Head/>
       <div className="wrapper">
-        <p><Link href="/"><a>…back to Region View</a></Link></p>
-        <h1>Trail Map</h1>
+        <p><Link href="/"><a>
+        <div className="buttons">
+          <button>
+            &lt; Back to map
+          </button>
+        </div>
+        </a></Link></p>
+        <h1>{props.trail.title.rendered}</h1>
       </div>
       <div className="wrapper trail">
         <TrailSidebar trail={props.trail} />
@@ -52,6 +58,21 @@ const Trail = props => {
           display: grid;
           grid-template-columns: 1fr 1fr;
           grid-gap: 3rem;
+        }
+        button {
+          border: none;
+          border-radius: 0.25rem;
+          background: #262727;
+          padding: 0.5rem 2rem;
+          color: #fff;
+          font-size: 1.8rem;
+          cursor: pointer;
+          transition: all 500ms;
+          flex: 50%;
+          flex-wrap: wrap;
+          &:hover {
+            background: #666666;
+          }
         }
       `}</style>
     </Layout>
