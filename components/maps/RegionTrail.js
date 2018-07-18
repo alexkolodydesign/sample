@@ -95,11 +95,79 @@ export default class RegionTrail extends React.Component {
         />
         {this.state.menu &&
           <Marker position={{lat: coordinates[0].lat, lng: coordinates[0].lng}} icon={{url: ""}} >
-            <InfoWindow onCloseClick={() => this.setState({menu: false})}>
-              <div>
-                <h3>{trail.title.rendered}</h3>
-                <Link href={`/trails/${trail.slug}`}><a>Go to Trail ></a></Link>
+            <InfoWindow options={{'maxWidth' : 320}} onCloseClick={() => this.setState({menu: false})}>
+              <div className="info_wrapper">
+                <div className="left">
+                  <h3>{trail.title.rendered}</h3>
+                  {trail.custom_data.length &&
+                    <p>Length: <span>{trail.custom_data.length} miles</span></p>
+                  }
+                  {trail.custom_data.highlights &&
+                    <p>Highlights: {trail.custom_data.highlights.map((highlight, k) => <span key={k}>{highlight.label} </span>)}
+                    </p>
+                  }
+                  {trail.custom_data.trailSurface &&
+                    <p>Trail Surface: <span>{trail.custom_data.trailSurface}</span></p>
+                  }
+                  {trail.custom_data.trailTraffic &&
+                    <p>Trail Traffic: <span>{trail.custom_data.trailTraffic.label}</span></p>
+                  }
+                  {/* REVIEW: Is Difficulty being done correctly here? Also check TrailSidebar.js */}
+                  {trail.custom_data.difficulty && trail.custom_data.difficulty.defaultDifficulty &&
+                    <p>Difficulty: <span>{trail.custom_data.difficulty.defaultDifficulty.label}</span></p>
+                  }
+                  {trail.custom_data.media.pictures[0] &&
+                    <img src={trail.custom_data.media.pictures[0].file.sizes.medium} />
+                  }
+                  <br />
+                  <Link href={`/trails/${trail.slug}`}><a>> View Trail</a></Link>
+                </div>
+                <div className="right">
+                  {trail.custom_data.region &&
+                    <p>Region: <span>{trail.custom_data.region}</span></p>
+                  }
+                  Something
+                </div>
+                <style jsx>{`
+                  h3 {
+                    padding: 0 0 6px;
+                    margin: 0 0 3px;
+                    border-bottom: 1px solid #222222;
+                  }
+                  p {
+                    font-weight: bold;
+                    margin: 2px 0;
+                    span {
+                      font-weight: normal;
+                    }
+                    &:last-of-type {
+                      margin-bottom: 10px;
+                    }
+                  }
+                  .info_wrapper {
+                    display: flex;
+                    .left {
+                      flex: 1;
+                      flex-grow: 2;
+                    }
+                    .right {
+                      flex: 1;
+                      flex-grow: 1;
+                    }
+                  }
+                  a {
+                    text-decoration: none;
+                    color: #3fa9f5;
+                    font-weight: bold;
+                    padding: 3px 0;
+                    &:hover {
+                      text-decoration: none;
+                      color: #000;
+                    }
+                  }
+                `}</style>
               </div>
+
             </InfoWindow>
           </Marker>
         }

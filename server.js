@@ -16,6 +16,7 @@ const staticFileOptions = { root: __dirname + '/static/', headers: { 'Content-Ty
 const catchErrors = fn => (req, res, next) => fn(req, res, next).catch(next);
 // Trails API
 const trails = require('./controllers/trails');
+const events = require('./controllers/events');
 
 app
   .prepare()
@@ -32,6 +33,7 @@ app
     router.get("/api/elevation", trails.getElevation);
     router.get("/api/trail/:trail", trails.getTrailData);
     router.get("/api/trail/", trails.getTrailData);
+    router.get("/api/event/", events.getEventData);
     // Handle All Routes
     server.get('/', (req, res) => app.render(req, res, '/'));
     server.get('/trail-systems/:system', (req, res) => app.render(req, res, '/trail-systems/trailsystem'));

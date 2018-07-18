@@ -22,7 +22,7 @@ const TrailSidebar = props => {
           <div><p>Trail Traffic<br/><span>{trail.trailTraffic.label}</span></p></div>
         }
 
-        {trail.enteranceFee &&
+        {trail.entranceFee &&
           <div><p>Entrance Fee<br/><span>{trail.entranceFee}</span></p></div>
         }
 

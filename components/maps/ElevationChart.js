@@ -28,7 +28,7 @@ export default class ElevationChart extends React.Component {
   }
   renderTooltip(data) {
     const elevation = data.payload && data.payload[0] ? Number(data.payload[0].payload.elevation).toFixed(0) : false
-    if (!elevation) return null
+    //if (!elevation) return null
     return (
       <div className="custom-tooltip">
         <p>Elevation <span>{elevation}</span></p>
@@ -47,7 +47,7 @@ export default class ElevationChart extends React.Component {
     )
   }
   mouseMove(data) {
-    const marker = data.activePayload ? data.activePayload[0].payload.location : false
+    const marker = data.activePayload ? data.activePayload[0].payload.location : true
     this.props.pathMarker(marker)
   }
   render() {
@@ -55,16 +55,23 @@ export default class ElevationChart extends React.Component {
     const totalDistance = Number(this.props.trail.custom_data.length).toFixed(2)
     const maxElevation = Number(Math.max(...this.state.elevations.map(o => o.elevation)) ).toFixed(0)
     const minElevation = Number(Math.min(...this.state.elevations.map(o => o.elevation)) ).toFixed(0)
+    const diff = Math.floor(Math.abs(maxElevation - minElevation))
     return (
       <div>
         <h2>Elevation</h2>
         <div className="chart">
           <AreaChart width={820} height={250} data={this.state.elevations} onMouseMove={this.mouseMove}
-            margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+            margin={{top: 10, right: 20, left: 10, bottom: 20}}>
             <CartesianGrid strokeDasharray="3 3"/>
-            <YAxis allowDecimals={false} unit=" ft" interval={0} domain={[Math.round(minElevation/10)*10, Math.ceil(maxElevation/10)*10]} />
+            <YAxis
+              allowDecimals={false}
+              unit=" ft"
+              interval='preserveEnd'
+              //ticks={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
+              domain={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
+            />
             <Tooltip content={this.renderTooltip} />
-            <Area type='monotone' dataKey='elevation' stroke='#0967aa' fill='#3fa9f5' />
+            <Area type='monotone' dataKey='elevation' stroke={this.props.areaStrokeColor} strokeWidth={2} fill='rgba(197,196,188,0.8)' />
           </AreaChart>
         </div>
         <div className="details">

@@ -64,8 +64,7 @@ class Map extends React.Component {
           zoomState(this.getZoom(), null)
         }}
         defaultOptions={{
-          streetViewControl: false,
-          mapTypeControl: false
+          streetViewControl: false
         }}
       >
         {this.props.regionData.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.state.zoom} /> )}

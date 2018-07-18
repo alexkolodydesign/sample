@@ -197,6 +197,9 @@ class Map extends React.Component {
           options={{
             styles: this.state.mapStyle
           }}
+          defaultOptions={{
+            streetViewControl: false
+          }}
         >
           <Polyline
             path={coordinates}
@@ -212,7 +215,7 @@ class Map extends React.Component {
             />
           }
         </GoogleMap>
-        <ElevationChart coordinates={coordinates.slice(0).reverse()} trail={this.props.trail} pathMarker={this.pathMarker} />
+        <ElevationChart coordinates={coordinates.slice(0).reverse()} trail={this.props.trail} areaStrokeColor={trailColor} pathMarker={this.pathMarker} />
       </React.Fragment>
     )
   }

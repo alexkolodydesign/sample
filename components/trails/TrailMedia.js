@@ -25,7 +25,14 @@ const TrailMedia = props =>
           <hr/>
           <div>
             {props.media.pictures.map((picture, k) => {
-              return <div  key={k}></div>
+              return (
+                <div key={k}>
+                  { /* {file, url, thumbnailUrl, credit} */ }
+                  { /* {ID, id, title, filename, filesize, url, link, alt, author, description, caption, name, status, uploaded_to, date, modified, menu_order, mime_type, type, subtype, icon, width, height, sizes} */}
+                  <img src={picture.file.sizes.medium} />
+
+                </div>
+              )
             })}
           </div>
         </div>
@@ -61,12 +68,15 @@ const TrailMedia = props =>
         & > div {
           display: grid;
           grid-template-columns: 1fr 1fr 1fr;
-          grid-gap: 3rem;
+          grid-gap: 2rem;
           & > div {
             background: #ccc;
-            height: 10rem;
             width: 100%;
           }
+        }
+        img.preview {
+          max-width: 100%;
+          height: auto;
         }
       }
     `}</style>
