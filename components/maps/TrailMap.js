@@ -109,13 +109,13 @@ class Map extends React.Component {
       if (!trailStorage) {
         localStorage.setItem('trails', JSON.stringify([{
           slug: this.props.trail.slug,
-          coordinates: trail.coordinates
+          coordinates: trail.coordinates ? trail.coordinates : []
         }]))
       } else {
         const trailStorageJSON = JSON.parse(trailStorage)
         trailStorageJSON.push({
           slug: this.props.trail.slug,
-          coordinates: trail.coordinates
+          coordinates: trail.coordinates ? trail.coordinates : []
         })
         localStorage.removeItem('trails')
         localStorage.setItem('trails', JSON.stringify(trailStorageJSON))
