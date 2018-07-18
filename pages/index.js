@@ -6,6 +6,7 @@ import { filterAction } from '../redux/filterAction'
 import MainMap from '../components/maps/MainMap'
 import TrailSystemGuide from '../components/menu/TrailSystemGuide'
 import MainMenu from '../components/menu/MainMenu'
+import EventList from '../components/menu/EventList'
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -17,7 +18,8 @@ class Dashboard extends React.Component {
       <Layout>
         <Head/>
         <MainMap regionData={region} />
-        <TrailSystemGuide/>
+        <EventList events={this.props.e_data} />
+        <TrailSystemGuide />
         <MainMenu system={region} />
       </Layout>
     )
@@ -30,8 +32,11 @@ Dashboard.getInitialProps = async props => {
   try {
     const res = await fetch(hostUrl + '/api/region' );
     const data = await res.json();
+    const e_res = await fetch(hostUrl + '/api/washco_event' );
+    const e_data = await e_res.json();
     return {
-      region: data
+      region: data,
+      event: e_data
     };
   } catch (e) {
     return {
