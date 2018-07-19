@@ -38,42 +38,49 @@ export default class Region extends React.Component {
     }
     return (
       <React.Fragment>
-          {this.props.zoomLevel < 12 &&
-            <Polygon
-              paths={coordinates}
-              options={{
-                strokeColor:"#000000",
-                strokeOpacity:0.25,
-                strokeWeight:1,
-                fillColor:"#ffffff",
-                fillOpacity:0.85
-              }}
-              onMouseOver={function() { this.setOptions({fillOpacity: 0.35}) }}
-              onMouseOut={function() { this.setOptions({fillOpacity: 0.85}) }}
-              onClick={() => this.props.zoom( 13, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}
-            />
+        {this.props.zoomLevel < 12 &&
+          <Polygon
+            paths={coordinates}
+            options={{
+              strokeColor:"#000000",
+              strokeOpacity:0.25,
+              strokeWeight:1,
+              fillColor:"#ffffff",
+              fillOpacity:0.85
+            }}
+            onMouseOver={function() { this.setOptions({fillOpacity: 0.35}) }}
+            onMouseOut={function() { this.setOptions({fillOpacity: 0.85}) }}
+            onClick={() => this.props.zoom( 13, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}
+          />
+        }
+        {this.props.zoomLevel < 12 &&
+          <Marker
+            position={{lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng}}
+            icon={{
+              url: region.markerIcon,
+              scaledSize: new google.maps.Size(68,68)
+            }}
+            onClick={this.toggleMenu}
+          >
+            {
+              this.state.menu &&
+              <InfoWindow onCloseClick={() => this.setState({menu: false})}>
+                <div>
+                  <h3>{region.regionName}</h3>
+                  <img src={region.regionImage} alt=""/>
+                  <p className="explore" onClick={() => this.props.zoom( 13, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}>Explore Region</p>
+                </div>
+              </InfoWindow>
+            }
+          </Marker>
+        }
+        <style jsx>{`
+          .explore {
+            color: #3fa9f5;
+            cursor: pointer;
+            font-weight: 500;
           }
-          {this.props.zoomLevel < 12 &&
-            <Marker
-              position={{lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng}}
-              icon={{
-                url: region.markerIcon,
-                scaledSize: new google.maps.Size(68,68)
-              }}
-              onClick={this.toggleMenu}
-            >
-              {
-                this.state.menu &&
-                <InfoWindow onCloseClick={() => this.setState({menu: false})}>
-                  <div>
-                    <h3><img src={`/static/images/regions/${region.regionName.toLowerCase()}-only.svg`} alt="Icon"/> {region.regionName}</h3>
-
-                  </div>
-                </InfoWindow>
-              }
-            </Marker>
-
-          }
+        `}</style>
       </React.Fragment>
     )
   }

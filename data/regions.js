@@ -21,7 +21,7 @@ const regions = [
     regionName: "Canyon",
     markerIcon: "/static/images/regions/canyon-region.svg",
     markerCoordinates: { lat: 37.32113432, lng: -113.0664033 },
-    regionImage: ""
+    regionImage: "http://washcotrails.flitchbeta.com/wp-content/uploads/2018/07/canyon-2179250_1280-300x200.jpg"
   },
   {
     regionName: "Desert",
