@@ -100,7 +100,7 @@ export default class RegionTrail extends React.Component {
                 <div className="left">
                   <h3>{trail.title.rendered}</h3>
                   {trail.custom_data.length &&
-                    <p>Length: <span>{trail.custom_data.length.toFixed(2)} miles</span></p>
+                    <p>Length: <span>{Number(trail.custom_data.length).toFixed(2)} miles</span></p>
                   }
                   {trail.custom_data.highlights &&
                     <p>Highlights: {trail.custom_data.highlights.map((highlight, k) => <span key={k}>{highlight.label} </span>)}
