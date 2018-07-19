@@ -23,13 +23,13 @@ const Trail = props => {
     <Layout nav={false} background="#f2f2f2" overflow={true}>
       <Head/>
       <div className="wrapper">
-        <p><Link href="/"><a>
-        <div className="buttons">
-          <button>
-            &lt; Back to map
-          </button>
-        </div>
-        </a></Link></p>
+        <Link href="/">
+          <a style={{paddingTop: "3rem"}}>
+            <button>
+              &lt; Back to map
+            </button>
+          </a>
+        </Link>
         <h1>{props.trail.title.rendered}</h1>
       </div>
       <div className="wrapper trail">
@@ -70,6 +70,7 @@ const Trail = props => {
           transition: all 500ms;
           flex: 50%;
           flex-wrap: wrap;
+          margin-top: 1.5rem;
           &:hover {
             background: #666666;
           }

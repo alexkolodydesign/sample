@@ -101,7 +101,7 @@ class TrailListMenu extends React.Component {
           @media screen and (min-width: 768px) {
             .menu {
               left: 0;
-              top: -43rem;
+              top: -45.5rem;
               z-index: -1;
               width: 30rem;
             }
@@ -114,12 +114,15 @@ class TrailListMenu extends React.Component {
 
 const Trail = props =>
   <div className="trail">
-    <Link href={`/trails/${props.trail.slug}`}><a>
-      <img src={props.trail.custom_data.media.pictures[0] ? props.trail.custom_data.media.pictures[0].sizes.medium : "https://placehold.it/75x75?text=unavailable"} alt=""/>
-    </a></Link>
+    <Link href={`/trails/${props.trail.slug}`}>
+      <a
+        style={{backgroundImage: `url(${props.trail.custom_data.media.pictures[0] ? props.trail.custom_data.media.pictures[0].sizes.medium : "https://placehold.it/75x75?text=unavailable"})`, backgroundPosition: "center", backgroundSize: "cover"}}
+      >
+      </a>
+    </Link>
     <div className="details">
       <h4><Link href={`/trails/${props.trail.slug}`}><a>{props.trail.title.rendered}</a></Link></h4>
-      <p>Length: <span>{props.trail.custom_data.length} Miles</span></p>
+      <p><span>{props.trail.custom_data.length} Miles</span></p>
       {props.trail.custom_data.highlights &&
         <p>Highlights:
           {props.trail.custom_data.highlights.map((highlight, index, k) => {
@@ -144,7 +147,7 @@ const Trail = props =>
       .trail {
         background: #eee;
         display: grid;
-        grid-template-columns: 7.5rem 1fr 8rem;
+        grid-template-columns: 7.5rem 1fr 6.5rem;
         margin: 1rem 0;
         animation-fill-mode: forwards;
         &:nth-child(1) {
@@ -168,7 +171,7 @@ const Trail = props =>
         }
       }
       .details {
-        padding: 0.25rem 2rem 1rem 1rem;
+        padding: 0.25rem 1rem 1rem 1rem;
         h4 {
           margin: 0; font-weight: 700;
           a {
@@ -181,8 +184,8 @@ const Trail = props =>
       }
       .trail_type {
         display: grid;
-        grid-template: 4rem 4rem / 4rem 4rem;
-        align-items: center;
+        grid-template: 2.5rem 2.5rem / 2.5rem 2.5rem;
+        align-self: center;
         img {width: 3.5rem;}
       }
       .inactive {
