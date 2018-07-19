@@ -3,25 +3,19 @@ import Link from 'next/link'
 const TrailSystemGuide = props =>
   <div className="systems">
     <div>
-      <Link href="/trail-systems/trailsystem" as="/trail-systems/zion-national-park">
-        <a className={props.system == "zion-national-park" ? "active" : null}>
-          Zion <span>National Park</span>
-        </a>
-      </Link>
+      <a className={props.system == "zion-national-park" ? "active" : null}>
+        Zion <span>National Park</span>
+      </a>
     </div>
     <div>
-      <Link href="/trail-systems/trailsystem" as="/trail-systems/snow-canyon-state-park">
-        <a className={props.system == "snow-canyon-state-park" ? "active" : null}>
-          Snow Canyon <span>State Park</span>
-        </a>
-      </Link>
+      <a className={props.system == "snow-canyon-state-park" ? "active" : null}>
+        Snow Canyon <span>State Park</span>
+      </a>
     </div>
     <div>
-      <Link href="/trail-systems/trailsystem" as="/trail-systems/gooseberry-mesa">
-        <a className={props.system == "gooseberry-mesa" ? "active" : null}>
-          Gooseberry <span>Mesa</span>
-        </a>
-      </Link>
+      <a className={props.system == "gooseberry-mesa" ? "active" : null}>
+        Gooseberry <span>Mesa</span>
+      </a>
     </div>
     <style jsx>{`
       .systems {
