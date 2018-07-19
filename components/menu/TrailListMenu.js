@@ -134,8 +134,8 @@ const Trail = props =>
           }
         )}</p>
       }
-      <p>Difficulty: <span>{props.trail.custom_data.difficulty.defaultDifficulty.value}</span></p>
-      <p>Region: <span>{props.trail.custom_data.region}</span></p>
+      {props.trail.custom_data.difficulty.defaultDifficulty.value && <p><span>{props.trail.custom_data.difficulty.defaultDifficulty.label}</span></p>}
+      {props.trail.custom_data.region && <p><span>{props.trail.custom_data.region} Region</span></p>}
     </div>
     <div className="trail_type">
       <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!props.trail.custom_data.recommendedUse.some((el) => el.value == 'hiking') && "inactive"} />
