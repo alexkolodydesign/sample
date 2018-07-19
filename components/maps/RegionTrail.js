@@ -41,7 +41,7 @@ export default class RegionTrail extends React.Component {
     const trail = this.props.trail
     let coordinates
     // Zoom threshold is not great enough for trail to show
-    if (this.props.zoomLevel < trail.custom_data.zoomThreshold) {
+    if (this.props.zoomLevel < 10) {
       return null
     } else {
       // Check localstorage for data before sending fetch
@@ -100,7 +100,7 @@ export default class RegionTrail extends React.Component {
                 <div className="left">
                   <h3>{trail.title.rendered}</h3>
                   {trail.custom_data.length &&
-                    <p>Length: <span>{trail.custom_data.length} miles</span></p>
+                    <p>Length: <span>{trail.custom_data.length.toFixed(2)} miles</span></p>
                   }
                   {trail.custom_data.highlights &&
                     <p>Highlights: {trail.custom_data.highlights.map((highlight, k) => <span key={k}>{highlight.label} </span>)}
@@ -117,17 +117,16 @@ export default class RegionTrail extends React.Component {
                     <p>Difficulty: <span>{trail.custom_data.difficulty.defaultDifficulty.label}</span></p>
                   }
                   {trail.custom_data.media.pictures[0] &&
-                    <img src={trail.custom_data.media.pictures[0].file.sizes.medium} />
+                    <img src={trail.custom_data.media.pictures[0].sizes.medium} />
                   }
                   <br />
                   <Link href={`/trails/${trail.slug}`}><a>> View Trail</a></Link>
                 </div>
-                <div className="right">
+                { /* <div className="right">
                   {trail.custom_data.region &&
                     <p>Region: <span>{trail.custom_data.region}</span></p>
                   }
-                  Something
-                </div>
+                </div> */ }
                 <style jsx>{`
                   h3 {
                     padding: 0 0 6px;
@@ -149,6 +148,10 @@ export default class RegionTrail extends React.Component {
                     .left {
                       flex: 1;
                       flex-grow: 2;
+                      img {
+                        max-height: 150px;
+                        width: auto;
+                      }
                     }
                     .right {
                       flex: 1;

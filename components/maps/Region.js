@@ -53,7 +53,6 @@ export default class Region extends React.Component {
               onClick={() => this.props.zoom( 13, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}
             />
           }
-          {console.log({region})}
           {this.props.zoomLevel < 12 &&
             <Marker
               position={{lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng}}

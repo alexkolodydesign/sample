@@ -36,7 +36,7 @@ export default class EventList extends React.Component {
             position: absolute;
             top: 50px;
             left: 15px;
-            z-index: 10;
+            z-index: 2;
             width: 62px;
             height: 62px;
             &:hover {

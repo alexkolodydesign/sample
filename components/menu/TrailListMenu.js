@@ -35,18 +35,19 @@ class TrailListMenu extends React.Component {
         <style jsx>{`
           h3 {text-transform: uppercase; margin: 0 0 0 1rem; color: #fff;}
           .menu {
+            left: -2rem;
+            right: -2rem;
+            bottom: -2.35rem;
+            top: initial;
+
+            z-index: 10;
             padding: 1rem 0.5rem 2rem 0.5rem;
             border-top-left-radius: 1rem;
             border-top-right-radius: 1rem;
             background: #3fa9f5;
+
             height: 40rem;
             position: absolute;
-            left: -2rem;
-            right: -2rem;
-            bottom: -1.5rem;
-            top: initial;
-
-            z-index: 10;
             overflow: hidden;
             animation-name: slideUp;
             animation-duration: 500ms;
@@ -114,7 +115,7 @@ class TrailListMenu extends React.Component {
 const Trail = props =>
   <div className="trail">
     <Link href={`/trails/${props.trail.slug}`}><a>
-      <img src={props.trail.custom_data.media.pictures[0] ? props.trail.custom_data.media.pictures[0].file.sizes.medium : "https://placehold.it/75x75?text=coming-soon"} alt=""/>
+      <img src={props.trail.custom_data.media.pictures[0] ? props.trail.custom_data.media.pictures[0].sizes.medium : "https://placehold.it/75x75?text=unavailable"} alt=""/>
     </a></Link>
     <div className="details">
       <h4><Link href={`/trails/${props.trail.slug}`}><a>{props.trail.title.rendered}</a></Link></h4>

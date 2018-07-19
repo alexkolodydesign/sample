@@ -33,6 +33,7 @@ export default class FilterTrails extends React.Component {
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            position: relative;
             transition: all 500ms;
             &:hover {
               background: #262727;
