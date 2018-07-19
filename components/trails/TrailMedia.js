@@ -1,5 +1,3 @@
-import Lightbox from 'lightbox-react'
-
 const TrailMedia = props =>
 <div>
   <div className="background_pattern" style={{position: "relative"}}>
@@ -99,6 +97,9 @@ class ImageGallery extends React.Component {
       loading: true
     };
   }
+  componentDidMount() {
+    this.setState({loading: false})
+  }
   render() {
     const { photoIndex, isOpen } = this.state;
     const images = this.props.images
@@ -117,7 +118,7 @@ class ImageGallery extends React.Component {
           )
         })}
         <div>
-          {isOpen && (
+          {!this.state.loading && isOpen && (
             <div className="overlay">
               <Lightbox
                 mainSrc={gallery[photoIndex]}
