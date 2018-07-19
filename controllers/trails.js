@@ -31,7 +31,7 @@ exports.getTrailSystemData = function(req, res) {
 
 exports.getRegionData = async (req, res) => {
   try {
-    const { data: trails } = await axios.get('http://washcotrails.flitchbeta.com/wp-json/wp/v2/trails?per_page=500&order=asc&region=2');
+    const { data: trails } = await axios.get('http://washcotrails.flitchbeta.com/wp-json/wp/v2/trails?per_page=500&order=asc&region=6');
     return res.json({
       regions,
       trails
