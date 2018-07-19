@@ -25,8 +25,6 @@ app
     ConfigureExpress(server);
     const router = require('express-promise-router')();
     server.use(router);
-    // Mock API
-    router.get("/api/trailsystem/:trailsystem", trails.getTrailSystemData);
     // API
     router.get("/api/region", trails.getRegionData);
     router.get("/api/coordinates", trails.getCoordinates);
