@@ -99,9 +99,6 @@ class ImageGallery extends React.Component {
       loading: true
     };
   }
-  componentDidMount() {
-    this.setState({loading: false})
-  }
   render() {
     const { photoIndex, isOpen } = this.state;
     const images = this.props.images
@@ -120,7 +117,7 @@ class ImageGallery extends React.Component {
           )
         })}
         <div>
-          {!this.state.loading && isOpen && (
+          {isOpen && (
             <div className="overlay">
               <Lightbox
                 mainSrc={gallery[photoIndex]}
