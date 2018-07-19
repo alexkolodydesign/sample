@@ -195,13 +195,13 @@ class Map extends React.Component {
       // Check if localstorage has this trail in it
       const trailStorageJSON = JSON.parse(trailStorage)
       const match = trailStorageJSON.find(storedTrail => trail.slug === storedTrail.slug)
-      if (match) coordinates = match.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng)}))
+      if (match) coordinates = match.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng), elevation: Number(point.elevation)}))
       else {
         this.setCoordinates()
         return null
       }
     }
-    if (!coordinates) coordinates = this.state.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng)}))
+    if (!coordinates) coordinates = this.state.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng), elevation: Number(point.elevation)}))
     // Change Trail Color Based on the First Value of Recommended Use Array
     let trailColor
     switch(trail.custom_data.recommendedUse[0].value) {
