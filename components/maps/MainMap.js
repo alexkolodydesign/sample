@@ -1,84 +1,62 @@
 import axios from "axios"
 import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps"
+import { connect } from 'react-redux'
+import { goToSystem } from '../../redux/actions'
 import Region from './Region'
 import RegionTrail from './RegionTrail'
 
-export default class MainMap extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-    return (
-      <div className="map">
-        <MapContainer
-          loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={<div style={{ height: `100%` }} id="washington_map" />}
-          mapElement={<div style={{ height: `100%` }} />}
-          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&v=3.exp&libraries=geometry,drawing,places"
-          regionData={this.props.regionData}
-        />
-        <style jsx>{`
-          .map {
-            background: #eee;
-            position: fixed;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: calc(100% - 11.5rem);
-            z-index: 1;
-          }
-          @media screen and (min-width: 768px) {
-            .map {
-              height: calc(100% - 9.75rem);
-            }
-          }
-          @media screen and (min-width: 992px) {
-            .map {
-              height: calc(100% - 10.75rem);
-            }
-          }
-        `}</style>
-      </div>
-    )
-  }
-}
+// Redux
+const mapStateToProps = (state, ownProps) => {
+  return {
+    map: state.map,
+    ...ownProps
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    goToSystem: (zoom, center) => {
+      dispatch(goToSystem(zoom, center));
+    }
+  };
+};
 
-const MapContainer = withScriptjs(withGoogleMap( (props) => <Map regionData={props.regionData} /> ))
 class Map extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { zoom: 8, center: {lat: 37.327059, lng: -113.445826} }
     this.zoom = this.zoom.bind(this)
+    this.washington_map = React.createRef();
   }
   zoom(zoom, center) {
-    this.setState({zoom, center})
+    this.props.goToSystem(zoom, center)
   }
   componentDidMount() {
     if (window.innerWidth >= 768 && window.innerWidth < 991) {
-      this.setState({zoom: 9})
+      this.props.goToSystem(9, this.props.map.center)
     } else if (window.innerWidth >= 992 && window.innerWidth < 1500) {
-      this.setState({zoom: 10})
+      this.props.goToSystem(10, this.props.map.center)
     } else if (window.innerWidth > 1500) {
-      this.setState({zoom: 11})
+      this.props.goToSystem(11, this.props.map.center)
     }
   }
   render() {
     const zoomState = this.zoom
     return (
       <GoogleMap
-        zoom={this.state.zoom}
-        center={this.state.center}
+        zoom={this.props.map.zoom}
+        center={this.props.map.center}
         onZoomChanged={function(e) {
           zoomState(this.getZoom(), null)
         }}
         defaultOptions={{
           streetViewControl: false
         }}
+        ref={this.washington_map}
       >
-        {this.props.regionData.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.state.zoom} /> )}
-        {this.props.regionData.trails.map((trail, k) => <RegionTrail trail={trail} key={k} zoomLevel={this.state.zoom} />)}
+        {this.props.regionData.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} /> )}
+        {this.props.regionData.trails.map((trail, k) => <RegionTrail trail={trail} key={k} zoomLevel={this.props.map.zoom} />)}
       </GoogleMap>
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map)

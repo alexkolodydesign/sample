@@ -2,33 +2,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import reducer from './reducers'
-
-export const defaultState = {
-  map: {
-    view: 'region',
-    metricType: "imperial",
-    filter: {
-      trailType: {
-        hiking: true,
-        biking: true,
-        ohv: true,
-        equestrian: true
-      },
-      season: "",
-      difficulty: {
-        default: "",
-        biking: "",
-        hiking: "",
-        ohv: "",
-        equestrian: ""
-      },
-      trailLength: null,
-      trailTraffic: "",
-      routeType: "",
-      exclude: ""
-    }
-  }
-}
+import {defaultState} from './reducers'
 
 export const changeTrailType = trailType => async dispatch => dispatch({ type: 'CHANGE_TRAIL_TYPE', trailType })
 export const changeTrailTraffic = trailTraffic => async dispatch => {
@@ -53,4 +27,8 @@ export const changeDifficulty = difficulty => async dispatch => {
 }
 export const changeTrailLength = trailLength => async dispatch => dispatch({ type: 'CHANGE_TRAIL_LENGTH', trailLength })
 export const changeMetricType = option => async dispatch => dispatch({ type: 'CHANGE_METRIC_TYPE', option })
+export const goToSystem = (zoom, center) => {
+  const location = {zoom, center}
+  return async dispatch => dispatch({ type: 'GO_TO_SYSTEM', location })
+}
 export const initStore = (initialState = defaultState) => createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))

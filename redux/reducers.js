@@ -4,6 +4,8 @@ export const defaultState = {
   map: {
     view: 'region',
     metricType: "imperial",
+    zoom: 8,
+    center: {lat: 37.327059, lng: -113.445826},
     filter: {
       trailType: {
         hiking: true,
@@ -47,6 +49,8 @@ export const map = (state = defaultState, action) => {
       return { map: { ...state.map, metricType: action.option } }
     case 'CHANGE_EXCLUDE':
       return { map: { ...state.map, filter: { ...state.map.filter, exclude: action.value } } }
+    case 'GO_TO_SYSTEM':
+      return { map: { ...state.map, zoom: action.location.zoom, center: action.location.center } }
     default:
       return state
   }

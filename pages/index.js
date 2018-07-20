@@ -3,7 +3,7 @@ import Head from '../components/layout/Head'
 import { nextConnect } from '../redux/store'
 import fetch from 'isomorphic-unfetch';
 import { filterAction } from '../redux/filterAction'
-import MainMap from '../components/maps/MainMap'
+import MainMapSetup from '../components/maps/MainMapSetup'
 import TrailSystemGuide from '../components/menu/TrailSystemGuide'
 import MainMenu from '../components/menu/MainMenu'
 import EventList from '../components/menu/EventList'
@@ -17,7 +17,7 @@ class Dashboard extends React.Component {
     return (
       <Layout>
         <Head/>
-        <MainMap regionData={region} />
+        <MainMapSetup regionData={region} />
         <EventList events={this.props.e_data} />
         <TrailSystemGuide />
         <MainMenu system={region} />

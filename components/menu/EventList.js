@@ -15,7 +15,7 @@ export default class EventList extends React.Component {
     }
   }
   render() {
-    console.log("EventList: ", this.props)
+    // console.log("EventList: ", this.props)
     return (
       <React.Fragment>
         <button onClick={this.toggleMenu} className={this.state.menu ? "active" : null}>
