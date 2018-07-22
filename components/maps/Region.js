@@ -1,4 +1,8 @@
-import {  Marker, Polygon, InfoWindow } from "react-google-maps"
+import {  Marker, Polygon, InfoWindow, GroundOverlay } from "react-google-maps"
+import { fitBounds } from 'google-map-react/utils'
+import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js'
+import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js'
+
 import alpineCoordinates from '../../data/alpine-coordinates'
 import desertCoordinates from '../../data/desert-coordinates'
 import canyonCoordinates from '../../data/canyon-coordinates'
@@ -36,22 +40,36 @@ export default class Region extends React.Component {
       default:
         coordinates = []
     }
+    // Make new bounds
+    let newBounds = new LatLngBounds()
+    // Add LatLng points to the new bounding area
+    coordinates.forEach(bound => newBounds.extend(new LatLng(bound.lat, bound.lng)))
     return (
       <React.Fragment>
         {this.props.zoomLevel < 12 &&
-          <Polygon
-            paths={coordinates}
-            options={{
-              strokeColor:"#000000",
-              strokeOpacity:0.25,
-              strokeWeight:1,
-              fillColor:"#ffffff",
-              fillOpacity:0.85
-            }}
-            onMouseOver={function() { this.setOptions({fillOpacity: 0.35}) }}
-            onMouseOut={function() { this.setOptions({fillOpacity: 0.85}) }}
-            onClick={() => this.props.zoom( 13, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}
-          />
+          <React.Fragment>
+            <GroundOverlay
+              defaultUrl={region.overlayImage}
+              defaultBounds={new google.maps.LatLngBounds(
+                newBounds.getSouthWest(),
+                newBounds.getNorthEast()
+              )}
+              defaultOpacity={1}
+            />
+            <Polygon
+              paths={coordinates}
+              options={{
+                strokeColor:"#000000",
+                strokeOpacity:0.25,
+                strokeWeight:1,
+                fillColor:"#ffffff",
+                fillOpacity:0
+              }}
+              onMouseOver={function() { this.setOptions({fillOpacity: .5}) }}
+              onMouseOut={function() { this.setOptions({fillOpacity: 0}) }}
+              onClick={() => this.props.zoom( 13, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}
+            />
+          </React.Fragment>
         }
         {this.props.zoomLevel < 12 &&
           <Marker
