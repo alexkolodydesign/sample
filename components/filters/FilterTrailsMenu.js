@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { changeSeason, changeDifficulty, changeTrailLength, changeTrailTraffic, changeRouteType, changeTrailType, changeExclude } from '../../redux/actions'
 import RangeSlider from './RangeSlider'
+import ResetMap from './ResetMap'
 
 const FilterTrailsMenu = props =>
   <div className={props.menuState == "exiting" ? "exiting menu" : "menu"}>
@@ -26,6 +27,7 @@ const FilterTrailsMenu = props =>
         action={props.changeTrailType} />
       <Option title="Exclude" selected={props.map.filter.exclude ? "On" : "Off"} options={["On", "Off"]} action={props.changeExclude} />
     </div>
+    <ResetMap />
     <style jsx>{`
       h3 {text-transform: uppercase; margin: 0 0 0 1rem; color: #fff;}
       .menu {
@@ -35,7 +37,7 @@ const FilterTrailsMenu = props =>
         top: initial;
 
         z-index: 10;
-        padding: 1rem 0.5rem 2rem 0.5rem;
+        padding: 1rem 0.5rem 3.5rem 0.5rem;
         border-top-left-radius: 1rem;
         border-top-right-radius: 1rem;
         background: #3fa9f5;
@@ -84,7 +86,7 @@ const FilterTrailsMenu = props =>
       @media screen and (min-width: 768px) {
         .menu {
           left: 0;
-          top: -43rem;
+          top: -47rem;
           z-index: -1;
           width: 30rem;
         }
