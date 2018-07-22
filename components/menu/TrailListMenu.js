@@ -151,19 +151,34 @@ const Trail = props =>
         margin: 1rem 0;
         animation-fill-mode: forwards;
         &:nth-child(1) {
+          opacity: 0;
           animation-name: slideUp;
           animation-duration: 500ms;
           animation-delay: 50ms;
         }
         &:nth-child(2) {
+          opacity: 0;
           animation-name: slideUp;
           animation-duration: 500ms;
-          animation-delay: 100ms;
+          animation-delay: 150ms;
         }
         &:nth-child(3) {
+          opacity: 0;
           animation-name: slideUp;
           animation-duration: 500ms;
-          animation-delay: 200ms;
+          animation-delay: 250ms;
+        }
+        &:nth-child(4) {
+          opacity: 0;
+          animation-name: slideUp;
+          animation-duration: 500ms;
+          animation-delay: 350ms;
+        }
+        &:nth-child(5) {
+          opacity: 0;
+          animation-name: slideUp;
+          animation-duration: 500ms;
+          animation-delay: 450ms;
         }
         img {
           max-width: 100%;

@@ -11,9 +11,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    goToSystem: (zoom, center) => {
-      dispatch(goToSystem(zoom, center));
-    }
+    goToSystem: (zoom, center) => dispatch(goToSystem(zoom, center))
   };
 };
 

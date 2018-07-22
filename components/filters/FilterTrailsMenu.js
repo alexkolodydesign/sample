@@ -158,26 +158,31 @@ class Option extends React.Component {
             margin: 1rem 0;
             animation-fill-mode: forwards;
             &:nth-child(1) {
+              opacity: 0;
               animation-name: slideUp;
               animation-duration: 500ms;
               animation-delay: 50ms;
             }
             &:nth-child(2) {
+              opacity: 0;
               animation-name: slideUp;
               animation-duration: 500ms;
               animation-delay: 100ms;
             }
             &:nth-child(3) {
+              opacity: 0;
               animation-name: slideUp;
               animation-duration: 500ms;
               animation-delay: 200ms;
             }
             &:nth-child(4) {
+              opacity: 0;
               animation-name: slideUp;
               animation-duration: 500ms;
               animation-delay: 300ms;
             }
             &:nth-child(5) {
+              opacity: 0;
               animation-name: slideUp;
               animation-duration: 500ms;
               animation-delay: 400ms;

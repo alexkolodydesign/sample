@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { goToSystem } from '../../redux/actions'
 import Region from './Region'
 import RegionTrail from './RegionTrail'
+import UserLocation from './UserLocation'
 
 // Redux
 const mapStateToProps = (state, ownProps) => {
@@ -52,6 +53,7 @@ class Map extends React.Component {
         }}
         ref={this.washington_map}
       >
+        {this.props.map.gps && <UserLocation />}
         {this.props.regionData.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} /> )}
         {this.props.regionData.trails.map((trail, k) => <RegionTrail trail={trail} key={k} zoomLevel={this.props.map.zoom} />)}
       </GoogleMap>

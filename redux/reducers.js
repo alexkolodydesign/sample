@@ -5,6 +5,7 @@ export const defaultState = {
     view: 'region',
     metricType: "imperial",
     zoom: 8,
+    gps: false,
     center: {lat: 37.327059, lng: -113.445826},
     filter: {
       trailType: {
@@ -51,6 +52,8 @@ export const map = (state = defaultState, action) => {
       return { map: { ...state.map, filter: { ...state.map.filter, exclude: action.value } } }
     case 'GO_TO_SYSTEM':
       return { map: { ...state.map, zoom: action.location.zoom, center: action.location.center } }
+    case 'TOGGLE_GPS':
+      return { map: { ...state.map, gps: !state.map.gps } }
     default:
       return state
   }
