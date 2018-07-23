@@ -70,6 +70,10 @@ const TrailSidebar = props => {
         <div><p>Description</p><div className="description">{ReactHtmlParser(sanitizeHtml(props.trail.content.rendered))}</div></div>
       }
 
+      {trail.icons &&
+        <div className="trail-general-icons">{trail.icons.map( (icon, k) => <img src={`/static/images/trail/black-icons/${icon.value}-icon-black.svg`} alt={icon.label} /> )}</div>
+      }
+
       </div>
       <style jsx>{`
         .background {
@@ -116,6 +120,13 @@ const TrailSidebar = props => {
             &:hover {
               background: #0d93f2;
             }
+          }
+        }
+        .trail-general-icons {
+          img {
+            max-width: 40px;
+            display: inline-block;
+            margin-right: 5px;
           }
         }
       `}</style>
