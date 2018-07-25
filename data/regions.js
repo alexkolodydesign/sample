@@ -18,14 +18,14 @@ const regions = [
     markerIcon: "/static/images/regions/urban-region.svg",
     markerCoordinates: { "lat": 37.109891, "lng": -113.583317 },
     regionImage: "",
-    overlayImage: "http://washcotrails.flitchbeta.com/wp-content/uploads/2018/07/urban_overlay-min.png"
+    overlayImage: "https://washcotrails.flitchbeta.com/wp-content/uploads/2018/07/urban_overlay-min.png"
   },
   {
     regionName: "Canyon",
     markerIcon: "/static/images/regions/canyon-region.svg",
     markerCoordinates: { "lat": 37.32113432, "lng": -113.0664033 },
-    regionImage: "http://washcotrails.flitchbeta.com/wp-content/uploads/2018/07/canyon-2179250_1280-300x200.jpg",
-    overlayImage: "http://washcotrails.flitchbeta.com/wp-content/uploads/2018/07/canyon_overlay-min.png"
+    regionImage: "https://washcotrails.flitchbeta.com/wp-content/uploads/2018/07/canyon-2179250_1280-300x200.jpg",
+    overlayImage: "https://washcotrails.flitchbeta.com/wp-content/uploads/2018/07/canyon_overlay-min.png"
   },
   {
     regionName: "Desert",
