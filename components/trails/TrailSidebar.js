@@ -62,7 +62,7 @@ const TrailSidebar = props => {
 
       {trail.recommendedUse &&
         <div><p>Recommended Use<br/><span>{
-          trail.recommendedUse.map( (use, k) => <span key={k}>{use.label} <br /></span> )
+          trail.recommendedUse.map( (use, k) => <span key={k}><img className='use-icon' src={`/static/images/menu/${use.value}.svg`} alt={use.label} />{use.label} <br /></span> )
         }</span></p></div>
       }
 
@@ -98,6 +98,12 @@ const TrailSidebar = props => {
         }
         .description {
           font-weight: 100;
+        }
+        .use-icon {
+          max-width:30px;
+          display: inline-block;
+          vertical-align: middle;
+          margin-right: 10px;
         }
         .buttons {
           margin-top: 3rem;
