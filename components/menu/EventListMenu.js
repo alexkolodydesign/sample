@@ -5,16 +5,15 @@ class EventListMenu extends React.Component {
     super(props)
   }
   render() {
-    console.log(this.props)
     return (
       <div className={this.props.menuState == "exiting" ? "exiting menu" : "menu"}>
         <h3>Event List</h3>
         <div className="close" onClick={this.props.toggleMenu}>X</div>
         <div className="events">
-          {this.props.events.map( (event, k) => <Event event={event} key={k} /> )}
+          {this.props.events && this.props.events.map( (event, k) => <Event event={event} key={k} /> )}
         </div>
         <style jsx>{`
-          h3 {text-transform: uppercase; margin: 0 0 0 1rem; color: #fff;}
+          h3 {text-transform: uppercase; margin: 0 0 1rem 1rem; color: #fff;}
           .menu {
             padding: 1rem 0.5rem 2rem 0.5rem;
             border-top-left-radius: 1rem;
@@ -22,12 +21,12 @@ class EventListMenu extends React.Component {
             background: #3fa9f5;
             height: 40rem;
             position: absolute;
-            left: -2rem;
-            right: -2rem;
+            left: 0;
+            right: 0;
             bottom: -1.5rem;
             top: initial;
 
-            z-index: 10;
+            z-index: 2;
             overflow: hidden;
             animation-name: slideUp;
             animation-duration: 500ms;
@@ -66,10 +65,9 @@ class EventListMenu extends React.Component {
           }
           @media screen and (min-width: 768px) {
             .menu {
-              left: 0;
-              top: -43rem;
-              z-index: -1;
-              width: 30rem;
+              left: 1rem;
+              width: 40rem;
+              bottom: 9rem;
             }
           }
         `}</style>
@@ -93,7 +91,7 @@ const Event = props =>
       .event {
         background: #eee;
         display: grid;
-        grid-template-columns: 7.5rem 1fr 8rem;
+        grid-template-columns: 7.5rem 1fr;
         margin: 1rem 0;
         animation-fill-mode: forwards;
         &:nth-child(1) {
@@ -110,6 +108,9 @@ const Event = props =>
           animation-name: slideUp;
           animation-duration: 500ms;
           animation-delay: 200ms;
+        }
+        a {
+          max-width: 100%;
         }
         img {
           max-width: 100%;

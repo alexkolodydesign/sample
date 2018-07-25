@@ -18,7 +18,9 @@ class Dashboard extends React.Component {
       <Layout>
         <Head/>
         <MainMapSetup regionData={region} />
-        <EventList events={this.props.e_data} />
+        {this.props.event.events &&
+            <EventList events={this.props.event} />
+        }
         <TrailSystemGuide />
         <MainMenu system={region} />
       </Layout>
