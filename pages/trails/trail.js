@@ -30,7 +30,7 @@ const Trail = props => {
             </button>
           </a>
         </Link>
-        <h1>{props.trail.title.rendered}</h1>
+        <h1 dangerouslySetInnerHTML={{__html: props.trail.title.rendered}} />
       </div>
       <div className="wrapper trail">
         <TrailSidebar trail={props.trail} />

@@ -121,7 +121,7 @@ const Trail = props =>
       </a>
     </Link>
     <div className="details">
-      <h4><Link href={`/trails/${props.trail.slug}`}><a>{props.trail.title.rendered}</a></Link></h4>
+      <h4><Link href={`/trails/${props.trail.slug}`}><a dangerouslySetInnerHTML={{__html: props.trail.title.rendered}} /></Link></h4>
       <p><span>{props.trail.custom_data.length} Miles</span></p>
       {props.trail.custom_data.highlights &&
         <p>Highlights:

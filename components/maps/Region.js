@@ -59,9 +59,9 @@ export default class Region extends React.Component {
             <Polygon
               paths={coordinates}
               options={{
-                strokeColor:"#000000",
-                strokeOpacity:0.25,
-                strokeWeight:1,
+                strokeColor:"#FFF",
+                strokeOpacity:1,
+                strokeWeight:3,
                 fillColor:"#ffffff",
                 fillOpacity:0
               }}

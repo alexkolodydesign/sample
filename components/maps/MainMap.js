@@ -37,6 +37,8 @@ class Map extends React.Component {
       this.props.goToSystem(10, this.props.map.center)
     } else if (window.innerWidth > 1500) {
       this.props.goToSystem(11, this.props.map.center)
+    } else {
+      this.props.goToSystem(8, this.props.map.center)
     }
   }
   render() {
