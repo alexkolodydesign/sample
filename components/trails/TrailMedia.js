@@ -64,6 +64,7 @@ const TrailMedia = props =>
       text-align: center;
       padding-bottom: 2.75rem;
       hr {margin: 1.5rem 0 3rem 0;}
+      /*
       & > div {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
@@ -72,6 +73,7 @@ const TrailMedia = props =>
           width: 100%;
         }
       }
+      */
       .wrapper {
         position: relative;
         p {
