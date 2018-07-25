@@ -71,7 +71,7 @@ const TrailSidebar = props => {
       }
 
       {trail.icons &&
-        <div className="trail-general-icons">{trail.icons.map( (icon, k) => <img src={`/static/images/trail/black-icons/${icon.value}-icon-black.svg`} alt={icon.label} /> )}</div>
+        <div className="trail-general-icons">{trail.icons.map( (icon, k) => <img key={k} src={`/static/images/trail/black-icons/${icon.value}-icon-black.svg`} alt={icon.label} /> )}</div>
       }
 
       </div>
