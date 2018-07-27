@@ -1,6 +1,8 @@
 import { Polyline, InfoWindow, Marker } from "react-google-maps"
 import axios from 'axios'
 import Link from 'next/link'
+import Difficulty from './Difficulty'
+
 
 export default class RegionTrail extends React.Component {
   constructor(props) {
@@ -97,8 +99,9 @@ export default class RegionTrail extends React.Component {
           <Marker position={{lat: coordinates[0].lat, lng: coordinates[0].lng}} icon={{url: ""}} >
             <InfoWindow options={{'maxWidth' : 320}} onCloseClick={() => this.setState({menu: false})}>
               <div className="info_wrapper">
-                <div className="left">
-                  <h3 dangerouslySetInnerHTML={{__html: trail.title.rendered}} />
+                <h3 className="top" dangerouslySetInnerHTML={{__html: trail.title.rendered}} />
+                <div className="info">
+                {console.log(trail)}
                   {trail.custom_data.length &&
                     <p>Length: <span>{Number(trail.custom_data.length).toFixed(2)} miles</span></p>
                   }
@@ -113,20 +116,34 @@ export default class RegionTrail extends React.Component {
                     <p>Trail Traffic: <span>{trail.custom_data.trailTraffic.label}</span></p>
                   }
                   {/* REVIEW: Is Difficulty being done correctly here? Also check TrailSidebar.js */}
-                  {trail.custom_data.difficulty && trail.custom_data.difficulty.defaultDifficulty &&
-                    <p>Difficulty: <span>{trail.custom_data.difficulty.defaultDifficulty.label}</span></p>
+                  {trail.custom_data.difficulty &&
+                    <Difficulty difficulty={trail.custom_data.difficulty} />
                   }
+                </div>
+                <div className="image">
                   {trail.custom_data.media.pictures[0] &&
                     <img src={trail.custom_data.media.pictures[0].sizes.medium} />
-                  }
-                  <br />
+                  }<br />
                   <Link href={`/trails/${trail.slug}`}><a>> View Trail</a></Link>
                 </div>
-                { /* <div className="right">
-                  {trail.custom_data.region &&
-                    <p>Region: <span>{trail.custom_data.region}</span></p>
-                  }
-                </div> */ }
+                <div className="icons">
+                  <div className="trail_type">
+                    {trail.custom_data.recommendedUse.some((el) => el.value == 'hiking') &&
+                      <img src="/static/images/menu/hiking.svg" alt="Hiking Trail" />
+                    }
+                    {trail.custom_data.recommendedUse.some((el) => el.value == 'biking') &&
+                      <img src="/static/images/menu/biking.svg" alt="Biking Trail" />
+                    }
+                    {trail.custom_data.recommendedUse.some((el) => el.value == 'equestrian') &&
+                      <img src="/static/images/menu/horse.svg" alt="Equestrian Trail" />
+                    }
+                    {trail.custom_data.recommendedUse.some((el) => el.value == 'ohv') &&
+                      <img src="/static/images/menu/atv.svg" alt="OHV Trail" />
+                    }
+
+
+                  </div>
+                </div>
                 <style jsx>{`
                   h3 {
                     padding: 0 0 6px;
@@ -135,7 +152,7 @@ export default class RegionTrail extends React.Component {
                   }
                   p {
                     font-weight: bold;
-                    margin: 2px 0;
+                    margin: 3px 0 0;
                     span {
                       font-weight: normal;
                     }
@@ -144,30 +161,53 @@ export default class RegionTrail extends React.Component {
                     }
                   }
                   .info_wrapper {
-                    display: flex;
-                    .left {
-                      flex: 1;
-                      flex-grow: 2;
+                    display: grid;
+                    height: 100%;
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-rows: 10% 45% 45%;
+                    grid-template-areas: "top top" "info info" "image icons";
+                    min-width: 300px;
+                    width: 100%;
+                    .top {
+                      grid-area: top;
+
+                    }
+                    .info {
+                      grid-area: info;
+                    }
+                    .image {
+                      grid-area: image;
                       img {
-                        max-height: 150px;
-                        width: auto;
+                        max-width: 140px;
+                        height: auto;
                       }
                     }
-                    .right {
-                      flex: 1;
-                      flex-grow: 1;
+                    .icons {
+                      grid-area: icons;
                     }
                   }
                   a {
                     text-decoration: none;
                     color: #3fa9f5;
                     font-weight: bold;
-                    padding: 3px 0;
+                    padding: 3px 0 0;
                     &:hover {
                       text-decoration: none;
                       color: #000;
                     }
                   }
+                  .gm-style .gm-style-iw {
+                    left: 10px;
+                    top: 5px;
+
+                  }
+                  .trail_type {
+                    display: grid;
+                    grid-template: 2.5rem 2.5rem / 2.5rem 2.5rem;
+                    align-self: center;
+                    img {width: 3.5rem;}
+                  }
+
                 `}</style>
               </div>
 

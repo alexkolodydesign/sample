@@ -37,7 +37,7 @@ const Trail = props => {
         <TrailMap trail={props.trail} />
       </div>
       <div className="wrapper more_trails">
-        {props.trail.custom_data.similarTrails && <SimilarTrails similarTrails={props.trail.custom_data.similarTrails} />}
+        {props.trail.custom_data.similarTrails.length ? <SimilarTrails similarTrails={props.trail.custom_data.similarTrails} /> : false }
       </div>
       <TrailMedia media={props.trail.custom_data.media} />
       <ScrollToTop showUnder={160} style={{background: '#4d4e4e', padding: '0.75rem'}}>
@@ -48,6 +48,7 @@ const Trail = props => {
         @media screen {
           h1 {
             text-transform: uppercase;
+            font-size: 3.5rem;
           }
           .trail {
             display: grid;

@@ -51,24 +51,25 @@ const Layout = props => (
         max-width: 120rem;
         margin: 0 auto;
       }
-      &::-webkit-scrollbar {
+      ::-webkit-scrollbar {
           width: 12px;
+          background: #ccc;
+          -webkit-border-radius: 5px;
+          border-radius: 5px;
       }
 
-      &::-webkit-scrollbar-track {
-          -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-          -webkit-border-radius: 10px;
-          border-radius: 10px;
+      ::-webkit-scrollbar-track {
+          -webkit-border-radius: 5px;
+          border-radius: 5px;
       }
 
-      &::-webkit-scrollbar-thumb {
-          -webkit-border-radius: 10px;
-          border-radius: 10px;
-          background: rgba(255,0,0,0.8);
-          -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+      ::-webkit-scrollbar-thumb {
+          -webkit-border-radius: 5px;
+          border-radius: 5px;
+          background: #4d4e4e;
       }
-      &::-webkit-scrollbar-thumb:window-inactive {
-        background: rgba(255,0,0,0.4);
+      ::-webkit-scrollbar-thumb:window-inactive {
+        background: rgba(77,78,78,0.4);
       }
       @media(max-width: 768px) {
         .wrapper {

@@ -148,7 +148,7 @@ const Trail = props =>
         background: #eee;
         display: grid;
         grid-template-columns: 7.5rem 1fr 6.5rem;
-        margin: 1rem 0;
+        margin: 0 0 1rem;
         animation-fill-mode: forwards;
         &:nth-child(1) {
           opacity: 0;

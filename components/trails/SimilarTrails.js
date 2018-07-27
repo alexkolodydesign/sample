@@ -9,7 +9,6 @@ export default class SimilarTrails extends React.Component {
   async componentDidMount() {
     const {data: trails} = await axios.get(`/api/trail/${this.props.similarTrails.map(trail => trail.post_name + ',')}`)
     this.setState({trails})
-    console.log(this.state)
   }
   render() {
     return (
@@ -41,7 +40,14 @@ export default class SimilarTrails extends React.Component {
                 {this.state.trails.custom_data.difficulty.defaultDifficulty.value && <p><span>{this.state.trails.custom_data.difficulty.defaultDifficulty.label}</span></p>}
                 {this.state.trails.custom_data.region && <p><span>{this.state.trails.custom_data.region} Region</span></p>}
               </div>
+              <div className="trail_type">
+                <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!this.state.trails.custom_data.recommendedUse.some((el) => el.value == 'hiking') && "inactive"} />
+                <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" className={!this.state.trails.custom_data.recommendedUse.some((el) => el.value == 'biking') && "inactive"} />
+                <img src="/static/images/menu/horse.svg" alt="Select Equestrian Trails" className={!this.state.trails.custom_data.recommendedUse.some((el) => el.value == 'equestrian') && "inactive"} />
+                <img src="/static/images/menu/atv.svg" alt="Select OHV Trails" className={!this.state.trails.custom_data.recommendedUse.some((el) => el.value == 'ohv') && "inactive"} />
+              </div>
             </div>
+
           }
 
           {this.state.trails && this.state.trails.length > 1 && this.state.trails.map((trail, k) => {
@@ -69,14 +75,21 @@ export default class SimilarTrails extends React.Component {
                 {trail.custom_data.difficulty.defaultDifficulty.value && <p><span>{trail.custom_data.difficulty.defaultDifficulty.label}</span></p>}
                 {trail.custom_data.region && <p><span>{trail.custom_data.region} Region</span></p>}
               </div>
+              <div className="trail_type">
+                <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!trail.custom_data.recommendedUse.some((el) => el.value == 'hiking') && "inactive"} />
+                <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" className={!trail.custom_data.recommendedUse.some((el) => el.value == 'biking') && "inactive"} />
+                <img src="/static/images/menu/horse.svg" alt="Select Equestrian Trails" className={!trail.custom_data.recommendedUse.some((el) => el.value == 'equestrian') && "inactive"} />
+                <img src="/static/images/menu/atv.svg" alt="Select OHV Trails" className={!trail.custom_data.recommendedUse.some((el) => el.value == 'ohv') && "inactive"} />
+              </div>
             </div>
+
           })}
 
         </div>
         <style jsx>{`
           .container {
             padding: 1.5rem 3rem 3rem 3rem;
-            background: #fff;
+            background-image: linear-gradient(rgba(255,255,255,0.98), rgba(255,255,255,0.98)), url(/static/images/background-pattern.svg);
           }
           .similar_trails {
             height: 15rem;
@@ -90,7 +103,7 @@ export default class SimilarTrails extends React.Component {
             background: #eee;
             display: grid;
             grid-template-columns: 10rem 1fr 6.5rem;
-            margin: 1rem 0;
+            margin: 0 0 1rem;
             img {
               max-width: 100%;
               height: auto;
@@ -107,6 +120,16 @@ export default class SimilarTrails extends React.Component {
             }
             p {margin: 0; font-weight: 500;}
             p span {font-weight: 100;}
+          }
+          .trail_type {
+            display: grid;
+            grid-template: 2.5rem 2.5rem / 2.5rem 2.5rem;
+            align-self: center;
+            img {width: 3.5rem;}
+          }
+          .inactive {
+            opacity: 0.25;
+            filter: grayscale();
           }
         `}</style>
       </div>
