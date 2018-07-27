@@ -45,36 +45,48 @@ const Trail = props => {
       </ScrollToTop>
 
       <style jsx>{`
-        h1 {
-          text-transform: uppercase;
-        }
-        .trail {
-          display: grid;
-          grid-template-columns: 30rem 1fr;
-          grid-gap: 3rem;
-        }
-        .more_trails {
-          margin-top: 3rem;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          grid-gap: 3rem;
-        }
-        button {
-          border: none;
-          border-radius: 0.25rem;
-          background: #262727;
-          padding: 0.5rem 2rem;
-          color: #fff;
-          font-size: 1.8rem;
-          cursor: pointer;
-          transition: all 500ms;
-          flex: 50%;
-          flex-wrap: wrap;
-          margin-top: 1.5rem;
-          &:hover {
-            background: #666666;
+        @media screen {
+          h1 {
+            text-transform: uppercase;
+          }
+          .trail {
+            display: grid;
+            grid-template-columns: 30rem 1fr;
+            grid-gap: 3rem;
+          }
+          .more_trails {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 3rem;
+          }
+          button {
+            border: none;
+            border-radius: 0.25rem;
+            background: #262727;
+            padding: 0.5rem 2rem;
+            color: #fff;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 500ms;
+            flex: 50%;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            &:hover {
+              background: #666666;
+            }
           }
         }
+        @media print {
+          *, *:before, *:after {
+            display: none;
+          }
+          .wrapper.trail, h1 {
+            display: block;
+            max-width: 100%;
+          }
+        }
+
       `}</style>
     </Layout>
   )

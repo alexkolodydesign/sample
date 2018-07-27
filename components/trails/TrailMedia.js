@@ -39,58 +39,65 @@ const TrailMedia = props =>
     </div>
   </div>
   <style jsx>{`
-    .background_pattern {
-      background: #fff;
-      background-image: linear-gradient(rgba(255,255,255,0.98),rgba(255,255,255,0.98)),url(/static/images/background-pattern.svg);
-      background-position: center;
-      background-size: 29rem auto;
-      padding-bottom: 3rem;
-    }
-    h3 {
-      text-transform: uppercase;
-      margin: 6rem 0 0 0;
-      font-size: 2rem;
-    }
-    .media {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-column-gap: 3rem;
-      h2 {
-        grid-column-start: span 2;
+    @media screen {
+      .background_pattern {
+        background: #fff;
+        background-image: linear-gradient(rgba(255,255,255,0.98),rgba(255,255,255,0.98)),url(/static/images/background-pattern.svg);
+        background-position: center;
+        background-size: 29rem auto;
+        padding-bottom: 3rem;
       }
-    }
-
-    .videos, .photos {
-      text-align: center;
-      padding-bottom: 2.75rem;
-      hr {margin: 1.5rem 0 3rem 0;}
-      /*
-      & > div {
+      h3 {
+        text-transform: uppercase;
+        margin: 6rem 0 0 0;
+        font-size: 2rem;
+      }
+      .media {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-gap: 2rem;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 3rem;
+        h2 {
+          grid-column-start: span 2;
+        }
+      }
+
+      .videos, .photos {
+        text-align: center;
+        padding-bottom: 2.75rem;
+        hr {margin: 1.5rem 0 3rem 0;}
+        /*
         & > div {
-          width: 100%;
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-gap: 2rem;
+          & > div {
+            width: 100%;
+          }
+        }
+        */
+        .wrapper {
+          position: relative;
+          p {
+            margin: 0;
+            padding: 8px 0;
+            background-color: #666666;
+            color: white;
+            position: absolute;
+            left: 0;
+            bottom: -2.75rem;
+            z-index: 5;
+            width: 100%;
+          }
+        }
+        img.preview {
+          max-width: 100%;
+          height: auto;
         }
       }
-      */
-      .wrapper {
-        position: relative;
-        p {
-          margin: 0;
-          padding: 8px 0;
-          background-color: #666666;
-          color: white;
-          position: absolute;
-          left: 0;
-          bottom: -2.75rem;
-          z-index: 5;
-          width: 100%;
-        }
-      }
-      img.preview {
-        max-width: 100%;
-        height: auto;
+    }
+    @media print {
+      *, *:before, *:after {
+        display: none;
       }
     }
   `}</style>

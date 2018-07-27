@@ -7,29 +7,28 @@ const mapStateToProps = (state, ownProps) => {
   return {
     map: state.map,
     ...ownProps
-  };
-};
+  }
+}
 const mapDispatchToProps = dispatch => {
   return {
     goToSystem: (zoom, center) => dispatch(goToSystem(zoom, center))
-  };
-};
-
+  }
+}
 const TrailSystemGuide = props => {
   return (
     <div className="systems">
       <div>
-        <a className={props.system == "zion-national-park" && "active"} onClick={() => props.goToSystem(14, { lat: 37.32113432, lng: -113.0664033 })}>
+        <a className={props.system == "zion-national-park" && "active"} onClick={() => props.goToSystem(12, { lat: 37.251888, lng: -112.962010 })}>
           Zion <span>National Park</span>
         </a>
       </div>
       <div>
-        <a className={props.system == "snow-canyon-state-park" && "active"} onClick={() => props.goToSystem(14, { lat: 37.109891, lng: -113.583317 })}>
+        <a className={props.system == "snow-canyon-state-park" && "active"} onClick={() => props.goToSystem(13, { lat: 37.204665, lng: -113.644752 })}>
           Snow Canyon <span>State Park</span>
         </a>
       </div>
       <div>
-        <a className={props.system == "gooseberry-mesa" && "active"} onClick={() => props.goToSystem(14, { lat: 37.08483451, lng: -113.1923863 })}>
+        <a className={props.system == "gooseberry-mesa" && "active"} onClick={() => props.goToSystem(13, { lat: 37.142663, lng: -113.190518 })}>
           Gooseberry <span>Mesa</span>
         </a>
       </div>

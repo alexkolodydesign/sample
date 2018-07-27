@@ -98,7 +98,7 @@ export default class RegionTrail extends React.Component {
             <InfoWindow options={{'maxWidth' : 320}} onCloseClick={() => this.setState({menu: false})}>
               <div className="info_wrapper">
                 <div className="left">
-                  <h3>{trail.title.rendered}</h3>
+                  <h3 dangerouslySetInnerHTML={{__html: trail.title.rendered}} />
                   {trail.custom_data.length &&
                     <p>Length: <span>{Number(trail.custom_data.length).toFixed(2)} miles</span></p>
                   }

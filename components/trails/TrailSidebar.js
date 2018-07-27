@@ -76,63 +76,70 @@ const TrailSidebar = props => {
 
       </div>
       <style jsx>{`
-        .background {
-          background: #fff;
-          background-image: linear-gradient(rgba(255,255,255,0.98),rgba(255,255,255,0.98)),url(/static/images/background-pattern.svg);
-          background-position: center;
-          background-size: 29rem auto;
-          &.details {
-            padding: 3rem;
-            display: flex;
-            flex-direction: column;
-            p {
-              margin: 0 0 2rem 0;
-              text-transform: uppercase;
-              font-weight: 500;
-              span {
-                font-weight: 100;
-                text-transform: initial;
+        @media screen {
+          .background {
+            background: #fff;
+            background-image: linear-gradient(rgba(255,255,255,0.98),rgba(255,255,255,0.98)),url(/static/images/background-pattern.svg);
+            background-position: center;
+            background-size: 29rem auto;
+            &.details {
+              padding: 3rem;
+              display: flex;
+              flex-direction: column;
+              p {
+                margin: 0 0 2rem 0;
+                text-transform: uppercase;
+                font-weight: 500;
+                span {
+                  font-weight: 100;
+                  text-transform: initial;
+                }
               }
             }
           }
-        }
-        .description {
-          font-weight: 100;
-        }
-        .use-icon {
-          max-width:30px;
-          display: inline-block;
-          vertical-align: middle;
-          margin-right: 10px;
-        }
-        .buttons {
-          margin-top: 3rem;
-        }
-        button {
-          border: none;
-          width: 100%;
-          margin-bottom: 1.5rem;
-          padding: 1.5rem 3rem;
-          color: #fff;
-          font-size: 1.8rem;
-          cursor: pointer;
-          transition: all 500ms;
-          background: #4D4E4E;
-          &:hover {
-            background: #262727;
+          .description {
+            font-weight: 100;
           }
-          &:first-child {
-            background: #3fa9f5;
+          .use-icon {
+            max-width:30px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+          }
+          .buttons {
+            margin-top: 3rem;
+          }
+          button {
+            border: none;
+            width: 100%;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem 3rem;
+            color: #fff;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 500ms;
+            background: #4D4E4E;
             &:hover {
-              background: #0d93f2;
+              background: #262727;
+            }
+            &:first-child {
+              background: #3fa9f5;
+              &:hover {
+                background: #0d93f2;
+              }
+            }
+          }
+          .trail-general-icons {
+            img {
+              max-width: 40px;
+              display: inline-block;
+              margin-right: 5px;
             }
           }
         }
-        .trail-general-icons {
-          img {
-            max-width: 40px;
-            display: inline-block;
-            margin-right: 5px;
+        @media print {
+          *, *:before, *:after {
+            display: none;
           }
         }
       `}</style>

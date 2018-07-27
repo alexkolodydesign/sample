@@ -19,10 +19,17 @@ export default class TrailMap extends React.Component {
   }
   toggleMapStyle() {
     if (!this.state.mapStyle) {
-      this.setState({mapStyle: printStyle })
-    } else {
-      this.setState({mapStyle: false})
+      this.setState({mapStyle: printStyle }, () => {
+        window.print()
+        this.setState({mapStyle: false})
+        }
+      )
     }
+  }
+
+  printMap() {
+    window.print()
+    return true
   }
   render() {
     return (
@@ -56,53 +63,55 @@ export default class TrailMap extends React.Component {
           {this.state.shareButtons && <ShareButtons />}
         </div>
         <style jsx>{`
-          .map_container {
-            background: #fff;
-            background-image: linear-gradient(rgba(255,255,255,0.98),rgba(255,255,255,0.98)),url(/static/images/background-pattern.svg);
-            background-position: center;
-            background-size: 29rem auto;
-            padding: 3rem;
-          }
-          .map {
-            background: #eee;
-            width: 100%;
-            height: 50rem;
-          }
-          .buttons {
-            margin-top: 1.5rem;
-            display: grid;
-            grid-template: 1fr 1fr / 1fr 1fr;
-            grid-gap: 1.5rem
-          }
-          .share_buttons {
-            margin-top: 1.5rem;
-          }
-          button {
-            border: none;
-            border-radius: 1rem;
-            background: #3fa9f5;
-            padding: 1rem 2rem;
-            color: #fff;
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: all 500ms;
-            &:hover {
-              background: #0d93f2;
+          @media screen {
+            .map_container {
+              background: #fff;
+              background-image: linear-gradient(rgba(255,255,255,0.98),rgba(255,255,255,0.98)),url(/static/images/background-pattern.svg);
+              background-position: center;
+              background-size: 29rem auto;
+              padding: 3rem;
             }
-            &:last-of-type {
-              background: #262727;
+            .map {
+              background: #eee;
+              width: 100%;
+              height: 50rem;
+            }
+            .buttons {
+              margin-top: 1.5rem;
+              display: grid;
+              grid-template: 1fr 1fr / 1fr 1fr;
+              grid-gap: 1.5rem
+            }
+            .share_buttons {
+              margin-top: 1.5rem;
+            }
+            button {
+              border: none;
+              border-radius: 1rem;
+              background: #3fa9f5;
+              padding: 1rem 2rem;
+              color: #fff;
+              font-size: 1.8rem;
+              cursor: pointer;
+              transition: all 500ms;
               &:hover {
-                background: #666666;
+                background: #0d93f2;
               }
+              &:last-of-type {
+                background: #262727;
+                &:hover {
+                  background: #666666;
+                }
 
-            }
-            &.active {
-              background-color: #00a89c;
-            }
-            img {
-              width: 3rem;
-              height: 3rem;
-              margin-right: 1rem
+              }
+              &.active {
+                background-color: #00a89c;
+              }
+              img {
+                width: 3rem;
+                height: 3rem;
+                margin-right: 1rem
+              }
             }
           }
           @media screen and (min-width: 768px) {
@@ -114,6 +123,15 @@ export default class TrailMap extends React.Component {
                   grid-row: 2;
                 }
               }
+            }
+          }
+          @media print {
+            *, *:before, *:after {
+              display: none;
+            }
+            .map_container, .gm-style, .gm-style * {
+              display: block!important;
+              max-width: 100%;
             }
           }
         `}</style>
@@ -225,6 +243,7 @@ class Map extends React.Component {
       <React.Fragment>
         <GoogleMap
           ref={this.mapLoaded}
+          className='THEMAP'
           zoom={this.state.zoom}
           center={{lat: coordinates[center].lat, lng: coordinates[center].lng}}
           // Only do this once. (TODO: look for a better event for this function like map loaded or something)
