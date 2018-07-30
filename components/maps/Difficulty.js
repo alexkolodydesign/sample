@@ -7,35 +7,35 @@ export default class Difficulty extends React.Component {
     return (
       <div>
         <div className="difficulty">
-          {difficulty.hikingDifficulty &&
+          {difficulty.hikingDifficulty.value != "none" &&
             <p>Hiking Difficulty:
               <img src={`/static/images/trail/difficulty/${difficulty.hikingDifficulty.value}.png`} alt={`${difficulty.hikingDifficulty.value} Difficulty`} />
               <span>{difficulty.hikingDifficulty.label}</span>
             </p>
           }
-          {difficulty.bikingDifficulty &&
+          {difficulty.bikingDifficulty.value != "none" &&
             <p>Biking Difficulty:
               <img src={`/static/images/trail/difficulty/${difficulty.bikingDifficulty.value}.png`} alt={`${difficulty.bikingDifficulty.value} Difficulty`} />
               <span>{difficulty.bikingDifficulty.label}</span>
             </p>
           }
-          {difficulty.equestrianDifficulty &&
+          {difficulty.equestrianDifficulty.value != "none" &&
             <p>Equestrian Difficulty:
               <img src={`/static/images/trail/difficulty/${difficulty.equestrianDifficulty.value}.png`} alt={`${difficulty.equestrianDifficulty.value} Difficulty`} />
               <span>{difficulty.equestrianDifficulty.label}</span>
             </p>
           }
-          {difficulty.ohvDifficulty &&
+          {difficulty.ohvDifficulty.value != "none" &&
             <p>OHV Difficulty:
               <img src={`/static/images/trail/difficulty/${difficulty.ohvDifficulty.value}.png`} alt={`${difficulty.ohvDifficulty.value} Difficulty`} />
               <span>{difficulty.ohvDifficulty.label}</span>
             </p>
           }
-          {difficulty.defaultDifficulty &&
-            !difficulty.hikingDifficulty &&
-            !difficulty.bikingDifficulty &&
-            !difficulty.equestrianDifficulty &&
-            !difficulty.ohvDifficulty &&
+          {difficulty.defaultDifficulty.value != "none" &&
+            difficulty.hikingDifficulty.value == "none" &&
+            difficulty.bikingDifficulty.value == "none" &&
+            difficulty.equestrianDifficulty.value == "none" &&
+            difficulty.ohvDifficulty.value == "none" &&
             <p>Difficulty:
               <img src={`/static/images/trail/difficulty/${difficulty.defaultDifficulty.value}.png`} alt={`${difficulty.defaultDifficulty.value} Difficulty`} />
               <span>{difficulty.defaultDifficulty.label}</span>

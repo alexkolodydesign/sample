@@ -7,6 +7,7 @@ export default class NearbyTrails extends React.Component {
     this.state = {trails: false}
   }
   async componentDidMount() {
+    console.log(this.state)
     const {data: trails} = await axios.get(`/api/trail/${this.props.nearbyTrails.map(trail => trail.post_name + ',')}`)
     this.setState({trails})
   }
