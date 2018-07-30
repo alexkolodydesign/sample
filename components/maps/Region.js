@@ -83,10 +83,10 @@ export default class Region extends React.Component {
             {
               this.state.menu &&
               <InfoWindow onCloseClick={() => this.setState({menu: false})}>
-                <div>
+                <div className="info_wrapper">
                   <h3>{region.regionName}</h3>
                   <img src={region.regionImage} alt=""/>
-                  <p className="explore" onClick={() => this.props.zoom( 13, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}>Explore Region</p>
+                  <p className="explore" onClick={() => this.props.zoom( 12, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}>Explore Region</p>
                 </div>
               </InfoWindow>
             }
@@ -97,6 +97,9 @@ export default class Region extends React.Component {
             color: #3fa9f5;
             cursor: pointer;
             font-weight: 500;
+          }
+          .info_wrapper img {
+            max-width: 150px;
           }
         `}</style>
       </React.Fragment>

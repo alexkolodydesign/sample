@@ -6,6 +6,7 @@ import fetch from 'isomorphic-unfetch'
 import TrailSidebar from '../../components/trails/TrailSidebar'
 import TrailMap from '../../components/maps/TrailMap'
 import SimilarTrails from '../../components/trails/SimilarTrails'
+import NearbyTrails from '../../components/trails/NearbyTrails'
 import TrailMedia from '../../components/trails/TrailMedia'
 import ScrollToTop from 'react-scroll-up'
 import { BarLoader } from 'react-spinners'
@@ -38,6 +39,7 @@ const Trail = props => {
       </div>
       <div className="wrapper more_trails">
         {props.trail.custom_data.similarTrails.length ? <SimilarTrails similarTrails={props.trail.custom_data.similarTrails} /> : false }
+        {props.trail.custom_data.similarTrails.length ? <NearbyTrails nearbyTrails={props.trail.custom_data.nearbyTrails} /> : false }
       </div>
       <TrailMedia media={props.trail.custom_data.media} />
       <ScrollToTop showUnder={160} style={{background: '#4d4e4e', padding: '0.75rem'}}>
