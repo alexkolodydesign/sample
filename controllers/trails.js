@@ -19,20 +19,24 @@ exports.getRegionData = async (req, res) => {
   try {
     const { data: trails } = await axios.get('http://washcotrails.flitchbeta.com/wp-json/wp/v2/trails?per_page=500&order=asc&region=6');
     const { data: regions } = await axios.get('http://washcotrails.flitchbeta.com/wp-json/wp/v2/regions');
-    const regionsArray = regions.map((region) => ({
-      regionName: region.name,
-      markerIcon: region.custom_data.markerIcon,
-      markerCoordinates: { "lat": Number(region.custom_data.markerCoordinates.marker_latitude), "lng": Number(region.custom_data.markerCoordinates.marker_longitude) },
-      regionImage: region.custom_data.regionImage,
-      overlayImage: region.custom_data.region_background_image
-    }))
+    const regionsArray = regions.map((region) => {
+      const lat = region.custom_data.markerCoordinates ? Number(region.custom_data.markerCoordinates.marker_latitude) : 0
+      const lng = region.custom_data.markerCoordinates ? Number(region.custom_data.markerCoordinates.marker_longitude) : 0
+      return {
+        regionName: region.name,
+        markerIcon: region.custom_data.markerIcon,
+        markerCoordinates: { lat, lng },
+        regionImage: region.custom_data.regionImage,
+        overlayImage: region.custom_data.region_background_image
+      }
+    })
     return res.json({
       regions: regionsArray,
       trails
     });
   } catch(e) {
-    console.log("Issue arose.");
-    return res.status(500).send("Error: ", e)
+    console.log("Issue arose.", e);
+    return res.status(500).send("Error")
   }
 }
 
@@ -43,7 +47,7 @@ exports.getCoordinates = async (req, res) => {
     const { data: trail } = await axios.get(url);
     return res.json({ trail });
   } catch(e) {
-    console.log("Issue arose.");
-    return res.status(500).send("Error: ", e)
+    console.log("Issue arose.", e);
+    return res.status(500).send("Error")
   }
 }

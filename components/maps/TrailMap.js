@@ -213,7 +213,10 @@ class Map extends React.Component {
       // Check if localstorage has this trail in it
       const trailStorageJSON = JSON.parse(trailStorage)
       const match = trailStorageJSON.find(storedTrail => trail.slug === storedTrail.slug)
-      if (match) coordinates = match.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng), elevation: Number(point.elevation)}))
+      if (match) {
+        if (Array.isArray(match.coordinates[0])) coordinates = match.coordinates
+        else coordinates = match.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng), elevation: Number(point.elevation)}))
+      }
       else {
         this.setCoordinates()
         return null
@@ -245,7 +248,11 @@ class Map extends React.Component {
           ref={this.mapLoaded}
           className='THEMAP'
           zoom={this.state.zoom}
-          center={{lat: coordinates[center].lat, lng: coordinates[center].lng}}
+          center={
+            Array.isArray(coordinates[0]) ?
+            {lat: coordinates[center][0].lat, lng: coordinates[center][0].lng}
+            : {lat: coordinates[center].lat, lng: coordinates[center].lng}
+          }
           // Only do this once. (TODO: look for a better event for this function like map loaded or something)
           onTilesLoaded={() => !this.state.mapIsCentered ? this.setCenterAndZoom(coordinates) : null}
           options={{
@@ -255,14 +262,35 @@ class Map extends React.Component {
             streetViewControl: false
           }}
         >
-          <Polyline
-            path={coordinates}
-            options={{
-              strokeColor: trailColor,
-              strokeOpacity:1,
-              strokeWeight:3,
-            }}
-          />
+          {Array.isArray(coordinates[0]) ?
+            <React.Fragment>
+              {coordinates.map((line, k) => {
+                return (
+                  <Polyline
+                    path={ line.map(point => ({lat: Number(point.lat), lng: Number(point.lng), elevation: Number(point.elevation)})) }
+                    options={{
+                      strokeColor: trailColor,
+                      strokeOpacity:1,
+                      strokeWeight:3,
+                    }}
+                    key={k}
+                  />
+                )
+              })}
+            </React.Fragment>
+          :
+            <React.Fragment>
+              <Polyline
+                path={coordinates}
+                options={{
+                  strokeColor: trailColor,
+                  strokeOpacity:1,
+                  strokeWeight:3,
+                }}
+              />
+              {console.log("ITS NOT AN ARRAY", coordinates)}
+            </React.Fragment>
+          }
           {this.state.marker &&
             <Marker
               position={this.state.marker}

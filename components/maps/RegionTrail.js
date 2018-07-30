@@ -101,7 +101,6 @@ export default class RegionTrail extends React.Component {
               <div className="info_wrapper">
                 <h3 className="top" dangerouslySetInnerHTML={{__html: trail.title.rendered}} />
                 <div className="info">
-                {console.log(trail)}
                   {trail.custom_data.length &&
                     <p>Length: <span>{Number(trail.custom_data.length).toFixed(2)} miles</span></p>
                   }
