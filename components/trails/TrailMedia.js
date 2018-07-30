@@ -31,7 +31,7 @@ const TrailMedia = props =>
           <h3>Pictures</h3>
           <hr/>
           <div>
-            <ImageGallery images={props.media.pictures} />
+            <ImageGallery trail={props.trail} images={props.media.pictures} />
           </div>
         </div>
       }
@@ -88,10 +88,6 @@ const TrailMedia = props =>
             z-index: 5;
             width: 100%;
           }
-        }
-        img.preview {
-          max-width: 100%;
-          height: auto;
         }
       }
     }

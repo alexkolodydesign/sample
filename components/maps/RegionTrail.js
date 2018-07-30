@@ -43,7 +43,7 @@ export default class RegionTrail extends React.Component {
     const trail = this.props.trail
     let coordinates
     // Zoom threshold is not great enough for trail to show
-    if (this.props.zoomLevel < 10) {
+    if (this.props.zoomLevel < trail.custom_data.zoomThreshold) {
       return null
     } else {
       // Check localstorage for data before sending fetch

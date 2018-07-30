@@ -41,7 +41,7 @@ const Trail = props => {
         {props.trail.custom_data.similarTrails.length ? <SimilarTrails similarTrails={props.trail.custom_data.similarTrails} /> : false }
         {props.trail.custom_data.trailsNearby.length ? <NearbyTrails nearbyTrails={props.trail.custom_data.trailsNearby} /> : false }
       </div>
-      <TrailMedia media={props.trail.custom_data.media} />
+      <TrailMedia trail={props.trail.title.rendered} media={props.trail.custom_data.media} />
       <ScrollToTop showUnder={160} style={{background: '#4d4e4e', padding: '0.75rem'}}>
         <img width="20" height="20" src="/static/images/scrollup.svg" alt="scroll to top" />
       </ScrollToTop>

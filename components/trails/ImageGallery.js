@@ -25,7 +25,7 @@ export default class ImageGallery extends React.Component {
             return (
               <div className="wrapper" key={k}  onClick={() => this.setState({ isOpen: true, photoIndex: k })}>
                 { /* {ID, id, title, filename, filesize, url, link, alt, author, description, caption, name, status, uploaded_to, date, modified, menu_order, mime_type, type, subtype, icon, width, height, sizes} */}
-                <img src={picture.sizes.medium} alt={picture.alt || picture.title} />
+                <img src={picture.sizes.medium} alt={picture.alt || this.props.trail} />
                 {picture.description && <p>{picture.description}</p> }
               </div>
             )
