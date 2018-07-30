@@ -32,6 +32,10 @@ export default class Difficulty extends React.Component {
             </p>
           }
           {difficulty.defaultDifficulty &&
+            !difficulty.hikingDifficulty &&
+            !difficulty.bikingDifficulty &&
+            !difficulty.equestrianDifficulty &&
+            !difficulty.ohvDifficulty &&
             <p>Difficulty:
               <img src={`/static/images/trail/difficulty/${difficulty.defaultDifficulty.value}.png`} alt={`${difficulty.defaultDifficulty.value} Difficulty`} />
               <span>{difficulty.defaultDifficulty.label}</span>

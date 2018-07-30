@@ -1,5 +1,6 @@
 import ReactHtmlParser from 'react-html-parser'
 import sanitizeHtml from 'sanitize-html-react'
+import Difficulty from '../maps/Difficulty'
 
 const TrailSidebar = props => {
   const trail = props.trail.custom_data
@@ -10,8 +11,11 @@ const TrailSidebar = props => {
           <div><p>Region<br/><span>{trail.region}</span></p></div>
         }
 
-        {trail.difficulty && trail.difficulty.defaultDifficulty &&
-          <div><p>Difficulty<br/><span>{trail.difficulty.defaultDifficulty.label}</span></p></div>
+        {trail.difficulty &&
+          <div>
+            <Difficulty difficulty={trail.difficulty} /><br/>
+          </div>
+
         }
 
         {trail.length &&

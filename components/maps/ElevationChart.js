@@ -47,31 +47,41 @@ export default class ElevationChart extends React.Component {
     const maxElevation = Number(Math.max(...this.props.coordinates.map(o => o.elevation)) ).toFixed(0)
     const minElevation = Number(Math.min(...this.props.coordinates.map(o => o.elevation)) ).toFixed(0)
     const diff = Math.floor(Math.abs(maxElevation - minElevation))
+    const elevationFlag = this.props.coordinates.some((el) => el.value == 'elevation')
 
     return (
       <ErrorBoundary>
         <div>
-          <h2>Elevation</h2>
-          <div className="chart">
-            <AreaChart width={820} height={250} data={this.props.coordinates} onMouseMove={this.mouseMove}
-              margin={{top: 10, right: 20, left: 10, bottom: 20}}>
-              <CartesianGrid strokeDasharray="3 3"/>
-              <YAxis
-                allowDecimals={false}
-                unit=" ft"
-                interval='preserveEnd'
-                //ticks={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
-                domain={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
-              />
-              <Tooltip content={this.renderTooltip} />
-              <Area type='monotone' dataKey='elevation' stroke={this.props.areaStrokeColor} strokeWidth={2} fill='rgba(197,196,188,0.8)' />
-            </AreaChart>
-          </div>
+          {elevationFlag &&
+            <div>
+              <h2>Elevation</h2>
+              <div className="chart">
+
+                <AreaChart width={820} height={250} data={this.props.coordinates} onMouseMove={this.mouseMove}
+                  margin={{top: 10, right: 20, left: 10, bottom: 20}}>
+                  <CartesianGrid strokeDasharray="3 3"/>
+                  <YAxis
+                    allowDecimals={false}
+                    unit=" ft"
+                    interval='preserveEnd'
+                    //ticks={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
+                    domain={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
+                  />
+                  <Tooltip content={this.renderTooltip} />
+                  <Area type='monotone' dataKey='elevation' stroke={this.props.areaStrokeColor} strokeWidth={2} fill='rgba(197,196,188,0.8)' />
+                </AreaChart>
+              </div>
+            </div>
+          }
           <div className="details">
             <div className="stats">
-              <p>Total Distance<span>{totalDistance}</span></p>
-              <p>Max Elevation<span>{maxElevation}</span></p>
-              <p>Min Elevation<span>{minElevation}</span></p>
+              <p>Total Distance<span>{totalDistance} miles</span></p>
+              {elevationFlag &&
+                <div>
+                  <p>Max Elevation<span>{maxElevation}</span></p>
+                  <p>Min Elevation<span>{minElevation}</span></p>
+                </div>
+              }
             </div>
             <div className="map_type">
               <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" />
