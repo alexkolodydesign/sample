@@ -137,7 +137,7 @@ export default class RegionTrail extends React.Component {
                       <img src="/static/images/menu/equestrian.svg" alt="Equestrian Trail" />
                     }
                     {trail.custom_data.recommendedUse.some((el) => el.value == 'ohv') &&
-                      <img src="/static/images/menu/atv.svg" alt="OHV Trail" />
+                      <img src="/static/images/menu/ohv.svg" alt="OHV Trail" />
                     }
 
 

@@ -15,7 +15,7 @@ const SelectTrailType = props =>
       className={props.map.filter.trailType.equestrian ? null : "inactive"}
       onClick={ () => props.changeTrailType("equestrian") }
     />
-    <img src="/static/images/menu/atv.svg" alt="Select OHV Trails"
+    <img src="/static/images/menu/ohv.svg" alt="Select OHV Trails"
       className={props.map.filter.trailType.ohv ? null : "inactive"}
       onClick={ () => props.changeTrailType("ohv") }
     />
