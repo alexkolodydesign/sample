@@ -123,6 +123,11 @@ export default class ElevationChart extends React.Component {
             .recharts-surface {
               overflow-y: visible;
             }
+            @media print {
+              .details {
+                display: none;
+              }
+            }
           `}</style>
         </div>
       </ErrorBoundary>

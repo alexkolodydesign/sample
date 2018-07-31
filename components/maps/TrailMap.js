@@ -126,12 +126,11 @@ export default class TrailMap extends React.Component {
             }
           }
           @media print {
-            *, *:before, *:after {
-              display: none;
-            }
             .map_container, .gm-style, .gm-style * {
-              display: block!important;
               max-width: 100%;
+            }
+            .buttons {
+              display: none;
             }
           }
         `}</style>

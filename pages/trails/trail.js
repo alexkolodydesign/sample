@@ -25,7 +25,7 @@ const Trail = props => {
       <Head/>
       <div className="wrapper">
         <Link href="/">
-          <a style={{paddingTop: "3rem"}}>
+          <a className="back_button" style={{paddingTop: "3rem"}}>
             <button>
               &lt; Back to map
             </button>
@@ -81,12 +81,8 @@ const Trail = props => {
           }
         }
         @media print {
-          *, *:before, *:after {
+          .back_button {
             display: none;
-          }
-          .wrapper.trail, h1 {
-            display: block;
-            max-width: 100%;
           }
         }
 
