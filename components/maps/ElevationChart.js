@@ -86,7 +86,7 @@ export default class ElevationChart extends React.Component {
             <div className="map_type">
               <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" />
               <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" />
-              <img src="/static/images/menu/horse.svg" alt="Select Equestian Trails" />
+              <img src="/static/images/menu/equestrian.svg" alt="Select Equestian Trails" />
               <img src="/static/images/menu/atv.svg" alt="Select OHV Trails" />
             </div>
           </div>
