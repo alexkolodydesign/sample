@@ -88,25 +88,18 @@ async function run() {
 async function getTrailCoordinates(trailCoordinates) {
   if (trailCoordinates) {
     let coordinates
-    // If the trail has coordinates and they have less than 500 points then just send a single elevation request
-    // Else break these requests into multiple calls and return a new array for coordinates (TODO: Dynamically make calls based on array length)
-    if (trailCoordinates.length < 300) {
-      coordinates = await getElevation(trailCoordinates)
-    }
-    else {
-      const fragment = await getElevation(trailCoordinates.slice(1,200)) || []
-      const fragment2 = await getElevation(trailCoordinates.slice(201,400)) || []
-      const fragment3 = await getElevation(trailCoordinates.slice(401,600)) || []
-      const fragment4 = await getElevation(trailCoordinates.slice(601,800)) || []
-      const fragment5 = await getElevation(trailCoordinates.slice(801,1000)) || []
-      coordinates = [
-        ...fragment,
-        ...fragment2,
-        ...fragment3,
-        ...fragment4,
-        ...fragment5
-      ]
-    }
+    const fragment = await getElevation(trailCoordinates.slice(1,200)) || []
+    const fragment2 = await getElevation(trailCoordinates.slice(201,400)) || []
+    const fragment3 = await getElevation(trailCoordinates.slice(401,600)) || []
+    const fragment4 = await getElevation(trailCoordinates.slice(601,800)) || []
+    const fragment5 = await getElevation(trailCoordinates.slice(801,1000)) || []
+    coordinates = [
+      ...fragment,
+      ...fragment2,
+      ...fragment3,
+      ...fragment4,
+      ...fragment5
+    ]
     await timeout(100);
     return coordinates
   } else {
