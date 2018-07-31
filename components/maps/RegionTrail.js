@@ -17,23 +17,23 @@ export default class RegionTrail extends React.Component {
   async setCoordinates() {
     if (!this.props.trail.custom_data.jsonCoordinates) return null
     try {
-      const {data: { trail }} = await axios.get('/api/coordinates', {params: {url: encodeURI(this.props.trail.custom_data.jsonCoordinates)} } )
-      // Store this data so we don't make extra calls when zooming
-      const trailStorage = localStorage.getItem('trails')
-      if (!trailStorage) {
-        localStorage.setItem('trails', JSON.stringify([{
-          slug: this.props.trail.slug,
-          coordinates: trail.coordinates
-        }]))
-      } else {
-        const trailStorageJSON = JSON.parse(trailStorage)
-        trailStorageJSON.push({
-          slug: this.props.trail.slug,
-          coordinates: trail.coordinates
-        })
-        localStorage.removeItem('trails')
-        localStorage.setItem('trails', JSON.stringify(trailStorageJSON))
-      }
+      const {data: { trail }} = await axios.get('/api/coordinates', {params: {url: encodeURI(this.props.trail.custom_data.jsonCoordinates.url)} } )
+      // // Store this data so we don't make extra calls when zooming
+      // const trailStorage = localStorage.getItem('trails')
+      // if (!trailStorage) {
+      //   localStorage.setItem('trails', JSON.stringify([{
+      //     slug: this.props.trail.slug,
+      //     coordinates: trail.coordinates
+      //   }]))
+      // } else {
+      //   const trailStorageJSON = JSON.parse(trailStorage)
+      //   trailStorageJSON.push({
+      //     slug: this.props.trail.slug,
+      //     coordinates: trail.coordinates
+      //   })
+      //   localStorage.removeItem('trails')
+      //   localStorage.setItem('trails', JSON.stringify(trailStorageJSON))
+      // }
       this.setState({coordinates: trail.coordinates})
     } catch(e) {
       console.log("Issue with Url: ", e)

@@ -156,7 +156,7 @@ class Map extends React.Component {
   async setCoordinates() {
     if (!this.props.trail.custom_data.jsonCoordinates) return null
     try {
-      const {data: { trail }} = await axios.get('/api/coordinates', {params: {url: encodeURI(this.props.trail.custom_data.jsonCoordinates)} } )
+      const {data: { trail }} = await axios.get('/api/coordinates', {params: {url: encodeURI(this.props.trail.custom_data.jsonCoordinates.url)} } )
       // Store this data so we don't make extra calls when zooming
       const trailStorage = localStorage.getItem('trails')
       if (!trailStorage) {
@@ -288,7 +288,6 @@ class Map extends React.Component {
                   strokeWeight:3,
                 }}
               />
-              {console.log("ITS NOT AN ARRAY", coordinates)}
             </React.Fragment>
           }
           {this.state.marker &&
