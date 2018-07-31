@@ -89,16 +89,26 @@ async function getTrailCoordinates(trailCoordinates) {
   if (trailCoordinates) {
     let coordinates
     const fragment = await getElevation(trailCoordinates.slice(1,200)) || []
-    const fragment2 = await getElevation(trailCoordinates.slice(201,400)) || []
-    const fragment3 = await getElevation(trailCoordinates.slice(401,600)) || []
-    const fragment4 = await getElevation(trailCoordinates.slice(601,800)) || []
-    const fragment5 = await getElevation(trailCoordinates.slice(801,1000)) || []
+    const fragment2 = await getElevation(trailCoordinates.slice(201,300)) || []
+    const fragment3 = await getElevation(trailCoordinates.slice(301,400)) || []
+    const fragment4 = await getElevation(trailCoordinates.slice(401,500)) || []
+    const fragment5 = await getElevation(trailCoordinates.slice(501,600)) || []
+    const fragment6 = await getElevation(trailCoordinates.slice(601,700)) || []
+    const fragment7 = await getElevation(trailCoordinates.slice(701,800)) || []
+    const fragment8 = await getElevation(trailCoordinates.slice(801,900)) || []
+    const fragment9 = await getElevation(trailCoordinates.slice(901,1000)) || []
+    const fragment10 = await getElevation(trailCoordinates.slice(1001,1100)) || []
     coordinates = [
       ...fragment,
       ...fragment2,
       ...fragment3,
       ...fragment4,
-      ...fragment5
+      ...fragment5,
+      ...fragment6,
+      ...fragment7,
+      ...fragment8,
+      ...fragment9,
+      ...fragment10
     ]
     await timeout(100);
     return coordinates
