@@ -46,6 +46,7 @@ export default class ElevationChart extends React.Component {
     const totalDistance = Number(this.props.trail.custom_data.length).toFixed(2)
     const maxElevation = Number(Math.max(...this.props.coordinates.map(o => o.elevation)) ).toFixed(0)
     const minElevation = Number(Math.min(...this.props.coordinates.map(o => o.elevation)) ).toFixed(0)
+    const trailType = this.props.trail.custom_data.trailType
     const diff = Math.floor(Math.abs(maxElevation - minElevation))
     const elevationFlag = this.props.coordinates.some((el) => el.value == 'elevation')
 
@@ -84,10 +85,9 @@ export default class ElevationChart extends React.Component {
               }
             </div>
             <div className="map_type">
-              <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" />
-              <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" />
-              <img src="/static/images/menu/equestrian.svg" alt="Select Equestian Trails" />
-              <img src="/static/images/menu/ohv.svg" alt="Select OHV Trails" />
+              {trailType &&
+                  trailType.map( (type, k) => <img key={k} className='type-icon' src={`/static/images/menu/${type.value}.svg`} alt={type.label} />  )
+              }
             </div>
           </div>
           <style jsx>{`
