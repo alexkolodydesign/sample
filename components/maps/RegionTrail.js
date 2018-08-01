@@ -20,21 +20,21 @@ export default class RegionTrail extends React.Component {
     try {
       const {data: { trail }} = await axios.get('/api/coordinates', {params: {url: encodeURI(this.props.trail.custom_data.jsonCoordinates.url)} } )
       // Store this data so we don't make extra calls when zooming
-      // const trailStorage = sessionStorage.getItem('trails')
-      // if (!trailStorage) {
-      //   sessionStorage.setItem('trails', JSON.stringify([{
-      //     slug: this.props.trail.slug,
-      //     coordinates: trail.coordinates
-      //   }]))
-      // } else {
-      //   const trailStorageJSON = JSON.parse(trailStorage)
-      //   trailStorageJSON.push({
-      //     slug: this.props.trail.slug,
-      //     coordinates: trail.coordinates
-      //   })
-      //   sessionStorage.removeItem('trails')
-      //   sessionStorage.setItem('trails', JSON.stringify(trailStorageJSON))
-      // }
+      const trailStorage = sessionStorage.getItem('trails')
+      if (!trailStorage) {
+        sessionStorage.setItem('trails', JSON.stringify([{
+          slug: this.props.trail.slug,
+          coordinates: trail.coordinates
+        }]))
+      } else {
+        const trailStorageJSON = JSON.parse(trailStorage)
+        trailStorageJSON.push({
+          slug: this.props.trail.slug,
+          coordinates: trail.coordinates
+        })
+        sessionStorage.removeItem('trails')
+        sessionStorage.setItem('trails', JSON.stringify(trailStorageJSON))
+      }
       this.setState({coordinates: trail.coordinates})
     } catch(e) {
       this.setState({coordinates: []})
@@ -49,17 +49,19 @@ export default class RegionTrail extends React.Component {
     } else {
       // Check localstorage for data before sending fetch
       const trailStorage = sessionStorage.getItem('trails')
-      // No localstorage so send fetch
+      // No session storage so send fetch
       if (!trailStorage) {
         if (!this.state.coordinates || this.state.coordinates === undefined || this.state.coordinates.length == 0) {
           this.setCoordinates()
           return null
         }
       } else {
-        // Check if localstorage has this trail in it
+        // Check if session storage has this trail in it
         const trailStorageJSON = JSON.parse(trailStorage)
         const match = trailStorageJSON.find(storedTrail => trail.slug === storedTrail.slug)
-        if (match != undefined) coordinates = match.coordinates ? match.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng)})) : []
+        if (match != undefined) {
+          coordinates = match.coordinates ? match.coordinates : []
+        }
         else {
           this.setCoordinates()
           return null
