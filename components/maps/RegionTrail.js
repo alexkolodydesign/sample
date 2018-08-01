@@ -8,12 +8,12 @@ import Difficulty from './Difficulty'
 export default class RegionTrail extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { coordinates: [], menu: false}
+    this.state = { coordinates: [], menu: false, menuCoords: false}
     this.setCoordinates = this.setCoordinates.bind(this)
     this.toggleMenu = this.toggleMenu.bind(this)
   }
-  toggleMenu() {
-    this.setState({menu: !this.state.menu})
+  toggleMenu(coords) {
+    this.setState({menu: !this.state.menu, menuCoords: coords})
   }
   async setCoordinates() {
     const coords = await setCoordinates(this.props.trail.custom_data.jsonCoordinates, this.props.trail.slug)
@@ -73,7 +73,7 @@ export default class RegionTrail extends React.Component {
         <Paths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor}  />
 
         {this.state.menu &&
-          <Marker position={{lat: coordinates[0].lat, lng: coordinates[0].lng}} icon={{url: ""}} >
+          <Marker position={this.state.menuCoords} icon={{url: ""}} >
             <InfoWindow options={{'maxWidth' : 320}} onCloseClick={() => this.setState({menu: false})}>
               <div className="info_wrapper">
                 <h3 className="top" dangerouslySetInnerHTML={{__html: trail.title.rendered}} />

@@ -29,7 +29,6 @@ export default class TrailMap extends React.Component {
       )
     }
   }
-
   printMap() {
     window.print()
     return true

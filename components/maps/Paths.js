@@ -15,7 +15,10 @@ const Paths = props =>
                 strokeWeight:3,
               }}
               key={k}
-              onClick={props.toggleMenu}
+              onClick={(e) => {
+                const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
+                props.toggleMenu(coord)
+              }}
             />
           )
         })}
@@ -28,7 +31,10 @@ const Paths = props =>
           strokeOpacity:1,
           strokeWeight:3,
         }}
-        onClick={props.toggleMenu}
+        onClick={(e) => {
+          const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
+          props.toggleMenu(coord)
+        }}
       />
     }
   </React.Fragment>
