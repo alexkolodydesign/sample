@@ -169,7 +169,15 @@ class Map extends React.Component {
     // Make new bounds
     let newBounds = new LatLngBounds()
     // Add LatLng points to the new bounding area
-    coords.forEach(bound => newBounds.extend(new LatLng(bound.lat, bound.lng)))
+    coords.forEach(bound => {
+      if (Array.isArray(bound)) {
+        bound.forEach(point => {
+          newBounds.extend(new LatLng(point.lat, point.lng))
+        })
+      } else {
+        newBounds.extend(new LatLng(bound.lat, bound.lng))
+      }
+    })
     // Get the new center and zoom from new bounds
     const fit = fitBounds(
       {nw: newBounds.getNorthWest(), se: newBounds.getSouthEast()},
