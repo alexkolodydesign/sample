@@ -96,6 +96,9 @@ export default class TrailMap extends React.Component {
               font-size: 1.8rem;
               cursor: pointer;
               transition: all 500ms;
+              display: flex;
+              align-items: center;
+              justify-content: center;
               &:hover {
                 background: #0d93f2;
               }
