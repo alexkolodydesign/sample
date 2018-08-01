@@ -1,9 +1,10 @@
 import axios from 'axios'
 import { withScriptjs, withGoogleMap, GoogleMap, Polyline, Marker } from "react-google-maps"
-import ElevationChart from './ElevationChart'
 import { fitBounds } from 'google-map-react/utils'
 import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js'
 import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js'
+import ElevationChart from './ElevationChart'
+import Paths from './Paths'
 import ShareButtons from '../layout/ShareButtons'
 import printStyle from './mapstyles/print'
 
@@ -157,24 +158,24 @@ class Map extends React.Component {
     try {
       const {data: { trail }} = await axios.get('/api/coordinates', {params: {url: encodeURI(this.props.trail.custom_data.jsonCoordinates.url)} } )
       // Store this data so we don't make extra calls when zooming
-      const trailStorage = localStorage.getItem('trails')
-      if (!trailStorage) {
-        localStorage.setItem('trails', JSON.stringify([{
-          slug: this.props.trail.slug,
-          coordinates: trail.coordinates ? trail.coordinates : []
-        }]))
-      } else {
-        const trailStorageJSON = JSON.parse(trailStorage)
-        trailStorageJSON.push({
-          slug: this.props.trail.slug,
-          coordinates: trail.coordinates ? trail.coordinates : []
-        })
-        localStorage.removeItem('trails')
-        localStorage.setItem('trails', JSON.stringify(trailStorageJSON))
-      }
+      // const trailStorage = localStorage.getItem('trails')
+      // if (!trailStorage) {
+      //   localStorage.setItem('trails', JSON.stringify([{
+      //     slug: this.props.trail.slug,
+      //     coordinates: trail.coordinates ? trail.coordinates : []
+      //   }]))
+      // } else {
+      //   const trailStorageJSON = JSON.parse(trailStorage)
+      //   trailStorageJSON.push({
+      //     slug: this.props.trail.slug,
+      //     coordinates: trail.coordinates ? trail.coordinates : []
+      //   })
+      //   localStorage.removeItem('trails')
+      //   localStorage.setItem('trails', JSON.stringify(trailStorageJSON))
+      // }
       this.setState({coordinates: trail.coordinates})
     } catch(e) {
-      console.log("Issue with Url: ", e)
+      this.setState({coordinates: []})
     }
   }
   pathMarker(location) {
@@ -261,34 +262,9 @@ class Map extends React.Component {
             streetViewControl: false
           }}
         >
-          {Array.isArray(coordinates[0]) ?
-            <React.Fragment>
-              {coordinates.map((line, k) => {
-                return (
-                  <Polyline
-                    path={ line.map(point => ({lat: Number(point.lat), lng: Number(point.lng), elevation: Number(point.elevation)})) }
-                    options={{
-                      strokeColor: trailColor,
-                      strokeOpacity:1,
-                      strokeWeight:3,
-                    }}
-                    key={k}
-                  />
-                )
-              })}
-            </React.Fragment>
-          :
-            <React.Fragment>
-              <Polyline
-                path={coordinates}
-                options={{
-                  strokeColor: trailColor,
-                  strokeOpacity:1,
-                  strokeWeight:3,
-                }}
-              />
-            </React.Fragment>
-          }
+
+          <Paths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor}  />
+
           {this.state.marker &&
             <Marker
               position={this.state.marker}

@@ -1,6 +1,7 @@
-import { Polyline, InfoWindow, Marker } from "react-google-maps"
+import { InfoWindow, Marker } from "react-google-maps"
 import axios from 'axios'
 import Link from 'next/link'
+import Paths from './Paths'
 import Difficulty from './Difficulty'
 
 
@@ -18,22 +19,22 @@ export default class RegionTrail extends React.Component {
     if (!this.props.trail.custom_data.jsonCoordinates) return null
     try {
       const {data: { trail }} = await axios.get('/api/coordinates', {params: {url: encodeURI(this.props.trail.custom_data.jsonCoordinates.url)} } )
-      // // Store this data so we don't make extra calls when zooming
-      const trailStorage = sessionStorage.getItem('trails')
-      if (!trailStorage) {
-        sessionStorage.setItem('trails', JSON.stringify([{
-          slug: this.props.trail.slug,
-          coordinates: trail.coordinates
-        }]))
-      } else {
-        const trailStorageJSON = JSON.parse(trailStorage)
-        trailStorageJSON.push({
-          slug: this.props.trail.slug,
-          coordinates: trail.coordinates
-        })
-        sessionStorage.removeItem('trails')
-        sessionStorage.setItem('trails', JSON.stringify(trailStorageJSON))
-      }
+      // Store this data so we don't make extra calls when zooming
+      // const trailStorage = sessionStorage.getItem('trails')
+      // if (!trailStorage) {
+      //   sessionStorage.setItem('trails', JSON.stringify([{
+      //     slug: this.props.trail.slug,
+      //     coordinates: trail.coordinates
+      //   }]))
+      // } else {
+      //   const trailStorageJSON = JSON.parse(trailStorage)
+      //   trailStorageJSON.push({
+      //     slug: this.props.trail.slug,
+      //     coordinates: trail.coordinates
+      //   })
+      //   sessionStorage.removeItem('trails')
+      //   sessionStorage.setItem('trails', JSON.stringify(trailStorageJSON))
+      // }
       this.setState({coordinates: trail.coordinates})
     } catch(e) {
       this.setState({coordinates: []})
@@ -88,37 +89,8 @@ export default class RegionTrail extends React.Component {
     }
     return (
       <React.Fragment>
-        {Array.isArray(coordinates[0]) ?
-          <React.Fragment>
-            {coordinates.map((line, k) => {
-              if (!line) return null
-              return (
-                <Polyline
-                  path={ line.map(point => ({lat: Number(point.lat), lng: Number(point.lng), elevation: Number(point.elevation)})) }
-                  options={{
-                    strokeColor: trailColor,
-                    strokeOpacity:1,
-                    strokeWeight:3,
-                  }}
-                  key={k}
-                  onClick={this.toggleMenu}
-                />
-              )
-            })}
-          </React.Fragment>
-        :
-          <React.Fragment>
-            <Polyline
-              path={coordinates}
-              options={{
-                strokeColor: trailColor,
-                strokeOpacity:1,
-                strokeWeight:3,
-              }}
-              onClick={this.toggleMenu}
-            />
-          </React.Fragment>
-        }
+        <Paths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor}  />
+
         {this.state.menu &&
           <Marker position={{lat: coordinates[0].lat, lng: coordinates[0].lng}} icon={{url: ""}} >
             <InfoWindow options={{'maxWidth' : 320}} onCloseClick={() => this.setState({menu: false})}>
