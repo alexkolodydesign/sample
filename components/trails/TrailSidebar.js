@@ -71,7 +71,7 @@ const TrailSidebar = props => {
       }
 
       {props.trail.content && props.trail.content.rendered &&
-        <div><p>Description</p><div className="description">{ReactHtmlParser(sanitizeHtml(props.trail.content.rendered))}</div></div>
+        <div className='trail_description'><p>Description</p><div className="description">{ReactHtmlParser(sanitizeHtml(props.trail.content.rendered))}</div></div>
       }
 
       {trail.icons &&
@@ -88,8 +88,16 @@ const TrailSidebar = props => {
             background-size: 29rem auto;
             &.details {
               padding: 3rem;
-              display: flex;
-              flex-direction: column;
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+
+              .trail_description {
+                grid-column-start: 1;
+                grid-column-end: 3;
+              }
+
+              // display: flex;
+              // flex-direction: column;
               p {
                 margin: 0 0 2rem 0;
                 text-transform: uppercase;
@@ -138,6 +146,13 @@ const TrailSidebar = props => {
               max-width: 40px;
               display: inline-block;
               margin-right: 5px;
+            }
+          }
+        }
+        @media screen and (min-width: 768px) {
+          .background {
+            &.details {
+              display: block;
             }
           }
         }

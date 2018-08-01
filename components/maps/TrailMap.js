@@ -35,7 +35,7 @@ export default class TrailMap extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="trail_map">
         <div className="map_container">
           <MapContainer
             loadingElement={<div style={{ height: `40rem` }} />}
@@ -66,6 +66,12 @@ export default class TrailMap extends React.Component {
         </div>
         <style jsx>{`
           @media screen {
+            .trail_map {
+              grid-column-start: 1;
+              grid-column-end: 2;
+              grid-row-start: 1;
+              grid-row-end: 2;
+            }
             .map_container {
               background: #fff;
               background-image: linear-gradient(rgba(255,255,255,0.98),rgba(255,255,255,0.98)),url(/static/images/background-pattern.svg);
@@ -79,7 +85,7 @@ export default class TrailMap extends React.Component {
               height: 50rem;
             }
             .buttons {
-              margin-top: 1.5rem;
+              margin-top: 3rem;
               display: grid;
               grid-template: 1fr 1fr / 1fr 1fr;
               grid-gap: 1.5rem
@@ -104,6 +110,12 @@ export default class TrailMap extends React.Component {
               }
               &:last-of-type {
                 background: #262727;
+
+                grid-column-start: 1;
+                grid-column-end: 2;
+                grid-row-start: 1;
+                grid-row-end: 2;
+
                 &:hover {
                   background: #666666;
                 }
@@ -121,13 +133,24 @@ export default class TrailMap extends React.Component {
           }
           @media screen and (min-width: 768px) {
             .buttons {
+              margin-top: 1.5rem;
               grid-template: 1fr 1fr / 1fr 1fr 1fr;
               button {
                 &:last-of-type {
+
+                  // grid-column-start: 1;
+                  // grid-column-end: 4;
+                  // grid-row-start: 2;
+                  // grid-row-end: 3;
+
                   grid-column: 1 / span 3;
                   grid-row: 2;
                 }
               }
+            }
+            .trail_map {
+              grid-column-start: 2;
+              grid-column-end: 3;
             }
           }
           @media print {

@@ -16,7 +16,7 @@ export default class SimilarTrails extends React.Component {
         <h2>Similar to This Trail:</h2>
         <div className="similar_trails">
           {this.state.trails && !this.state.trails.length &&
-            <div className="trail">
+            <div className="trail singletrail">
               <Link href={`/trails/${this.state.trails.slug}`}>
                 <a
                   style={{backgroundImage: `url(${this.state.trails.custom_data.media.pictures[0] ? this.state.trails.custom_data.media.pictures[0].sizes.medium : "https://placehold.it/75x75?text=unavailable"})`, backgroundPosition: "center", backgroundSize: "cover"}}
@@ -43,8 +43,8 @@ export default class SimilarTrails extends React.Component {
               <div className="trail_type">
                 <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!this.state.trails.custom_data.recommendedUse.some((el) => el.value == 'hiking') && "inactive"} />
                 <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" className={!this.state.trails.custom_data.recommendedUse.some((el) => el.value == 'biking') && "inactive"} />
-                <img src="/static/images/menu/horse.svg" alt="Select Equestrian Trails" className={!this.state.trails.custom_data.recommendedUse.some((el) => el.value == 'equestrian') && "inactive"} />
-                <img src="/static/images/menu/atv.svg" alt="Select OHV Trails" className={!this.state.trails.custom_data.recommendedUse.some((el) => el.value == 'ohv') && "inactive"} />
+                <img src="/static/images/menu/equestrian.svg" alt="Select Equestrian Trails" className={!this.state.trails.custom_data.recommendedUse.some((el) => el.value == 'equestrian') && "inactive"} />
+                <img src="/static/images/menu/ohv.svg" alt="Select OHV Trails" className={!this.state.trails.custom_data.recommendedUse.some((el) => el.value == 'ohv') && "inactive"} />
               </div>
             </div>
 
@@ -78,8 +78,8 @@ export default class SimilarTrails extends React.Component {
               <div className="trail_type">
                 <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!trail.custom_data.recommendedUse.some((el) => el.value == 'hiking') && "inactive"} />
                 <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" className={!trail.custom_data.recommendedUse.some((el) => el.value == 'biking') && "inactive"} />
-                <img src="/static/images/menu/horse.svg" alt="Select Equestrian Trails" className={!trail.custom_data.recommendedUse.some((el) => el.value == 'equestrian') && "inactive"} />
-                <img src="/static/images/menu/atv.svg" alt="Select OHV Trails" className={!trail.custom_data.recommendedUse.some((el) => el.value == 'ohv') && "inactive"} />
+                <img src="/static/images/menu/equestrian.svg" alt="Select Equestrian Trails" className={!trail.custom_data.recommendedUse.some((el) => el.value == 'equestrian') && "inactive"} />
+                <img src="/static/images/menu/ohv.svg" alt="Select OHV Trails" className={!trail.custom_data.recommendedUse.some((el) => el.value == 'ohv') && "inactive"} />
               </div>
             </div>
 

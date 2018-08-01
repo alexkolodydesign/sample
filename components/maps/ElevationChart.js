@@ -7,6 +7,16 @@ export default class ElevationChart extends React.Component {
     super(props)
     this.renderTooltip = this.renderTooltip.bind(this)
     this.mouseMove = this.mouseMove.bind(this)
+    if (window.innerWidth <= 768) {
+      this.state = { width: window.innerWidth - 120, height: window.innerHeight };
+    }
+    else if (window.innerWidth < 1200) {
+      this.state = { width: window.innerWidth-420, height: window.innerHeight };
+    }
+    else {
+      this.state = { width: window.innerWidth, height: window.innerHeight };
+    }
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
   componentDidCatch(error, info) {
     // Display fallback UI
@@ -15,6 +25,28 @@ export default class ElevationChart extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state === nextState) return false
     else return true
+  }
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+
+    if (window.innerWidth <= 768) {
+      this.setState({ width: window.innerWidth - 120, height: window.innerHeight });
+    }
+    else if (window.innerWidth < 1200) {
+      this.setState({ width: window.innerWidth-420, height: window.innerHeight });
+    }
+    else {
+      this.setState({ width: 820, height: window.innerHeight });
+    }
+
   }
   renderTooltip(data) {
     const elevation = data.payload && data.payload[0] ? Number(data.payload[0].payload.elevation).toFixed(0) : false
@@ -60,8 +92,7 @@ export default class ElevationChart extends React.Component {
             <div>
               <h2>Elevation</h2>
               <div className="chart">
-
-                <AreaChart width={820} height={250} data={coordinates} onMouseMove={this.mouseMove}
+                <AreaChart width={this.state.width} height={250} data={coordinates} onMouseMove={this.mouseMove}
                   margin={{top: 10, right: 20, left: 10, bottom: 20}}>
                   <CartesianGrid strokeDasharray="3 3"/>
                   <YAxis
@@ -104,7 +135,7 @@ export default class ElevationChart extends React.Component {
             }
             .details {
               display: grid;
-              grid-template-columns: 1fr 15rem;
+              grid-template-columns: 1fr 11rem;
               margin-top: 3rem;
             }
             .stats {
@@ -125,6 +156,13 @@ export default class ElevationChart extends React.Component {
             }
             .recharts-surface {
               overflow-y: visible;
+            }
+            @media screen and (min-width: 768px) {
+              .details {
+                display: grid;
+                grid-template-columns: 1fr 15rem;
+                margin-top: 3rem;
+              }
             }
             @media print {
               .details {

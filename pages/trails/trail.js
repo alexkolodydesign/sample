@@ -38,6 +38,7 @@ const Trail = props => {
         <TrailMap trail={props.trail} />
       </div>
       <div className="wrapper more_trails">
+      { console.log("similar trails: ", props.trail.custom_data.similarTrails )}
         {props.trail.custom_data.similarTrails.length ? <SimilarTrails similarTrails={props.trail.custom_data.similarTrails} /> : false }
         {props.trail.custom_data.trailsNearby.length ? <NearbyTrails nearbyTrails={props.trail.custom_data.trailsNearby} /> : false }
       </div>
@@ -54,13 +55,19 @@ const Trail = props => {
           }
           .trail {
             display: grid;
-            grid-template-columns: 30rem 1fr;
+            grid-template-columns: 100%;
             grid-gap: 3rem;
+            .sidebar {
+              grid-column-start: 1;
+              grid-column-end: 2;
+              grid-row-start: 2;
+              grid-row-end: 3;
+            }
           }
           .more_trails {
             margin-top: 3rem;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             grid-gap: 3rem;
           }
           button {
@@ -78,6 +85,22 @@ const Trail = props => {
             &:hover {
               background: #666666;
             }
+          }
+        }
+        @media screen and (min-width: 768px) {
+          .trail {
+            display: grid;
+            grid-template-columns: 30rem 1fr;
+            grid-gap: 3rem;
+            .sidebar {
+              grid-column-start: 1;
+              grid-column-end: 2;
+              grid-row-start: 1;
+              grid-row-end: 2;
+            }
+          }
+          .more_trails {
+            grid-template-columns: 1fr 1fr;
           }
         }
         @media print {
