@@ -1,6 +1,6 @@
 import { InfoWindow, Marker } from "react-google-maps"
-import axios from 'axios'
 import Link from 'next/link'
+import { setCoordinates } from '../../redux/mapActions'
 import Paths from './Paths'
 import Difficulty from './Difficulty'
 
@@ -16,29 +16,8 @@ export default class RegionTrail extends React.Component {
     this.setState({menu: !this.state.menu})
   }
   async setCoordinates() {
-    if (!this.props.trail.custom_data.jsonCoordinates) return null
-    try {
-      const {data: { trail }} = await axios.get('/api/coordinates', {params: {url: encodeURI(this.props.trail.custom_data.jsonCoordinates.url)} } )
-      // Store this data so we don't make extra calls when zooming
-      const trailStorage = sessionStorage.getItem('trails')
-      if (!trailStorage) {
-        sessionStorage.setItem('trails', JSON.stringify([{
-          slug: this.props.trail.slug,
-          coordinates: trail.coordinates
-        }]))
-      } else {
-        const trailStorageJSON = JSON.parse(trailStorage)
-        trailStorageJSON.push({
-          slug: this.props.trail.slug,
-          coordinates: trail.coordinates
-        })
-        sessionStorage.removeItem('trails')
-        sessionStorage.setItem('trails', JSON.stringify(trailStorageJSON))
-      }
-      this.setState({coordinates: trail.coordinates})
-    } catch(e) {
-      this.setState({coordinates: []})
-    }
+    const coords = await setCoordinates(this.props.trail.custom_data.jsonCoordinates, this.props.trail.slug)
+    if (coords) this.setState({coordinates: coords})
   }
   render() {
     const trail = this.props.trail

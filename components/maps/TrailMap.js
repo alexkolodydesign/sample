@@ -3,6 +3,8 @@ import { withScriptjs, withGoogleMap, GoogleMap, Polyline, Marker } from "react-
 import { fitBounds } from 'google-map-react/utils'
 import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js'
 import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js'
+
+import { setCoordinates } from '../../redux/mapActions'
 import ElevationChart from './ElevationChart'
 import Paths from './Paths'
 import ShareButtons from '../layout/ShareButtons'
@@ -154,29 +156,8 @@ class Map extends React.Component {
     return state.mapStyle = props.mapStyle
   }
   async setCoordinates() {
-    if (!this.props.trail.custom_data.jsonCoordinates) return null
-    try {
-      const {data: { trail }} = await axios.get('/api/coordinates', {params: {url: encodeURI(this.props.trail.custom_data.jsonCoordinates.url)} } )
-      // Store this data so we don't make extra calls when zooming
-      // const trailStorage = localStorage.getItem('trails')
-      // if (!trailStorage) {
-      //   localStorage.setItem('trails', JSON.stringify([{
-      //     slug: this.props.trail.slug,
-      //     coordinates: trail.coordinates ? trail.coordinates : []
-      //   }]))
-      // } else {
-      //   const trailStorageJSON = JSON.parse(trailStorage)
-      //   trailStorageJSON.push({
-      //     slug: this.props.trail.slug,
-      //     coordinates: trail.coordinates ? trail.coordinates : []
-      //   })
-      //   localStorage.removeItem('trails')
-      //   localStorage.setItem('trails', JSON.stringify(trailStorageJSON))
-      // }
-      this.setState({coordinates: trail.coordinates})
-    } catch(e) {
-      this.setState({coordinates: []})
-    }
+    const coords = await setCoordinates(this.props.trail.custom_data.jsonCoordinates, this.props.trail.slug)
+    if (coords) this.setState({coordinates: coords})
   }
   pathMarker(location) {
     this.setState({marker: location})
@@ -202,15 +183,15 @@ class Map extends React.Component {
     const trail = this.props.trail
     let coordinates
     // Check localstorage for data before sending fetch
-    const trailStorage = localStorage.getItem('trails')
-    // No localstorage so send fetch
+    const trailStorage = sessionStorage.getItem('trails')
+    // No session storage so send fetch
     if (!trailStorage) {
-      if (this.state.coordinates === undefined || this.state.coordinates.length == 0) {
+      if (!this.state.coordinates || this.state.coordinates === undefined || this.state.coordinates.length == 0) {
         this.setCoordinates()
         return null
       }
     } else {
-      // Check if localstorage has this trail in it
+      // Check if session storage has this trail in it
       const trailStorageJSON = JSON.parse(trailStorage)
       const match = trailStorageJSON.find(storedTrail => trail.slug === storedTrail.slug)
       if (match) {
