@@ -19,24 +19,24 @@ export default class RegionTrail extends React.Component {
     try {
       const {data: { trail }} = await axios.get('/api/coordinates', {params: {url: encodeURI(this.props.trail.custom_data.jsonCoordinates.url)} } )
       // // Store this data so we don't make extra calls when zooming
-      // const trailStorage = localStorage.getItem('trails')
-      // if (!trailStorage) {
-      //   localStorage.setItem('trails', JSON.stringify([{
-      //     slug: this.props.trail.slug,
-      //     coordinates: trail.coordinates
-      //   }]))
-      // } else {
-      //   const trailStorageJSON = JSON.parse(trailStorage)
-      //   trailStorageJSON.push({
-      //     slug: this.props.trail.slug,
-      //     coordinates: trail.coordinates
-      //   })
-      //   localStorage.removeItem('trails')
-      //   localStorage.setItem('trails', JSON.stringify(trailStorageJSON))
-      // }
+      const trailStorage = sessionStorage.getItem('trails')
+      if (!trailStorage) {
+        sessionStorage.setItem('trails', JSON.stringify([{
+          slug: this.props.trail.slug,
+          coordinates: trail.coordinates
+        }]))
+      } else {
+        const trailStorageJSON = JSON.parse(trailStorage)
+        trailStorageJSON.push({
+          slug: this.props.trail.slug,
+          coordinates: trail.coordinates
+        })
+        sessionStorage.removeItem('trails')
+        sessionStorage.setItem('trails', JSON.stringify(trailStorageJSON))
+      }
       this.setState({coordinates: trail.coordinates})
     } catch(e) {
-      console.log("Issue with Url: ", e)
+      this.setState({coordinates: []})
     }
   }
   render() {
@@ -47,10 +47,10 @@ export default class RegionTrail extends React.Component {
       return null
     } else {
       // Check localstorage for data before sending fetch
-      const trailStorage = localStorage.getItem('trails')
+      const trailStorage = sessionStorage.getItem('trails')
       // No localstorage so send fetch
       if (!trailStorage) {
-        if (this.state.coordinates === undefined || this.state.coordinates.length == 0) {
+        if (!this.state.coordinates || this.state.coordinates === undefined || this.state.coordinates.length == 0) {
           this.setCoordinates()
           return null
         }
@@ -65,7 +65,9 @@ export default class RegionTrail extends React.Component {
         }
       }
     }
-    if (!coordinates) coordinates = this.state.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng)}))
+    if (!coordinates) {
+      coordinates = this.state.coordinates
+    }
     // Change Trail Color Based on the First Value of Recommended Use Array
     let trailColor
     switch(trail.custom_data.recommendedUse[0].value) {
@@ -86,15 +88,37 @@ export default class RegionTrail extends React.Component {
     }
     return (
       <React.Fragment>
-        <Polyline
-          path={coordinates}
-          options={{
-            strokeColor: trailColor,
-            strokeOpacity:1,
-            strokeWeight:3,
-          }}
-          onClick={this.toggleMenu}
-        />
+        {Array.isArray(coordinates[0]) ?
+          <React.Fragment>
+            {coordinates.map((line, k) => {
+              if (!line) return null
+              return (
+                <Polyline
+                  path={ line.map(point => ({lat: Number(point.lat), lng: Number(point.lng), elevation: Number(point.elevation)})) }
+                  options={{
+                    strokeColor: trailColor,
+                    strokeOpacity:1,
+                    strokeWeight:3,
+                  }}
+                  key={k}
+                  onClick={this.toggleMenu}
+                />
+              )
+            })}
+          </React.Fragment>
+        :
+          <React.Fragment>
+            <Polyline
+              path={coordinates}
+              options={{
+                strokeColor: trailColor,
+                strokeOpacity:1,
+                strokeWeight:3,
+              }}
+              onClick={this.toggleMenu}
+            />
+          </React.Fragment>
+        }
         {this.state.menu &&
           <Marker position={{lat: coordinates[0].lat, lng: coordinates[0].lng}} icon={{url: ""}} >
             <InfoWindow options={{'maxWidth' : 320}} onCloseClick={() => this.setState({menu: false})}>
