@@ -44,11 +44,14 @@ export default class ElevationChart extends React.Component {
   }
   render() {
     const totalDistance = Number(this.props.trail.custom_data.length).toFixed(2)
-    const maxElevation = Number(Math.max(...this.props.coordinates.map(o => o.elevation)) ).toFixed(0)
-    const minElevation = Number(Math.min(...this.props.coordinates.map(o => o.elevation)) ).toFixed(0)
     const trailType = this.props.trail.custom_data.trailType
     const diff = Math.floor(Math.abs(maxElevation - minElevation))
-    const elevationFlag = this.props.coordinates.some((el) => el.value == 'elevation')
+    const coordinates = Array.isArray(this.props.coordinates[0]) ?
+      [].concat.apply([], this.props.coordinates)
+      : this.props.coordinates
+    const maxElevation = Number(Math.max(...coordinates.map(o => o.elevation)) ).toFixed(0)
+    const minElevation = Number(Math.min(...coordinates.map(o => o.elevation)) ).toFixed(0)
+    const elevationFlag = coordinates.some((el) => el.elevation)
 
     return (
       <ErrorBoundary>
@@ -58,7 +61,7 @@ export default class ElevationChart extends React.Component {
               <h2>Elevation</h2>
               <div className="chart">
 
-                <AreaChart width={820} height={250} data={this.props.coordinates} onMouseMove={this.mouseMove}
+                <AreaChart width={820} height={250} data={coordinates} onMouseMove={this.mouseMove}
                   margin={{top: 10, right: 20, left: 10, bottom: 20}}>
                   <CartesianGrid strokeDasharray="3 3"/>
                   <YAxis
