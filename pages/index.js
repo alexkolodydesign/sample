@@ -1,7 +1,8 @@
+import fetch from 'isomorphic-unfetch'
+import cookies from 'next-cookies'
 import Layout from '../components/layout/Layout'
 import Head from '../components/layout/Head'
 import { nextConnect } from '../redux/store'
-import fetch from 'isomorphic-unfetch';
 import { filterAction } from '../redux/filterAction'
 import MainMapSetup from '../components/maps/MainMapSetup'
 import TrailSystemGuide from '../components/menu/TrailSystemGuide'
@@ -14,6 +15,19 @@ class Dashboard extends React.Component {
   }
   render() {
     const region = filterAction(this.props.region, this.props.map.filter)
+    if (this.props.firstTimeUser) {
+      return (
+        <Layout>
+          <Head/>
+          <MainMapSetup regionData={region} />
+          {this.props.event.events &&
+              <EventList events={this.props.event} />
+          }
+          <TrailSystemGuide />
+          <MainMenu system={region} />
+        </Layout>
+      )
+    }
     return (
       <Layout>
         <Head/>
@@ -36,9 +50,11 @@ Dashboard.getInitialProps = async props => {
     const data = await res.json();
     const e_res = await fetch(hostUrl + '/api/washco_event' );
     const e_data = await e_res.json();
+    const { firstTimeUser } = cookies(props)
     return {
       region: data,
-      event: e_data
+      event: e_data,
+      firstTimeUser: !firstTimeUser
     };
   } catch (e) {
     return {
@@ -47,4 +63,7 @@ Dashboard.getInitialProps = async props => {
   }
 };
 
-export default nextConnect((state, res) => state)(Dashboard);
+export default nextConnect((state, res) => {
+  state.firstTimeUser = res.firstTimeUser
+  return state
+})(Dashboard);
