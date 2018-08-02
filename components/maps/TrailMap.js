@@ -10,24 +10,24 @@ import Paths from './Paths'
 import ShareButtons from '../layout/ShareButtons'
 import printStyle from './mapstyles/print'
 
+const timeout = ms => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
+
 export default class TrailMap extends React.Component {
   constructor(props) {
     super(props)
     this.state = {mapStyle: false, shareButtons: false}
     this.toggleMapStyle = this.toggleMapStyle.bind(this)
     this.toggleShareButtons = this.toggleShareButtons.bind(this)
+    this.printMap = this.printMap.bind(this)
   }
   toggleShareButtons() {
     this.setState({shareButtons: !this.state.shareButtons})
   }
   toggleMapStyle() {
-    if (!this.state.mapStyle) {
-      this.setState({mapStyle: printStyle }, () => {
-        window.print()
-        this.setState({mapStyle: false})
-        }
-      )
-    }
+    if (!this.state.mapStyle) this.setState({mapStyle: printStyle })
+    else this.setState({mapStyle: false })
   }
   printMap() {
     window.print()
@@ -55,7 +55,16 @@ export default class TrailMap extends React.Component {
             <img src="/static/images/trail/download.svg" alt="Event List"/>
             <span>Download GPS</span>
           </button>
-          <button onClick={this.toggleMapStyle}><img src="/static/images/trail/print.svg" alt="Print Map"/> Print Map</button>
+          <button onClick={
+            async () => {
+              this.toggleMapStyle()
+              await timeout(250)
+              this.printMap()
+              await timeout(250)
+              this.toggleMapStyle()
+            }
+          }>
+            <img src="/static/images/trail/print.svg" alt="Print Map"/> Print Map</button>
           <button>
             <img src="/static/images/menu/gps.svg" alt="Directions"/>
             <span>Directions to Trail Head</span>
