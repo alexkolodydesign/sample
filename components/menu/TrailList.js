@@ -17,7 +17,7 @@ export default class TrailList extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <button onClick={this.toggleMenu} className={this.state.menu ? "active" : null}>
+        <button onClick={this.toggleMenu} className={this.state.menu ? "active trail_list" : "trail_list"}>
           <img src="/static/images/menu/trail-list.svg" alt="Trail List"/>
           <p>Trail List</p>
         </button>

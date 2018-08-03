@@ -17,7 +17,7 @@ export default class FilterTrails extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <button onClick={this.toggleFilterMenu} className={this.state.menu ? "active" : null}>
+        <button onClick={this.toggleFilterMenu} className={this.state.menu ? "active filters" : "filters"}>
           <img src="/static/images/menu/filter.svg" alt="Filter Trails"/>
           <p className='filter-trails-title'>Filter Trails</p>
         </button>

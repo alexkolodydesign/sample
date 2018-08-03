@@ -20,7 +20,7 @@ const GPS = props => {
   }
   return (
     <React.Fragment>
-      <button className={props.gps && "active"} onClick={userLocation}>
+      <button className={props.gps ? "active gps" : "gps"} onClick={userLocation}>
         <img src="/static/images/menu/gps.svg" alt="Your GPS"/>
       </button>
       <style jsx>{`

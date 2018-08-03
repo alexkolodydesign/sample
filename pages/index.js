@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-unfetch'
 import cookies from 'next-cookies'
+import OnBoarding from '../components/OnBoarding'
 import Layout from '../components/layout/Layout'
 import Head from '../components/layout/Head'
 import { nextConnect } from '../redux/store'
@@ -15,19 +16,8 @@ class Dashboard extends React.Component {
   }
   render() {
     const region = filterAction(this.props.region, this.props.map.filter)
-    if (this.props.firstTimeUser) {
-      return (
-        <Layout>
-          <Head/>
-          <MainMapSetup regionData={region} />
-          {this.props.event.events &&
-              <EventList events={this.props.event} />
-          }
-          <TrailSystemGuide />
-          <MainMenu system={region} />
-        </Layout>
-      )
-    }
+    // First Time Users Go To OnBoarding!
+    if (this.props.firstTimeUser) return (<OnBoarding regionData={region} events={this.props.event} region={region} />)
     return (
       <Layout>
         <Head/>

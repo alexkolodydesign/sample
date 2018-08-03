@@ -17,7 +17,7 @@ export default class Settings extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <button>
+        <button className={this.state.menu ? "active settings" : "settings"} onClick={this.toggleMenu}>
           <img src="/static/images/menu/settings.svg" alt="Settings"/>
         </button>
         {this.state.menu ? <Options toggleOptions={this.toggleOptions} menuState={this.state.menu} /> : null}
