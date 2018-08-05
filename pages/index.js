@@ -44,7 +44,7 @@ Dashboard.getInitialProps = async props => {
     return {
       region: data,
       event: e_data,
-      firstTimeUser: !firstTimeUser
+      firstTimeUser: firstTimeUser === undefined ? true : firstTimeUser
     };
   } catch (e) {
     return {

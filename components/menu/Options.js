@@ -1,5 +1,16 @@
 import { connect } from 'react-redux';
+import Router from 'next/router'
 import { changeMetricType } from '../../redux/actions'
+
+// Redux
+const mapStateToProps = (state, ownProps) => ({ map: state.map });
+const mapDispatchToProps = dispatch => {
+  return {
+    changeMetricType: (metricType) => {
+      dispatch(changeMetricType(metricType));
+    }
+  }
+}
 
 const Options = props =>
   <div className={props.menuState == "exiting" ? "exiting menu" : "menu"}>
@@ -7,9 +18,11 @@ const Options = props =>
     <div className="close" onClick={props.toggleOptions}>X</div>
     <div className="options">
       <Option title="Increments" selected={props.map.metricType} options={["Metric", "Imperial"]} action={props.changeMetricType} />
-      <Option title="Tutorial" selected="Completed" />
-      <Option title="Introduction" selected="Finished" />
       <Option title="Map Style" selected="Map" options={["Map", "Map 2"]} />
+      <button onClick={() => {
+        document.cookie = 'firstTimeUser=true';
+        Router.push("/");
+      }} >Restart Tutorial</button>
     </div>
     <style jsx>{`
       h3 {text-transform: uppercase; margin: 0 0 0 1rem; color: #fff;}
@@ -22,7 +35,7 @@ const Options = props =>
         height: 40rem;
         position: absolute;
         right: 0;
-        top: -47rem;
+        top: -45rem;
         z-index: -1;
         overflow: hidden;
         animation-name: slideUp;
@@ -61,18 +74,23 @@ const Options = props =>
           opacity: 1;
         }
       }
+      button {
+        margin: 1rem 0;
+        padding: 1rem;
+        color: #fff;
+        background: #3fa9f5;
+        border: 0.1rem solid #fff;
+        width: 100%;
+        text-transform: uppercase;
+        cursor: pointer;
+        -webkit-transition: all 500ms;
+        transition: all 500ms;
+        &:hover {
+          background: #0d93f2;
+        }
+      }
     `}</style>
   </div>
-
-// Redux
-const mapStateToProps = (state, ownProps) => ({ map: state.map });
-const mapDispatchToProps = dispatch => {
-  return {
-    changeMetricType: (metricType) => {
-      dispatch(changeMetricType(metricType));
-    }
-  };
-};
 
 class Option extends React.Component {
   constructor(props) {
