@@ -16,7 +16,6 @@ class Dashboard extends React.Component {
   }
   render() {
     const region = filterAction(this.props.region, this.props.map.filter)
-    console.log("RENDER", this.props.firstTimeUser)
     // First Time Users Go To OnBoarding!
     if (this.props.firstTimeUser === true) return (<OnBoarding regionData={region} events={this.props.event} region={region} />)
     return (
