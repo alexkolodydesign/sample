@@ -4,8 +4,7 @@ import { setCoordinates } from '../../redux/mapActions'
 import Paths from './Paths'
 import Difficulty from './Difficulty'
 
-
-export default class RegionTrail extends React.Component {
+class RegionTrail extends React.Component {
   constructor(props) {
     super(props)
     this.state = { coordinates: [], menu: false, menuCoords: false}
@@ -70,7 +69,7 @@ export default class RegionTrail extends React.Component {
     }
     return (
       <React.Fragment>
-        <Paths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor}  />
+        <Paths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor} slug={trail.slug}  />
 
         {this.state.menu &&
           <Marker position={this.state.menuCoords} icon={{url: ""}} >
@@ -194,3 +193,5 @@ export default class RegionTrail extends React.Component {
     )
   }
 }
+
+export default RegionTrail

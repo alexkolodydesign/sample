@@ -33,4 +33,5 @@ export const goToSystem = (zoom, center) => {
 }
 export const toggleGPS = () => dispatch => dispatch({ type: 'TOGGLE_GPS' })
 export const resetMap = () => dispatch => dispatch({ type: 'RESET_MAP' })
+export const highlightTrail = slug => dispatch => dispatch({ type: 'HIGHLIGHT_TRAIL' , slug })
 export const initStore = (initialState = defaultState) => createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))

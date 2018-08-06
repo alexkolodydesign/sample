@@ -1,4 +1,20 @@
 import Link from 'next/link'
+import { connect } from 'react-redux'
+import { highlightTrail } from '../../redux/actions'
+
+// Redux
+const mapStateToProps = (state, ownProps) => {
+  return {
+    ...ownProps
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    highlightTrail: (slug) => {
+      dispatch(highlightTrail(slug));
+    }
+  };
+};
 
 class TrailListMenu extends React.Component {
   constructor(props) {
@@ -30,7 +46,7 @@ class TrailListMenu extends React.Component {
           </form>
         </div>
         <div className="trails">
-          {this.state.filteredTrails.map( (trail, k) => <Trail trail={trail} key={k} /> )}
+          {this.state.filteredTrails.map( (trail, k) => <Trail trail={trail} key={k} highlightTrail={this.props.highlightTrail} /> )}
         </div>
         <style jsx>{`
           h3 {text-transform: uppercase; margin: 0 0 0 1rem; color: #fff;}
@@ -113,7 +129,7 @@ class TrailListMenu extends React.Component {
 }
 
 const Trail = props =>
-  <div className="trail">
+  <div className="trail" onMouseEnter={()=> props.highlightTrail(props.trail.slug)}>
     <Link href={`/trails/${props.trail.slug}`}>
       <a
         style={{backgroundImage: `url(${props.trail.custom_data.media.pictures[0] ? props.trail.custom_data.media.pictures[0].sizes.medium : "https://placehold.it/75x75?text=unavailable"})`, backgroundPosition: "center", backgroundSize: "cover"}}
@@ -214,6 +230,4 @@ const Trail = props =>
     `}</style>
   </div>
 
-
-
-export default TrailListMenu
+export default connect(mapStateToProps, mapDispatchToProps)(TrailListMenu)

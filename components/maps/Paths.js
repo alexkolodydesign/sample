@@ -1,8 +1,20 @@
 import { Polyline } from "react-google-maps"
+import { connect } from 'react-redux'
+
+// Redux
+const mapStateToProps = (state, ownProps) => {
+  return {
+    highlight: state.map.highlightTrail,
+    ...ownProps
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {};
+};
 
 const Paths = props =>
   <React.Fragment>
-    {Array.isArray(props.coordinates[0]) ?
+    {Array.isArray(props.highlight == props.slug ? 6 : 3) ?
       <React.Fragment>
         {props.coordinates.map((line, k) => {
           if (!line) return null
@@ -12,7 +24,7 @@ const Paths = props =>
               options={{
                 strokeColor: props.trailColor,
                 strokeOpacity:1,
-                strokeWeight:3,
+                strokeWeight: props.highlight == props.slug ? 6 : 3,
               }}
               key={k}
               onClick={(e) => {
@@ -29,7 +41,7 @@ const Paths = props =>
         options={{
           strokeColor: props.trailColor,
           strokeOpacity:1,
-          strokeWeight:3,
+          strokeWeight: props.highlight == props.slug ? 6 : 3,
         }}
         onClick={(e) => {
           const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
@@ -39,4 +51,4 @@ const Paths = props =>
     }
   </React.Fragment>
 
-export default Paths
+export default connect(mapStateToProps, mapDispatchToProps)(Paths)

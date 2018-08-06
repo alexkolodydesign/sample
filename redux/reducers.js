@@ -56,6 +56,8 @@ export const map = (state = defaultState, action) => {
       return { map: { ...state.map, gps: !state.map.gps } }
     case 'RESET_MAP':
       return defaultState
+    case 'HIGHLIGHT_TRAIL':
+      return { map: { ...state.map, highlightTrail: action.slug } }
     default:
       return state
   }
