@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const setCoordinates = async (jsonCoordinates, slug) => {
+export const getCoordinates = async (jsonCoordinates, slug) => {
   if (!jsonCoordinates) return null
   try {
     const {data: { trail }} = await axios.get('/api/coordinates', {params: {url: encodeURI(jsonCoordinates.url)} } )
@@ -22,6 +22,7 @@ export const setCoordinates = async (jsonCoordinates, slug) => {
     }
     return trail.coordinates
   } catch(e) {
+    console.log("ERROR ", e)
     return null
   }
 }

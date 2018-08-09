@@ -14,7 +14,7 @@ const mapDispatchToProps = dispatch => {
 
 const Paths = props =>
   <React.Fragment>
-    {Array.isArray(props.highlight == props.slug ? 6 : 3) ?
+    {Array.isArray(props.coordinates[0]) ?
       <React.Fragment>
         {props.coordinates.map((line, k) => {
           if (!line) return null

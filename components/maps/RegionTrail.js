@@ -1,6 +1,6 @@
 import { InfoWindow, Marker } from "react-google-maps"
 import Link from 'next/link'
-import { setCoordinates } from '../../redux/mapActions'
+import { getCoordinates } from '../../redux/mapActions'
 import Paths from './Paths'
 import Difficulty from './Difficulty'
 
@@ -15,7 +15,7 @@ class RegionTrail extends React.Component {
     this.setState({menu: !this.state.menu, menuCoords: coords})
   }
   async setCoordinates() {
-    const coords = await setCoordinates(this.props.trail.custom_data.jsonCoordinates, this.props.trail.slug)
+    const coords = await getCoordinates(this.props.trail.custom_data.jsonCoordinates, this.props.trail.slug)
     if (coords) this.setState({coordinates: coords})
   }
   render() {
