@@ -5,6 +5,11 @@ const ImageGallery = dynamic(
   ssr: false
 })
 
+const VideoGallery = dynamic(
+  import('./VideoGallery'), {
+  ssr: false
+})
+
 const TrailMedia = props =>
 <div>
   <div className="background_pattern" style={{position: "relative"}}>
@@ -20,9 +25,12 @@ const TrailMedia = props =>
           <h3>Videos</h3>
           <hr/>
           <div>
-            {props.media.videos.map((video, k) => {
-              return <div key={k}></div>
-            })}
+            <VideoGallery trail={props.trail} videos={props.media.videos} />
+            {
+              /*props.media.videos.map((video, k) => {
+              return <div key={k}>Video</div>
+            })
+            */}
           </div>
         </div>
       }
@@ -64,6 +72,8 @@ const TrailMedia = props =>
       .videos, .photos {
         text-align: center;
         padding-bottom: 2.75rem;
+        grid-column-start: 1;
+
         hr {margin: 1.5rem 0 3rem 0;}
         /*
         & > div {
@@ -89,6 +99,12 @@ const TrailMedia = props =>
             width: 100%;
           }
         }
+      }
+    }
+
+    @media screen and (min-width:768px) {
+      .photos {
+        grid-column-start:2;
       }
     }
     @media print {
