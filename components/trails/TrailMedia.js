@@ -58,15 +58,8 @@ const TrailMedia = props =>
       h3 {
         text-transform: uppercase;
         margin: 6rem 0 0 0;
+        padding-top:3rem;
         font-size: 2rem;
-      }
-      .media {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-column-gap: 3rem;
-        h2 {
-          grid-column-start: span 2;
-        }
       }
 
       .videos, .photos {
@@ -103,6 +96,15 @@ const TrailMedia = props =>
     }
 
     @media screen and (min-width:768px) {
+
+      .media {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 3rem;
+        h2 {
+          grid-column-start: span 2;
+        }
+      }
       .photos {
         grid-column-start:2;
       }
