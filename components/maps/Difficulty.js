@@ -48,6 +48,7 @@ export default class Difficulty extends React.Component {
             p {
               margin: 3px 0 0;
               font-weight: bold;
+              color: #777;
             }
             img {
               margin: 0 3px 0 2px;

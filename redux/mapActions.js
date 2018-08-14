@@ -5,9 +5,9 @@ export const getCoordinates = async (jsonCoordinates, slug) => {
   try {
     const {data: { trail }} = await axios.get('/api/coordinates', {params: {url: encodeURI(jsonCoordinates.url)} } )
     // Store this data so we don't make extra calls when zooming
-    const trailStorage = sessionStorage.getItem('trails')
+    const trailStorage = localStorage.getItem('trails')
     if (!trailStorage) {
-      sessionStorage.setItem('trails', JSON.stringify([{
+      localStorage.setItem('trails', JSON.stringify([{
         slug: slug,
         coordinates: trail.coordinates
       }]))
@@ -17,8 +17,8 @@ export const getCoordinates = async (jsonCoordinates, slug) => {
         slug: slug,
         coordinates: trail.coordinates
       })
-      sessionStorage.removeItem('trails')
-      sessionStorage.setItem('trails', JSON.stringify(trailStorageJSON))
+      localStorage.removeItem('trails')
+      localStorage.setItem('trails', JSON.stringify(trailStorageJSON))
     }
     return trail.coordinates
   } catch(e) {

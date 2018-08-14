@@ -26,7 +26,7 @@ class RegionTrail extends React.Component {
       return null
     } else {
       // Check localstorage for data before sending fetch
-      const trailStorage = sessionStorage.getItem('trails')
+      const trailStorage = localStorage.getItem('trails')
       // No session storage so send fetch
       if (!trailStorage) {
         if (!this.state.coordinates || this.state.coordinates === undefined || this.state.coordinates.length == 0) {
@@ -122,12 +122,13 @@ class RegionTrail extends React.Component {
                 <style jsx>{`
                   h3 {
                     padding: 0 0 6px;
-                    margin: 0 0 3px;
-                    border-bottom: 1px solid #222222;
+                    color: #777;
+                    border-bottom: 1px solid #ccc;
                   }
                   p {
                     font-weight: bold;
-                    margin: 3px 0 0;
+                    margin: 0 0 1rem;
+                    color: #777;
                     span {
                       font-weight: normal;
                     }
@@ -153,11 +154,13 @@ class RegionTrail extends React.Component {
                     .image {
                       grid-area: image;
                       img {
+                        padding: 1.5rem 0;
                         max-width: 140px;
                         height: auto;
                       }
                     }
                     .icons {
+                      padding-top: 1rem;
                       grid-area: icons;
                     }
                   }

@@ -11,7 +11,7 @@ exports.getTrailData = async (req, res) => {
     res.status(200).json(trail);
   } catch(e) {
     // console.log("Issue arose.", e);
-    res.status(500).send("Error")
+    return res.status(e.response.status).send("Error")
   }
 }
 
@@ -36,7 +36,7 @@ exports.getRegionData = async (req, res) => {
     });
   } catch(e) {
     // console.log("Issue arose.", e);
-    return res.status(500).send("Error")
+    return res.status(e.response.status).send("Error")
   }
 }
 
