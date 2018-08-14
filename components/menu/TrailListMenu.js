@@ -26,7 +26,7 @@ class TrailListMenu extends React.Component {
     }
   }
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.trails == nextProps.trails) return nextProps
+    if (prevState.trails.length == nextProps.trails.length) return nextProps
     const state = {trails: nextProps.trails, filteredTrails: nextProps.trails}
     return state
   }
