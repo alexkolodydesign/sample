@@ -5,12 +5,17 @@ export default class SimilarTrails extends React.Component {
   constructor(props) {
     super(props)
     this.state = {trails: false}
+    this.getTrailData = this.getTrailData.bind(this)
   }
-  async componentDidMount() {
+  componentDidMount() {
+    this.getTrailData()
+  }
+  async getTrailData() {
     const {data: trails} = await axios.get(`/api/trail/${this.props.similarTrails.map(trail => trail.post_name + ',')}`)
-    this.setState({trails})
+    // this.setState({ trails })
   }
   render() {
+    if (!this.state.trails) return null
     return (
       <div className="container">
         <h2>Similar to This Trail:</h2>

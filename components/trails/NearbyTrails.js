@@ -4,53 +4,27 @@ import Link from 'next/link'
 export default class NearbyTrails extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {trails: false}
+    this.state = { trails: false }
   }
-  async componentDidMount() {
-    console.log(this.state)
-    const {data: trails} = await axios.get(`/api/trail/${this.props.nearbyTrails.map(trail => trail.post_name + ',')}`)
-    this.setState({trails})
+  componentDidMount() {
+    this.getTrailData()
+  }
+  async getTrailData() {
+    const nearbyTrails = this.props.nearbyTrails
+    let trails = []
+    for (var i = 0; i < nearbyTrails.length; i++) {
+      const {data: trail} = await axios.get(`/api/trail/${nearbyTrails[i].post_name}`)
+      trails.push(trail)
+    }
+    console.log(trails)
+    // this.setState({ trails })
   }
   render() {
+    if (!this.state.trails) return null
     return (
       <div className="container">
         <h2>Nearby Trails:</h2>
         <div className="nearby_trails">
-          {this.state.trails && !this.state.trails.length &&
-            <div className="trail">
-              <Link href={`/trails/${this.state.trails.slug}`}>
-                <a
-                  style={{backgroundImage: `url(${this.state.trails.custom_data.media.pictures[0] ? this.state.trails.custom_data.media.pictures[0].sizes.medium : "https://placehold.it/75x75?text=unavailable"})`, backgroundPosition: "center", backgroundSize: "cover"}}
-                >
-                </a>
-              </Link>
-              <div className="details">
-                <h4><Link href={`/trails/${this.state.trails.slug}`}><a dangerouslySetInnerHTML={{__html: this.state.trails.title.rendered}} /></Link></h4>
-                <p><span>{this.state.trails.custom_data.length} Miles</span></p>
-                {this.state.trails.custom_data.highlights &&
-                  <p>Highlights:
-                    {this.state.trails.custom_data.highlights && this.state.trails.custom_data.highlights.map((highlight, index, k) => {
-                      if(index < this.state.trails.custom_data.highlights.length - 1) {
-                        return <span key={k}> {highlight.label},</span>
-                      } else {
-                        return <span key={k}> {highlight.label}</span>
-                      }
-                    }
-                  )}</p>
-                }
-                {this.state.trails.custom_data.difficulty.defaultDifficulty.value && <p><span>{this.state.trails.custom_data.difficulty.defaultDifficulty.label}</span></p>}
-                {this.state.trails.custom_data.region && <p><span>{this.state.trails.custom_data.region} Region</span></p>}
-              </div>
-              <div className="trail_type">
-                <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!this.state.trails.custom_data.recommendedUse.some((el) => el.value == 'hiking') && "inactive"} />
-                <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" className={!this.state.trails.custom_data.recommendedUse.some((el) => el.value == 'biking') && "inactive"} />
-                <img src="/static/images/menu/equestrian.svg" alt="Select Equestrian Trails" className={!this.state.trails.custom_data.recommendedUse.some((el) => el.value == 'equestrian') && "inactive"} />
-                <img src="/static/images/menu/ohv.svg" alt="Select OHV Trails" className={!this.state.trails.custom_data.recommendedUse.some((el) => el.value == 'ohv') && "inactive"} />
-              </div>
-            </div>
-
-          }
-
           {this.state.trails && this.state.trails.length > 1 && this.state.trails.map((trail, k) => {
             <div className="trail">
               <div className="details">

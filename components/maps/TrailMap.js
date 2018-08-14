@@ -4,7 +4,7 @@ import { fitBounds } from 'google-map-react/utils'
 import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js'
 import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js'
 
-import { setCoordinates } from '../../redux/mapActions'
+import { getCoordinates } from '../../redux/mapActions'
 import ElevationChart from './ElevationChart'
 import Paths from './Paths'
 import ShareButtons from '../layout/ShareButtons'
@@ -190,7 +190,7 @@ class Map extends React.Component {
     return state.mapStyle = props.mapStyle
   }
   async setCoordinates() {
-    const coords = await setCoordinates(this.props.trail.custom_data.jsonCoordinates, this.props.trail.slug)
+    const coords = await getCoordinates(this.props.trail.custom_data.jsonCoordinates, this.props.trail.slug)
     if (coords) this.setState({coordinates: coords})
   }
   pathMarker(location) {
