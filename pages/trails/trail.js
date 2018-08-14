@@ -38,8 +38,8 @@ const Trail = props => {
         <TrailMap trail={props.trail} />
       </div>
       <div className="wrapper more_trails">
-        {props.trail.custom_data.similarTrails.length >= 0 && <SimilarTrails similarTrails={props.trail.custom_data.similarTrails} /> }
-        {props.trail.custom_data.trailsNearby.length >= 0 && <NearbyTrails nearbyTrails={props.trail.custom_data.trailsNearby} /> }
+        {props.trail.custom_data.similarTrails.length > 0 && <SimilarTrails similarTrails={props.trail.custom_data.similarTrails} /> }
+        {props.trail.custom_data.trailsNearby.length > 0 && <NearbyTrails nearbyTrails={props.trail.custom_data.trailsNearby} /> }
       </div>
       <TrailMedia trail={props.trail.title.rendered} media={props.trail.custom_data.media} />
       <ScrollToTop showUnder={160} style={{background: '#4d4e4e', padding: '0.75rem'}}>

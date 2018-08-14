@@ -16,8 +16,7 @@ export default class NearbyTrails extends React.Component {
       const {data: trail} = await axios.get(`/api/trail/${nearbyTrails[i].post_name}`)
       trails.push(trail)
     }
-    console.log(trails)
-    // this.setState({ trails })
+    this.setState({ trails })
   }
   render() {
     if (!this.state.trails) return null
@@ -26,38 +25,40 @@ export default class NearbyTrails extends React.Component {
         <h2>Nearby Trails:</h2>
         <div className="nearby_trails">
           {this.state.trails && this.state.trails.length > 1 && this.state.trails.map((trail, k) => {
-            <div className="trail">
-              <div className="details">
-                <Link href={`/trails/${trail.slug}`}>
-                  <a
-                    style={{backgroundImage: `url(${trail.custom_data.media.pictures[0] ? trail.custom_data.media.pictures[0].sizes.medium : "https://placehold.it/75x75?text=unavailable"})`, backgroundPosition: "center", backgroundSize: "cover"}}
-                  >
-                  </a>
-                </Link>
-                <h4><Link href={`/trails/${trail.slug}`}><a dangerouslySetInnerHTML={{__html: trail.title.rendered}} /></Link></h4>
-                <p><span>{trail.custom_data.length} Miles</span></p>
-                {trail.custom_data.highlights &&
-                  <p>Highlights:
-                    {trail.custom_data.highlights && trail.custom_data.highlights.map((highlight, index, k) => {
-                      if(index < trail.custom_data.highlights.length - 1) {
-                        return <span key={k}> {highlight.label},</span>
-                      } else {
-                        return <span key={k}> {highlight.label}</span>
+            const recommendedUse = trail.custom_data.recommendedUse != "" ? trail.custom_data.recommendedUse : []
+            return (
+              <div className="trail" key={k}>
+                <div className="details">
+                  <Link href={`/trails/${trail.slug}`}>
+                    <a
+                      style={{backgroundImage: `url(${trail.custom_data.media.pictures[0] ? trail.custom_data.media.pictures[0].sizes.medium : "https://placehold.it/75x75?text=unavailable"})`, backgroundPosition: "center", backgroundSize: "cover"}}
+                    >
+                    </a>
+                  </Link>
+                  <h4><Link href={`/trails/${trail.slug}`}><a dangerouslySetInnerHTML={{__html: trail.title.rendered}} /></Link></h4>
+                  <p><span>{trail.custom_data.length} Miles</span></p>
+                  {trail.custom_data.highlights &&
+                    <p>Highlights:
+                      {trail.custom_data.highlights && trail.custom_data.highlights.map((highlight, index, k) => {
+                        if(index < trail.custom_data.highlights.length - 1) {
+                          return <span key={k}> {highlight.label},</span>
+                        } else {
+                          return <span key={k}> {highlight.label}</span>
+                        }
                       }
-                    }
-                  )}</p>
-                }
-                {trail.custom_data.difficulty.defaultDifficulty.value && <p><span>{trail.custom_data.difficulty.defaultDifficulty.label}</span></p>}
-                {trail.custom_data.region && <p><span>{trail.custom_data.region} Region</span></p>}
+                    )}</p>
+                  }
+                  {trail.custom_data.difficulty.defaultDifficulty.value && <p><span>{trail.custom_data.difficulty.defaultDifficulty.label}</span></p>}
+                  {trail.custom_data.region && <p><span>{trail.custom_data.region} Region</span></p>}
+                </div>
+                <div className="trail_type">
+                  <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!recommendedUse.some((el) => el.value == 'hiking') && "inactive"} />
+                  <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" className={!recommendedUse.some((el) => el.value == 'biking') && "inactive"} />
+                  <img src="/static/images/menu/equestrian.svg" alt="Select Equestrian Trails" className={!recommendedUse.some((el) => el.value == 'equestrian') && "inactive"} />
+                  <img src="/static/images/menu/ohv.svg" alt="Select OHV Trails" className={!recommendedUse.some((el) => el.value == 'ohv') && "inactive"} />
+                </div>
               </div>
-              <div className="trail_type">
-                <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!trail.custom_data.recommendedUse.some((el) => el.value == 'hiking') && "inactive"} />
-                <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" className={!trail.custom_data.recommendedUse.some((el) => el.value == 'biking') && "inactive"} />
-                <img src="/static/images/menu/equestrian.svg" alt="Select Equestrian Trails" className={!trail.custom_data.recommendedUse.some((el) => el.value == 'equestrian') && "inactive"} />
-                <img src="/static/images/menu/ohv.svg" alt="Select OHV Trails" className={!trail.custom_data.recommendedUse.some((el) => el.value == 'ohv') && "inactive"} />
-              </div>
-            </div>
-
+            )
           })}
 
         </div>
