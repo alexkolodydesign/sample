@@ -21,7 +21,7 @@ export default class TrailList extends React.Component {
           <img src="/static/images/menu/trail-list.svg" alt="Trail List"/>
           <p>Trail List</p>
         </button>
-        {this.state.menu ? <TrailListMenu trails={this.props.system.trails} toggleMenu={this.toggleMenu} menuState={this.state.menu} /> : null}
+        {this.state.menu && this.props.system ? <TrailListMenu trails={this.props.system.trails} toggleMenu={this.toggleMenu} menuState={this.state.menu} /> : null}
         <style jsx>{`
           button {
             padding: 4px 5px;

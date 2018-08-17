@@ -159,7 +159,7 @@ class OnBoarding extends React.Component {
             <EventList events={this.props.events} />
         }
         <TrailSystemGuide />
-        <MainMenu system={this.props.system} />
+        <MainMenu system={this.props.regionData} />
 
         <style jsx>{`
           h1 {
