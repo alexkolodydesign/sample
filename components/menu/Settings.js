@@ -1,26 +1,53 @@
+import { connect } from 'react-redux';
+import { toggleMenus } from '../../redux/actions'
 import Options from './Options'
 
-export default class Settings extends React.Component {
+// Redux
+const mapStateToProps = (state, ownProps) => {
+  return {
+    menus: state.map.menus
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleMenus: (menu) => dispatch(toggleMenus(menu))
+  };
+};
+
+class Settings extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {menu: false}
     this.toggleOptions = this.toggleOptions.bind(this)
   }
   toggleOptions() {
-    if (this.state.menu == true) {
-      this.setState({menu: "exiting"});
-      setTimeout( () => this.setState({menu: !this.state.menu}), 500)
+    if (this.props.menus.optionsMenu == true) {
+      this.props.toggleMenus({
+        trailsListMenu: this.props.menus.trailsListMenu,
+        optionsMenu: 'exiting',
+        filterTrailsMenu: this.props.menus.filterTrailsMenu
+      })
+      setTimeout( () => this.props.toggleMenus({
+        trailsListMenu: this.props.menus.trailsListMenu,
+        optionsMenu: false,
+        filterTrailsMenu: this.props.menus.filterTrailsMenu
+      }), 500)
     } else {
-      this.setState({menu: !this.state.menu})
+      this.props.toggleMenus({
+        trailsListMenu: false,
+        optionsMenu: true,
+        filterTrailsMenu: false
+      })
     }
   }
   render() {
     return (
       <React.Fragment>
-        <button className={this.state.menu ? "active settings" : "settings"} onClick={this.toggleOptions}>
+        <button className={this.props.menus.optionsMenu ? "active settings" : "settings"} onClick={this.toggleOptions}>
           <img src="/static/images/menu/settings.svg" alt="Settings"/>
         </button>
-        {this.state.menu ? <Options toggleOptions={this.toggleOptions} menuState={this.state.menu} /> : null}
+        {this.props.menus.optionsMenu &&
+          <Options toggleOptions={this.toggleOptions} menuState={this.props.menus.optionsMenu} />
+        }
         <style jsx>{`
           button {
             padding: 5px;
@@ -63,3 +90,5 @@ export default class Settings extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings)

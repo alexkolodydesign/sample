@@ -31,6 +31,7 @@ export const goToSystem = (zoom, center) => {
   const location = {zoom, center}
   return dispatch => dispatch({ type: 'GO_TO_SYSTEM', location })
 }
+export const toggleMenus = menus => dispatch => dispatch({ type: 'TOGGLE_MENUS', menus })
 export const toggleGPS = () => dispatch => dispatch({ type: 'TOGGLE_GPS' })
 export const resetMap = () => dispatch => dispatch({ type: 'RESET_MAP' })
 export const highlightTrail = slug => dispatch => dispatch({ type: 'HIGHLIGHT_TRAIL' , slug })

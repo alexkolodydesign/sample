@@ -6,6 +6,12 @@ import Region from './Region'
 import RegionTrail from './RegionTrail'
 import UserLocation from './UserLocation'
 
+// import alpineCoordinates from '../../data/alpine-coordinates'
+// import desertCoordinates from '../../data/desert-coordinates'
+// import canyonCoordinates from '../../data/canyon-coordinates'
+// import mesaCoordinates from '../../data/mesa-coordinates'
+// import urbanCoordinates from '../../data/urban-coordinates'
+
 // Redux
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -50,6 +56,14 @@ class Map extends React.Component {
         onZoomChanged={function(e) {
           zoomState(this.getZoom(), null)
         }}
+        // TODO:
+        // Set map bounds to redux store. In RegionTrail after checking zoom threshold check if center coordinate falls into map bounds to display/pull info
+        // onBoundsChanged={function(e) {
+        //   console.log("BOUNDS CHANGED: ", this.getBounds())
+        //   const center = this.getCenter()
+        //   console.log("CENTER", center.lat(), center.lng())
+        //   // Check if region is in bounds
+        // }}
         defaultOptions={{
           streetViewControl: false
         }}

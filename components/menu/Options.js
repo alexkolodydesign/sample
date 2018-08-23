@@ -6,7 +6,7 @@ import { changeMetricType } from '../../redux/actions'
 const mapStateToProps = (state, ownProps) => ({ map: state.map });
 const mapDispatchToProps = dispatch => {
   return {
-    changeMetricType: (metricType) => {
+    changeMetricType: metricType => {
       dispatch(changeMetricType(metricType));
     }
   }

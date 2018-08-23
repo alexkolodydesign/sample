@@ -2,7 +2,12 @@
 
 export const defaultState = {
   map: {
-    view: 'region',
+    activeRegions: {
+      urban: true,
+      canyon: true,
+      mesa: true,
+      alpine: true
+    },
     metricType: "imperial",
     zoom: 8,
     gps: false,
@@ -26,6 +31,11 @@ export const defaultState = {
       trailTraffic: "",
       routeType: "",
       exclude: ""
+    },
+    menus: {
+      filterTrailsMenu: false,
+      trailsListMenu: false,
+      optionsMenu: false
     }
   }
 }
@@ -58,6 +68,8 @@ export const map = (state = defaultState, action) => {
       return defaultState
     case 'HIGHLIGHT_TRAIL':
       return { map: { ...state.map, highlightTrail: action.slug } }
+    case 'TOGGLE_MENUS':
+      return { map: { ...state.map, menus: action.menus } }
     default:
       return state
   }

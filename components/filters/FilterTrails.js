@@ -1,27 +1,54 @@
+import { connect } from 'react-redux';
+import { toggleMenus } from '../../redux/actions'
 import FilterTrailsMenu from './FilterTrailsMenu'
 
-export default class FilterTrails extends React.Component {
+// Redux
+const mapStateToProps = (state, ownProps) => {
+  return {
+    menus: state.map.menus
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleMenus: (menu) => dispatch(toggleMenus(menu))
+  };
+};
+
+class FilterTrails extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {menu: false}
     this.toggleFilterMenu = this.toggleFilterMenu.bind(this)
   }
   toggleFilterMenu() {
-    if (this.state.menu == true) {
-      this.setState({menu: "exiting"});
-      setTimeout( () => this.setState({menu: !this.state.menu}), 500)
+    if (this.props.menus.filterTrailsMenu == true) {
+      this.props.toggleMenus({
+        trailsListMenu: this.props.menus.trailsListMenu,
+        optionsMenu: this.props.menus.filterTrailsMenu,
+        filterTrailsMenu: 'exiting'
+      })
+      setTimeout( () => this.props.toggleMenus({
+        trailsListMenu: this.props.menus.trailsListMenu,
+        optionsMenu: this.props.menus.optionsMenu,
+        filterTrailsMenu: false
+      }), 500)
     } else {
-      this.setState({menu: !this.state.menu})
+      this.props.toggleMenus({
+        trailsListMenu: false,
+        optionsMenu: false,
+        filterTrailsMenu: true
+      })
     }
   }
   render() {
     return (
       <React.Fragment>
-        <button onClick={this.toggleFilterMenu} className={this.state.menu ? "active filters" : "filters"}>
+        <button onClick={this.toggleFilterMenu} className={this.props.menus.filterTrailsMenu ? "active filters" : "filters"}>
           <img src="/static/images/menu/filter.svg" alt="Filter Trails"/>
           <p className='filter-trails-title'>Filter Trails</p>
         </button>
-        {this.state.menu ? <FilterTrailsMenu toggleFilterMenu={this.toggleFilterMenu} menuState={this.state.menu} /> : null}
+        {this.props.menus.filterTrailsMenu &&
+          <FilterTrailsMenu toggleFilterMenu={this.toggleFilterMenu} menuState={this.props.menus.filterTrailsMenu} />
+        }
         <style jsx>{`
           button {
             padding: 5px;
@@ -78,3 +105,5 @@ export default class FilterTrails extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilterTrails)

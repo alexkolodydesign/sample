@@ -1,27 +1,54 @@
 import TrailListMenu from './TrailListMenu'
+import { toggleMenus } from '../../redux/actions'
+import { connect } from 'react-redux'
 
-export default class TrailList extends React.Component {
+// Redux
+const mapStateToProps = (state, ownProps) => {
+  return {
+    menus: state.map.menus
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleMenus: (menu) => dispatch(toggleMenus(menu))
+  };
+};
+
+class TrailList extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {menu: false}
     this.toggleMenu = this.toggleMenu.bind(this)
   }
   toggleMenu() {
-    if (this.state.menu == true) {
-      this.setState({menu: "exiting"});
-      setTimeout( () => this.setState({menu: !this.state.menu}), 500)
+    if (this.props.menus.trailsListMenu == true) {
+      this.props.toggleMenus({
+        trailsListMenu: 'exiting',
+        optionsMenu: this.props.menus.optionsMenu,
+        filterTrailsMenu: this.props.menus.filterTrailsMenu
+      })
+      setTimeout( () => this.props.toggleMenus({
+        trailsListMenu: false,
+        optionsMenu: this.props.menus.optionsMenu,
+        filterTrailsMenu: this.props.menus.filterTrailsMenu
+      }), 500)
     } else {
-      this.setState({menu: !this.state.menu})
+      this.props.toggleMenus({
+        trailsListMenu: true,
+        optionsMenu: false,
+        filterTrailsMenu: false
+      })
     }
   }
   render() {
     return (
       <React.Fragment>
-        <button onClick={this.toggleMenu} className={this.state.menu ? "active trail_list" : "trail_list"}>
+        <button onClick={this.toggleMenu} className={this.props.menus.trailsListMenu ? "active trail_list" : "trail_list"}>
           <img src="/static/images/menu/trail-list.svg" alt="Trail List"/>
           <p>Trail List</p>
         </button>
-        {this.state.menu && this.props.system ? <TrailListMenu trails={this.props.system.trails} toggleMenu={this.toggleMenu} menuState={this.state.menu} /> : null}
+        {this.props.menus.trailsListMenu && this.props.system &&
+          <TrailListMenu trails={this.props.system.trails} toggleMenu={this.toggleMenu} menuState={this.props.menus.trailsListMenu} />
+        }
         <style jsx>{`
           button {
             padding: 4px 5px;
@@ -73,3 +100,5 @@ export default class TrailList extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(TrailList)
