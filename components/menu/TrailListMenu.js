@@ -154,10 +154,10 @@ const Trail = props =>
       {props.trail.custom_data.region && <p><span>{props.trail.custom_data.region} Region</span></p>}
     </div>
     <div className="trail_type">
-      <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!props.trail.custom_data.recommendedUse.some((el) => el.value == 'hiking') && "inactive"} />
-      <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" className={!props.trail.custom_data.recommendedUse.some((el) => el.value == 'biking') && "inactive"} />
-      <img src="/static/images/menu/equestrian.svg" alt="Select Equestrian Trails" className={!props.trail.custom_data.recommendedUse.some((el) => el.value == 'equestrian') && "inactive"} />
-      <img src="/static/images/menu/ohv.svg" alt="Select OHV Trails" className={!props.trail.custom_data.recommendedUse.some((el) => el.value == 'ohv') && "inactive"} />
+      <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!props.trail.custom_data.recommendedUse == '' ? (!props.trail.custom_data.recommendedUse.some((el) => el.value == 'hiking') && "inactive") : "inactive"} />
+      <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" className={!props.trail.custom_data.recommendedUse == '' ? (!props.trail.custom_data.recommendedUse.some((el) => el.value == 'biking') && "inactive") : "inactive"} />
+      <img src="/static/images/menu/equestrian.svg" alt="Select Equestrian Trails" className={!props.trail.custom_data.recommendedUse == '' ? (!props.trail.custom_data.recommendedUse.some((el) => el.value == 'equestrian') && "inactive") : "inactive"} />
+      <img src="/static/images/menu/ohv.svg" alt="Select OHV Trails" className={!props.trail.custom_data.recommendedUse == '' ? (!props.trail.custom_data.recommendedUse.some((el) => el.value == 'ohv') && "inactive") : "inactive"} />
     </div>
     <style jsx>{`
       .trail {

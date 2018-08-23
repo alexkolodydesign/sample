@@ -8,7 +8,8 @@ exports.getTrailData = async (req, res) => {
       res.status(422)
     }
     const { data: [trail] } = await axios.get(`http://washcotrails.flitchbeta.com/wp-json/wp/v2/trails?slug=${trailHandle}`);
-    res.status(200).json(trail);
+    const { data: all_trails } = await axios.get('http://washcotrails.flitchbeta.com/wp-json/wp/v2/trails?per_page=500&order=asc');
+    res.status(200).json({trail, allTrails: all_trails});
   } catch(e) {
     // console.log("Issue arose.", e);
     return res.status(e.response.status).send("Error")

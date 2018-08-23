@@ -10,9 +10,13 @@ import NearbyTrails from '../../components/trails/NearbyTrails'
 import TrailMedia from '../../components/trails/TrailMedia'
 import ScrollToTop from 'react-scroll-up'
 import { BarLoader } from 'react-spinners'
+import TrailMainMenu from '../../components/menu/TrailMainMenu'
 
 
 const Trail = props => {
+  const trail = props.trail.trail;
+  const allTrails = props.trail.allTrails
+
   if (props.error) return (
     <Layout nav={false} background="#f2f2f2" overflow={true}>
       <div className="wrapper">
@@ -31,17 +35,17 @@ const Trail = props => {
             </button>
           </a>
         </Link>
-        <h1 dangerouslySetInnerHTML={{__html: props.trail.title.rendered}} />
+        <h1 dangerouslySetInnerHTML={{__html: trail.title.rendered}} />
       </div>
       <div className="wrapper trail">
-        <TrailSidebar trail={props.trail} />
-        <TrailMap trail={props.trail} />
+        <TrailSidebar trail={trail} />
+        <TrailMap trail={trail} />
       </div>
       <div className="wrapper more_trails">
-        {props.trail.custom_data.similarTrails.length > 0 && <SimilarTrails similarTrails={props.trail.custom_data.similarTrails} /> }
-        {props.trail.custom_data.trailsNearby.length > 0 && <NearbyTrails nearbyTrails={props.trail.custom_data.trailsNearby} /> }
+        {trail.custom_data.similarTrails.length > 0 && <SimilarTrails similarTrails={trail.custom_data.similarTrails} /> }
+        {trail.custom_data.trailsNearby.length > 0 && <NearbyTrails nearbyTrails={trail.custom_data.trailsNearby} /> }
       </div>
-      <TrailMedia trail={props.trail.title.rendered} media={props.trail.custom_data.media} />
+      <TrailMedia trail={trail.title.rendered} media={trail.custom_data.media} />
       <ScrollToTop showUnder={160} style={{background: '#4d4e4e', padding: '0.75rem'}}>
         <img width="20" height="20" src="/static/images/scrollup.svg" alt="scroll to top" />
       </ScrollToTop>
@@ -109,6 +113,7 @@ const Trail = props => {
         }
 
       `}</style>
+        <TrailMainMenu system={{trails: allTrails}} />
     </Layout>
   )
 }
