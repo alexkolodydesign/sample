@@ -37,7 +37,7 @@ const SelectTrailType = props =>
           transform: scale(1);
         }
         &.inactive {
-          opacity: 0.5;
+          opacity: 0.2;
         }
       }
       @media screen and (min-width: 768px) {

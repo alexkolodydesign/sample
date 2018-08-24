@@ -1,4 +1,28 @@
 // import { combineReducers } from 'redux'
+import reduxWindow from 'redux-window'
+
+
+
+// TODO: Is this sort of like how we would reset the Map and alter the zoom on screen size?
+// getWidth(state) is from reduxWindow
+//
+// Current Error when using this
+// Warning: Failed prop type: Invalid prop `zoom` of type `function` supplied to `GoogleMap`, expected `number`.
+//
+//
+// export const zoomLevelOnReset = () => {
+//   if (getWidth(state) >= 768 && getWidth(state) < 991) {
+//     return 9
+//   } else if (getWidth(state) >= 992 && getWidth(state) < 1500) {
+//     return 10
+//   } else if (getWidth(state) > 1500) {
+//     return 11
+//   } else {
+//     return 8
+//   }
+// }
+
+
 
 export const defaultState = {
   map: {
@@ -9,6 +33,7 @@ export const defaultState = {
       alpine: true
     },
     metricType: "imperial",
+    // zoom: zoomLevelOnReset,
     zoom: 8,
     gps: false,
     center: {lat: 37.327059, lng: -113.445826},

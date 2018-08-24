@@ -50,6 +50,8 @@ const Trail = props => {
         <img width="20" height="20" src="/static/images/scrollup.svg" alt="scroll to top" />
       </ScrollToTop>
 
+      <TrailMainMenu system={{trails: allTrails}} />
+
       <style jsx>{`
         @media screen {
           h1 {
@@ -113,7 +115,6 @@ const Trail = props => {
         }
 
       `}</style>
-        <TrailMainMenu system={{trails: allTrails}} />
     </Layout>
   )
 }
