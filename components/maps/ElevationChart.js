@@ -94,7 +94,6 @@ export default class ElevationChart extends React.Component {
               <div className="chart">
                 <AreaChart width={this.state.width} height={250} data={coordinates.map(coordinate => {
                   coordinate.elevation = Math.floor(coordinate.elevation)
-                  console.log({coordinate})
                   return coordinate
                 })} onMouseMove={this.mouseMove}
                   margin={{top: 10, right: 20, left: 10, bottom: 20}}>

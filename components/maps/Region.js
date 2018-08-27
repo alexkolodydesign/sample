@@ -48,14 +48,16 @@ export default class Region extends React.Component {
       <React.Fragment>
         {this.props.zoomLevel < 12 &&
           <React.Fragment>
-            <GroundOverlay
-              defaultUrl={region.overlayImage}
-              defaultBounds={new google.maps.LatLngBounds(
-                newBounds.getSouthWest(),
-                newBounds.getNorthEast()
-              )}
-              defaultOpacity={1}
-            />
+            {this.props.showOverlay &&
+              <GroundOverlay
+                defaultUrl={region.overlayImage}
+                defaultBounds={new google.maps.LatLngBounds(
+                  newBounds.getSouthWest(),
+                  newBounds.getNorthEast()
+                )}
+                defaultOpacity={1}
+              />
+            }
             <Polygon
               paths={coordinates}
               options={{

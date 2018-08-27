@@ -6,12 +6,6 @@ import Region from './Region'
 import RegionTrail from './RegionTrail'
 import UserLocation from './UserLocation'
 
-// import alpineCoordinates from '../../data/alpine-coordinates'
-// import desertCoordinates from '../../data/desert-coordinates'
-// import canyonCoordinates from '../../data/canyon-coordinates'
-// import mesaCoordinates from '../../data/mesa-coordinates'
-// import urbanCoordinates from '../../data/urban-coordinates'
-
 // Redux
 const mapStateToProps = (state, ownProps) => {
   return {

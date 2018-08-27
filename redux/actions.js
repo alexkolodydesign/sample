@@ -33,6 +33,13 @@ export const goToSystem = (zoom, center) => {
 }
 export const toggleMenus = menus => dispatch => dispatch({ type: 'TOGGLE_MENUS', menus })
 export const toggleGPS = () => dispatch => dispatch({ type: 'TOGGLE_GPS' })
-export const resetMap = () => dispatch => dispatch({ type: 'RESET_MAP' })
+export const resetMap = () => dispatch => {
+  let zoom
+  if (window.innerWidth >= 768 && window.innerWidth < 991) zoom = 9
+  else if (window.innerWidth >= 992 && window.innerWidth < 1500) zoom = 10
+  else if (window.innerWidth > 1500) zoom = 11
+  else zoom = 8
+  return dispatch({ type: 'RESET_MAP', zoom })
+}
 export const highlightTrail = slug => dispatch => dispatch({ type: 'HIGHLIGHT_TRAIL' , slug })
 export const initStore = (initialState = defaultState) => createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))
