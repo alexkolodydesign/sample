@@ -27,7 +27,6 @@ class ElevationChart extends React.Component {
     this.setState({ hasError: true });
   }
   shouldComponentUpdate(nextProps, nextState) {
-    console.log({nextProps, nextState})
     if (nextProps === nextState) return false
     else return true
   }

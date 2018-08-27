@@ -225,15 +225,15 @@ class Map extends React.Component {
     const trail = this.props.trail
     let coordinates
     // Check localstorage for data before sending fetch
-    const trailStorage = sessionStorage.getItem('trails')
-    // No session storage so send fetch
+    const trailStorage = localStorage.getItem('trails')
+    // No local storage so send fetch
     if (!trailStorage) {
       if (!this.state.coordinates || this.state.coordinates === undefined || this.state.coordinates.length == 0) {
         this.setCoordinates()
         return null
       }
     } else {
-      // Check if session storage has this trail in it
+      // Check if local storage has this trail in it
       const trailStorageJSON = JSON.parse(trailStorage)
       const match = trailStorageJSON.find(storedTrail => trail.slug === storedTrail.slug)
       if (match) {
