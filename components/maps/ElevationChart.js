@@ -17,18 +17,10 @@ const mapDispatchToProps = dispatch => {
 class ElevationChart extends React.Component {
   constructor(props) {
     super(props)
+    this.state = { loading: true }
     this.renderTooltip = this.renderTooltip.bind(this)
     this.mouseMove = this.mouseMove.bind(this)
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-    this.state = { metricType: this.props.metricType };
-  }
-  componentDidCatch(error, info) {
-    // Display fallback UI
-    this.setState({ hasError: true });
-  }
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps === nextState) return false
-    else return true
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
   componentDidMount() {
     this.updateWindowDimensions();
@@ -37,17 +29,25 @@ class ElevationChart extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
   }
+  componentDidCatch(error, info) {
+    this.setState({ hasError: true });
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props === nextProps) return false
+    else return true
+  }
   updateWindowDimensions() {
-    if (window.innerWidth <= 768) this.setState({ width: window.innerWidth - 120, height: window.innerHeight, metricType: this.state.metricType });
-    else if (window.innerWidth < 1200) this.setState({ width: window.innerWidth-420, height: window.innerHeight, metricType: this.state.metricType });
-    else this.setState({ width: 820, height: window.innerHeight, metricType: this.state.metricType });
+    let width
+    if (window.innerWidth <= 768) width = 400;
+    else width = 900;
+    this.setState({ loading: false, width })
   }
   renderTooltip(data) {
     const elevation = data.payload && data.payload[0] ? Number(data.payload[0].payload.elevation).toFixed(0) : false
     if (!elevation) return null
     return (
       <div className="custom-tooltip">
-        {this.state.metricType === 'imperial' ?
+        {this.props.metricType === 'imperial' ?
           <p>Elevation <span>{elevation} ft</span></p>
         :
           <p>Elevation <span>{(elevation * 0.3048).toFixed(2)} meters</span></p>
@@ -69,7 +69,6 @@ class ElevationChart extends React.Component {
   }
 
   mouseMove(data) {
-    console.log({data})
     if (!data.activePayload) return
     const marker = data.activePayload[0].payload
     this.props.pathMarker(marker)
@@ -77,20 +76,24 @@ class ElevationChart extends React.Component {
   render() {
     const totalDistance = Number(this.props.trail.custom_data.length).toFixed(2)
     const trailType = this.props.trail.custom_data.trailType
-    const diff = Math.floor(Math.abs(maxElevation - minElevation))
     const coordinates = Array.isArray(this.props.coordinates[0]) ?
       [].concat.apply([], this.props.coordinates)
       : this.props.coordinates
-    const maxElevation = this.state.metricType === 'imperial' ?
+    const maxElevation = this.props.metricType === 'imperial' ?
       Number(Math.max(...coordinates.map(o => o.elevation)) ).toFixed(0)
     :
       Number(Math.max(...coordinates.map(o => (o.elevation * 0.3048))) ).toFixed(0)
-    const minElevation = this.state.metricType === 'imperial' ?
+    const minElevation = this.props.metricType === 'imperial' ?
       Number(Math.min(...coordinates.map(o => o.elevation)) ).toFixed(0)
     :
       Number(Math.min(...coordinates.map(o => (o.elevation * 0.3048))) ).toFixed(0)
+    const diff = Math.floor(Math.abs(maxElevation - minElevation))
+    const data = coordinates.map(coordinate => {
+      if (this.props.metricType === 'imperial') coordinate.elevation = Math.floor(coordinate.elevation)
+      else coordinate.elevation = Math.floor((coordinate.elevation * 0.3048))
+      return coordinate
+    })
     const elevationFlag = coordinates.some((el) => el.elevation)
-
     return (
       <ErrorBoundary>
         <div>
@@ -98,25 +101,17 @@ class ElevationChart extends React.Component {
             <div>
               <h2>Elevation</h2>
               <div className="chart">
-                <AreaChart width={this.state.width} height={250} data={
-                  coordinates.map(coordinate => {
-                    if (this.state.metricType === 'imperial') coordinate.elevation = Math.floor(coordinate.elevation)
-                    else coordinate.elevation = Math.floor((coordinate.elevation * 0.3048))
-                    return coordinate
-                  })
-                } onMouseMove={this.mouseMove}
-                  margin={{top: 10, right: 20, left: 10, bottom: 20}}>
-                  <CartesianGrid strokeDasharray="3 3"/>
-                  <YAxis
-                    allowDecimals={false}
-                    unit={this.state.metricType === 'imperial' ? " ft" : " meters"}
-                    interval='preserveEnd'
-                    //ticks={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
+                {!this.state.loading &&
+                  <Chart
+                    width={Number(this.state.width)}
+                    data={data}
+                    onMouseMove={this.mouseMove}
                     domain={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
+                    metricType={this.props.metricType}
+                    renderTooltip={this.renderTooltip}
+                    areaStrokeColor={this.props.areaStrokeColor}
                   />
-                  <Tooltip content={this.renderTooltip} />
-                  <Area type='monotone' dataKey='elevation' stroke={this.props.areaStrokeColor} strokeWidth={2} fill='rgba(197,196,188,0.8)' />
-                </AreaChart>
+                }
               </div>
             </div>
           }
@@ -129,7 +124,7 @@ class ElevationChart extends React.Component {
               }
               {elevationFlag &&
                 <div>
-                  {this.state.metricType === 'imperial' ?
+                  {this.props.metricType === 'imperial' ?
                     <React.Fragment>
                       <p>Max Elevation<span>{maxElevation} ft</span></p>
                       <p>Min Elevation<span>{minElevation} ft</span></p>
@@ -200,5 +195,36 @@ class ElevationChart extends React.Component {
     )
   }
 }
+
+class Chart extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      nextProps.width !== this.props.width ||
+      nextProps.metricType !== this.props.metricType
+    ) { return true }
+    else { return false }
+  }
+  render() {
+    return (
+      <AreaChart width={this.props.width} height={250} data={this.props.data} onMouseMove={this.props.onMouseMove} margin={{top: 10, right: 20, left: 10, bottom: 20}}>
+        <CartesianGrid strokeDasharray="3 3"/>
+        <YAxis
+          allowDecimals={false}
+          unit={this.props.metricType === 'imperial' ? " ft" : " meters"}
+          interval='preserveEnd'
+          //ticks={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
+          domain={this.props.domain}
+        />
+        <Tooltip content={this.props.renderTooltip} />
+        <Area type='monotone' dataKey='elevation' stroke={this.props.areaStrokeColor} strokeWidth={2} fill='rgba(197,196,188,0.8)' />
+      </AreaChart>
+    )
+  }
+}
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(ElevationChart)
