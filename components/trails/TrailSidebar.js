@@ -1,6 +1,18 @@
 import ReactHtmlParser from 'react-html-parser'
 import sanitizeHtml from 'sanitize-html-react'
+import { connect } from 'react-redux'
 import Difficulty from '../maps/Difficulty'
+
+// Redux
+const mapStateToProps = (state, ownProps) => {
+  return {
+    metricType: state.map.metricType,
+    ...ownProps
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {};
+};
 
 const TrailSidebar = props => {
   const trail = props.trail.custom_data
@@ -19,7 +31,13 @@ const TrailSidebar = props => {
         }
 
         {trail.length &&
-          <div><p>Length<br/><span>{trail.length}</span></p></div>
+          <React.Fragment>
+            {props.metricType === 'imperial' ?
+              <div><p>Length<br/><span>{trail.length} mi</span></p></div>
+            :
+              <div><p>Length<br/><span>{(trail.length * 1.60934).toFixed(2)} km</span></p></div>
+            }
+          </React.Fragment>
         }
 
         {trail.trailTraffic &&
@@ -166,4 +184,4 @@ const TrailSidebar = props => {
   )
 }
 
-export default TrailSidebar
+export default connect(mapStateToProps, mapDispatchToProps)(TrailSidebar)

@@ -1,29 +1,43 @@
 import axios from 'axios'
 import {AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts'
+import { connect } from 'react-redux'
 import ErrorBoundary from '../ErrorBoundary'
 
-export default class ElevationChart extends React.Component {
+// Redux
+const mapStateToProps = (state, ownProps) => {
+  return {
+    metricType: state.map.metricType,
+    ...ownProps
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+class ElevationChart extends React.Component {
   constructor(props) {
     super(props)
     this.renderTooltip = this.renderTooltip.bind(this)
     this.mouseMove = this.mouseMove.bind(this)
-    if (window.innerWidth <= 768) {
-      this.state = { width: window.innerWidth - 120, height: window.innerHeight };
-    }
-    else if (window.innerWidth < 1200) {
-      this.state = { width: window.innerWidth-420, height: window.innerHeight };
-    }
-    else {
-      this.state = { width: window.innerWidth, height: window.innerHeight };
-    }
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    if (window.innerWidth <= 768) this.state = { width: window.innerWidth - 120, height: window.innerHeight, metricType: this.props.metricType, };
+    else if (window.innerWidth < 1200) this.state = { width: window.innerWidth-420, height: window.innerHeight, metricType: this.props.metricType, };
+    else this.state = { width: window.innerWidth, height: window.innerHeight, metricType: this.props.metricType };
   }
   componentDidCatch(error, info) {
     // Display fallback UI
     this.setState({ hasError: true });
   }
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state === nextState) return false
+    console.log({nextProps, nextState})
+    if (nextProps === nextState) {
+      console.log("SAME TYPE")
+      return false
+    }
+    if (nextProps.metricType !== nextState.metricType) {
+      console.log("NOT THE SAME TYPE")
+      return true
+    }
     else return true
   }
   componentDidMount() {
@@ -36,29 +50,26 @@ export default class ElevationChart extends React.Component {
   }
 
   updateWindowDimensions() {
-
-    if (window.innerWidth <= 768) {
-      this.setState({ width: window.innerWidth - 120, height: window.innerHeight });
-    }
-    else if (window.innerWidth < 1200) {
-      this.setState({ width: window.innerWidth-420, height: window.innerHeight });
-    }
-    else {
-      this.setState({ width: 820, height: window.innerHeight });
-    }
-
+    if (window.innerWidth <= 768) this.setState({ width: window.innerWidth - 120, height: window.innerHeight });
+    else if (window.innerWidth < 1200) this.setState({ width: window.innerWidth-420, height: window.innerHeight });
+    else this.setState({ width: 820, height: window.innerHeight });
   }
   renderTooltip(data) {
     const elevation = data.payload && data.payload[0] ? Number(data.payload[0].payload.elevation).toFixed(0) : false
     if (!elevation) return null
     return (
       <div className="custom-tooltip">
-        <p>Elevation <span>{elevation}</span></p>
+        {this.state.metricType === 'imperial' ?
+          <p>Elevation <span>{elevation} ft</span></p>
+        :
+          <p>Elevation <span>{(elevation * 0.3048).toFixed(2)} meters</span></p>
+        }
         <style jsx>{`
           div {
             background: #fff;
             padding: 0.5rem 1.5rem;
           }
+
           p {
             span {
               font-weight: 100;
@@ -81,8 +92,14 @@ export default class ElevationChart extends React.Component {
     const coordinates = Array.isArray(this.props.coordinates[0]) ?
       [].concat.apply([], this.props.coordinates)
       : this.props.coordinates
-    const maxElevation = Number(Math.max(...coordinates.map(o => o.elevation)) ).toFixed(0)
-    const minElevation = Number(Math.min(...coordinates.map(o => o.elevation)) ).toFixed(0)
+    const maxElevation = this.state.metricType === 'imperial' ?
+      Number(Math.max(...coordinates.map(o => o.elevation)) ).toFixed(0)
+    :
+      Number(Math.max(...coordinates.map(o => (o.elevation * 0.3048))) ).toFixed(0)
+    const minElevation = this.state.metricType === 'imperial' ?
+      Number(Math.min(...coordinates.map(o => o.elevation)) ).toFixed(0)
+    :
+      Number(Math.min(...coordinates.map(o => (o.elevation * 0.3048))) ).toFixed(0)
     const elevationFlag = coordinates.some((el) => el.elevation)
 
     return (
@@ -92,15 +109,18 @@ export default class ElevationChart extends React.Component {
             <div>
               <h2>Elevation</h2>
               <div className="chart">
-                <AreaChart width={this.state.width} height={250} data={coordinates.map(coordinate => {
-                  coordinate.elevation = Math.floor(coordinate.elevation)
-                  return coordinate
-                })} onMouseMove={this.mouseMove}
+                <AreaChart width={this.state.width} height={250} data={
+                  coordinates.map(coordinate => {
+                    if (this.state.metricType === 'imperial') coordinate.elevation = Math.floor(coordinate.elevation)
+                    else coordinate.elevation = Math.floor((coordinate.elevation * 0.3048))
+                    return coordinate
+                  })
+                } onMouseMove={this.mouseMove}
                   margin={{top: 10, right: 20, left: 10, bottom: 20}}>
                   <CartesianGrid strokeDasharray="3 3"/>
                   <YAxis
                     allowDecimals={false}
-                    unit=" ft"
+                    unit={this.state.metricType === 'imperial' ? " ft" : " meters"}
                     interval='preserveEnd'
                     //ticks={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
                     domain={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
@@ -113,11 +133,24 @@ export default class ElevationChart extends React.Component {
           }
           <div className="details">
             <div className="stats">
-              <p>Total Distance<span>{totalDistance} miles</span></p>
+              {this.props.metricType === 'imperial' ?
+                <p>Total Distance<span>{totalDistance} miles</span></p>
+              :
+                <p>Total Distance<span>{(totalDistance * 1.60934).toFixed(2)} km</span></p>
+              }
               {elevationFlag &&
                 <div>
-                  <p>Max Elevation<span>{maxElevation}</span></p>
-                  <p>Min Elevation<span>{minElevation}</span></p>
+                  {this.state.metricType === 'imperial' ?
+                    <React.Fragment>
+                      <p>Max Elevation<span>{maxElevation} ft</span></p>
+                      <p>Min Elevation<span>{minElevation} ft</span></p>
+                    </React.Fragment>
+                  :
+                    <React.Fragment>
+                      <p>Max Elevation<span>{maxElevation} meters</span></p>
+                      <p>Min Elevation<span>{minElevation} meters</span></p>
+                    </React.Fragment>
+                  }
                 </div>
               }
             </div>
@@ -178,3 +211,5 @@ export default class ElevationChart extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ElevationChart)

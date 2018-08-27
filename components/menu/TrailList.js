@@ -1,6 +1,6 @@
+import { connect } from 'react-redux'
 import TrailListMenu from './TrailListMenu'
 import { toggleMenus } from '../../redux/actions'
-import { connect } from 'react-redux'
 
 // Redux
 const mapStateToProps = (state, ownProps) => {
