@@ -20,9 +20,7 @@ class ElevationChart extends React.Component {
     this.renderTooltip = this.renderTooltip.bind(this)
     this.mouseMove = this.mouseMove.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-    if (window.innerWidth <= 768) this.state = { width: window.innerWidth - 120, height: window.innerHeight, metricType: this.props.metricType, };
-    else if (window.innerWidth < 1200) this.state = { width: window.innerWidth-420, height: window.innerHeight, metricType: this.props.metricType, };
-    else this.state = { width: window.innerWidth, height: window.innerHeight, metricType: this.props.metricType };
+    this.state = { metricType: this.props.metricType };
   }
   componentDidCatch(error, info) {
     // Display fallback UI
@@ -30,29 +28,20 @@ class ElevationChart extends React.Component {
   }
   shouldComponentUpdate(nextProps, nextState) {
     console.log({nextProps, nextState})
-    if (nextProps === nextState) {
-      console.log("SAME TYPE")
-      return false
-    }
-    if (nextProps.metricType !== nextState.metricType) {
-      console.log("NOT THE SAME TYPE")
-      return true
-    }
+    if (nextProps === nextState) return false
     else return true
   }
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
   }
-
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
   }
-
   updateWindowDimensions() {
-    if (window.innerWidth <= 768) this.setState({ width: window.innerWidth - 120, height: window.innerHeight });
-    else if (window.innerWidth < 1200) this.setState({ width: window.innerWidth-420, height: window.innerHeight });
-    else this.setState({ width: 820, height: window.innerHeight });
+    if (window.innerWidth <= 768) this.setState({ width: window.innerWidth - 120, height: window.innerHeight, metricType: this.state.metricType });
+    else if (window.innerWidth < 1200) this.setState({ width: window.innerWidth-420, height: window.innerHeight, metricType: this.state.metricType });
+    else this.setState({ width: 820, height: window.innerHeight, metricType: this.state.metricType });
   }
   renderTooltip(data) {
     const elevation = data.payload && data.payload[0] ? Number(data.payload[0].payload.elevation).toFixed(0) : false
@@ -81,6 +70,7 @@ class ElevationChart extends React.Component {
   }
 
   mouseMove(data) {
+    console.log({data})
     if (!data.activePayload) return
     const marker = data.activePayload[0].payload
     this.props.pathMarker(marker)
