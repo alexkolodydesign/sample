@@ -1,5 +1,4 @@
 // import { combineReducers } from 'redux'
-import reduxWindow from 'redux-window'
 
 export const defaultState = {
   map: {
@@ -37,7 +36,8 @@ export const defaultState = {
       filterTrailsMenu: false,
       trailsListMenu: false,
       optionsMenu: false
-    }
+    },
+    firstTimeUser: true
   }
 }
 
@@ -71,6 +71,8 @@ export const map = (state = defaultState, action) => {
       return { map: { ...state.map, highlightTrail: action.slug } }
     case 'TOGGLE_MENUS':
       return { map: { ...state.map, menus: action.menus } }
+    case 'CHANGE_FIRST_TIME_USER':
+      return { map: { ...state.map, firstTimeUser: action.status } }
     default:
       return state
   }

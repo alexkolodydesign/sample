@@ -5,6 +5,7 @@ import { highlightTrail } from '../../redux/actions'
 // Redux
 const mapStateToProps = (state, ownProps) => {
   return {
+    metricType: state.map.metricType,
     ...ownProps
   };
 };
@@ -46,7 +47,7 @@ class TrailListMenu extends React.Component {
           </form>
         </div>
         <div className="trails">
-          {this.state.filteredTrails.map( (trail, k) => <Trail trail={trail} key={k} highlightTrail={this.props.highlightTrail} /> )}
+          {this.state.filteredTrails.map( (trail, k) => <Trail trail={trail} key={k} highlightTrail={this.props.highlightTrail} metricType={this.props.metricType} /> )}
         </div>
         <style jsx>{`
           h3 {text-transform: uppercase; margin: 0 0 0 1rem; color: #fff;}
@@ -138,7 +139,13 @@ const Trail = props =>
     </Link>
     <div className="details">
       <h4><Link href={`/trails/${props.trail.slug}`}><a dangerouslySetInnerHTML={{__html: props.trail.title.rendered}} /></Link></h4>
-      <p><span>{props.trail.custom_data.length} Miles</span></p>
+      <p>
+        {props.metricType === 'imperial' ?
+          <span>{props.trail.custom_data.length} mi</span>
+        :
+          <span>{(props.trail.custom_data.length * 1.60934).toFixed(2)} km</span>
+        }
+      </p>
       {props.trail.custom_data.highlights &&
         <p>Highlights:
           {props.trail.custom_data.highlights.map((highlight, index, k) => {

@@ -1,3 +1,4 @@
+import { connect } from 'react-redux'
 import {  Marker, Polygon, InfoWindow, GroundOverlay } from "react-google-maps"
 import { fitBounds } from 'google-map-react/utils'
 import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js'
@@ -9,10 +10,25 @@ import canyonCoordinates from '../../data/canyon-coordinates'
 import mesaCoordinates from '../../data/mesa-coordinates'
 import urbanCoordinates from '../../data/urban-coordinates'
 
-export default class Region extends React.Component {
+// Redux
+const mapStateToProps = (state, ownProps) => {
+  return {
+    firstTimeUser: state.map.firstTimeUser,
+    ...ownProps
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    changeFirstTimeUser: status => {
+      dispatch(changeFirstTimeUser(status));
+    }
+  };
+};
+
+class Region extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { menu: false }
+    this.state = { menu: false, firstTimeUser: this.props.firstTimeUser }
     this.toggleMenu = this.toggleMenu.bind(this)
   }
   toggleMenu() {
@@ -48,7 +64,7 @@ export default class Region extends React.Component {
       <React.Fragment>
         {this.props.zoomLevel < 12 &&
           <React.Fragment>
-            {this.props.showOverlay &&
+            {this.state.firstTimeUser === true &&
               <GroundOverlay
                 defaultUrl={region.overlayImage}
                 defaultBounds={new google.maps.LatLngBounds(
@@ -108,3 +124,5 @@ export default class Region extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Region)

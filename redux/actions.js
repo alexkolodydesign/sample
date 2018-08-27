@@ -42,4 +42,5 @@ export const resetMap = () => dispatch => {
   return dispatch({ type: 'RESET_MAP', zoom })
 }
 export const highlightTrail = slug => dispatch => dispatch({ type: 'HIGHLIGHT_TRAIL' , slug })
+export const changeFirstTimeUser = status => dispatch => dispatch({ type: 'CHANGE_FIRST_TIME_USER', status })
 export const initStore = (initialState = defaultState) => createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))

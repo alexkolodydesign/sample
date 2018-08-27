@@ -44,7 +44,7 @@ Dashboard.getInitialProps = async props => {
     return {
       region: data,
       event: e_data,
-      firstTimeUser: firstTimeUser === undefined ? true : firstTimeUser
+      firstTimeUser: firstTimeUser === undefined ? true : false
     };
   } catch (e) {
     return {
@@ -54,6 +54,6 @@ Dashboard.getInitialProps = async props => {
 };
 
 export default nextConnect((state, res) => {
-  state.firstTimeUser = res.firstTimeUser
+  state.map.firstTimeUser = res.firstTimeUser
   return state
 })(Dashboard);

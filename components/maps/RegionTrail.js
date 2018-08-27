@@ -78,7 +78,13 @@ class RegionTrail extends React.Component {
                 <h3 className="top" dangerouslySetInnerHTML={{__html: trail.title.rendered}} />
                 <div className="info">
                   {trail.custom_data.length &&
-                    <p>Length: <span>{Number(trail.custom_data.length).toFixed(2)} miles</span></p>
+                    <React.Fragment>
+                      {this.props.metricType === 'imperial' ?
+                        <p>Length: <span>{Number(trail.custom_data.length).toFixed(2)} mi</span></p>
+                      :
+                        <p>Length: <span>{(Number(trail.custom_data.length) * 1.60934).toFixed(2)} km</span></p>
+                      }
+                    </React.Fragment>
                   }
                   {trail.custom_data.highlights &&
                     <p>Highlights: {trail.custom_data.highlights.map((highlight, k) => <span key={k}>{highlight.label} </span>)}

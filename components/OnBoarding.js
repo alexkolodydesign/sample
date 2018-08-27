@@ -1,13 +1,29 @@
 import Joyride from "react-joyride";
+import { connect } from 'react-redux'
 
 import Layout from '../components/layout/Layout'
 import Head from '../components/layout/Head'
 import { nextConnect } from '../redux/store'
-import { filterAction } from '../redux/filterAction'
+import { changeFirstTimeUser } from '../redux/actions'
 import MainMapSetup from '../components/maps/MainMapSetup'
 import TrailSystemGuide from '../components/menu/TrailSystemGuide'
 import MainMenu from '../components/menu/MainMenu'
 import EventList from '../components/menu/EventList'
+
+// Redux
+const mapStateToProps = (state, ownProps) => {
+  return {
+    firstTimeUser: state.map.firstTimeUser,
+    ...ownProps
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    changeFirstTimeUser: status => {
+      dispatch(changeFirstTimeUser(status));
+    }
+  };
+};
 
 class OnBoarding extends React.Component {
   constructor(props) {
@@ -35,7 +51,10 @@ class OnBoarding extends React.Component {
     const { joyride } = this.props;
     const { type } = data;
     if (typeof joyride.callback === "function") joyride.callback(data);
-    else if (data.status == 'finished' || data.status == 'skipped') this.setCookie()
+    else if (data.status == 'finished' || data.status == 'skipped') {
+      this.setCookie()
+      this.props.changeFirstTimeUser(false)
+    }
   }
   render() {
     const { run } = this.state;
@@ -147,13 +166,13 @@ class OnBoarding extends React.Component {
                 <button className="cta" onClick={this.handleClickStart}>Explore Our Trails</button>
                 <p onClick={() => {
                   this.setCookie()
+                  this.props.changeFirstTimeUser(false)
                   this.setState({showOnboardingMessage: false})
                 }}>Skip Short Tutorial</p>
               </div>
             </div>
           </section>
         }
-
         <MainMapSetup regionData={this.props.regionData} />
         {this.props.events.events &&
             <EventList events={this.props.events} />
@@ -218,4 +237,4 @@ OnBoarding.defaultProps = {
   joyride: {}
 }
 
-export default OnBoarding;
+export default connect(mapStateToProps, mapDispatchToProps)(OnBoarding)

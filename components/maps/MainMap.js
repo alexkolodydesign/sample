@@ -10,6 +10,8 @@ import UserLocation from './UserLocation'
 const mapStateToProps = (state, ownProps) => {
   return {
     map: state.map,
+    firstTimeUser: state.map.firstTimeUser,
+    metricType: state.map.metricType,
     ...ownProps
   };
 };
@@ -65,7 +67,7 @@ class Map extends React.Component {
       >
         {this.props.map.gps && <UserLocation />}
         {this.props.regionData.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} /> )}
-        {this.props.regionData.trails.map((trail, k) => <RegionTrail trail={trail} key={k} zoomLevel={this.props.map.zoom} />)}
+        {this.props.regionData.trails.map((trail, k) => <RegionTrail trail={trail} key={k} zoomLevel={this.props.map.zoom} metricType={this.props.metricType} />)}
       </GoogleMap>
     )
   }
