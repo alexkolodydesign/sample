@@ -12,8 +12,8 @@ const mapDispatchToProps = dispatch => {
   return {};
 };
 
-const Paths = props => {
-  const coordinates = props.coordinates.trail.coordinates
+const TrailPaths = props => {
+  const coordinates = props.coordinates
   if (coordinates == null || coordinates == undefined) return null
   if (Array.isArray(coordinates[0])) {
     // If a trail has multiple paths
@@ -59,4 +59,4 @@ const Paths = props => {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Paths)
+export default connect(mapStateToProps, mapDispatchToProps)(TrailPaths)

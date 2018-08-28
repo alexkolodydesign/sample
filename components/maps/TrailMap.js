@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 import { updateTrailCoords } from '../../redux/actions'
 import ElevationChart from './ElevationChart'
-import Paths from './Paths'
+import TrailPaths from './TrailPaths'
 import ShareButtons from '../layout/ShareButtons'
 import printStyle from './mapstyles/print'
 
@@ -37,6 +37,7 @@ class TrailMap extends React.Component {
     this.toggleMapStyle = this.toggleMapStyle.bind(this)
     this.toggleShareButtons = this.toggleShareButtons.bind(this)
     this.printMap = this.printMap.bind(this)
+    this.setCoordinates = this.setCoordinates.bind(this)
   }
   async setCoordinates() {
     if (!this.props.trail.custom_data.jsonCoordinates.url || this.props.trail.custom_data.jsonCoordinates.url === undefined) {
@@ -47,7 +48,7 @@ class TrailMap extends React.Component {
       this.props.updateTrailCoords(coords.data, this.props.trail.slug)
       this.setState({loading: false, coordinates: coords.data})
     } catch(e) {
-      console.log(e)
+      // console.log(e)
     }
   }
   toggleShareButtons() {
@@ -218,7 +219,7 @@ const MapContainer = withScriptjs(withGoogleMap( (props) => <Map trail={props.tr
 class Map extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { zoom: Number(this.props.trail.custom_data.defaultZoom), center: {lat: 37.2, lng: -113.432}, mapStyle: false, coordinates: this.props.trail.coordinates }
+    this.state = { zoom: Number(this.props.trail.custom_data.defaultZoom), center: {lat: 37.2, lng: -113.432}, mapStyle: 'roadmap', coordinates: this.props.trail.coordinates }
     this.setCenterAndZoom = this.setCenterAndZoom.bind(this)
     this.pathMarker = this.pathMarker.bind(this)
     this.mapLoaded = React.createRef()
