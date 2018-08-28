@@ -10,7 +10,6 @@ import UserLocation from './UserLocation'
 const mapStateToProps = (state, ownProps) => {
   return {
     map: state.map,
-    firstTimeUser: state.map.firstTimeUser,
     metricType: state.map.metricType,
     ...ownProps
   };

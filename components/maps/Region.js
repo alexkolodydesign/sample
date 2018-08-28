@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import {  Marker, Polygon, InfoWindow, GroundOverlay } from "react-google-maps"
+import cookies from 'next-cookies'
 import { fitBounds } from 'google-map-react/utils'
 import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js'
 import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js'
@@ -13,7 +14,6 @@ import urbanCoordinates from '../../data/urban-coordinates'
 // Redux
 const mapStateToProps = (state, ownProps) => {
   return {
-    firstTimeUser: state.map.firstTimeUser,
     ...ownProps
   };
 };
@@ -28,7 +28,7 @@ const mapDispatchToProps = dispatch => {
 class Region extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { menu: false, firstTimeUser: this.props.firstTimeUser }
+    this.state = { menu: false }
     this.toggleMenu = this.toggleMenu.bind(this)
   }
   toggleMenu() {
@@ -60,11 +60,12 @@ class Region extends React.Component {
     let newBounds = new LatLngBounds()
     // Add LatLng points to the new bounding area
     coordinates.forEach(bound => newBounds.extend(new LatLng(bound.lat, bound.lng)))
+    const { firstTimeUser } = cookies(this.props)
     return (
       <React.Fragment>
         {this.props.zoomLevel < 12 &&
           <React.Fragment>
-            {this.state.firstTimeUser === true &&
+            {firstTimeUser == true || firstTimeUser == 'true' &&
               <GroundOverlay
                 defaultUrl={region.overlayImage}
                 defaultBounds={new google.maps.LatLngBounds(

@@ -18,7 +18,7 @@ class Dashboard extends React.Component {
     const region = filterAction(this.props.region, this.props.map.filter)
     const { firstTimeUser } = cookies(this.props)
     // First Time Users Go To OnBoarding!
-    if (firstTimeUser) return (<OnBoarding regionData={region} events={this.props.event} region={region} />)
+    if (firstTimeUser == true || firstTimeUser == 'true') return (<OnBoarding regionData={region} events={this.props.event} region={region} />)
     return (
       <Layout>
         <Head/>
