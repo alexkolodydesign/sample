@@ -16,7 +16,7 @@ export default class MainMapSetup extends React.Component {
           containerElement={<div style={{ height: `100%` }} />}
           mapElement={<div style={{ height: `100%` }} id="washington_map" />}
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&v=3.exp&libraries=geometry,drawing,places"
-          regionData={this.props.regionData}
+          regions={this.props.regions}
         />
         <style jsx>{`
           .map {
@@ -45,4 +45,4 @@ export default class MainMapSetup extends React.Component {
   }
 }
 
-const MapContainer = withScriptjs(withGoogleMap( (props) => <MainMap regionData={props.regionData} /> ))
+const MapContainer = withScriptjs(withGoogleMap( (props) => <MainMap regions={props.regions} /> ))

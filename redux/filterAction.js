@@ -1,7 +1,7 @@
-export const filterAction = (data, mapState) => {
+export const filterAction = (trailsState, mapState) => {
   const recommendedUseFilter = Object.keys(mapState.trailType).filter((trailType) => mapState.trailType[trailType] ? true : false)
   const difficultyFilter = Object.keys(mapState.difficulty).filter((difficulty) => mapState.difficulty[difficulty] ? true : false)
-  const trails = data.trails
+  const trails = trailsState
     // Filter by Recommended Use
     .filter((trail) => {
       if (trail.custom_data.recommendedUse && trail.custom_data.recommendedUse !== "") {
@@ -44,6 +44,6 @@ export const filterAction = (data, mapState) => {
     })
 
 
-  const newTrailSystem = {...data, trails: trails}
+  const newTrailSystem = {...trailsState, trails: trails}
   return newTrailSystem
 }

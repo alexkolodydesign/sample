@@ -69,7 +69,7 @@ class Map extends React.Component {
         ref={this.washington_map}
       >
         {this.props.map.gps && <UserLocation />}
-        {this.props.regionData.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} /> )}
+        {this.props.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} /> )}
         {this.props.trails.map((trail, k) => <RegionTrail trail={trail} key={k} zoomLevel={this.props.map.zoom} metricType={this.props.metricType} />)}
       </GoogleMap>
     )

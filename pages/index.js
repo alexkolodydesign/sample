@@ -11,14 +11,14 @@ import MainMenu from '../components/menu/MainMenu'
 import EventList from '../components/menu/EventList'
 
 const Dashboard = props => {
-  const region = filterAction(props.region, props.map.filter)
+  const trails = filterAction(props.trails, props.map.filter)
   const { firstTimeUser } = cookies(props)
   // First Time Users Go To OnBoarding!
-  if (firstTimeUser == true || firstTimeUser == 'true') return (<OnBoarding regionData={region} events={props.event} region={region} />)
+  if (firstTimeUser == true || firstTimeUser == 'true') return (<OnBoarding events={props.event} regions={props.regions} />)
   return (
     <Layout>
       <Head/>
-      <MainMapSetup regionData={region} />
+      <MainMapSetup regions={props.regions} />
       {props.event.events &&
           <EventList events={props.event} />
       }
@@ -33,18 +33,28 @@ Dashboard.getInitialProps = async props => {
   const slug = props.asPath.split('/')[2];
   try {
     const res = await fetch(hostUrl + '/api/region' );
-    const data = await res.json();
+    const regions = await res.json();
     const e_res = await fetch(hostUrl + '/api/washco_event' );
     const e_data = await e_res.json();
     const { firstTimeUser } = cookies(props)
-    return {
-      region: data,
-      regions: data.regions,
-      trails: data.trails,
-      event: e_data,
-      firstTimeUser: firstTimeUser === undefined ? true : firstTimeUser
-    };
+    if (props.req) {
+      const resTrails = await fetch(hostUrl + '/api/trails/');
+      const trails = await resTrails.json();
+      return {
+        regions,
+        trails,
+        event: e_data,
+        firstTimeUser: firstTimeUser === undefined ? true : firstTimeUser
+      }
+    } else {
+      return {
+        regions,
+        event: e_data,
+        firstTimeUser: firstTimeUser === undefined ? true : firstTimeUser
+      }
+    }
   } catch (e) {
+    console.log(e)
     return {
       error: true
     };
@@ -53,6 +63,8 @@ Dashboard.getInitialProps = async props => {
 
 export default nextConnect((state, res) => {
   state.map.firstTimeUser = res.firstTimeUser
-  state.map.trails = res.trails
+  if (res.trails) {
+    state.map.trails = res.trails
+  }
   return state
 })(Dashboard);

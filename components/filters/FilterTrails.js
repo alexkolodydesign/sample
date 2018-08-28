@@ -22,13 +22,13 @@ class FilterTrails extends React.Component {
   toggleFilterMenu() {
     if (this.props.menus.filterTrailsMenu == true) {
       this.props.toggleMenus({
-        trailsListMenu: this.props.menus.trailsListMenu,
-        optionsMenu: this.props.menus.filterTrailsMenu,
+        trailsListMenu: false,
+        optionsMenu: false,
         filterTrailsMenu: 'exiting'
       })
       setTimeout( () => this.props.toggleMenus({
         trailsListMenu: this.props.menus.trailsListMenu,
-        optionsMenu: this.props.menus.optionsMenu,
+        optionsMenu: false,
         filterTrailsMenu: false
       }), 500)
     } else {
