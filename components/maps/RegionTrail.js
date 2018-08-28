@@ -51,21 +51,25 @@ class RegionTrail extends React.Component {
     }
     // Change Trail Color Based on the First Value of Recommended Use Array
     let trailColor
-    switch(trail.custom_data.recommendedUse[0].value) {
-      case 'hiking':
-        trailColor = '#ed264c'
-        break
-      case 'biking':
-        trailColor = '#ff5a00'
-        break
-      case 'equestrian':
-        trailColor = '#662f8e'
-        break
-      case 'ohv':
-        trailColor = '#00a89c'
-        break
-      default:
-        trailColor = '#ff0000'
+    if (trail.custom_data.recommendedUse) {
+      switch(trail.custom_data.recommendedUse[0].value) {
+        case 'hiking':
+          trailColor = '#ed264c'
+          break
+        case 'biking':
+          trailColor = '#ff5a00'
+          break
+        case 'equestrian':
+          trailColor = '#662f8e'
+          break
+        case 'ohv':
+          trailColor = '#00a89c'
+          break
+        default:
+          trailColor = '#ff0000'
+      }
+    } else {
+      trailColor = '#ff0000'
     }
     return (
       <React.Fragment>
@@ -108,22 +112,22 @@ class RegionTrail extends React.Component {
                   <Link href={`/trails/${trail.slug}`}><a>> View Trail</a></Link>
                 </div>
                 <div className="icons">
-                  <div className="trail_type">
-                    {trail.custom_data.recommendedUse.some((el) => el.value == 'hiking') &&
-                      <img src="/static/images/menu/hiking.svg" alt="Hiking Trail" />
-                    }
-                    {trail.custom_data.recommendedUse.some((el) => el.value == 'biking') &&
-                      <img src="/static/images/menu/biking.svg" alt="Biking Trail" />
-                    }
-                    {trail.custom_data.recommendedUse.some((el) => el.value == 'equestrian') &&
-                      <img src="/static/images/menu/equestrian.svg" alt="Equestrian Trail" />
-                    }
-                    {trail.custom_data.recommendedUse.some((el) => el.value == 'ohv') &&
-                      <img src="/static/images/menu/ohv.svg" alt="OHV Trail" />
-                    }
-
-
-                  </div>
+                  {trail.custom_data.recommendedUse &&
+                    <div className="trail_type">
+                      {trail.custom_data.recommendedUse.some((el) => el.value == 'hiking') &&
+                        <img src="/static/images/menu/hiking.svg" alt="Hiking Trail" />
+                      }
+                      {trail.custom_data.recommendedUse.some((el) => el.value == 'biking') &&
+                        <img src="/static/images/menu/biking.svg" alt="Biking Trail" />
+                      }
+                      {trail.custom_data.recommendedUse.some((el) => el.value == 'equestrian') &&
+                        <img src="/static/images/menu/equestrian.svg" alt="Equestrian Trail" />
+                      }
+                      {trail.custom_data.recommendedUse.some((el) => el.value == 'ohv') &&
+                        <img src="/static/images/menu/ohv.svg" alt="OHV Trail" />
+                      }
+                    </div>
+                  }
                 </div>
                 <style jsx>{`
                   h3 {

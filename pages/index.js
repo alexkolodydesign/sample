@@ -10,27 +10,22 @@ import TrailSystemGuide from '../components/menu/TrailSystemGuide'
 import MainMenu from '../components/menu/MainMenu'
 import EventList from '../components/menu/EventList'
 
-class Dashboard extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-    const region = filterAction(this.props.region, this.props.map.filter)
-    const { firstTimeUser } = cookies(this.props)
-    // First Time Users Go To OnBoarding!
-    if (firstTimeUser == true || firstTimeUser == 'true') return (<OnBoarding regionData={region} events={this.props.event} region={region} />)
-    return (
-      <Layout>
-        <Head/>
-        <MainMapSetup regionData={region} />
-        {this.props.event.events &&
-            <EventList events={this.props.event} />
-        }
-        <TrailSystemGuide />
-        <MainMenu system={region} />
-      </Layout>
-    )
-  }
+const Dashboard = props => {
+  const region = filterAction(props.region, props.map.filter)
+  const { firstTimeUser } = cookies(props)
+  // First Time Users Go To OnBoarding!
+  if (firstTimeUser == true || firstTimeUser == 'true') return (<OnBoarding regionData={region} events={props.event} region={region} />)
+  return (
+    <Layout>
+      <Head/>
+      <MainMapSetup regionData={region} />
+      {props.event.events &&
+          <EventList events={props.event} />
+      }
+      <TrailSystemGuide />
+      <MainMenu />
+    </Layout>
+  )
 }
 
 Dashboard.getInitialProps = async props => {
@@ -44,6 +39,8 @@ Dashboard.getInitialProps = async props => {
     const { firstTimeUser } = cookies(props)
     return {
       region: data,
+      regions: data.regions,
+      trails: data.trails,
       event: e_data,
       firstTimeUser: firstTimeUser === undefined ? true : firstTimeUser
     };
@@ -56,5 +53,6 @@ Dashboard.getInitialProps = async props => {
 
 export default nextConnect((state, res) => {
   state.map.firstTimeUser = res.firstTimeUser
+  state.map.trails = res.trails
   return state
 })(Dashboard);

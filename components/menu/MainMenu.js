@@ -17,7 +17,7 @@ const MainMenu = props =>
     <div className="wrapper">
       <SelectTrailType />
       <FilterTrails />
-      <TrailList system={props.system} />
+      <TrailList />
       <GPS />
       <Settings />
 

@@ -2,6 +2,7 @@
 
 export const defaultState = {
   map: {
+    trails: [],
     activeRegions: {
       urban: true,
       canyon: true,

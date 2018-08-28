@@ -5,7 +5,8 @@ import { toggleMenus } from '../../redux/actions'
 // Redux
 const mapStateToProps = (state, ownProps) => {
   return {
-    menus: state.map.menus
+    menus: state.map.menus,
+    trails: state.map.trails
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -46,8 +47,8 @@ class TrailList extends React.Component {
           <img src="/static/images/menu/trail-list.svg" alt="Trail List"/>
           <p>Trail List</p>
         </button>
-        {this.props.menus.trailsListMenu && this.props.system &&
-          <TrailListMenu trails={this.props.system.trails} toggleMenu={this.toggleMenu} menuState={this.props.menus.trailsListMenu} />
+        {this.props.menus.trailsListMenu &&
+          <TrailListMenu trails={this.props.trails} toggleMenu={this.toggleMenu} menuState={this.props.menus.trailsListMenu} />
         }
         <style jsx>{`
           button {
