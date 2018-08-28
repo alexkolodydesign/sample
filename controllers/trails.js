@@ -8,7 +8,7 @@ exports.getTrailData = async (req, res) => {
       res.status(422)
     }
     const { data: [trail] } = await axios.get(`http://washcotrails.flitchbeta.com/wp-json/wp/v2/trails?slug=${trailHandle}`);
-    const { data: all_trails } = await axios.get('http://washcotrails.flitchbeta.com/wp-json/wp/v2/trails?per_page=500&order=asc');
+    const { data: all_trails } = await axios.get('http://washcotrails.flitchbeta.com/wp-json/wp/v2/trails?per_page=500&order=asc&fields=title,slug,custom_data,regions');
     res.status(200).json({trail, allTrails: all_trails});
   } catch(e) {
     // console.log("Issue arose.", e);
@@ -18,7 +18,7 @@ exports.getTrailData = async (req, res) => {
 
 exports.getRegionData = async (req, res) => {
   try {
-    const { data: trails } = await axios.get('http://washcotrails.flitchbeta.com/wp-json/wp/v2/trails?per_page=500&order=asc&region=6');
+    const { data: trails } = await axios.get('http://washcotrails.flitchbeta.com/wp-json/wp/v2/trails?per_page=500&order=asc&fields=title,slug,custom_data,regions');
     const { data: regions } = await axios.get('http://washcotrails.flitchbeta.com/wp-json/wp/v2/regions');
     const regionsArray = regions.map((region) => {
       const lat = region.custom_data.markerCoordinates ? Number(region.custom_data.markerCoordinates.marker_latitude) : 0
