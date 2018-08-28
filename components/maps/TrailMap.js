@@ -3,76 +3,37 @@ import { withScriptjs, withGoogleMap, GoogleMap, Polyline, Marker } from "react-
 import { fitBounds } from 'google-map-react/utils'
 import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js'
 import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js'
-import { connect } from 'react-redux'
 
-import { updateTrailCoords } from '../../redux/actions'
-import ElevationChart from './ElevationChart'
-import TrailPaths from './TrailPaths'
+import TrailChart from './TrailChart'
 import ShareButtons from '../layout/ShareButtons'
 import printStyle from './mapstyles/print'
 
-// Redux
-const mapStateToProps = (state, ownProps) => {
-  return {
-    map: state.map,
-    ...ownProps
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    updateTrailCoords: (coords, slug) => {
-      dispatch(updateTrailCoords(coords, slug));
-    }
-  };
-};
+
 
 const timeout = ms => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
 
-class TrailMap extends React.Component {
+export default class TrailMap extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { coordinates: [], loading: true, mapStyle: false, shareButtons: false }
+    this.state = { coordinates: [], loading: true, mapStyle: 'roadmap', shareButtons: false }
     this.toggleMapStyle = this.toggleMapStyle.bind(this)
     this.toggleShareButtons = this.toggleShareButtons.bind(this)
     this.printMap = this.printMap.bind(this)
-    this.setCoordinates = this.setCoordinates.bind(this)
-  }
-  async setCoordinates() {
-    if (!this.props.trail.custom_data.jsonCoordinates.url || this.props.trail.custom_data.jsonCoordinates.url === undefined) {
-      this.props.updateTrailCoords([], this.props.trail.slug)
-    }
-    try {
-      const coords = await axios.get(`/api/coordinates?url=${this.props.trail.custom_data.jsonCoordinates.url}`)
-      this.props.updateTrailCoords(coords.data, this.props.trail.slug)
-      this.setState({loading: false, coordinates: coords.data})
-    } catch(e) {
-      // console.log(e)
-    }
   }
   toggleShareButtons() {
     this.setState({shareButtons: !this.state.shareButtons})
   }
   toggleMapStyle() {
     if (!this.state.mapStyle) this.setState({mapStyle: printStyle })
-    else this.setState({mapStyle: false })
+    else this.setState({mapStyle: 'roadmap' })
   }
   printMap() {
     window.print()
     return true
   }
   render() {
-    const trail = this.props.trail
-    // Find matching trail
-    const matchingTrail = this.props.map.trails.find(reduxTrail => {
-      if (trail.slug == reduxTrail.slug) return true
-    })
-    if (matchingTrail.coordinates) trail.coordinates = matchingTrail.coordinates.trail.coordinates
-    else {
-      trail.coordinates = this.setCoordinates()
-    }
-    if (this.state.loading) return null
     return (
       <div className="trail_map">
         <div className="map_container">
@@ -215,97 +176,4 @@ class TrailMap extends React.Component {
   }
 }
 
-const MapContainer = withScriptjs(withGoogleMap( (props) => <Map trail={props.trail} mapStyle={props.mapStyle} /> ))
-class Map extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { zoom: Number(this.props.trail.custom_data.defaultZoom), center: {lat: 37.2, lng: -113.432}, mapStyle: 'roadmap', coordinates: this.props.trail.coordinates }
-    this.setCenterAndZoom = this.setCenterAndZoom.bind(this)
-    this.pathMarker = this.pathMarker.bind(this)
-    this.mapLoaded = React.createRef()
-  }
-  static getDerivedStateFromProps(props, state) {
-    return state.mapStyle = props.mapStyle
-  }
-  pathMarker(location) {
-    this.setState({marker: location})
-  }
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state === nextState) return false
-    else return true
-  }
-  setCenterAndZoom(coords) {
-    // Make new bounds
-    let newBounds = new LatLngBounds()
-    // Add LatLng points to the new bounding area
-    coords.forEach(bound => {
-      if (Array.isArray(bound)) {
-        bound.forEach(point => {
-          newBounds.extend(new LatLng(point.lat, point.lng))
-        })
-      } else {
-        newBounds.extend(new LatLng(bound.lat, bound.lng))
-      }
-    })
-    // Get the new center and zoom from new bounds
-    const fit = fitBounds(
-      {nw: newBounds.getNorthWest(), se: newBounds.getSouthEast()},
-      {width: 820, height: 400}
-    );
-    // Update state for map
-    this.setState({zoom: fit.zoom, center: fit.center, mapIsCentered: true})
-  }
-  render() {
-    const trail = this.props.trail
-    const coordinates = this.state.coordinates
-    // Change Trail Color Based on the First Value of Recommended Use Array
-    let trailColor
-    switch(trail.custom_data.recommendedUse[0].value) {
-      case 'hiking':
-        trailColor = '#ed264c'
-        break
-      case 'biking':
-        trailColor = '#ff5a00'
-        break
-      case 'equestrian':
-        trailColor = '#662f8e'
-        break
-      case 'ohv':
-        trailColor = '#00a89c'
-        break
-      default:
-        trailColor = '#ff0000'
-    }
-    return (
-      <React.Fragment>
-        <GoogleMap
-          ref={this.mapLoaded}
-          className='THEMAP'
-          zoom={this.state.zoom}
-          // Only do this once. (TODO: look for a better event for this function like map loaded or something)
-          onTilesLoaded={() => !this.state.mapIsCentered ? this.setCenterAndZoom(coordinates) : null}
-          options={{
-            styles: this.state.mapStyle
-          }}
-          defaultOptions={{
-            streetViewControl: false
-          }}
-        >
-
-          <Paths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor}  />
-
-          {this.state.marker &&
-            <Marker
-              position={this.state.marker}
-            />
-          }
-        </GoogleMap>
-        <ElevationChart coordinates={coordinates.slice(0).reverse()} trail={this.props.trail} areaStrokeColor={trailColor} pathMarker={this.pathMarker} />
-      </React.Fragment>
-    )
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TrailMap)
-
-
+const MapContainer = withScriptjs(withGoogleMap( (props) => <TrailChart trail={props.trail} mapStyle={props.mapStyle} /> ))
