@@ -8,6 +8,7 @@ export const defaultState = {
       mesa: true,
       alpine: true
     },
+    mapStyle: "roadmap",
     metricType: "imperial",
     zoom: 8,
     gps: false,
@@ -73,6 +74,8 @@ export const map = (state = defaultState, action) => {
       return { map: { ...state.map, menus: action.menus } }
     case 'TOGGLE_FIRST_TIME_USER':
       return { map: { ...state.map, firstTimeUser: action.status } }
+    case 'CHANGE_MAP_STYLE':
+      return { map: { ...state.map, mapStyle: action.style } }
     default:
       return state
   }

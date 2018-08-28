@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Router from 'next/router'
-import { changeMetricType, toggleFirstTimeUser } from '../../redux/actions'
+import { changeMetricType, toggleFirstTimeUser, changeMapStyle } from '../../redux/actions'
 
 // Redux
 const mapStateToProps = (state, ownProps) => ({ map: state.map });
@@ -11,6 +11,9 @@ const mapDispatchToProps = dispatch => {
     },
     toggleFirstTimeUser: status => {
       dispatch(toggleFirstTimeUser(status));
+    },
+    changeMapStyle: style => {
+      dispatch(changeMapStyle(style));
     }
   }
 }
@@ -21,7 +24,7 @@ const Options = props =>
     <div className="close" onClick={props.toggleOptions}>X</div>
     <div className="options">
       <Option title="Increments" selected={props.map.metricType} options={["Metric", "Imperial"]} action={props.changeMetricType} />
-      <Option title="Map Style" selected="Map" options={["Map", "Map 2"]} />
+      <Option title="Map Style" selected={props.map.mapStyle} options={["RoadMap", "Terrain", "Satellite"]} action={props.changeMapStyle} />
       <button onClick={() => {
         document.cookie = 'firstTimeUser=true';
         return props.toggleFirstTimeUser(true)

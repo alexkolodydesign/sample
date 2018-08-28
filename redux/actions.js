@@ -43,4 +43,5 @@ export const resetMap = () => dispatch => {
 }
 export const highlightTrail = slug => dispatch => dispatch({ type: 'HIGHLIGHT_TRAIL' , slug })
 export const toggleFirstTimeUser = status => dispatch => dispatch({ type: 'TOGGLE_FIRST_TIME_USER', status })
+export const changeMapStyle = style => dispatch => dispatch({ type: 'CHANGE_MAP_STYLE', style })
 export const initStore = (initialState = defaultState) => createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))

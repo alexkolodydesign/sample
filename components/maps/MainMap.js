@@ -51,6 +51,9 @@ class Map extends React.Component {
         onZoomChanged={function(e) {
           zoomState(this.getZoom(), null)
         }}
+        options={{
+          mapTypeId: this.props.map.mapStyle
+        }}
         // TODO:
         // Set map bounds to redux store. In RegionTrail after checking zoom threshold check if center coordinate falls into map bounds to display/pull info
         // onBoundsChanged={function(e) {
