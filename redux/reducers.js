@@ -71,7 +71,7 @@ export const map = (state = defaultState, action) => {
       return { map: { ...state.map, highlightTrail: action.slug } }
     case 'TOGGLE_MENUS':
       return { map: { ...state.map, menus: action.menus } }
-    case 'CHANGE_FIRST_TIME_USER':
+    case 'TOGGLE_FIRST_TIME_USER':
       return { map: { ...state.map, firstTimeUser: action.status } }
     default:
       return state

@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import Layout from '../components/layout/Layout'
 import Head from '../components/layout/Head'
 import { nextConnect } from '../redux/store'
-import { changeFirstTimeUser } from '../redux/actions'
 import MainMapSetup from '../components/maps/MainMapSetup'
+import { toggleFirstTimeUser } from '../redux/actions'
 import TrailSystemGuide from '../components/menu/TrailSystemGuide'
 import MainMenu from '../components/menu/MainMenu'
 import EventList from '../components/menu/EventList'
@@ -19,10 +19,10 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    changeFirstTimeUser: status => {
-      dispatch(changeFirstTimeUser(status));
+    toggleFirstTimeUser: status => {
+      dispatch(toggleFirstTimeUser(status));
     }
-  };
+  }
 };
 
 class OnBoarding extends React.Component {
@@ -36,12 +36,17 @@ class OnBoarding extends React.Component {
     this.handleJoyrideCallback = this.handleJoyrideCallback.bind(this)
     this.handleClickStart = this.handleClickStart.bind(this)
     this.setCookie = this.setCookie.bind(this)
+    this.toggleFirstTimeUser = this.toggleFirstTimeUser.bind(this)
   }
   componentDidMount() {
     this.setState({loading: false})
   }
   setCookie() {
     document.cookie = 'firstTimeUser=false'
+  }
+  toggleFirstTimeUser() {
+    this.setCookie()
+    this.props.toggleFirstTimeUser(false)
   }
   handleClickStart(e) {
     e.preventDefault();
@@ -53,8 +58,8 @@ class OnBoarding extends React.Component {
     if (typeof joyride.callback === "function") joyride.callback(data);
     else if (data.status == 'finished' || data.status == 'skipped') {
       this.setCookie()
-      this.props.changeFirstTimeUser(false)
     }
+    return this.toggleFirstTimeUser(false)
   }
   render() {
     const { run } = this.state;
@@ -165,9 +170,8 @@ class OnBoarding extends React.Component {
                 <h1>Welcome to<br/><span>Washington County Trails</span></h1>
                 <button className="cta" onClick={this.handleClickStart}>Explore Our Trails</button>
                 <p onClick={() => {
-                  this.setCookie()
-                  this.props.changeFirstTimeUser(false)
                   this.setState({showOnboardingMessage: false})
+                  return this.toggleFirstTimeUser(false)
                 }}>Skip Short Tutorial</p>
               </div>
             </div>

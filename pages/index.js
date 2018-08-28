@@ -16,8 +16,9 @@ class Dashboard extends React.Component {
   }
   render() {
     const region = filterAction(this.props.region, this.props.map.filter)
+    const { firstTimeUser } = cookies(this.props)
     // First Time Users Go To OnBoarding!
-    if (this.props.firstTimeUser === true) return (<OnBoarding regionData={region} events={this.props.event} region={region} />)
+    if (firstTimeUser) return (<OnBoarding regionData={region} events={this.props.event} region={region} />)
     return (
       <Layout>
         <Head/>
@@ -44,7 +45,7 @@ Dashboard.getInitialProps = async props => {
     return {
       region: data,
       event: e_data,
-      firstTimeUser: firstTimeUser === undefined ? true : false
+      firstTimeUser: firstTimeUser === undefined ? true : firstTimeUser
     };
   } catch (e) {
     return {
