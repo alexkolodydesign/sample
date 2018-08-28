@@ -13,7 +13,9 @@ const mapDispatchToProps = dispatch => {
 };
 
 const Paths = props => {
-  const coordinates = props.coordinates.trail.coordinates
+  let coordinates;
+  if (props.coordinates) coordinates = props.coordinates
+  else coordinates = props.coordinates.trail.coordinates
   if (coordinates == null || coordinates == undefined) return null
   if (Array.isArray(coordinates[0])) {
     // If a trail has multiple paths

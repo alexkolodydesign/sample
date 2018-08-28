@@ -3,24 +3,52 @@ import { withScriptjs, withGoogleMap, GoogleMap, Polyline, Marker } from "react-
 import { fitBounds } from 'google-map-react/utils'
 import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js'
 import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js'
+import { connect } from 'react-redux'
 
-import { getCoordinates } from '../../redux/mapActions'
+import { updateTrailCoords } from '../../redux/actions'
 import ElevationChart from './ElevationChart'
 import Paths from './Paths'
 import ShareButtons from '../layout/ShareButtons'
 import printStyle from './mapstyles/print'
 
+// Redux
+const mapStateToProps = (state, ownProps) => {
+  return {
+    map: state.map,
+    ...ownProps
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    updateTrailCoords: (coords, slug) => {
+      dispatch(updateTrailCoords(coords, slug));
+    }
+  };
+};
+
 const timeout = ms => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
 
-export default class TrailMap extends React.Component {
+class TrailMap extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {mapStyle: false, shareButtons: false}
+    this.state = { coordinates: [], loading: true, mapStyle: false, shareButtons: false }
     this.toggleMapStyle = this.toggleMapStyle.bind(this)
     this.toggleShareButtons = this.toggleShareButtons.bind(this)
     this.printMap = this.printMap.bind(this)
+  }
+  async setCoordinates() {
+    if (!this.props.trail.custom_data.jsonCoordinates.url || this.props.trail.custom_data.jsonCoordinates.url === undefined) {
+      this.props.updateTrailCoords([], this.props.trail.slug)
+    }
+    try {
+      const coords = await axios.get(`/api/coordinates?url=${this.props.trail.custom_data.jsonCoordinates.url}`)
+      this.props.updateTrailCoords(coords.data, this.props.trail.slug)
+      this.setState({loading: false, coordinates: coords.data})
+    } catch(e) {
+      console.log(e)
+    }
   }
   toggleShareButtons() {
     this.setState({shareButtons: !this.state.shareButtons})
@@ -34,6 +62,16 @@ export default class TrailMap extends React.Component {
     return true
   }
   render() {
+    const trail = this.props.trail
+    // Find matching trail
+    const matchingTrail = this.props.map.trails.find(reduxTrail => {
+      if (trail.slug == reduxTrail.slug) return true
+    })
+    if (matchingTrail.coordinates) trail.coordinates = matchingTrail.coordinates.trail.coordinates
+    else {
+      trail.coordinates = this.setCoordinates()
+    }
+    if (this.state.loading) return null
     return (
       <div className="trail_map">
         <div className="map_container">
@@ -180,18 +218,13 @@ const MapContainer = withScriptjs(withGoogleMap( (props) => <Map trail={props.tr
 class Map extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { zoom: Number(this.props.trail.custom_data.defaultZoom), center: {lat: 37.2, lng: -113.432}, mapStyle: false }
-    this.setCoordinates = this.setCoordinates.bind(this)
+    this.state = { zoom: Number(this.props.trail.custom_data.defaultZoom), center: {lat: 37.2, lng: -113.432}, mapStyle: false, coordinates: this.props.trail.coordinates }
     this.setCenterAndZoom = this.setCenterAndZoom.bind(this)
     this.pathMarker = this.pathMarker.bind(this)
     this.mapLoaded = React.createRef()
   }
   static getDerivedStateFromProps(props, state) {
     return state.mapStyle = props.mapStyle
-  }
-  async setCoordinates() {
-    const coords = await getCoordinates(this.props.trail.custom_data.jsonCoordinates, this.props.trail.slug)
-    if (coords) this.setState({coordinates: coords})
   }
   pathMarker(location) {
     this.setState({marker: location})
@@ -223,29 +256,7 @@ class Map extends React.Component {
   }
   render() {
     const trail = this.props.trail
-    let coordinates
-    // Check localstorage for data before sending fetch
-    const trailStorage = localStorage.getItem('trails')
-    // No local storage so send fetch
-    if (!trailStorage) {
-      if (!this.state.coordinates || this.state.coordinates === undefined || this.state.coordinates.length == 0) {
-        this.setCoordinates()
-        return null
-      }
-    } else {
-      // Check if local storage has this trail in it
-      const trailStorageJSON = JSON.parse(trailStorage)
-      const match = trailStorageJSON.find(storedTrail => trail.slug === storedTrail.slug)
-      if (match) {
-        if (Array.isArray(match.coordinates[0])) coordinates = match.coordinates
-        else coordinates = match.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng), elevation: Number(point.elevation)}))
-      }
-      else {
-        this.setCoordinates()
-        return null
-      }
-    }
-    if (!coordinates) coordinates = this.state.coordinates.map(point => ({lat: Number(point.lat), lng: Number(point.lng), elevation: Number(point.elevation)}))
+    const coordinates = this.state.coordinates
     // Change Trail Color Based on the First Value of Recommended Use Array
     let trailColor
     switch(trail.custom_data.recommendedUse[0].value) {
@@ -264,18 +275,12 @@ class Map extends React.Component {
       default:
         trailColor = '#ff0000'
     }
-    const center = Math.round(coordinates.length / 2)
     return (
       <React.Fragment>
         <GoogleMap
           ref={this.mapLoaded}
           className='THEMAP'
           zoom={this.state.zoom}
-          center={
-            Array.isArray(coordinates[0]) ?
-            {lat: coordinates[center][0].lat, lng: coordinates[center][0].lng}
-            : {lat: coordinates[center].lat, lng: coordinates[center].lng}
-          }
           // Only do this once. (TODO: look for a better event for this function like map loaded or something)
           onTilesLoaded={() => !this.state.mapIsCentered ? this.setCenterAndZoom(coordinates) : null}
           options={{
@@ -300,5 +305,6 @@ class Map extends React.Component {
   }
 }
 
+export default connect(mapStateToProps, mapDispatchToProps)(TrailMap)
 
 
