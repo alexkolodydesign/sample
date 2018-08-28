@@ -14,9 +14,8 @@ import TrailMainMenu from '../../components/menu/TrailMainMenu'
 
 
 const Trail = props => {
-  const trail = props.trail.trail;
-  const allTrails = props.trail.allTrails
-
+  const trail = props.trail;
+  const trails = props.trails
   if (props.error) return (
     <Layout nav={false} background="#f2f2f2" overflow={true}>
       <div className="wrapper">
@@ -50,7 +49,7 @@ const Trail = props => {
         <img width="20" height="20" src="/static/images/scrollup.svg" alt="scroll to top" />
       </ScrollToTop>
 
-      <TrailMainMenu system={{trails: allTrails}} />
+      <TrailMainMenu />
 
       <style jsx>{`
         @media screen {
@@ -125,9 +124,19 @@ Trail.getInitialProps = async props => {
   try {
     const res = await fetch(hostUrl + '/api/trail/' + slug);
     const data = await res.json();
-    return {
-      trail: data
-    };
+    if (props.req) {
+      const resTrails = await fetch(hostUrl + '/api/trails/');
+      const trails = await resTrails.json();
+      return {
+        trail: data.trail,
+        trails
+      }
+    }
+    else {
+      return {
+        trail: data.trail
+      }
+    }
   } catch (e) {
     return {
       error: true
@@ -135,4 +144,9 @@ Trail.getInitialProps = async props => {
   }
 };
 
-export default nextConnect((state, res) => state)(Trail);
+export default nextConnect((state, res) => {
+  if (res.trails) {
+    state.map.trails = res.trails
+  }
+  return state
+})(Trail);

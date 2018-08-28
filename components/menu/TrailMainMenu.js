@@ -15,7 +15,7 @@ const TrailMainMenu = props =>
     </div>
     <div className="background"></div>
     <div className="wrapper">
-      <TrailList system={props.system} />
+      <TrailList />
       <GPS />
       <Settings />
 

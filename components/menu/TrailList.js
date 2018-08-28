@@ -48,7 +48,7 @@ class TrailList extends React.Component {
           <p>Trail List</p>
         </button>
         {this.props.menus.trailsListMenu &&
-          <TrailListMenu trails={this.props.trails} toggleMenu={this.toggleMenu} menuState={this.props.menus.trailsListMenu} />
+          <TrailListMenu toggleMenu={this.toggleMenu} menuState={this.props.menus.trailsListMenu} />
         }
         <style jsx>{`
           button {
