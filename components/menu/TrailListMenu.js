@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { connect } from 'react-redux'
+import { filterAction } from '../../redux/filterAction'
 import { highlightTrail } from '../../redux/actions'
 
 // Redux
@@ -7,6 +8,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     metricType: state.map.metricType,
     trails: state.map.trails,
+    filter: state.map.filter,
     ...ownProps
   };
 };
@@ -21,29 +23,29 @@ const mapDispatchToProps = dispatch => {
 class TrailListMenu extends React.Component {
   constructor(props) {
     super(props)
-    this.search = this.search.bind(this)
     this.state = {
-      trails: this.props.trails,
-      filteredTrails: this.props.trails
+      filteredTrails: filterAction(this.props.trails, this.props.filter),
+      trails: filterAction(this.props.trails, this.props.filter),
+      search: ''
     }
   }
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.trails.length == nextProps.trails.length) return nextProps
-    const state = {trails: nextProps.trails, filteredTrails: nextProps.trails}
+    let newTrails
+    const value = prevState.search
+    if (value == '') newTrails = filterAction(nextProps.trails, nextProps.filter)
+    else newTrails = filterAction(nextProps.trails, nextProps.filter).filter( (trail) => trail.title.rendered.toLowerCase().includes(value) ? true : false)
+    const state = {trails: newTrails, filteredTrails: newTrails}
     return state
   }
-  search(searchTerm) {
-    const value = searchTerm.target.value.toLowerCase()
-    const trails = this.state.trails.filter( (trail) => trail.title.rendered.toLowerCase().includes(value) ? true : false)
-    this.setState({filteredTrails: trails})
-  }
   render() {
+    const trails = filterAction(this.props.trails, this.props.filter)
     return (
       <div className={this.props.menuState == "exiting" ? "exiting menu" : "menu"}>
         <h3>Trail List</h3>
         <div className="close" onClick={this.props.toggleMenu}>X</div>
         <div className="search">
-          <form onChange={this.search}>
+          <form onChange={(e) => this.setState({search: e.target.value.toLowerCase()})}>
             <input type="text" placeholder="Search here…" />
           </form>
         </div>

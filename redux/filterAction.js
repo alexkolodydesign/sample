@@ -43,7 +43,5 @@ export const filterAction = (trailsState, mapState) => {
       return false
     })
 
-
-  const newTrailSystem = {...trailsState, trails: trails}
-  return newTrailSystem
+  return trails
 }

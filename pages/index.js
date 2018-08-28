@@ -4,14 +4,12 @@ import OnBoarding from '../components/OnBoarding'
 import Layout from '../components/layout/Layout'
 import Head from '../components/layout/Head'
 import { nextConnect } from '../redux/store'
-import { filterAction } from '../redux/filterAction'
 import MainMapSetup from '../components/maps/MainMapSetup'
 import TrailSystemGuide from '../components/menu/TrailSystemGuide'
 import MainMenu from '../components/menu/MainMenu'
 import EventList from '../components/menu/EventList'
 
 const Dashboard = props => {
-  const trails = filterAction(props.trails, props.map.filter)
   const { firstTimeUser } = cookies(props)
   // First Time Users Go To OnBoarding!
   if (firstTimeUser == true || firstTimeUser == 'true') return (<OnBoarding events={props.event} regions={props.regions} />)

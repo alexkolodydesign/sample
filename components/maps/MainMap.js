@@ -2,6 +2,7 @@ import axios from "axios"
 import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps"
 import { connect } from 'react-redux'
 import { goToSystem } from '../../redux/actions'
+import { filterAction } from '../../redux/filterAction'
 import Region from './Region'
 import RegionTrail from './RegionTrail'
 import UserLocation from './UserLocation'
@@ -11,7 +12,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     map: state.map,
     metricType: state.map.metricType,
-    trails: state.map.trails,
     ...ownProps
   };
 };
@@ -45,6 +45,7 @@ class Map extends React.Component {
   }
   render() {
     const zoomState = this.zoom
+    const trails = filterAction(this.props.map.trails, this.props.map.filter)
     return (
       <GoogleMap
         zoom={this.props.map.zoom}
@@ -52,9 +53,7 @@ class Map extends React.Component {
         onZoomChanged={function(e) {
           zoomState(this.getZoom(), null)
         }}
-        options={{
-          mapTypeId: this.props.map.mapStyle
-        }}
+        options={{ mapTypeId: this.props.map.mapStyle }}
         // TODO:
         // Set map bounds to redux store. In RegionTrail after checking zoom threshold check if center coordinate falls into map bounds to display/pull info
         // onBoundsChanged={function(e) {
@@ -70,7 +69,7 @@ class Map extends React.Component {
       >
         {this.props.map.gps && <UserLocation />}
         {this.props.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} /> )}
-        {this.props.trails.map((trail, k) => <RegionTrail trail={trail} key={k} zoomLevel={this.props.map.zoom} metricType={this.props.metricType} />)}
+        {trails.map((trail, k) => <RegionTrail trail={trail} key={k} zoomLevel={this.props.map.zoom} metricType={this.props.metricType} />)}
       </GoogleMap>
     )
   }
