@@ -12,11 +12,14 @@ const mapDispatchToProps = dispatch => {
   return {};
 };
 
-const Paths = props =>
-  <React.Fragment>
-    {Array.isArray(props.coordinates[0]) ?
+const Paths = props => {
+  const coordinates = props.coordinates.trail.coordinates
+  if (coordinates == null || coordinates == undefined) return null
+  if (Array.isArray(coordinates[0])) {
+    // If a trail has multiple paths
+    return (
       <React.Fragment>
-        {props.coordinates.map((line, k) => {
+        {coordinates.map((line, k) => {
           if (!line) return null
           return (
             <Polyline
@@ -35,20 +38,25 @@ const Paths = props =>
           )
         })}
       </React.Fragment>
-    :
-      <Polyline
-        path={props.coordinates}
-        options={{
-          strokeColor: props.trailColor,
-          strokeOpacity:1,
-          strokeWeight: props.highlight == props.slug ? 6 : 3,
-        }}
-        onClick={(e) => {
-          const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
-          props.toggleMenu(coord)
-        }}
-      />
-    }
-  </React.Fragment>
+    )
+  }
+  // Single path trail
+  return (
+    <React.Fragment>
+        <Polyline
+          path={coordinates}
+          options={{
+            strokeColor: props.trailColor,
+            strokeOpacity:1,
+            strokeWeight: props.highlight == props.slug ? 6 : 3,
+          }}
+          onClick={(e) => {
+            const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
+            props.toggleMenu(coord)
+          }}
+        />
+    </React.Fragment>
+  )
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Paths)

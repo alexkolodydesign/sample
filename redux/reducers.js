@@ -77,6 +77,13 @@ export const map = (state = defaultState, action) => {
       return { map: { ...state.map, firstTimeUser: action.status } }
     case 'CHANGE_MAP_STYLE':
       return { map: { ...state.map, mapStyle: action.style } }
+    case 'UPDATE_TRAIL_COORDINATES':
+      const newState = { ...state }
+      let matchingTrail = newState.map.trails.find(trail => {
+        if (trail.slug == action.data.slug) return true
+      })
+      matchingTrail.coordinates = action.data.coords || ''
+      return newState
     default:
       return state
   }

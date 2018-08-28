@@ -1,13 +1,34 @@
 import { InfoWindow, Marker } from "react-google-maps"
+import { connect } from 'react-redux'
+import axios from 'axios'
+import { updateTrailCoords } from '../../redux/actions'
 import Link from 'next/link'
-import { getCoordinates } from '../../redux/mapActions'
 import Paths from './Paths'
 import Difficulty from './Difficulty'
+
+// Redux
+const mapStateToProps = (state, ownProps) => {
+  return {
+    map: state.map,
+    ...ownProps
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    updateTrailCoords: (coords, slug) => {
+      dispatch(updateTrailCoords(coords, slug));
+    }
+  };
+};
+
+const timeout = ms => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
 
 class RegionTrail extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { coordinates: [], menu: false, menuCoords: false}
+    this.state = { coordinates: [], menu: false, menuCoords: false, loading: true}
     this.setCoordinates = this.setCoordinates.bind(this)
     this.toggleMenu = this.toggleMenu.bind(this)
   }
@@ -15,39 +36,27 @@ class RegionTrail extends React.Component {
     this.setState({menu: !this.state.menu, menuCoords: coords})
   }
   async setCoordinates() {
-    const coords = await getCoordinates(this.props.trail.custom_data.jsonCoordinates, this.props.trail.slug)
-    if (coords) this.setState({coordinates: coords})
+    if (!this.props.trail.custom_data.jsonCoordinates.url || this.props.trail.custom_data.jsonCoordinates.url === undefined) {
+      this.props.updateTrailCoords([], this.props.trail.slug)
+    }
+    try {
+      const coords = await axios.get(`/api/coordinates?url=${this.props.trail.custom_data.jsonCoordinates.url}`)
+      this.props.updateTrailCoords(coords.data, this.props.trail.slug)
+      this.setState({loading: false, coordinates: coords.data})
+    } catch(e) {
+      // console.log(e)
+    }
   }
   render() {
     const trail = this.props.trail
     let coordinates
-    // Zoom threshold is not great enough for trail to show
-    if (this.props.zoomLevel < trail.custom_data.zoomThreshold) {
-      return null
-    } else {
-      // Check localstorage for data before sending fetch
-      const trailStorage = localStorage.getItem('trails')
-      // No session storage so send fetch
-      if (!trailStorage) {
-        if (!this.state.coordinates || this.state.coordinates === undefined || this.state.coordinates.length == 0) {
-          this.setCoordinates()
-          return null
-        }
-      } else {
-        // Check if session storage has this trail in it
-        const trailStorageJSON = JSON.parse(trailStorage)
-        const match = trailStorageJSON.find(storedTrail => trail.slug === storedTrail.slug)
-        if (match != undefined) {
-          coordinates = match.coordinates ? match.coordinates : []
-        }
-        else {
-          this.setCoordinates()
-          return null
-        }
-      }
-    }
-    if (!coordinates) {
-      coordinates = this.state.coordinates
+    // Find matching trail
+    const matchingTrail = this.props.map.trails.find(reduxTrail => {
+      if (trail.slug == reduxTrail.slug) return true
+    })
+    if (matchingTrail.coordinates) coordinates = matchingTrail.coordinates
+    else {
+      coordinates = this.setCoordinates()
     }
     // Change Trail Color Based on the First Value of Recommended Use Array
     let trailColor
@@ -71,10 +80,10 @@ class RegionTrail extends React.Component {
     } else {
       trailColor = '#ff0000'
     }
+    if (this.state.loading) return null
     return (
       <React.Fragment>
-        <Paths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor} slug={trail.slug}  />
-
+        <Paths coordinates={this.state.coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor} slug={trail.slug}  />
         {this.state.menu &&
           <Marker position={this.state.menuCoords} icon={{url: ""}} >
             <InfoWindow options={{'maxWidth' : 320}} onCloseClick={() => this.setState({menu: false})}>
@@ -207,4 +216,4 @@ class RegionTrail extends React.Component {
   }
 }
 
-export default RegionTrail
+export default connect(mapStateToProps, mapDispatchToProps)(RegionTrail)

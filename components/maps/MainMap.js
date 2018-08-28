@@ -45,7 +45,12 @@ class Map extends React.Component {
   }
   render() {
     const zoomState = this.zoom
-    const trails = filterAction(this.props.map.trails, this.props.map.filter)
+    const zoomLevel = this.props.map.zoom
+    const trails = filterAction(this.props.map.trails, this.props.map.filter).filter(trail => {
+      if (!trail.custom_data.zoomThreshold && zoomLevel < 14) return true
+      if (zoomLevel < Number(trail.custom_data.zoomThreshold)) return true
+      else return false
+    })
     return (
       <GoogleMap
         zoom={this.props.map.zoom}
@@ -69,7 +74,7 @@ class Map extends React.Component {
       >
         {this.props.map.gps && <UserLocation />}
         {this.props.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} /> )}
-        {trails.map((trail, k) => <RegionTrail trail={trail} key={k} zoomLevel={this.props.map.zoom} metricType={this.props.metricType} />)}
+        {trails.map((trail, k) => <RegionTrail trail={trail} key={k} metricType={this.props.metricType} /> )}
       </GoogleMap>
     )
   }
