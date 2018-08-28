@@ -58,8 +58,8 @@ class OnBoarding extends React.Component {
     if (typeof joyride.callback === "function") joyride.callback(data);
     else if (data.status == 'finished' || data.status == 'skipped') {
       this.setCookie()
+      this.toggleFirstTimeUser(false)
     }
-    return this.toggleFirstTimeUser(false)
   }
   render() {
     const { run } = this.state;
