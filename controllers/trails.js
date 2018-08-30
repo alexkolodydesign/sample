@@ -57,6 +57,7 @@ exports.getCoordinates = async (req, res) => {
     return res.json({ trail });
   } catch(e) {
     // console.log("Issue arose.", e);
+    console.log("BROKEN URL", url)
     return res.status(e.response.status).send("Error")
   }
 }

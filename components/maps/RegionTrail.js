@@ -21,10 +21,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const timeout = ms => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-};
-
 class RegionTrail extends React.Component {
   constructor(props) {
     super(props)
@@ -32,12 +28,20 @@ class RegionTrail extends React.Component {
     this.setCoordinates = this.setCoordinates.bind(this)
     this.toggleMenu = this.toggleMenu.bind(this)
   }
+  onComponentDidMount() {
+    this.setCoordinates()
+  }
   toggleMenu(coords) {
     this.setState({menu: !this.state.menu, menuCoords: coords})
   }
   async setCoordinates() {
-    if (!this.props.trail.custom_data.jsonCoordinates.url || this.props.trail.custom_data.jsonCoordinates.url === undefined) {
+    if (
+      !this.props.trail.custom_data.jsonCoordinates.url ||
+      this.props.trail.custom_data.jsonCoordinates.url === undefined ||
+      this.props.trail.custom_data.jsonCoordinates.url === 'undefined'
+    ) {
       this.props.updateTrailCoords([], this.props.trail.slug)
+      return
     }
     try {
       const coords = await axios.get(`/api/coordinates?url=${this.props.trail.custom_data.jsonCoordinates.url}`)

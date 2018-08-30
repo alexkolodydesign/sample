@@ -10,9 +10,8 @@ import MainMenu from '../components/menu/MainMenu'
 import EventList from '../components/menu/EventList'
 
 const Dashboard = props => {
-  const { firstTimeUser } = cookies(props)
   // First Time Users Go To OnBoarding!
-  if (firstTimeUser == true || firstTimeUser == 'true') return (<OnBoarding events={props.event} regions={props.regions} />)
+  if (props.firstTimeUser == true || props.firstTimeUser == 'true') return (<OnBoarding events={props.event} regions={props.regions} />)
   return (
     <Layout>
       <Head/>
@@ -34,7 +33,7 @@ Dashboard.getInitialProps = async props => {
     const regions = await res.json();
     const e_res = await fetch(hostUrl + '/api/washco_event' );
     const e_data = await e_res.json();
-    const { firstTimeUser } = cookies(props)
+    const { firstTimeUser } = props.req ? cookies(props) : cookies(window)
     if (props.req) {
       const resTrails = await fetch(hostUrl + '/api/trails/');
       const trails = await resTrails.json();

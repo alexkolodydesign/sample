@@ -177,7 +177,7 @@ class OnBoarding extends React.Component {
             </div>
           </section>
         }
-        <MainMapSetup regionData={this.props.regionData} />
+        <MainMapSetup regions={this.props.regions} />
         {this.props.events.events &&
             <EventList events={this.props.events} />
         }
