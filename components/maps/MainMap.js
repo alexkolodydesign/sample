@@ -12,6 +12,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     map: state.map,
     metricType: state.map.metricType,
+    firstTimeUser: state.map.firstTimeUser,
     ...ownProps
   };
 };
@@ -73,8 +74,8 @@ class Map extends React.Component {
         ref={this.washington_map}
       >
         {this.props.map.gps && <UserLocation />}
-        {this.props.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} /> )}
-        {trails.map((trail, k) => <RegionTrail trail={trail} key={k} metricType={this.props.metricType} /> )}
+        {this.props.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} firstTimeUser={this.props.firstTimeUser} /> )}
+        {trails.map((trail, k) => <RegionTrail trail={trail} key={k} metricType={this.props.metricType}  /> )}
       </GoogleMap>
     )
   }

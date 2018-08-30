@@ -28,13 +28,27 @@ class RegionTrail extends React.Component {
     this.setCoordinates = this.setCoordinates.bind(this)
     this.toggleMenu = this.toggleMenu.bind(this)
   }
-  onComponentDidMount() {
+  componentDidMount() {
+    this._isMounted = true;
     this.setCoordinates()
+  }
+  componentWillUnmount(){
+    this._isMounted = false;
   }
   toggleMenu(coords) {
     this.setState({menu: !this.state.menu, menuCoords: coords})
   }
   async setCoordinates() {
+    // If redux store already has coordinates on trail then set component state and set loading to false
+    let coordinates
+    const matchingTrail = this.props.map.trails.find(reduxTrail => {
+      if (this.props.trail.slug == reduxTrail.slug) return true
+    })
+    if (matchingTrail.coordinates) {
+      if (this._isMounted) this.setState({loading: false, coordinates: matchingTrail.coordinates})
+      return
+    }
+    // If trail does not have json coordinates exit here
     if (
       !this.props.trail.custom_data.jsonCoordinates.url ||
       this.props.trail.custom_data.jsonCoordinates.url === undefined ||
@@ -43,25 +57,21 @@ class RegionTrail extends React.Component {
       this.props.updateTrailCoords([], this.props.trail.slug)
       return
     }
+    // If trail coordinates are not found in redux store try and get them
     try {
       const coords = await axios.get(`/api/coordinates?url=${this.props.trail.custom_data.jsonCoordinates.url}`)
       this.props.updateTrailCoords(coords.data, this.props.trail.slug)
-      this.setState({loading: false, coordinates: coords.data})
+      if (this._isMounted) this.setState({loading: false, coordinates: coords.data})
     } catch(e) {
       // console.log(e)
     }
   }
   render() {
+    // While component is loading
+    if (this.state.loading) return null
+    // If coordinates loaded then proceed to create variables and render
     const trail = this.props.trail
-    let coordinates
-    // Find matching trail
-    const matchingTrail = this.props.map.trails.find(reduxTrail => {
-      if (trail.slug == reduxTrail.slug) return true
-    })
-    if (matchingTrail.coordinates) coordinates = matchingTrail.coordinates
-    else {
-      coordinates = this.setCoordinates()
-    }
+    const coordinates = this.state.coordinates
     // Change Trail Color Based on the First Value of Recommended Use Array
     let trailColor
     if (trail.custom_data.recommendedUse) {
@@ -84,7 +94,6 @@ class RegionTrail extends React.Component {
     } else {
       trailColor = '#ff0000'
     }
-    if (this.state.loading) return null
     return (
       <React.Fragment>
         <Paths coordinates={this.state.coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor} slug={trail.slug}  />

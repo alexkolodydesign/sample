@@ -1,4 +1,3 @@
-import { connect } from 'react-redux'
 import {  Marker, Polygon, InfoWindow, GroundOverlay } from "react-google-maps"
 import cookies from 'next-cookies'
 import { fitBounds } from 'google-map-react/utils'
@@ -10,20 +9,6 @@ import desertCoordinates from '../../data/desert-coordinates'
 import canyonCoordinates from '../../data/canyon-coordinates'
 import mesaCoordinates from '../../data/mesa-coordinates'
 import urbanCoordinates from '../../data/urban-coordinates'
-
-// Redux
-const mapStateToProps = (state, ownProps) => {
-  return {
-    ...ownProps
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    changeFirstTimeUser: status => {
-      dispatch(changeFirstTimeUser(status));
-    }
-  };
-};
 
 class Region extends React.Component {
   constructor(props) {
@@ -60,7 +45,7 @@ class Region extends React.Component {
     let newBounds = new LatLngBounds()
     // Add LatLng points to the new bounding area
     coordinates.forEach(bound => newBounds.extend(new LatLng(bound.lat, bound.lng)))
-    const { firstTimeUser } = cookies(this.props)
+    const firstTimeUser = this.props.firstTimeUser
     return (
       <React.Fragment>
         {this.props.zoomLevel < 12 &&
@@ -126,4 +111,4 @@ class Region extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Region)
+export default Region
