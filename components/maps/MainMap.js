@@ -45,6 +45,8 @@ class Map extends React.Component {
     }
   }
   render() {
+    // TODO: Memory leak connected with this
+    const regions = this.props.regions
     const zoomState = this.zoom
     const zoomLevel = this.props.map.zoom
     const trails = filterAction(this.props.map.trails, this.props.map.filter).filter(trail => {
@@ -74,7 +76,9 @@ class Map extends React.Component {
         ref={this.washington_map}
       >
         {this.props.map.gps && <UserLocation />}
-        {this.props.regions.map((region, k) => <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} firstTimeUser={this.props.firstTimeUser} /> )}
+        {regions.map((region, k) => {
+          return <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} firstTimeUser={this.props.firstTimeUser} />
+          })}
         {trails.map((trail, k) => <RegionTrail trail={trail} key={k} metricType={this.props.metricType}  /> )}
       </GoogleMap>
     )

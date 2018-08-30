@@ -46,20 +46,19 @@ class Region extends React.Component {
     // Add LatLng points to the new bounding area
     coordinates.forEach(bound => newBounds.extend(new LatLng(bound.lat, bound.lng)))
     const firstTimeUser = this.props.firstTimeUser
+    if (!coordinates) return null
     return (
       <React.Fragment>
         {this.props.zoomLevel < 12 &&
           <React.Fragment>
-            {firstTimeUser == true || firstTimeUser == 'true' &&
-              <GroundOverlay
-                defaultUrl={region.overlayImage}
-                defaultBounds={new google.maps.LatLngBounds(
-                  newBounds.getSouthWest(),
-                  newBounds.getNorthEast()
-                )}
-                defaultOpacity={1}
-              />
-            }
+            <GroundOverlay
+              defaultUrl={region.overlayImage}
+              defaultBounds={new google.maps.LatLngBounds(
+                newBounds.getSouthWest(),
+                newBounds.getNorthEast()
+              )}
+              defaultOpacity={firstTimeUser ? 1 : 0}
+            />
             <Polygon
               paths={coordinates}
               options={{
