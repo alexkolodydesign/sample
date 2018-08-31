@@ -11,7 +11,8 @@ import EventList from '../components/menu/EventList'
 
 const Dashboard = props => {
   // First Time Users Go To OnBoarding!
-  if (props.firstTimeUser == true || props.firstTimeUser == 'true') return (<OnBoarding events={props.event} regions={props.regions} />)
+  const firstTimeUser = props.firstTimeUser == true || props.firstTimeUser == 'true' ? true : false
+  if (firstTimeUser) return (<OnBoarding events={props.event} regions={props.regions} />)
   return (
     <Layout>
       <Head/>
@@ -61,7 +62,7 @@ Dashboard.getInitialProps = async props => {
 export default nextConnect((state, res) => {
   state.map.firstTimeUser = res.firstTimeUser
   if (res.trails) {
-    state.map.trails = res.trails
+    state.trails = res.trails
   }
   return state
 })(Dashboard);

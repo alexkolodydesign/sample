@@ -4,19 +4,19 @@ import { changeTrailType } from '../../redux/actions'
 const SelectTrailType = props =>
   <div className="trails">
     <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails"
-      className={props.map.filter.trailType.hiking ? null : "inactive"}
+      className={props.filters.trailType.hiking ? null : "inactive"}
       onClick={ () => props.changeTrailType("hiking") }
     />
     <img src="/static/images/menu/biking.svg" alt="Select Biking Trails"
-      className={props.map.filter.trailType.biking ? null : "inactive"}
+      className={props.filters.trailType.biking ? null : "inactive"}
       onClick={ () => props.changeTrailType("biking") }
     />
     <img src="/static/images/menu/equestrian.svg" alt="Select Equestrian Trails"
-      className={props.map.filter.trailType.equestrian ? null : "inactive"}
+      className={props.filters.trailType.equestrian ? null : "inactive"}
       onClick={ () => props.changeTrailType("equestrian") }
     />
     <img src="/static/images/menu/ohv.svg" alt="Select OHV Trails"
-      className={props.map.filter.trailType.ohv ? null : "inactive"}
+      className={props.filters.trailType.ohv ? null : "inactive"}
       onClick={ () => props.changeTrailType("ohv") }
     />
     <style jsx>{`
@@ -49,7 +49,11 @@ const SelectTrailType = props =>
   </div>
 
 // Redux
-const mapStateToProps = (state, ownProps) => ({ map: state.map });
+const mapStateToProps = (state, ownProps) => {
+  return {
+    filters: state.map.filters
+  };
+};
 const mapDispatchToProps = dispatch => {
   return {
     changeTrailType: (trailType) => {

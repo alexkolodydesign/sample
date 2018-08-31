@@ -57,7 +57,7 @@ class Region extends React.Component {
                 newBounds.getSouthWest(),
                 newBounds.getNorthEast()
               )}
-              defaultOpacity={firstTimeUser ? 1 : 0}
+              defaultOpacity={firstTimeUser == true ? 1 : 0}
             />
             <Polygon
               paths={coordinates}

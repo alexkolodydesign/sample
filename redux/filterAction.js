@@ -1,7 +1,8 @@
-export const filterAction = (trailsState, mapState) => {
-  const recommendedUseFilter = Object.keys(mapState.trailType).filter((trailType) => mapState.trailType[trailType] ? true : false)
-  const difficultyFilter = Object.keys(mapState.difficulty).filter((difficulty) => mapState.difficulty[difficulty] ? true : false)
-  const trails = trailsState
+export const filterAction = (trails, filters) => {
+  if (!trails || trails.length < 1) return []
+  const recommendedUseFilter = Object.keys(filters.trailType).filter((trailType) => filters.trailType[trailType] ? true : false)
+  const difficultyFilter = Object.keys(filters.difficulty).filter((difficulty) => filters.difficulty[difficulty] ? true : false)
+  const updatedTrails = trails
     // Filter by Recommended Use
     .filter((trail) => {
       if (trail.custom_data.recommendedUse && trail.custom_data.recommendedUse !== "") {
@@ -10,7 +11,7 @@ export const filterAction = (trailsState, mapState) => {
         for (var i = 0; i < recommendedUseFilter.length; i++) {
           if (trailTypes.includes(recommendedUseFilter[i]) ) match = true
         }
-        if (mapState.exclude) {
+        if (filters.exclude) {
           if (trailTypes.join("") != recommendedUseFilter.join("")) match = false
         }
         if (match) return true
@@ -20,28 +21,28 @@ export const filterAction = (trailsState, mapState) => {
     })
     // Filter by Trail Length
     .filter((trail) => {
-      if (!mapState.trailLength) return true
-      if (Number(trail.custom_data.length) >= Number(mapState.trailLength) ) return true
+      if (!filters.trailLength) return true
+      if (Number(trail.custom_data.length) >= Number(filters.trailLength) ) return true
       return false
     })
     // Filter by Trail Traffic
     .filter((trail) => {
-      if (!mapState.trailTraffic) return true
-      if (trail.custom_data.trailTraffic.value == mapState.trailTraffic) return true
+      if (!filters.trailTraffic) return true
+      if (trail.custom_data.trailTraffic.value == filters.trailTraffic) return true
       return false
     })
     // Filter by Route Type
     .filter((trail) => {
-      if (!mapState.routeType) return true
-      if (trail.custom_data.routeType.value == mapState.routeType) return true
+      if (!filters.routeType) return true
+      if (trail.custom_data.routeType.value == filters.routeType) return true
       return false
     })
     // Filter by Difficulty
     .filter((trail) => {
-      if (!mapState.difficulty.default) return true
-      if (trail.custom_data.difficulty.defaultDifficulty.value == mapState.difficulty.default) return true
+      if (!filters.difficulty.default) return true
+      if (trail.custom_data.difficulty.defaultDifficulty.value == filters.difficulty.default) return true
       return false
     })
 
-  return trails
+  return updatedTrails
 }

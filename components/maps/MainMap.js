@@ -11,9 +11,10 @@ import UserLocation from './UserLocation'
 const mapStateToProps = (state, ownProps) => {
   return {
     map: state.map,
+    trails: state.trails,
     metricType: state.map.metricType,
     firstTimeUser: state.map.firstTimeUser,
-    ...ownProps
+    ...ownProps,
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -49,7 +50,7 @@ class Map extends React.Component {
     const regions = this.props.regions
     const zoomState = this.zoom
     const zoomLevel = this.props.map.zoom
-    const trails = filterAction(this.props.map.trails, this.props.map.filter).filter(trail => {
+    const trails = filterAction(this.props.trails, this.props.map.filter).filter(trail => {
       if (!trail.custom_data.zoomThreshold && zoomLevel < 14) return true
       if (zoomLevel < Number(trail.custom_data.zoomThreshold)) return true
       else return false
@@ -78,7 +79,7 @@ class Map extends React.Component {
         {this.props.map.gps && <UserLocation />}
         {regions.map((region, k) => {
           return <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} firstTimeUser={this.props.firstTimeUser} />
-          })}
+        })}
         {trails.map((trail, k) => <RegionTrail trail={trail} key={k} metricType={this.props.metricType}  /> )}
       </GoogleMap>
     )
