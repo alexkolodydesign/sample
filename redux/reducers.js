@@ -43,37 +43,37 @@ export const defaultState = {
 export const map = (state = defaultState, action) => {
   switch (action.type) {
     case 'CHANGE_TRAIL_TYPE':
-      const trailTypes = Object.assign({}, state.map.filters.trailType)
+      const trailTypes = Object.assign({}, state.filters.trailType)
       trailTypes[action.trailType] = !trailTypes[action.trailType]
-      return { ...state, map: { ...state.map, filters: { ...state.map.filters, trailType: trailTypes } } }
+      return { ...state, filters: { ...state.filters, trailType: trailTypes } }
     case 'CHANGE_SEASON':
-      return { ...state, map: { ...state.map, filters: { ...state.map.filters, season: action.filter } } }
+      return { ...state, filters: { ...state.filters, season: action.filter } }
     case 'CHANGE_TRAIL_TRAFFIC':
-      return { ...state, map: { ...state.map, filters: { ...state.map.filters, trailTraffic: action.trailTraffic } } }
+      return { ...state, filters: { ...state.filters, trailTraffic: action.trailTraffic } }
     case 'CHANGE_ROUTE_TYPE':
-      return { ...state, map: { ...state.map, filters: { ...state.map.filters, routeType: action.routeType } } }
+      return { ...state, filters: { ...state.filters, routeType: action.routeType } }
     case 'CHANGE_DIFFICULTY':
-      return { ...state, map: { ...state.map, filters: { ...state.map.filters, difficulty: { ...state.map.filter.difficulty, default: action.difficulty } } } }
+      return { ...state, filters: { ...state.filters, difficulty: { ...state.filters.difficulty, default: action.difficulty } } }
     case 'CHANGE_TRAIL_LENGTH':
-      return { ...state, map: { ...state.map, filters: { ...state.map.filters, trailLength: action.trailLength } } }
+      return { ...state, filters: { ...state.filters, trailLength: action.trailLength } }
     case 'CHANGE_EXCLUDE':
-      return { ...state, map: { ...state.map, filters: { ...state.map.filters, exclude: action.value } } }
+      return { ...state, filters: { ...state.filters, exclude: action.value } }
     case 'CHANGE_METRIC_TYPE':
-      return { ...state, map: { ...state.map, metricType: action.option } }
+      return { ...state, metricType: action.option }
     case 'GO_TO_SYSTEM':
-      return { ...state, map: { ...state.map, zoom: action.location.zoom, center: action.location.center } }
+      return { ...state, zoom: action.location.zoom, center: action.location.center }
     case 'TOGGLE_GPS':
-      return { ...state, map: { ...state.map, gps: !state.map.gps } }
+      return { ...state, gps: !state.map.gps }
     case 'RESET_MAP':
-      return { ...state, map: {...defaultState.map, zoom: action.zoom} }
+      return { ...defaultState, zoom: action.zoom }
     case 'HIGHLIGHT_TRAIL':
-      return { ...state, map: { ...state.map, highlightTrail: action.slug } }
+      return { ...state, highlightTrail: action.slug }
     case 'TOGGLE_MENUS':
-      return { ...state, map: { ...state.map, menus: action.menus } }
+      return { ...state, menus: action.menus }
     case 'TOGGLE_FIRST_TIME_USER':
-      return { ...state, map: { ...state.map, firstTimeUser: action.status } }
+      return { ...state, firstTimeUser: action.status }
     case 'CHANGE_MAP_STYLE':
-      return { ...state, map: { ...state.map, mapStyle: action.style } }
+      return { ...state, mapStyle: action.style }
     default:
       return state
   }

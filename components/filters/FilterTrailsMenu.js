@@ -3,29 +3,43 @@ import { changeSeason, changeDifficulty, changeTrailLength, changeTrailTraffic, 
 import RangeSlider from './RangeSlider'
 import ResetMap from './ResetMap'
 
+// Redux
+const mapStateToProps = (state, ownProps) => ({ map: state.map });
+const mapDispatchToProps = dispatch => {
+  return {
+    changeSeason: (season) => dispatch(changeSeason(season)),
+    changeRouteType: (routeType) => dispatch(changeRouteType(routeType)),
+    changeTrailTraffic: (trailTraffic) => dispatch(changeTrailTraffic(trailTraffic)),
+    changeTrailType: (trailType) => dispatch(changeTrailType(trailType)),
+    changeDifficulty: (difficulty) => dispatch(changeDifficulty(difficulty)),
+    changeTrailLength: (trailLength) => dispatch(changeTrailLength(trailLength)),
+    changeExclude: (exclude) => dispatch(changeExclude(exclude))
+  };
+};
+
 const FilterTrailsMenu = props =>
   <div className={props.menuState == "exiting" ? "exiting menu" : "menu"}>
     <h3>Filter Trails</h3>
     <div className="close" onClick={props.toggleFilterMenu}>X</div>
     <div className="options">
       <Option title="Difficulty"
-        selected={props.map.filter.difficulty.default}
+        selected={props.map.filters.difficulty.default}
         options={["Easy", "Moderate", "Challenging", "Extreme", "Clear"]}
         action={props.changeDifficulty} />
       <Option title="Length of Trail" selected="" range={true} action={props.changeTrailLength} />
-      <Option title="Traffic Density" selected={props.map.filter.trailTraffic} options={["Light", "Medium", "Heavy", "Clear"]} action={props.changeTrailTraffic} />
-      <Option title="Route Type" selected={props.map.filter.routeType} options={["Loop", "In and Back", "Connector", "Clear"]} action={props.changeRouteType} />
+      <Option title="Traffic Density" selected={props.map.filters.trailTraffic} options={["Light", "Medium", "Heavy", "Clear"]} action={props.changeTrailTraffic} />
+      <Option title="Route Type" selected={props.map.filters.routeType} options={["Loop", "In and Back", "Connector", "Clear"]} action={props.changeRouteType} />
       <Option title="Trail Type"
         selected={
-          Object.keys(props.map.filter.trailType).filter( (key) => {
-            if (props.map.filter.trailType[key] == true) return key
+          Object.keys(props.map.filters.trailType).filter( (key) => {
+            if (props.map.filters.trailType[key] == true) return key
             else return null
           }).join(" ")
         }
-        object={props.map.filter.trailType}
+        object={props.map.filters.trailType}
         options={["Hiking", "Biking", "Equestrian", "OHV"]}
         action={props.changeTrailType} />
-      <Option title="Exclude" selected={props.map.filter.exclude ? "On" : "Off"} options={["On", "Off"]} action={props.changeExclude} />
+      <Option title="Exclude" selected={props.map.filters.exclude ? "On" : "Off"} options={["On", "Off"]} action={props.changeExclude} />
     </div>
     <ResetMap />
     <style jsx>{`
@@ -93,20 +107,6 @@ const FilterTrailsMenu = props =>
       }
     `}</style>
   </div>
-
-// Redux
-const mapStateToProps = (state, ownProps) => ({ map: state.map });
-const mapDispatchToProps = dispatch => {
-  return {
-    changeSeason: (season) => dispatch(changeSeason(season)),
-    changeRouteType: (routeType) => dispatch(changeRouteType(routeType)),
-    changeTrailTraffic: (trailTraffic) => dispatch(changeTrailTraffic(trailTraffic)),
-    changeTrailType: (trailType) => dispatch(changeTrailType(trailType)),
-    changeDifficulty: (difficulty) => dispatch(changeDifficulty(difficulty)),
-    changeTrailLength: (trailLength) => dispatch(changeTrailLength(trailLength)),
-    changeExclude: (exclude) => dispatch(changeExclude(exclude))
-  };
-};
 
 class Option extends React.Component {
   constructor(props) {
