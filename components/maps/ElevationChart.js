@@ -17,10 +17,14 @@ const mapDispatchToProps = dispatch => {
 class ElevationChart extends React.Component {
   constructor(props) {
     super(props)
+    // TODO: move data to state
     this.state = { loading: true }
     this.renderTooltip = this.renderTooltip.bind(this)
     this.mouseMove = this.mouseMove.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
+  }
+  static getDerivedStateFromProps(props, state) {
+    return state
   }
   componentDidMount() {
     this.updateWindowDimensions();
@@ -97,24 +101,22 @@ class ElevationChart extends React.Component {
     return (
       <ErrorBoundary>
         <div>
-          {elevationFlag &&
-            <div>
-              <h2>Elevation</h2>
-              <div className="chart">
-                {!this.state.loading &&
-                  <Chart
-                    width={Number(this.state.width)}
-                    data={data}
-                    onMouseMove={this.mouseMove}
-                    domain={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
-                    metricType={this.props.metricType}
-                    renderTooltip={this.renderTooltip}
-                    areaStrokeColor={this.props.areaStrokeColor}
-                  />
-                }
-              </div>
+          <div>
+            <h2>Elevation</h2>
+            <div className="chart">
+              {!this.state.loading &&
+                <Chart
+                  width={Number(this.state.width)}
+                  data={data}
+                  onMouseMove={this.mouseMove}
+                  domain={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
+                  metricType={this.props.metricType}
+                  renderTooltip={this.renderTooltip}
+                  areaStrokeColor={this.props.areaStrokeColor}
+                />
+              }
             </div>
-          }
+          </div>
           <div className="details">
             <div className="stats">
               {this.props.metricType === 'imperial' ?
@@ -122,21 +124,19 @@ class ElevationChart extends React.Component {
               :
                 <p>Total Distance<span>{(totalDistance * 1.60934).toFixed(2)} km</span></p>
               }
-              {elevationFlag &&
-                <div>
-                  {this.props.metricType === 'imperial' ?
-                    <React.Fragment>
-                      <p>Max Elevation<span>{maxElevation} ft</span></p>
-                      <p>Min Elevation<span>{minElevation} ft</span></p>
-                    </React.Fragment>
-                  :
-                    <React.Fragment>
-                      <p>Max Elevation<span>{maxElevation} meters</span></p>
-                      <p>Min Elevation<span>{minElevation} meters</span></p>
-                    </React.Fragment>
-                  }
-                </div>
-              }
+              <div>
+                {this.props.metricType === 'imperial' ?
+                  <React.Fragment>
+                    <p>Max Elevation<span>{maxElevation} ft</span></p>
+                    <p>Min Elevation<span>{minElevation} ft</span></p>
+                  </React.Fragment>
+                :
+                  <React.Fragment>
+                    <p>Max Elevation<span>{maxElevation} meters</span></p>
+                    <p>Min Elevation<span>{minElevation} meters</span></p>
+                  </React.Fragment>
+                }
+              </div>
             </div>
             <div className="map_type">
               {trailType &&

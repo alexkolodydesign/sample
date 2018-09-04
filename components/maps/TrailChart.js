@@ -80,10 +80,10 @@ class TrailChart extends React.Component {
   pathMarker(location) {
     this.setState({marker: location})
   }
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.state === nextState) return false
-  //   else return true
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state === nextState) return false
+    else return true
+  }
   setCenterAndZoom(coords) {
     // Make new bounds
     let newBounds = new LatLngBounds()
@@ -137,7 +137,9 @@ class TrailChart extends React.Component {
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&v=3.exp&libraries=geometry,drawing,places"
           // Only do this once. (TODO: look for a better event for this function like map loaded or something)
           onTilesLoaded={() => !this.state.mapIsCentered ? this.setCenterAndZoom(coordinates) : null}
-          options={{ styles: this.state.mapStyle }}
+          options={{
+            styles: this.state.mapStyle
+          }}
           defaultOptions={{
             streetViewControl: false
           }}
