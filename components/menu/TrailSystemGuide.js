@@ -23,12 +23,12 @@ const TrailSystemGuide = props => {
         </a>
       </div>
       <div>
-        <a className={props.system == "snow-canyon-state-park" && "active"} onClick={() => props.goToSystem(13, { lat: 37.204665, lng: -113.644752 })}>
+        <a className={props.system == "snow-canyon-state-park" && "active"} onClick={() => props.goToSystem(12, { lat: 37.204665, lng: -113.644752 })}>
           Snow Canyon <span>State Park</span>
         </a>
       </div>
       <div>
-        <a className={props.system == "gooseberry-mesa" && "active"} onClick={() => props.goToSystem(13, { lat: 37.142663, lng: -113.190518 })}>
+        <a className={props.system == "gooseberry-mesa" && "active"} onClick={() => props.goToSystem(12, { lat: 37.142663, lng: -113.190518 })}>
           Gooseberry <span>Mesa</span>
         </a>
       </div>
