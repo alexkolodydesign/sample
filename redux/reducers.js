@@ -63,7 +63,7 @@ export const map = (state = defaultState, action) => {
     case 'GO_TO_SYSTEM':
       return { ...state, zoom: action.location.zoom, center: action.location.center }
     case 'TOGGLE_GPS':
-      return { ...state, gps: !state.map.gps }
+      return { ...state, gps: !state.gps }
     case 'RESET_MAP':
       return { ...defaultState, zoom: action.zoom }
     case 'HIGHLIGHT_TRAIL':

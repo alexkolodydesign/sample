@@ -27,7 +27,8 @@ const Options = props =>
       <Option title="Map Style" selected={props.map.mapStyle} options={["RoadMap", "Terrain", "Satellite"]} action={props.changeMapStyle} />
       <button onClick={() => {
         document.cookie = 'firstTimeUser=true';
-        return props.toggleFirstTimeUser(true)
+        window.location.reload(true)
+        // return props.toggleFirstTimeUser(true)
       }} >Restart Tutorial</button>
     </div>
     <style jsx>{`
