@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { withScriptjs, withGoogleMap, GoogleMap, Polyline, Marker } from "react-google-maps"
 import { fitBounds } from 'google-map-react/utils'
 import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js'
@@ -11,6 +12,7 @@ import ElevationChart from './ElevationChart'
 const mapStateToProps = (state, ownProps) => {
   return {
     map: state.map,
+    trails: state.trails,
     ...ownProps
   };
 };
@@ -25,22 +27,51 @@ const mapDispatchToProps = dispatch => {
 class TrailChart extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { zoom: Number(this.props.trail.custom_data.defaultZoom), center: {lat: 37.2, lng: -113.432}, mapStyle: 'roadmap', coordinates: this.props.trail.coordinates }
+    this.state = {
+      zoom: Number(this.props.trail.custom_data.defaultZoom),
+      center: {lat: 37.2, lng: -113.432},
+      mapStyle: 'roadmap',
+      coordinates: [],
+      loading: true
+    }
     this.setCenterAndZoom = this.setCenterAndZoom.bind(this)
     this.pathMarker = this.pathMarker.bind(this)
     this.mapLoaded = React.createRef()
     this.setCoordinates = this.setCoordinates.bind(this)
   }
+  componentDidMount() {
+    this._isMounted = true;
+    this.setCoordinates()
+  }
+  componentWillUnmount(){
+    this._isMounted = false;
+  }
   async setCoordinates() {
-    if (!this.props.trail.custom_data.jsonCoordinates.url || this.props.trail.custom_data.jsonCoordinates.url === undefined) {
-      this.props.updateTrailCoords([], this.props.trail.slug)
+    // If redux store already has coordinates on trail then set component state and set loading to false
+    let coordinates
+    const matchingTrail = this.props.trails.find(reduxTrail => {
+      if (this.props.trail.slug == reduxTrail.slug) return true
+    })
+    if (matchingTrail && matchingTrail.coordinates) {
+      if (this._isMounted) this.setState({loading: false, coordinates: matchingTrail.coordinates})
+      return
     }
+    // If trail does not have json coordinates exit here
+    if (
+      !this.props.trail.custom_data.jsonCoordinates.url ||
+      this.props.trail.custom_data.jsonCoordinates.url === undefined ||
+      this.props.trail.custom_data.jsonCoordinates.url === 'undefined'
+    ) {
+      this.props.updateTrailCoords([], this.props.trail.slug)
+      return
+    }
+    // If trail coordinates are not found in redux store try and get them
     try {
-      const coords = await axios.get(`/api/coordinates?url=${this.props.trail.custom_data.jsonCoordinates.url}`)
-      this.props.updateTrailCoords(coords.data, this.props.trail.slug)
-      this.setState({loading: false, coordinates: coords.data})
+      const {data: { trail: { coordinates: coords } } } = await axios.get(`/api/coordinates?url=${this.props.trail.custom_data.jsonCoordinates.url}`)
+      this.props.updateTrailCoords(coords, this.props.trail.slug)
+      if (this._isMounted) this.setState({loading: false, coordinates: coords})
     } catch(e) {
-      // console.log(e)
+      console.log(e)
     }
   }
   // static getDerivedStateFromProps(props, state) {
@@ -75,6 +106,8 @@ class TrailChart extends React.Component {
     this.setState({zoom: fit.zoom, center: fit.center, mapIsCentered: true})
   }
   render() {
+    // While component is loading
+    if (this.state.loading) return null
     const trail = this.props.trail
     const coordinates = this.state.coordinates
     // Change Trail Color Based on the First Value of Recommended Use Array
@@ -99,8 +132,8 @@ class TrailChart extends React.Component {
       <React.Fragment>
         <GoogleMap
           ref={this.mapLoaded}
-          className='THEMAP'
           zoom={this.state.zoom}
+          center={this.state.center}
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&v=3.exp&libraries=geometry,drawing,places"
           // Only do this once. (TODO: look for a better event for this function like map loaded or something)
           onTilesLoaded={() => !this.state.mapIsCentered ? this.setCenterAndZoom(coordinates) : null}
@@ -109,7 +142,7 @@ class TrailChart extends React.Component {
             streetViewControl: false
           }}
         >
-
+          <TrailPaths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor}  />
 
           {this.state.marker &&
             <Marker
@@ -121,6 +154,5 @@ class TrailChart extends React.Component {
     )
   }
 }
-// <TrailPaths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor}  />
 // <ElevationChart coordinates={coordinates.slice(0).reverse()} trail={this.props.trail} areaStrokeColor={trailColor} pathMarker={this.pathMarker} />
 export default connect(mapStateToProps, mapDispatchToProps)(TrailChart)

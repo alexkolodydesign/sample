@@ -86,7 +86,8 @@ export const trails = (state = [], action) => {
       let matchingTrail = newState.find(trail => {
         if (trail.slug == action.data.slug) return true
       })
-      matchingTrail.coordinates = action.data.coords || ''
+      if (matchingTrail) matchingTrail.coordinates = action.data.coords || ''
+      else newState.push({ slug: action.data.slug, coordinates: action.data.coords })
       return newState
     default:
       return state
