@@ -10,6 +10,7 @@ import Difficulty from './Difficulty'
 const mapStateToProps = (state, ownProps) => {
   return {
     map: state.map,
+    trails: state.trails,
     ...ownProps
   };
 };
@@ -41,7 +42,7 @@ class RegionTrail extends React.Component {
   async setCoordinates() {
     // If redux store already has coordinates on trail then set component state and set loading to false
     let coordinates
-    const matchingTrail = this.props.map.trails.find(reduxTrail => {
+    const matchingTrail = this.props.trails.find(reduxTrail => {
       if (this.props.trail.slug == reduxTrail.slug) return true
     })
     if (matchingTrail.coordinates) {

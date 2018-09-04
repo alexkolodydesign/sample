@@ -50,7 +50,7 @@ class Map extends React.Component {
     const regions = this.props.regions
     const zoomState = this.zoom
     const zoomLevel = this.props.map.zoom
-    const trails = filterAction(this.props.trails, this.props.map.filter).filter(trail => {
+    const trails = filterAction(this.props.trails, this.props.map.filters).filter(trail => {
       if (!trail.custom_data.zoomThreshold && zoomLevel < 14) return true
       if (zoomLevel < Number(trail.custom_data.zoomThreshold)) return true
       else return false

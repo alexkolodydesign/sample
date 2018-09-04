@@ -1,45 +1,43 @@
 import { combineReducers } from 'redux'
 
 export const defaultState = {
-  map: {
-    activeRegions: {
-      urban: true,
-      canyon: true,
-      mesa: true,
-      alpine: true
+  activeRegions: {
+    urban: true,
+    canyon: true,
+    mesa: true,
+    alpine: true
+  },
+  mapStyle: "roadmap",
+  metricType: "imperial",
+  zoom: 8,
+  gps: false,
+  center: {lat: 37.327059, lng: -113.445826},
+  filters: {
+    trailType: {
+      hiking: true,
+      biking: true,
+      ohv: true,
+      equestrian: true
     },
-    mapStyle: "roadmap",
-    metricType: "imperial",
-    zoom: 8,
-    gps: false,
-    center: {lat: 37.327059, lng: -113.445826},
-    filters: {
-      trailType: {
-        hiking: true,
-        biking: true,
-        ohv: true,
-        equestrian: true
-      },
-      season: "",
-      difficulty: {
-        default: "",
-        biking: "",
-        hiking: "",
-        ohv: "",
-        equestrian: ""
-      },
-      trailLength: null,
-      trailTraffic: "",
-      routeType: "",
-      exclude: ""
+    season: "",
+    difficulty: {
+      default: "",
+      biking: "",
+      hiking: "",
+      ohv: "",
+      equestrian: ""
     },
-    menus: {
-      filterTrailsMenu: false,
-      trailsListMenu: false,
-      optionsMenu: false
-    },
-    firstTimeUser: true
-  }
+    trailLength: null,
+    trailTraffic: "",
+    routeType: "",
+    exclude: ""
+  },
+  menus: {
+    filterTrailsMenu: false,
+    trailsListMenu: false,
+    optionsMenu: false
+  },
+  firstTimeUser: true
 }
 
 export const map = (state = defaultState, action) => {
