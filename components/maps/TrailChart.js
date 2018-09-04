@@ -39,6 +39,9 @@ class TrailChart extends React.Component {
     this.mapLoaded = React.createRef()
     this.setCoordinates = this.setCoordinates.bind(this)
   }
+  static getDerivedStateFromProps(props, state) {
+    return state.mapStyle = props.mapStyle
+  }
   componentDidMount() {
     this._isMounted = true;
     this.setCoordinates()
@@ -74,9 +77,6 @@ class TrailChart extends React.Component {
       console.log(e)
     }
   }
-  // static getDerivedStateFromProps(props, state) {
-  //   return state.mapStyle = props.mapStyle
-  // }
   pathMarker(location) {
     this.setState({marker: location})
   }
@@ -143,16 +143,15 @@ class TrailChart extends React.Component {
           }}
         >
           <TrailPaths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor}  />
-
           {this.state.marker &&
             <Marker
               position={this.state.marker}
             />
           }
         </GoogleMap>
+        <ElevationChart coordinates={coordinates.slice(0).reverse()} trail={this.props.trail} areaStrokeColor={trailColor} pathMarker={this.pathMarker} />
       </React.Fragment>
     )
   }
 }
-// <ElevationChart coordinates={coordinates.slice(0).reverse()} trail={this.props.trail} areaStrokeColor={trailColor} pathMarker={this.pathMarker} />
 export default connect(mapStateToProps, mapDispatchToProps)(TrailChart)
