@@ -7,8 +7,8 @@ import { highlightTrail } from '../../redux/actions'
 const mapStateToProps = (state, ownProps) => {
   return {
     metricType: state.map.metricType,
-    trails: state.map.trails,
-    filter: state.map.filter,
+    trails: state.trails,
+    filters: state.map.filters,
     ...ownProps
   };
 };
@@ -24,8 +24,8 @@ class TrailListMenu extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      filteredTrails: filterAction(this.props.trails, this.props.filter),
-      trails: filterAction(this.props.trails, this.props.filter),
+      filteredTrails: filterAction(this.props.trails, this.props.filters),
+      trails: filterAction(this.props.trails, this.props.filters),
       search: ''
     }
   }
@@ -33,13 +33,13 @@ class TrailListMenu extends React.Component {
     if (prevState.trails.length == nextProps.trails.length) return nextProps
     let newTrails
     const value = prevState.search
-    if (value == '') newTrails = filterAction(nextProps.trails, nextProps.filter)
-    else newTrails = filterAction(nextProps.trails, nextProps.filter).filter( (trail) => trail.title.rendered.toLowerCase().includes(value) ? true : false)
+    if (value == '') newTrails = filterAction(nextProps.trails, nextProps.filters)
+    else newTrails = filterAction(nextProps.trails, nextProps.filters).filter( (trail) => trail.title.rendered.toLowerCase().includes(value) ? true : false)
     const state = {trails: newTrails, filteredTrails: newTrails}
     return state
   }
   render() {
-    const trails = filterAction(this.props.trails, this.props.filter)
+    const trails = filterAction(this.props.trails, this.props.filters)
     return (
       <div className={this.props.menuState == "exiting" ? "exiting menu" : "menu"}>
         <h3>Trail List</h3>
@@ -133,111 +133,119 @@ class TrailListMenu extends React.Component {
 }
 
 const Trail = props =>
-  <div className="trail" onMouseEnter={()=> props.highlightTrail(props.trail.slug)}>
+  <React.Fragment>
     <Link href="/trails/trail" as={`/trails/${props.trail.slug}`}>
-      <a
-        style={{backgroundImage: `url(${props.trail.custom_data.media.pictures[0] ? props.trail.custom_data.media.pictures[0].sizes.medium : "https://placehold.it/75x75?text=unavailable"})`, backgroundPosition: "center", backgroundSize: "cover"}}
-      >
-      </a>
-    </Link>
-    <div className="details">
-      <h4><Link href="/trails/trail" as={`/trails/${props.trail.slug}`}><a dangerouslySetInnerHTML={{__html: props.trail.title.rendered}} /></Link></h4>
-      <p>
-        {props.metricType === 'imperial' ?
-          <span>{props.trail.custom_data.length} mi</span>
-        :
-          <span>{(props.trail.custom_data.length * 1.60934).toFixed(2)} km</span>
-        }
-      </p>
-      {props.trail.custom_data.highlights &&
-        <p>Highlights:
-          {props.trail.custom_data.highlights.map((highlight, index, k) => {
-            if(index < props.trail.custom_data.highlights.length - 1) {
-              return <span key={k}> {highlight.label},</span>
-            } else {
-              return <span key={k}> {highlight.label}</span>
+      <a className="trail" onMouseEnter={()=> props.highlightTrail(props.trail.slug)}>
+        <Link href="/trails/trail" as={`/trails/${props.trail.slug}`}>
+          <a
+            style={{backgroundImage: `url(${props.trail.custom_data.media.pictures[0] ? props.trail.custom_data.media.pictures[0].sizes.medium : "https://placehold.it/75x75?text=unavailable"})`, backgroundPosition: "center", backgroundSize: "cover"}}
+          >
+          </a>
+        </Link>
+        <div className="details">
+          <h4><Link href="/trails/trail" as={`/trails/${props.trail.slug}`}><a dangerouslySetInnerHTML={{__html: props.trail.title.rendered}} /></Link></h4>
+          <p>
+            {props.metricType === 'imperial' ?
+              <span>{props.trail.custom_data.length} mi</span>
+            :
+              <span>{(props.trail.custom_data.length * 1.60934).toFixed(2)} km</span>
             }
+          </p>
+          {props.trail.custom_data.highlights &&
+            <p>Highlights:
+              {props.trail.custom_data.highlights.map((highlight, index, k) => {
+                if(index < props.trail.custom_data.highlights.length - 1) {
+                  return <span key={k}> {highlight.label},</span>
+                } else {
+                  return <span key={k}> {highlight.label}</span>
+                }
+              }
+            )}</p>
           }
-        )}</p>
-      }
-      {props.trail.custom_data.difficulty.defaultDifficulty.value && <p><span>{props.trail.custom_data.difficulty.defaultDifficulty.label}</span></p>}
-      {props.trail.custom_data.region && <p><span>{props.trail.custom_data.region} Region</span></p>}
-    </div>
-    <div className="trail_type">
-      <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!props.trail.custom_data.recommendedUse == '' ? (!props.trail.custom_data.recommendedUse.some((el) => el.value == 'hiking') && "inactive") : "inactive"} />
-      <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" className={!props.trail.custom_data.recommendedUse == '' ? (!props.trail.custom_data.recommendedUse.some((el) => el.value == 'biking') && "inactive") : "inactive"} />
-      <img src="/static/images/menu/equestrian.svg" alt="Select Equestrian Trails" className={!props.trail.custom_data.recommendedUse == '' ? (!props.trail.custom_data.recommendedUse.some((el) => el.value == 'equestrian') && "inactive") : "inactive"} />
-      <img src="/static/images/menu/ohv.svg" alt="Select OHV Trails" className={!props.trail.custom_data.recommendedUse == '' ? (!props.trail.custom_data.recommendedUse.some((el) => el.value == 'ohv') && "inactive") : "inactive"} />
-    </div>
-    <style jsx>{`
-      .trail {
-        background: #eee;
-        display: grid;
-        grid-template-columns: 7.5rem 1fr 6.5rem;
-        margin: 0 0 1rem;
-        animation-fill-mode: forwards;
-        &:nth-child(1) {
-          opacity: 0;
-          animation-name: slideUp;
-          animation-duration: 500ms;
-          animation-delay: 50ms;
-        }
-        &:nth-child(2) {
-          opacity: 0;
-          animation-name: slideUp;
-          animation-duration: 500ms;
-          animation-delay: 150ms;
-        }
-        &:nth-child(3) {
-          opacity: 0;
-          animation-name: slideUp;
-          animation-duration: 500ms;
-          animation-delay: 250ms;
-        }
-        &:nth-child(4) {
-          opacity: 0;
-          animation-name: slideUp;
-          animation-duration: 500ms;
-          animation-delay: 350ms;
-        }
-        &:nth-child(5) {
-          opacity: 0;
-          animation-name: slideUp;
-          animation-duration: 500ms;
-          animation-delay: 450ms;
-        }
-        img {
-          max-width: 100%;
-          height: auto;
-        }
-      }
-      .details {
-        padding: 0.25rem 1rem 1rem 1rem;
-        h4 {
-          margin: 0; font-weight: 700;
+          {props.trail.custom_data.difficulty.defaultDifficulty.value && <p><span>{props.trail.custom_data.difficulty.defaultDifficulty.label}</span></p>}
+          {props.trail.custom_data.region && <p><span>{props.trail.custom_data.region} Region</span></p>}
+        </div>
+        <div className="trail_type">
+          <img src="/static/images/menu/hiking.svg" alt="Select Hiking Trails" className={!props.trail.custom_data.recommendedUse == '' ? (!props.trail.custom_data.recommendedUse.some((el) => el.value == 'hiking') && "inactive") : "inactive"} />
+          <img src="/static/images/menu/biking.svg" alt="Select Biking Trails" className={!props.trail.custom_data.recommendedUse == '' ? (!props.trail.custom_data.recommendedUse.some((el) => el.value == 'biking') && "inactive") : "inactive"} />
+          <img src="/static/images/menu/equestrian.svg" alt="Select Equestrian Trails" className={!props.trail.custom_data.recommendedUse == '' ? (!props.trail.custom_data.recommendedUse.some((el) => el.value == 'equestrian') && "inactive") : "inactive"} />
+          <img src="/static/images/menu/ohv.svg" alt="Select OHV Trails" className={!props.trail.custom_data.recommendedUse == '' ? (!props.trail.custom_data.recommendedUse.some((el) => el.value == 'ohv') && "inactive") : "inactive"} />
+        </div>
+        <style jsx>{`
           a {
             text-decoration: none;
-            color: inherit;
+            color: #777;
           }
-        }
-        p {margin: 0; font-weight: 500;}
-        p span {font-weight: 100;}
-      }
-      .trail_type {
-        display: grid;
-        grid-template: 2.5rem 2.5rem / 2.5rem 2.5rem;
-        align-self: center;
-        img {width: 3.5rem;}
-      }
-      .inactive {
-        opacity: 0.25;
-        filter: grayscale();
-      }
-      @keyframes slideUp {
-        from {transform: translateY(25rem);opacity: 0;}
-        to {transform: translateY(0); opacity: 1;}
-      }
-    `}</style>
-  </div>
+          .trail {
+            background: #eee;
+            display: grid;
+            grid-template-columns: 7.5rem 1fr 6.5rem;
+            margin: 0 0 1rem;
+            animation-fill-mode: forwards;
+            &:nth-child(1) {
+              opacity: 0;
+              animation-name: slideUp;
+              animation-duration: 500ms;
+              animation-delay: 50ms;
+            }
+            &:nth-child(2) {
+              opacity: 0;
+              animation-name: slideUp;
+              animation-duration: 500ms;
+              animation-delay: 150ms;
+            }
+            &:nth-child(3) {
+              opacity: 0;
+              animation-name: slideUp;
+              animation-duration: 500ms;
+              animation-delay: 250ms;
+            }
+            &:nth-child(4) {
+              opacity: 0;
+              animation-name: slideUp;
+              animation-duration: 500ms;
+              animation-delay: 350ms;
+            }
+            &:nth-child(5) {
+              opacity: 0;
+              animation-name: slideUp;
+              animation-duration: 500ms;
+              animation-delay: 450ms;
+            }
+            img {
+              max-width: 100%;
+              height: auto;
+            }
+          }
+          .details {
+            padding: 0.25rem 1rem 1rem 1rem;
+            h4 {
+              margin: 0; font-weight: 700;
+              a {
+                text-decoration: none;
+                color: inherit;
+              }
+            }
+            p {margin: 0; font-weight: 500;}
+            p span {font-weight: 100;}
+          }
+          .trail_type {
+            display: grid;
+            grid-template: 2.5rem 2.5rem / 2.5rem 2.5rem;
+            align-self: center;
+            img {width: 3.5rem;}
+          }
+          .inactive {
+            opacity: 0.25;
+            filter: grayscale();
+          }
+          @keyframes slideUp {
+            from {transform: translateY(25rem);opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
+          }
+        `}</style>
+      </a>
+    </Link>
+  </React.Fragment>
 
 export default connect(mapStateToProps, mapDispatchToProps)(TrailListMenu)
