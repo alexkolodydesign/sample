@@ -136,14 +136,12 @@ const Trail = props =>
   <React.Fragment>
     <Link href="/trails/trail" as={`/trails/${props.trail.slug}`}>
       <a className="trail" onMouseEnter={()=> props.highlightTrail(props.trail.slug)}>
-        <Link href="/trails/trail" as={`/trails/${props.trail.slug}`}>
-          <a
-            style={{backgroundImage: `url(${props.trail.custom_data.media.pictures[0] ? props.trail.custom_data.media.pictures[0].sizes.medium : "https://placehold.it/75x75?text=unavailable"})`, backgroundPosition: "center", backgroundSize: "cover"}}
-          >
-          </a>
-        </Link>
+        <div
+          style={{backgroundImage: `url(${props.trail.custom_data.media.pictures[0] ? props.trail.custom_data.media.pictures[0].sizes.medium : "https://placehold.it/75x75?text=unavailable"})`, backgroundPosition: "center", backgroundSize: "cover"}}
+        >
+        </div>
         <div className="details">
-          <h4><Link href="/trails/trail" as={`/trails/${props.trail.slug}`}><a dangerouslySetInnerHTML={{__html: props.trail.title.rendered}} /></Link></h4>
+          <h4 dangerouslySetInnerHTML={{__html: props.trail.title.rendered}} />
           <p>
             {props.metricType === 'imperial' ?
               <span>{props.trail.custom_data.length} mi</span>

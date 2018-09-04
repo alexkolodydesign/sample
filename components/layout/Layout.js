@@ -36,7 +36,7 @@ const Layout = props => (
         font-size: 62.5%;
         padding: 0;
         margin: 0;
-        ${props.overflow ? "overflow-x: hidden;" : "overflow: hidden;"}
+        ${props.overflow ? "overflow-x: hidden;" : "overflow: hidden !important;"}
         background: ${props.background};
       }
       body {
