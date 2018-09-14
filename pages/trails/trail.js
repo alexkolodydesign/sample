@@ -138,8 +138,6 @@ Trail.getInitialProps = async props => {
 };
 
 export default nextConnect((state, res) => {
-  if (res.trails) {
-    state.map.trails = res.trails
-  }
+  state.trails = res.trails
   return state
 })(Trail);

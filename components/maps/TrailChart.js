@@ -87,6 +87,7 @@ class TrailChart extends React.Component {
   setCenterAndZoom(coords) {
     // Make new bounds
     let newBounds = new LatLngBounds()
+    debugger
     // Add LatLng points to the new bounding area
     coords.forEach(bound => {
       if (Array.isArray(bound)) {
@@ -130,28 +131,34 @@ class TrailChart extends React.Component {
     }
     return (
       <React.Fragment>
-        <GoogleMap
-          ref={this.mapLoaded}
-          zoom={this.state.zoom}
-          center={this.state.center}
-          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&v=3.exp&libraries=geometry,drawing,places"
-          // Only do this once. (TODO: look for a better event for this function like map loaded or something)
-          onTilesLoaded={() => !this.state.mapIsCentered ? this.setCenterAndZoom(coordinates) : null}
-          options={{
-            styles: this.state.mapStyle
-          }}
-          defaultOptions={{
-            streetViewControl: false
-          }}
-        >
-          <TrailPaths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor}  />
-          {this.state.marker &&
-            <Marker
-              position={this.state.marker}
-            />
-          }
-        </GoogleMap>
-        <ElevationChart coordinates={coordinates.slice(0).reverse()} trail={this.props.trail} areaStrokeColor={trailColor} pathMarker={this.pathMarker} />
+        {coordinates ?
+          <React.Fragment>
+            <GoogleMap
+              ref={this.mapLoaded}
+              zoom={this.state.zoom}
+              center={this.state.center}
+              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&v=3.exp&libraries=geometry,drawing,places"
+              // Only do this once. (TODO: look for a better event for this function like map loaded or something)
+              onTilesLoaded={() => !this.state.mapIsCentered ? this.setCenterAndZoom(coordinates) : null}
+              options={{
+                styles: this.state.mapStyle
+              }}
+              defaultOptions={{
+                streetViewControl: false
+              }}
+            >
+              <TrailPaths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor}  />
+              {this.state.marker &&
+                <Marker
+                  position={this.state.marker}
+                />
+              }
+            </GoogleMap>
+            {/*<ElevationChart coordinates={coordinates.slice(0).reverse()} trail={this.props.trail} areaStrokeColor={trailColor} pathMarker={this.pathMarker} />*/}
+          </React.Fragment>
+          :
+          <p>Coordinates Missing {console.log(this.props)}</p>
+        }
       </React.Fragment>
     )
   }

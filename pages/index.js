@@ -53,8 +53,6 @@ Dashboard.getInitialProps = async props => {
 
 export default nextConnect((state, res) => {
   state.map.firstTimeUser = res.firstTimeUser
-  if (res.trails) {
-    state.trails = res.trails
-  }
+  state.trails = res.trails
   return state
 })(Dashboard);
