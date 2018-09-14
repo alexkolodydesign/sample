@@ -35,21 +35,13 @@ Dashboard.getInitialProps = async props => {
     const e_res = await fetch(hostUrl + '/api/washco_event' );
     const e_data = await e_res.json();
     const { firstTimeUser } = props.req ? cookies(props) : cookies(window)
-    if (props.req) {
-      const resTrails = await fetch(hostUrl + '/api/trails/');
-      const trails = await resTrails.json();
-      return {
-        regions,
-        trails,
-        event: e_data,
-        firstTimeUser: firstTimeUser === undefined ? true : firstTimeUser
-      }
-    } else {
-      return {
-        regions,
-        event: e_data,
-        firstTimeUser: firstTimeUser === undefined ? true : firstTimeUser
-      }
+    const resTrails = await fetch(hostUrl + '/api/trails/');
+    const trails = await resTrails.json();
+    return {
+      regions,
+      trails,
+      event: e_data,
+      firstTimeUser: firstTimeUser === undefined ? true : firstTimeUser
     }
   } catch (e) {
     console.log(e)

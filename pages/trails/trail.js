@@ -124,18 +124,11 @@ Trail.getInitialProps = async props => {
   try {
     const res = await fetch(hostUrl + '/api/trail/' + slug);
     const data = await res.json();
-    if (props.req) {
-      const resTrails = await fetch(hostUrl + '/api/trails/');
-      const trails = await resTrails.json();
-      return {
-        trail: data.trail,
-        trails
-      }
-    }
-    else {
-      return {
-        trail: data.trail
-      }
+    const resTrails = await fetch(hostUrl + '/api/trails/');
+    const trails = await resTrails.json();
+    return {
+      trail: data.trail,
+      trails
     }
   } catch (e) {
     return {

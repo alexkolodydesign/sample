@@ -22,7 +22,7 @@ const Paths = props => {
         {coordinates.map((line, k) => {
           if (!line) return null
           return (
-            <React.Fragment>
+            <React.Fragment key={k}>
               <Polyline
                 path={ line.map(point => ({lat: Number(point.lat), lng: Number(point.lng), elevation: Number(point.elevation)})) }
                 options={{
@@ -30,7 +30,6 @@ const Paths = props => {
                   strokeOpacity: 0.0,
                   strokeWeight: 100,
                 }}
-                key={k}
                 onClick={(e) => {
                   const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
                   props.toggleMenu(coord)
@@ -43,7 +42,6 @@ const Paths = props => {
                   strokeOpacity:1,
                   strokeWeight: props.highlight == props.slug ? 6 : 3,
                 }}
-                key={k}
                 onClick={(e) => {
                   const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
                   props.toggleMenu(coord)
