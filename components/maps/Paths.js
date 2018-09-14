@@ -22,19 +22,34 @@ const Paths = props => {
         {coordinates.map((line, k) => {
           if (!line) return null
           return (
-            <Polyline
-              path={ line.map(point => ({lat: Number(point.lat), lng: Number(point.lng), elevation: Number(point.elevation)})) }
-              options={{
-                strokeColor: props.trailColor,
-                strokeOpacity:1,
-                strokeWeight: props.highlight == props.slug ? 6 : 3,
-              }}
-              key={k}
-              onClick={(e) => {
-                const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
-                props.toggleMenu(coord)
-              }}
-            />
+            <React.Fragment>
+              <Polyline
+                path={ line.map(point => ({lat: Number(point.lat), lng: Number(point.lng), elevation: Number(point.elevation)})) }
+                options={{
+                  strokeColor: props.trailColor,
+                  strokeOpacity: 0.0,
+                  strokeWeight: 100,
+                }}
+                key={k}
+                onClick={(e) => {
+                  const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
+                  props.toggleMenu(coord)
+                }}
+              />
+              <Polyline
+                path={ line.map(point => ({lat: Number(point.lat), lng: Number(point.lng), elevation: Number(point.elevation)})) }
+                options={{
+                  strokeColor: props.trailColor,
+                  strokeOpacity:1,
+                  strokeWeight: props.highlight == props.slug ? 6 : 3,
+                }}
+                key={k}
+                onClick={(e) => {
+                  const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
+                  props.toggleMenu(coord)
+                }}
+              />
+            </React.Fragment>
           )
         })}
       </React.Fragment>
@@ -47,7 +62,19 @@ const Paths = props => {
           path={coordinates}
           options={{
             strokeColor: props.trailColor,
-            strokeOpacity:1,
+            strokeOpacity: 0.0,
+            strokeWeight: 100,
+          }}
+          onClick={(e) => {
+            const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
+            props.toggleMenu(coord)
+          }}
+        />
+        <Polyline
+          path={coordinates}
+          options={{
+            strokeColor: props.trailColor,
+            strokeOpacity: 1,
             strokeWeight: props.highlight == props.slug ? 6 : 3,
           }}
           onClick={(e) => {
