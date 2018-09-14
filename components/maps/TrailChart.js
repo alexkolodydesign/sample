@@ -87,7 +87,6 @@ class TrailChart extends React.Component {
   setCenterAndZoom(coords) {
     // Make new bounds
     let newBounds = new LatLngBounds()
-    debugger
     // Add LatLng points to the new bounding area
     coords.forEach(bound => {
       if (Array.isArray(bound)) {
@@ -154,7 +153,7 @@ class TrailChart extends React.Component {
                 />
               }
             </GoogleMap>
-            {/*<ElevationChart coordinates={coordinates.slice(0).reverse()} trail={this.props.trail} areaStrokeColor={trailColor} pathMarker={this.pathMarker} />*/}
+            <ElevationChart coordinates={coordinates.slice(0).reverse()} trail={this.props.trail} areaStrokeColor={trailColor} pathMarker={this.pathMarker} />
           </React.Fragment>
           :
           <p>Coordinates Missing {console.log(this.props)}</p>
