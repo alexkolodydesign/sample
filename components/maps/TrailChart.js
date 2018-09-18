@@ -5,7 +5,7 @@ import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js'
 import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js'
 import { connect } from 'react-redux'
 import { updateTrailCoords } from '../../redux/actions'
-import TrailPaths from './TrailPaths'
+import Paths from './Paths'
 import ElevationChart from './ElevationChart'
 
 // Redux
@@ -112,22 +112,24 @@ class TrailChart extends React.Component {
     const coordinates = this.state.coordinates
     // Change Trail Color Based on the First Value of Recommended Use Array
     let trailColor
-    switch(trail.custom_data.recommendedUse[0].value) {
-      case 'hiking':
-        trailColor = '#ed264c'
-        break
-      case 'biking':
-        trailColor = '#ff5a00'
-        break
-      case 'equestrian':
-        trailColor = '#662f8e'
-        break
-      case 'ohv':
-        trailColor = '#00a89c'
-        break
-      default:
-        trailColor = '#ff0000'
-    }
+    if (trail.custom_data.recommendedUse[0]) {
+      switch(trail.custom_data.recommendedUse[0].value) {
+        case 'hiking':
+          trailColor = '#ed264c'
+          break
+        case 'biking':
+          trailColor = '#ff5a00'
+          break
+        case 'equestrian':
+          trailColor = '#662f8e'
+          break
+        case 'ohv':
+          trailColor = '#00a89c'
+          break
+        default:
+          trailColor = '#ff0000'
+      }
+    } else { trailColor = '#ff0000' }
     return (
       <React.Fragment>
         {coordinates ?
@@ -146,7 +148,7 @@ class TrailChart extends React.Component {
                 streetViewControl: false
               }}
             >
-              <TrailPaths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor}  />
+              <Paths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor}  />
               {this.state.marker &&
                 <Marker
                   position={this.state.marker}

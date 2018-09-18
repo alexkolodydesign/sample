@@ -95,9 +95,6 @@ class RegionTrail extends React.Component {
     } else {
       trailColor = '#ff0000'
     }
-    if (trail.slug == 'sand-mountain') {
-      console.log("SAND MOUNTAIN: ", { coordinates })
-    }
     return (
       <React.Fragment>
         <Paths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor} slug={trail.slug}  />

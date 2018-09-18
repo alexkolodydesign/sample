@@ -53,35 +53,37 @@ const Paths = props => {
       </React.Fragment>
     )
   }
-  // Single path trail
-  return (
-    <React.Fragment>
-        <Polyline
-          path={coordinates}
-          options={{
-            strokeColor: props.trailColor,
-            strokeOpacity: 0.0,
-            strokeWeight: 100,
-          }}
-          onClick={(e) => {
-            const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
-            props.toggleMenu(coord)
-          }}
-        />
-        <Polyline
-          path={coordinates}
-          options={{
-            strokeColor: props.trailColor,
-            strokeOpacity: 1,
-            strokeWeight: props.highlight == props.slug ? 6 : 3,
-          }}
-          onClick={(e) => {
-            const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
-            props.toggleMenu(coord)
-          }}
-        />
-    </React.Fragment>
-  )
+  else {
+    // Single path trail
+    return (
+      <React.Fragment>
+          <Polyline
+            path={coordinates}
+            options={{
+              strokeColor: props.trailColor,
+              strokeOpacity: 0.0,
+              strokeWeight: 100,
+            }}
+            onClick={(e) => {
+              const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
+              props.toggleMenu(coord)
+            }}
+          />
+          <Polyline
+            path={coordinates}
+            options={{
+              strokeColor: props.trailColor,
+              strokeOpacity: 1,
+              strokeWeight: props.highlight == props.slug ? 6 : 3,
+            }}
+            onClick={(e) => {
+              const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
+              props.toggleMenu(coord)
+            }}
+          />
+      </React.Fragment>
+    )
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Paths)
