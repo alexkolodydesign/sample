@@ -6,7 +6,7 @@ import { toggleMenus } from '../../redux/actions'
 const mapStateToProps = (state, ownProps) => {
   return {
     menus: state.map.menus,
-    trails: state.map.trails
+    trails: state.trails
   };
 };
 const mapDispatchToProps = dispatch => {

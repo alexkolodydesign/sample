@@ -24,8 +24,8 @@ class TrailListMenu extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      filteredTrails: filterAction(this.props.trails, this.props.filters),
-      trails: filterAction(this.props.trails, this.props.filters),
+      filteredTrails: filterAction(this.props.trails, this.props.filters, true),
+      trails: filterAction(this.props.trails, this.props.filters, true),
       search: ''
     }
   }
@@ -33,13 +33,13 @@ class TrailListMenu extends React.Component {
     if (prevState.trails.length == nextProps.trails.length) return nextProps
     let newTrails
     const value = prevState.search
-    if (value == '') newTrails = filterAction(nextProps.trails, nextProps.filters)
-    else newTrails = filterAction(nextProps.trails, nextProps.filters).filter( (trail) => trail.title.rendered.toLowerCase().includes(value) ? true : false)
+    if (!value) newTrails = filterAction(nextProps.trails, nextProps.filters, true)
+    else newTrails = filterAction(nextProps.trails, nextProps.filters, true).filter( (trail) => trail.title.rendered.toLowerCase().includes(value) ? true : false)
     const state = {trails: newTrails, filteredTrails: newTrails}
     return state
   }
   render() {
-    const trails = filterAction(this.props.trails, this.props.filters)
+    const trails = filterAction(this.props.trails, this.props.filters, true)
     return (
       <div className={this.props.menuState == "exiting" ? "exiting menu" : "menu"}>
         <h3>Trail List</h3>

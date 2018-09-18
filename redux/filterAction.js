@@ -1,4 +1,4 @@
-export const filterAction = (trails, filters) => {
+export const filterAction = (trails, filters, zoomLevel) => {
   if (!trails || trails.length < 1) return []
   const recommendedUseFilter = Object.keys(filters.trailType).filter((trailType) => filters.trailType[trailType] ? true : false)
   const difficultyFilter = Object.keys(filters.difficulty).filter((difficulty) => filters.difficulty[difficulty] ? true : false)
@@ -41,6 +41,12 @@ export const filterAction = (trails, filters) => {
     .filter((trail) => {
       if (!filters.difficulty.default) return true
       if (trail.custom_data.difficulty.defaultDifficulty.value == filters.difficulty.default) return true
+      return false
+    })
+    // Filter by Zoom
+    .filter(trail => {
+      if (zoomLevel === true) return true
+      if (Number(zoomLevel) >= Number(trail.custom_data.zoomThreshold)) return true
       return false
     })
 
