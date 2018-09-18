@@ -15,6 +15,9 @@ const MainMenu = props =>
     </div>
     <div className="background"></div>
     <div className="wrapper">
+      <div className="utahElevated">
+        <img src="../../static/images/UTAH_LIFE_ELEVATED_RGB_navy-web.png" alt="Utah Life Elevated" />
+      </div>
       <SelectTrailType />
       <FilterTrails />
       <TrailList />
@@ -38,7 +41,14 @@ const MainMenu = props =>
           position: relative;
         }
       }
-
+      .utahElevated {
+        position: relative;
+        z-index: 100;
+        img {
+          max-width: 80px;
+          margin-right: 12px;
+        }
+      }
       .colors {
         position: absolute;
         top: 0;
@@ -67,6 +77,11 @@ const MainMenu = props =>
           padding: 2rem 0;
           .wrapper {
             grid-template-columns: 1fr 28rem repeat(2, 14rem) repeat(2, 6.5rem) 10px;
+          }
+        }
+        .utahElevated {
+          img {
+            max-width: 150px;
           }
         }
       }
