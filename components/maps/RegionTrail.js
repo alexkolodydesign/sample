@@ -60,9 +60,9 @@ class RegionTrail extends React.Component {
     }
     // If trail coordinates are not found in redux store try and get them
     try {
-      const coords = await axios.get(`/api/coordinates?url=${this.props.trail.custom_data.jsonCoordinates.url}`)
-      this.props.updateTrailCoords(coords.data, this.props.trail.slug)
-      if (this._isMounted) this.setState({loading: false, coordinates: coords.data})
+      const { data: { trail: { coordinates: coords } } } = await axios.get(`/api/coordinates?url=${this.props.trail.custom_data.jsonCoordinates.url}`)
+      this.props.updateTrailCoords(coords, this.props.trail.slug)
+      if (this._isMounted) this.setState({loading: false, coordinates: coords})
     } catch(e) {
       // console.log(e)
     }
@@ -95,9 +95,12 @@ class RegionTrail extends React.Component {
     } else {
       trailColor = '#ff0000'
     }
+    if (trail.slug == 'sand-mountain') {
+      console.log("SAND MOUNTAIN: ", { coordinates })
+    }
     return (
       <React.Fragment>
-        <Paths coordinates={this.state.coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor} slug={trail.slug}  />
+        <Paths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor} slug={trail.slug}  />
         {this.state.menu &&
           <Marker position={this.state.menuCoords} icon={{url: ""}} >
             <InfoWindow options={{'maxWidth' : 320}} onCloseClick={() => this.setState({menu: false})}>

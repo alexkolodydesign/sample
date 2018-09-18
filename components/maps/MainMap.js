@@ -51,7 +51,7 @@ class Map extends React.Component {
     const zoomState = this.zoom
     const zoomLevel = this.props.map.zoom
     const trails = filterAction(this.props.trails, this.props.map.filters).filter(trail => {
-      if (!trail.custom_data.zoomThreshold && zoomLevel < 14) return true
+      if (!trail.custom_data.zoomThreshold && zoomLevel > 14) return true
       if (zoomLevel < Number(trail.custom_data.zoomThreshold)) return true
       else return false
     })
@@ -63,14 +63,6 @@ class Map extends React.Component {
           zoomState(this.getZoom(), null)
         }}
         options={{ mapTypeId: this.props.map.mapStyle }}
-        // TODO:
-        // Set map bounds to redux store. In RegionTrail after checking zoom threshold check if center coordinate falls into map bounds to display/pull info
-        // onBoundsChanged={function(e) {
-        //   console.log("BOUNDS CHANGED: ", this.getBounds())
-        //   const center = this.getCenter()
-        //   console.log("CENTER", center.lat(), center.lng())
-        //   // Check if region is in bounds
-        // }}
         defaultOptions={{
           streetViewControl: false
         }}
