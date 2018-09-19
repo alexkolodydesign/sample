@@ -16,7 +16,7 @@ const MainMenu = props =>
     <div className="background"></div>
     <div className="wrapper">
       <div className="utahElevated">
-        <img src="../../static/images/UTAH_LIFE_ELEVATED_RGB_navy-web.png" alt="Utah Life Elevated" />
+        <img src="/static/images/UTAH_LIFE_ELEVATED_RGB_navy-web.png" alt="Utah Life Elevated" />
       </div>
       <SelectTrailType />
       <FilterTrails />
