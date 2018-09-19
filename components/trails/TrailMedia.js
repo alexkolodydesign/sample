@@ -101,6 +101,7 @@ const TrailMedia = props =>
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-column-gap: 3rem;
+        padding-bottom: 12rem;
         h2 {
           grid-column-start: span 2;
         }
