@@ -18,7 +18,7 @@ class ElevationChart extends React.Component {
   constructor(props) {
     super(props)
     // TODO: move data to state
-    this.state = { loading: true }
+    this.state = { loading: true,  }
     this.renderTooltip = this.renderTooltip.bind(this)
     this.mouseMove = this.mouseMove.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
@@ -93,8 +93,7 @@ class ElevationChart extends React.Component {
       Number(Math.min(...coordinates.map(o => (o.elevation * 0.3048))) ).toFixed(0)
     const diff = Math.floor(Math.abs(maxElevation - minElevation))
     const data = coordinates.map(coordinate => {
-      if (this.props.metricType === 'imperial') coordinate.elevation = Math.floor(coordinate.elevation)
-      else coordinate.elevation = Math.floor((coordinate.elevation * 0.3048))
+      coordinate.elevation = Math.floor(coordinate.elevation)
       return coordinate
     })
     const elevationFlag = coordinates.some((el) => el.elevation)
@@ -109,7 +108,7 @@ class ElevationChart extends React.Component {
                   width={Number(this.state.width)}
                   data={data}
                   onMouseMove={this.mouseMove}
-                  domain={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
+                  domain={[Number(minElevation - 2) / 10, Number(maxElevation + 2) / 10]}
                   metricType={this.props.metricType}
                   renderTooltip={this.renderTooltip}
                   areaStrokeColor={this.props.areaStrokeColor}
@@ -210,12 +209,19 @@ class Chart extends React.Component {
   }
   render() {
     return (
-      <AreaChart width={this.props.width} height={250} data={this.props.data} onMouseMove={this.props.onMouseMove} margin={{top: 10, right: 20, left: 10, bottom: 20}}>
+      <AreaChart
+        width={this.props.width}
+        height={250}
+        data={this.props.data}
+        onMouseMove={this.props.onMouseMove}
+        margin={{top: 10, right: 20, left: 10, bottom: 20}}
+      >
         <CartesianGrid strokeDasharray="3 3"/>
         <YAxis
           allowDecimals={false}
           unit={this.props.metricType === 'imperial' ? " ft" : " meters"}
           interval='preserveEnd'
+          type='number'
           //ticks={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
           domain={this.props.domain}
         />
