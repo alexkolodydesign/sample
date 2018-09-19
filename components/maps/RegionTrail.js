@@ -61,10 +61,6 @@ class RegionTrail extends React.Component {
     // If trail coordinates are not found in redux store try and get them
     axios.get(`/api/coordinates?url=${this.props.trail.custom_data.jsonCoordinates.url}`).then( data => {
       const coords = data.data.trail.coordinates
-      if (this.props.trail.slug == "rim-rambler") {
-        console.log(`/api/coordinates?url=${this.props.trail.custom_data.jsonCoordinates.url}`, coords)
-
-      }
       this.props.updateTrailCoords(coords, this.props.trail.slug)
       if (this._isMounted) this.setState({loading: false, coordinates: coords})
     }, error => {

@@ -54,9 +54,6 @@ exports.getCoordinates = async (req, res) => {
   }
   try {
     const { data: trail } = await axios.get(url);
-    if (trail.name == "Sandstone Mountain") {
-      console.log("SANDSTONE: ", trail)
-    }
     return res.json({ trail });
   } catch(e) {
     // console.log("Issue arose.", e);
