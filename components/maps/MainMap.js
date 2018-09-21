@@ -30,9 +30,34 @@ class Map extends React.Component {
     super(props)
     this.zoom = this.zoom.bind(this)
     this.washington_map = React.createRef();
+    this.onRegionToggle = this.onRegionToggle.bind(this)
+    this.state = { activeRegion: {} }
   }
   zoom(zoom, center) {
     this.props.goToSystem(zoom, center)
+  }
+  onRegionToggle(region) {
+    // if new is same as current, close
+    if (this.state.activeRegion.props && this.state.activeRegion.props.region.regionName == region.props.region.regionName) {
+      console.log("new is current active")
+      region.toggleMenu();
+      this.setState({activeRegion: {}})
+    }
+    // if current is set, but is not the one clicked, close the current and set to new
+    else if (this.state.activeRegion && this.state.activeRegion.state) {
+      console.log("current is set but different than new")
+      this.state.activeRegion.toggleMenu() // this closes the current popup
+      this.state.activeRegion.togglePopupMenu(region.regionName); // this will compare the current active to the new and close if needed
+      this.setState({activeRegion:region})
+      this.state.activeRegion.toggleMenu() // this closes the current popup
+    }
+    // else there is none set, so start from beginning
+    else {
+      console.log("none set, start from scratch")
+      this.setState({activeRegion:region})
+      this.state.activeRegion.toggleMenu() // this closes the current popup
+
+    }
   }
   componentDidMount() {
     if (window.innerWidth >= 768 && window.innerWidth < 991) {
@@ -65,7 +90,7 @@ class Map extends React.Component {
       >
         {this.props.map.gps && <UserLocation />}
         {regions.map((region, k) => {
-          return <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} firstTimeUser={this.props.firstTimeUser} />
+          return <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} onRegionToggle={this.onRegionToggle} firstTimeUser={this.props.firstTimeUser} />
         })}
         {trails.map((trail, k) => <RegionTrail trail={trail} key={k} metricType={this.props.metricType}  /> )}
       </GoogleMap>
