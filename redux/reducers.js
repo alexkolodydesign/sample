@@ -41,7 +41,8 @@ export const defaultState = {
     trailPopup: false,
     regionPopup: false,
     activeRegionPopup: '',
-    activeRegionComponent: {}
+    activeTrailPopup: '',
+    activePopupType: ''
   },
   firstTimeUser: true
 }
@@ -77,7 +78,6 @@ export const map = (state = defaultState, action) => {
     case 'TOGGLE_MENUS':
       return { ...state, menus: action.menus }
     case 'TOGGLE_POPUPMENUS':
-      console.log("REDUCER POPUP: ", action.popups);
       return { ...state, popupMenus: action.popups }
     case 'TOGGLE_FIRST_TIME_USER':
       return { ...state, firstTimeUser: action.status }

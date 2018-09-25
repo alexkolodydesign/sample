@@ -39,33 +39,55 @@ class Region extends React.Component {
   togglePopupMenu(region) {
     //if there is a popup open, but it is not the one that is clicked, close the current
     if (this.props.popupMenus.regionPopup == true && !(this.props.popupMenus.activeRegionPopup == region)) {
-      this.props.togglePopupMenus({
-        regionPopup: 'exiting',
-        trailPopup: this.props.popupMenus.trailPopup
-      })
+      if (this.props.popupMenus.activePopupType == 'region') {
+        this.props.togglePopupMenus({
+          trailPopup: false,
+          regionPopup: 'exiting'
+        })
+      }
+      else {
+        this.props.togglePopupMenus({
+          regionPopup: false,
+          trailPopup: 'exiting'
+        })
+      }
       this.props.togglePopupMenus({
         regionPopup: false,
-        trailPopup: this.props.popupMenus.trailPopup,
-        activeRegionPopup: ''
+        trailPopup: false,
+        activeRegionPopup: '',
+        activeTrailPopup: '',
+        activePopupType: ''
       })
     }
     else {
       // no popup, check this one
       if (this.props.popupMenus.regionPopup == true) {
-        this.props.togglePopupMenus({
-          regionPopup: 'exiting',
-          trailPopup: this.props.popupMenus.trailPopup,
-        })
+        if (this.props.popupMenus.activePopupType == 'region') {
+          this.props.togglePopupMenus({
+            trailPopup: false,
+            regionPopup: 'exiting'
+          })
+        }
+        else {
+          this.props.togglePopupMenus({
+            regionPopup: false,
+            trailPopup: 'exiting'
+          })
+        }
         setTimeout( () => this.props.togglePopupMenus({
           regionPopup: false,
-          trailPopup: this.props.popupMenus.trailPopup,
-          activeRegionPopup: ''
+          trailPopup: false,
+          activeRegionPopup: '',
+          activeTrailPopup: '',
+          activePopupType: ''
         }), 500)
       } else {
         this.props.togglePopupMenus({
           regionPopup: true,
           trailPopup: false,
-          activeRegionPopup: region
+          activeRegionPopup: region,
+          activeTrailPopup: '',
+          activePopupType: 'region'
         })
       }
     }
