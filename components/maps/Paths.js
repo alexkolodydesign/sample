@@ -32,7 +32,9 @@ const Paths = props => {
                 }}
                 onClick={(e) => {
                   const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
-                  props.toggleMenu(coord)
+                  //props.toggleMenu(coord)()
+                  props.onTrailToggle(props.regionTrail, coord);
+                  props.togglePopupMenu(props.trail.slug)
                 }}
               />
               <Polyline
@@ -44,7 +46,9 @@ const Paths = props => {
                 }}
                 onClick={(e) => {
                   const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
-                  props.toggleMenu(coord)
+                  //props.toggleMenu(coord)
+                  props.onTrailToggle(props.regionTrail, coord);
+                  props.togglePopupMenu(props.trail.slug)
                 }}
               />
             </React.Fragment>
@@ -66,7 +70,9 @@ const Paths = props => {
             }}
             onClick={(e) => {
               const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
-              props.toggleMenu(coord)
+              //props.toggleMenu(coord)
+              props.onTrailToggle(props.regionTrail, coord);
+              props.togglePopupMenu(props.trail.slug)
             }}
           />
           <Polyline
@@ -78,7 +84,9 @@ const Paths = props => {
             }}
             onClick={(e) => {
               const coord = {lat: e.latLng.lat(), lng: e.latLng.lng()}
-              props.toggleMenu(coord)
+              //props.toggleMenu(coord)
+              props.onTrailToggle(props.regionTrail, coord);
+              props.togglePopupMenu(props.trail.slug)
             }}
           />
       </React.Fragment>

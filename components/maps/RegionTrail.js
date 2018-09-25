@@ -1,7 +1,7 @@
 import { InfoWindow, Marker } from "react-google-maps"
 import { connect } from 'react-redux'
 import axios from 'axios'
-import { updateTrailCoords } from '../../redux/actions'
+import { updateTrailCoords, togglePopupMenus } from '../../redux/actions'
 import Link from 'next/link'
 import Paths from './Paths'
 import Difficulty from './Difficulty'
@@ -11,6 +11,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     map: state.map,
     trails: state.trails,
+    popupMenus: state.map.popupMenus,
     ...ownProps
   };
 };
@@ -18,7 +19,8 @@ const mapDispatchToProps = dispatch => {
   return {
     updateTrailCoords: (coords, slug) => {
       dispatch(updateTrailCoords(coords, slug));
-    }
+    },
+    togglePopupMenus: (popups) => dispatch(togglePopupMenus(popups))
   };
 };
 
@@ -28,6 +30,7 @@ class RegionTrail extends React.Component {
     this.state = { coordinates: [], menu: false, menuCoords: false, loading: true}
     this.setCoordinates = this.setCoordinates.bind(this)
     this.toggleMenu = this.toggleMenu.bind(this)
+    this.togglePopupMenu = this.togglePopupMenu.bind(this)
   }
   componentDidMount() {
     this._isMounted = true;
@@ -38,6 +41,62 @@ class RegionTrail extends React.Component {
   }
   toggleMenu(coords) {
     this.setState({menu: !this.state.menu, menuCoords: coords})
+  }
+  togglePopupMenu(trail) {
+    //if there is a popup open, but it is not the one that is clicked, close the current
+    if (this.props.popupMenus.trailPopup == true && !(this.props.popupMenus.activeTrailPopup == trail)) {
+      if (this.props.popupMenus.activePopupType == 'trail') {
+        this.props.togglePopupMenus({
+          regionPopup: false,
+          trailPopup: 'exiting'
+        })
+      }
+      else {
+        this.props.togglePopupMenus({
+          trailPopup: false,
+          regionPopup: 'exiting'
+        })
+      }
+      this.props.togglePopupMenus({
+        regionPopup: false,
+        trailPopup: false,
+        activeTrailPopup: '',
+        activeRegionPopup: '',
+        activePopupType: ''
+      })
+    }
+    else {
+      // no popup, check this one
+      if (this.props.popupMenus.trailPopup == true || this.props.popupMenus.regionPopup == true) {
+        if (this.props.popupMenus.activePopupType == 'trail') {
+          this.props.togglePopupMenus({
+            regionPopup: false,
+            trailPopup: 'exiting'
+          })
+        }
+        else {
+          this.props.togglePopupMenus({
+            trailPopup: false,
+            regionPopup: 'exiting'
+          })
+        }
+        setTimeout( () => this.props.togglePopupMenus({
+          regionPopup: false,
+          trailPopup: false,
+          activeRegionPopup: '',
+          activeTrailPopup: '',
+          activePopupType: ''
+        }), 500)
+      } else {
+        this.props.togglePopupMenus({
+          regionPopup: false,
+          trailPopup: true,
+          activeRegionPopup: '',
+          activeTrailPopup: trail,
+          activePopupType: 'trail'
+        })
+      }
+    }
   }
   async setCoordinates() {
     // If redux store already has coordinates on trail then set component state and set loading to false
@@ -97,10 +156,15 @@ class RegionTrail extends React.Component {
     }
     return (
       <React.Fragment>
-        <Paths coordinates={coordinates} toggleMenu={this.toggleMenu} trailColor={trailColor} slug={trail.slug}  />
+        <Paths coordinates={coordinates} toggleMenu={this.toggleMenu} onTrailToggle={this.props.onTrailToggle} togglePopupMenu={this.togglePopupMenu} regionTrail={this} trail={trail} trailColor={trailColor} slug={trail.slug}  />
         {this.state.menu &&
           <Marker position={this.state.menuCoords} icon={{url: ""}} >
-            <InfoWindow options={{'maxWidth' : 320}} onCloseClick={() => this.setState({menu: false})}>
+            <InfoWindow options={{'maxWidth' : 320}} onCloseClick={ () => {
+                    this.props.onTrailToggle(this)
+                    this.togglePopupMenu(trail.trailName)
+                  }
+              }
+            >
               <div className="info_wrapper">
                 <h3 className="top" dangerouslySetInnerHTML={{__html: trail.title.rendered}} />
                 <div className="info">
