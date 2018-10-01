@@ -3,6 +3,8 @@ import cookies from 'next-cookies'
 import { fitBounds } from 'google-map-react/utils'
 import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js'
 import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js'
+import { connect } from 'react-redux'
+import { toggleMenus, togglePopupMenus } from '../../redux/actions'
 
 import alpineCoordinates from '../../data/alpine-coordinates'
 import desertCoordinates from '../../data/desert-coordinates'
@@ -10,14 +12,85 @@ import canyonCoordinates from '../../data/canyon-coordinates'
 import mesaCoordinates from '../../data/mesa-coordinates'
 import urbanCoordinates from '../../data/urban-coordinates'
 
+
+// Redux
+const mapStateToProps = (state, ownProps) => {
+  return {
+    popupMenus: state.map.popupMenus
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    togglePopupMenus: (popups) => dispatch(togglePopupMenus(popups))
+  };
+};
+
+
 class Region extends React.Component {
   constructor(props) {
     super(props)
     this.state = { menu: false }
     this.toggleMenu = this.toggleMenu.bind(this)
+    this.togglePopupMenu = this.togglePopupMenu.bind(this)
   }
-  toggleMenu() {
+  toggleMenu(src) {
     this.setState({menu: !this.state.menu})
+  }
+  togglePopupMenu(region) {
+    //if there is a popup open, but it is not the one that is clicked, close the current
+    if (this.props.popupMenus.regionPopup == true && !(this.props.popupMenus.activeRegionPopup == region)) {
+      if (this.props.popupMenus.activePopupType == 'region') {
+        this.props.togglePopupMenus({
+          trailPopup: false,
+          regionPopup: 'exiting'
+        })
+      }
+      else {
+        this.props.togglePopupMenus({
+          regionPopup: false,
+          trailPopup: 'exiting'
+        })
+      }
+      this.props.togglePopupMenus({
+        regionPopup: false,
+        trailPopup: false,
+        activeRegionPopup: '',
+        activeTrailPopup: '',
+        activePopupType: ''
+      })
+    }
+    else {
+      // no popup, check this one
+      if (this.props.popupMenus.regionPopup == true) {
+        if (this.props.popupMenus.activePopupType == 'region') {
+          this.props.togglePopupMenus({
+            trailPopup: false,
+            regionPopup: 'exiting'
+          })
+        }
+        else {
+          this.props.togglePopupMenus({
+            regionPopup: false,
+            trailPopup: 'exiting'
+          })
+        }
+        setTimeout( () => this.props.togglePopupMenus({
+          regionPopup: false,
+          trailPopup: false,
+          activeRegionPopup: '',
+          activeTrailPopup: '',
+          activePopupType: ''
+        }), 500)
+      } else {
+        this.props.togglePopupMenus({
+          regionPopup: true,
+          trailPopup: false,
+          activeRegionPopup: region,
+          activeTrailPopup: '',
+          activePopupType: 'region'
+        })
+      }
+    }
   }
   render() {
     const region = this.props.region
@@ -76,22 +149,34 @@ class Region extends React.Component {
         }
         {this.props.zoomLevel < 12 &&
           <Marker
+            className={this.props.popupMenus.regionPopup ? "active region_popup" : "region_popup"}
             position={{lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng}}
             icon={{
               url: region.markerIcon,
               scaledSize: new google.maps.Size(68,68)
             }}
-            onClick={this.toggleMenu}
+            onClick={ () => {
+              // this.toggleMenu()
+              this.props.onRegionToggle(this);
+              this.togglePopupMenu(region.regionName)
+              }
+            }
           >
             {
-              this.state.menu &&
-              <InfoWindow onCloseClick={() => this.setState({menu: false})}>
-                <div className="info_wrapper">
-                  <h3>{region.regionName}</h3>
-                  <img src={region.regionImage} alt=""/>
-                  <p className="explore" onClick={() => this.props.zoom( 12, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}>Explore Region</p>
-                </div>
-              </InfoWindow>
+              this.state.menu && this.props.popupMenus.regionPopup &&
+                <InfoWindow onCloseClick={() => {
+                    this.props.onRegionToggle(this);
+                    this.togglePopupMenu(region.regionName)
+                    //this.setState({menu: false})
+                  }
+                }
+                >
+                  <div className="info_wrapper">
+                    <h3>{region.regionName}</h3>
+                    <img src={region.regionImage} alt=""/>
+                    <p className="explore" onClick={() => this.props.zoom( 12, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}>Explore Region</p>
+                  </div>
+                </InfoWindow>
             }
           </Marker>
         }
@@ -110,4 +195,4 @@ class Region extends React.Component {
   }
 }
 
-export default Region
+export default connect(mapStateToProps, mapDispatchToProps)(Region)
