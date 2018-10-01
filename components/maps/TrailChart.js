@@ -81,6 +81,8 @@ class TrailChart extends React.Component {
     this.setState({marker: location})
   }
   shouldComponentUpdate(nextProps, nextState) {
+    console.log({nextProps, nextState})
+    if (this.props !== nextProps) return true
     if (this.state === nextState) return false
     else return true
   }
@@ -155,7 +157,9 @@ class TrailChart extends React.Component {
                 />
               }
             </GoogleMap>
-            <ElevationChart coordinates={coordinates.slice(0).reverse()} trail={this.props.trail} areaStrokeColor={trailColor} pathMarker={this.pathMarker} />
+            {trail.custom_data.recommendedUse[0].value != "ohv" &&
+              <ElevationChart coordinates={coordinates.slice(0).reverse()} trail={this.props.trail} areaStrokeColor={trailColor} pathMarker={this.pathMarker} />
+            }
           </React.Fragment>
           :
           <p>Coordinates Missing {console.log(this.props)}</p>
