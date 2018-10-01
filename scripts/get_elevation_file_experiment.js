@@ -16,22 +16,24 @@ async function run() {
     const name = json.features[0].attributes["TRAIL_NAME"]
     const filename = name.toLowerCase().replace(/ /g, "_")
     const increments = Math.ceil( (coordinates.length / 200) )
-
-    for (let i = 0; i < coordinates.length; i++) {
-      const { data: { results: [ { elevation: elevation } ] } } = await axios.get(`https://maps.googleapis.com/maps/api/elevation/json?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&locations=
-        ${coordinates[i].lat},${coordinates[i].lng}
-      `)
-      coordinates[i].elevation = elevation
-      await timeout(100);
-      console.log(`Point finished ${i} out of ${coordinates.length}`);
+    for (let i = 0; i < increments; i++) {
+      console.log(coordinates.splice(200))
     }
+    // for (let i = 0; i < coordinates.length; i++) {
+    //   const { data: { results: [ { elevation: elevation } ] } } = await axios.get(`https://maps.googleapis.com/maps/api/elevation/json?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&locations=
+    //     ${coordinates[i].lat},${coordinates[i].lng}
+    //   `)
+    //   coordinates[i].elevation = elevation
+    //   await timeout(100);
+    //   console.log(`Point finished ${i} out of ${coordinates.length}`);
+    // }
 
-    // Create final trail variable to store
-    const trail = { name, filename, coordinates }
-    // Write trail file
-    fs.writeFile(`./trails/${filename}.json`, trail, 'utf8', () => {
-      console.log(`Wrote ${filename} into a new file!`)
-    });
+    // // Create final trail variable to store
+    // const trail = JSON.stringify({ name, filename, coordinates })
+    // // Write trail file
+    // fs.writeFile(`./trails/${filename}.json`, trail, 'utf8', () => {
+    //   console.log(`Wrote ${filename} into a new file!`)
+    // });
 
    });
 }

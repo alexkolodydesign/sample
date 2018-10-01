@@ -25,7 +25,7 @@ async function run() {
     }
 
     // Create final trail variable to store
-    const trail = { name, filename, coordinates }
+    const trail = JSON.stringify({ name, filename, coordinates })
     // Write trail file
     fs.writeFile(`./trails/${filename}.json`, trail, 'utf8', () => {
       console.log(`Wrote ${filename} into a new file!`)
