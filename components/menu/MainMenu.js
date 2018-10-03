@@ -57,8 +57,8 @@ const MainMenu = props =>
         display: grid;
         grid-template-columns: repeat(4, 1fr);
       }
-      .magenta { background: #ed264b; }
-      .orange { background: #ff5a00; }
+      .magenta { background: #d2144b; }
+      .orange { background: #ff9100; }
       .purple { background: #662f8e; }
       .aqua { background: #00a89c; }
 
