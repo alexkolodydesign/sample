@@ -156,6 +156,16 @@ class TrailChart extends React.Component {
                   position={this.state.marker}
                 />
               }
+              {
+                trail.custom_data.trailhead_latitude && trail.custom_data.trailhead_longitude &&
+                  <Marker
+                    position={{ lat: Number(this.props.trail.custom_data.trailhead_latitude), lng: Number(this.props.trail.custom_data.trailhead_longitude) }}
+                    icon={{
+                      url: "/static/images/trailhead-icon.png",
+                      scaledSize: new google.maps.Size(20 ,25)
+                    }}
+                  />
+              }
             </GoogleMap>
             {trail.custom_data.recommendedUse[0].value != "ohv" &&
               <ElevationChart coordinates={coordinates.slice(0).reverse()} trail={this.props.trail} areaStrokeColor={trailColor} pathMarker={this.pathMarker} />
