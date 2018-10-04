@@ -15,12 +15,16 @@ const TrailMainMenu = props =>
     </div>
     <div className="background"></div>
     <div className="wrapper">
-      <div className="utahElevated">
-        <img src="../../static/images/UTAH_LIFE_ELEVATED_RGB_navy-web.png" alt="Utah Life Elevated" />
+      <div className="footerLogos">
+        <img src="/static/images/UTAH_LIFE_ELEVATED_RGB_navy-web.png" alt="Utah Life Elevated" />
+        <img src="/static/images/washco-logo.png" alt="Washington County, Utah" />
       </div>
-      <TrailList />
-      <GPS />
-      <Settings />
+      <div className='menuWrapper trailMenuWrapper'>
+        <div />
+        <TrailList />
+        <GPS />
+        <Settings />
+      </div>
 
     </div>
     <style jsx>{`
@@ -33,15 +37,24 @@ const TrailMainMenu = props =>
         padding: 1.5rem 0;
         .wrapper {
           display: grid;
-          grid-template-columns: 1fr 10rem 5rem 5rem 5rem 5rem;
+          grid-template-columns: 1fr;
           align-items: center;
           justify-items: center;
           position: relative;
+          .footerLogos {
+            grid-row-start: 2;
+          }
+          .menuWrapper {
+            display: flex;
+            margin: 1rem 0;
+            align-items: center;
+            justify-items: center;
+          }
         }
       }
-      .utahElevated {
+      .footerLogos {
         position: relative;
-        z-index: 100;
+        z-index: 10;
         img {
           max-width: 80px;
           margin-right: 12px;
@@ -74,10 +87,12 @@ const TrailMainMenu = props =>
         .menu {
           padding: 2rem 0;
           .wrapper {
-            grid-template-columns: 1fr 28rem repeat(2, 14rem) repeat(2, 6.5rem) 10px;
+            .menuWrapper {
+              grid-template-columns: 1fr 28rem repeat(2, 14rem) repeat(2, 6.5rem) 10px;
+            }
           }
         }
-        .utahElevated {
+        .footerLogos {
           img {
             max-width: 150px;
           }
@@ -87,7 +102,15 @@ const TrailMainMenu = props =>
         .menu {
           padding: 2.5rem 0;
           .wrapper {
-            grid-template-columns: 1fr 28rem repeat(2, 14rem) repeat(2, 6.5rem) 10px;
+            grid-template-columns: 27% 1fr;
+            .footerLogos {
+              grid-row-start:1;
+            }
+            .menuWrapper {
+              display:grid;
+              grid-template-columns: 1fr 15rem repeat(2, 6.5rem);
+              width: 100%;
+            }
           }
         }
       }
