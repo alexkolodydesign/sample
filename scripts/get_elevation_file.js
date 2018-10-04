@@ -10,19 +10,21 @@ const timeout = ms => {
 
 async function run() {
 
-  fs.readFile( './GrassValleyATV.json', async (err, data) => {
+  fs.readFile( './WestRimTrail.json', async (err, data) => {
     const json = JSON.parse(data)
     const coordinates = json.features.map(feature => ({ lat: feature.attributes.POINT_Y, lng: feature.attributes.POINT_X }) )
     const name = json.features[0].attributes["TRAIL_NAME"] || json.features[0].attributes["Trail_Name"]
     const filename = name.toLowerCase().replace(/ /g, "_")
-    const fragments = chunkArray(coordinates, 150);
+    const chunkSize = 150;
+    const fragments = chunkArray(coordinates, chunkSize);
     let enhancedCoordinates = []
 
     for (let i = 0; i < fragments.length; i++) {
       // coordinates[i].elevation = elevation
       let url = `https://maps.googleapis.com/maps/api/elevation/json?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&locations=`
+      var baseCoordCount = chunkSize * i; // need this so loop through each fragment doesnt start coordinate check back at 0
       for (let k = 0; k < fragments[i].length; k++) {
-        url += `${coordinates[i].lat},${coordinates[i].lng}`
+        url += `${coordinates[baseCoordCount+k].lat},${coordinates[baseCoordCount+ k].lng}`
         if (k === (fragments[i].length - 1)) {
           console.log("LAST POINT")
         } else {
