@@ -20,8 +20,9 @@ const MainMenu = props =>
         <img src="/static/images/washco-logo.png" alt="Washington County, Utah" />
       </div>
       <div className='menuWrapper'>
-        <SelectTrailType />
-        <FilterTrails />
+        { !props.trailPage && <SelectTrailType /> }
+        { !props.trailPage && <FilterTrails /> }
+        { props.trailPage && <div/> }
         <TrailList />
         <GPS />
         <Settings />
@@ -108,7 +109,7 @@ const MainMenu = props =>
               grid-row-start:1;
             }
             .menuWrapper {
-              grid-template-columns: 1fr 28rem repeat(2, 14rem) repeat(2, 6.5rem) 10px;
+              grid-template-columns: ${!props.trailPage ? '1fr 28rem repeat(2, 14rem) repeat(2, 6.5rem) 10px' : '100% 14rem 6.5rem 6.5rem'};
             }
           }
         }
