@@ -75,6 +75,8 @@ export const map = (state = defaultState, action) => {
       return { ...defaultState, zoom: action.zoom }
     case 'HIGHLIGHT_TRAIL':
       return { ...state, highlightTrail: action.slug }
+    case 'HIGHLIGHT_REGION':
+      return { ...state, highlightRegion: action.name }
     case 'TOGGLE_MENUS':
       return { ...state, menus: action.menus }
     case 'TOGGLE_POPUPMENUS':

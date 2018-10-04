@@ -16,7 +16,8 @@ import urbanCoordinates from '../../data/urban-coordinates'
 // Redux
 const mapStateToProps = (state, ownProps) => {
   return {
-    popupMenus: state.map.popupMenus
+    popupMenus: state.map.popupMenus,
+    highlightRegion: state.map.highlightRegion
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -135,7 +136,7 @@ class Region extends React.Component {
             <Polygon
               paths={coordinates}
               options={{
-                strokeColor:"#FFF",
+                strokeColor: this.props.highlightRegion == region.regionName ? "#000" : "#FFF",
                 strokeOpacity:1,
                 strokeWeight:3,
                 fillColor:"#ffffff",
@@ -143,7 +144,7 @@ class Region extends React.Component {
               }}
               onMouseOver={function() { this.setOptions({fillOpacity: .5}) }}
               onMouseOut={function() { this.setOptions({fillOpacity: 0}) }}
-              onClick={() => this.props.zoom( 13, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}
+              onClick={() => this.props.zoom( 13, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng}, region.regionName )}
             />
           </React.Fragment>
         }
