@@ -16,7 +16,7 @@ export default class SimilarTrails extends React.Component {
       const {data: trail} = await axios.get(`/api/trail/${this.props.similarTrails[i].post_name}`)
       trails.push(trail)
     }
-    console.log(trails)
+    //console.log(trails)
     this.setState({ trails })
   }
   render() {
