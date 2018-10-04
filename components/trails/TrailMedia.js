@@ -15,7 +15,7 @@ const TrailMedia = props =>
   <div className="background_pattern" style={{position: "relative"}}>
     <div style={{position: "absolute", top: "0", width: "100%", height: "1rem", display: "grid", gridTemplateColumns: "repeat(4, 1fr)"}}>
       <div style={{background: "#ec1e79"}}></div>
-      <div style={{background: "#ff5a00"}}></div>
+      <div style={{background: "#ff9100"}}></div>
       <div style={{background: "#662f8e"}}></div>
       <div style={{background: "#00a89c"}}></div>
     </div>

@@ -140,7 +140,7 @@ class RegionTrail extends React.Component {
           trailColor = '#ed264c'
           break
         case 'biking':
-          trailColor = '#ff5a00'
+          trailColor = '#ff9100'
           break
         case 'equestrian':
           trailColor = '#662f8e'

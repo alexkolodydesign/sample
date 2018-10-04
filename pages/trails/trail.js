@@ -34,6 +34,7 @@ const Trail = props => {
             </button>
           </a>
         </Link>
+
         <h1 dangerouslySetInnerHTML={{__html: trail.title.rendered}} />
       </div>
       <div className="wrapper trail">
