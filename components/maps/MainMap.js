@@ -1,7 +1,7 @@
 import axios from "axios"
 import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps"
 import { connect } from 'react-redux'
-import { goToSystem } from '../../redux/actions'
+import { goToSystem, highlightRegion } from '../../redux/actions'
 import { filterAction } from '../../redux/filterAction'
 import Region from './Region'
 import RegionTrail from './RegionTrail'
@@ -21,6 +21,9 @@ const mapDispatchToProps = dispatch => {
   return {
     goToSystem: (zoom, center) => {
       dispatch(goToSystem(zoom, center));
+    },
+    highlightRegion: name => {
+      dispatch(highlightRegion(name))
     }
   };
 };
@@ -34,7 +37,8 @@ class Map extends React.Component {
     this.onTrailToggle = this.onTrailToggle.bind(this)
     this.state = { activeRegion: {}, activeTrail: {} }
   }
-  zoom(zoom, center) {
+  zoom(zoom, center, regionName) {
+    this.props.highlightRegion(regionName)
     this.props.goToSystem(zoom, center)
   }
   onRegionToggle(region) {
