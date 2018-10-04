@@ -80,7 +80,7 @@ export const map = (state = defaultState, action) => {
     case 'TOGGLE_POPUPMENUS':
       return { ...state, popupMenus: action.popups }
     case 'TOGGLE_FIRST_TIME_USER':
-      return { ...state, firstTimeUser: action.status }
+      return { ...state, map: { ...state.map, firstTimeUser: action.status } }
     case 'CHANGE_MAP_STYLE':
       return { ...state, mapStyle: action.style }
     default:

@@ -9,21 +9,38 @@ import TrailSystemGuide from '../components/menu/TrailSystemGuide'
 import MainMenu from '../components/menu/MainMenu'
 import EventList from '../components/menu/EventList'
 
-const Dashboard = props => {
-  // First Time Users Go To OnBoarding!
-  const firstTimeUser = props.firstTimeUser == true || props.firstTimeUser == 'true' ? true : false
-  if (firstTimeUser) return (<OnBoarding events={props.event} regions={props.regions} />)
-  return (
-    <Layout>
-      <Head/>
-      <MainMapSetup regions={props.regions} />
-      {props.event.events &&
-          <EventList events={props.event} />
-      }
-      <TrailSystemGuide />
-      <MainMenu />
-    </Layout>
-  )
+class Dashboard extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      firstTimeUser: this.props.map.firstTimeUser == true || this.props.map.firstTimeUser == 'true' ? true : false
+    }
+    console.log(this.props)
+  }
+  static getDerivedStateFromProps(props, state) {
+    if (process.browser) {
+      let { firstTimeUser } = cookies(document)
+      if (firstTimeUser === undefined) firstTimeUser = true
+      if (firstTimeUser == 'false') firstTimeUser = false
+      if (firstTimeUser == 'true') firstTimeUser = true
+      return { firstTimeUser }
+    }
+    return state
+  }
+  render() {
+    // First Time Users Go To OnBoarding!
+    const { firstTimeUser } = this.state
+    if (firstTimeUser) return (<OnBoarding events={this.props.event} regions={this.props.regions} />)
+    return (
+      <Layout>
+        <Head/>
+        <MainMapSetup regions={this.props.regions} />
+        {this.props.event.events && <EventList events={this.props.event} />}
+        <TrailSystemGuide />
+        <MainMenu />
+      </Layout>
+    )
+  }
 }
 
 Dashboard.getInitialProps = async props => {
@@ -52,7 +69,17 @@ Dashboard.getInitialProps = async props => {
 };
 
 export default nextConnect((state, res) => {
-  state.map.firstTimeUser = res.firstTimeUser
-  state.trails = res.trails
-  return state
+  if (res) {
+    let { firstTimeUser } = cookies(res)
+    if (firstTimeUser === undefined) firstTimeUser = true
+    state.map.firstTimeUser = firstTimeUser
+    state.trails = res.trails
+    return state
+  } else {
+    let { firstTimeUser } = cookies(document)
+    if (firstTimeUser === undefined) firstTimeUser = true
+    state.map.firstTimeUser = firstTimeUser
+    state.trails = res.trails
+    return state
+  }
 })(Dashboard);
