@@ -174,7 +174,10 @@ class Region extends React.Component {
                 >
                   <div className="info_wrapper">
                     <h3>{region.regionName}</h3>
-                    <img src={region.regionImage} alt=""/>
+                    <p>{region.trail_count} Trails</p>
+                    { region.regionImage &&
+                      <img src={region.regionImage} alt=""/>
+                    }
                     <p className="explore" onClick={() => this.props.zoom( 12, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}>Explore Region</p>
                   </div>
                 </InfoWindow>

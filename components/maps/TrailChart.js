@@ -167,7 +167,7 @@ class TrailChart extends React.Component {
                   />
               }
             </GoogleMap>
-            {(trail.custom_data.recommendedUse[0] && trail.custom_data.recommendedUse[0].value != "ohv") || !trail.custom_data.recommendedUse[0] &&
+            {(trail.custom_data.recommendedUse[0] && trail.custom_data.recommendedUse[0].value != "ohv") &&
               <ElevationChart coordinates={coordinates.slice(0).reverse()} trail={this.props.trail} areaStrokeColor={trailColor} pathMarker={this.pathMarker} />
             }
           </React.Fragment>
