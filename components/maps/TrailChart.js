@@ -32,6 +32,7 @@ class TrailChart extends React.Component {
       center: {lat: 37.2, lng: -113.432},
       mapStyle: 'roadmap',
       coordinates: [],
+      trailhead: (this.props.trail.custom_data.trailhead_latitude && this.props.trail.custom_data.trailhead_longitude ? {"lat":Number(this.props.trail.custom_data.trailhead_latitude), "lng":Number(this.props.trail.custom_data.trailhead_longitude)} : false ),
       loading: true
     }
     this.setCenterAndZoom = this.setCenterAndZoom.bind(this)
@@ -86,7 +87,7 @@ class TrailChart extends React.Component {
     if (this.state === nextState) return false
     else return true
   }
-  setCenterAndZoom(coords) {
+  setCenterAndZoom(coords, trailhead) {
     // Make new bounds
     let newBounds = new LatLngBounds()
     // Add LatLng points to the new bounding area
@@ -99,6 +100,13 @@ class TrailChart extends React.Component {
         newBounds.extend(new LatLng(bound.lat, bound.lng))
       }
     })
+
+    // add trailhead point if available
+    if (trailhead) {
+      newBounds.extend(new LatLng(trailhead.lat, trailhead.lng))
+    }
+
+
     // Get the new center and zoom from new bounds
     const fit = fitBounds(
       {nw: newBounds.getNorthWest(), se: newBounds.getSouthEast()},
@@ -142,7 +150,7 @@ class TrailChart extends React.Component {
               center={this.state.center}
               googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&v=3.exp&libraries=geometry,drawing,places"
               // Only do this once. (TODO: look for a better event for this function like map loaded or something)
-              onTilesLoaded={() => !this.state.mapIsCentered ? this.setCenterAndZoom(coordinates) : null}
+              onTilesLoaded={() => !this.state.mapIsCentered ? this.setCenterAndZoom(coordinates, this.state.trailhead) : null}
               options={{
                 styles: this.state.mapStyle
               }}

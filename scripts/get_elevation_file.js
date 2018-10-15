@@ -9,15 +9,13 @@ const timeout = ms => {
 };
 
 async function run() {
-  //fs.readdir('./Rest_of_Split_Missing_Broken/', function(err, files) {
-/*
+  fs.readdir('./ReverseElevation/', function(err, files) {
     if (err) {
       console.error("could not list dir: ", err);
       process.exit(1);
     }
-*/
-    //files.forEach(function(file, index) {
-      fs.readFile( "Rest_of_Split_Missing_Broken/BarrelRollTrailUpdated.json", async (err, data) => {
+    files.forEach(function(file, index) {
+      fs.readFile( "ReverseElevation/"+file, async (err, data) => {
         const json = JSON.parse(data)
         const coordinates = json.features.map(feature => ({ lat: feature.attributes.POINT_Y, lng: feature.attributes.POINT_X }) )
         const name = json.features[0].attributes["TRAIL_NAME"] || json.features[0].attributes["Trail_Name"] || json.features[0].attributes["ROUTE_NAME"] || json.features[0].attributes["Route_Name"]
@@ -25,8 +23,6 @@ async function run() {
         const chunkSize = 150;
         const fragments = chunkArray(coordinates, chunkSize);
         let enhancedCoordinates = []
-
-console.log('coordinates: ', coordinates);
 
         for (let i = 0; i < fragments.length; i++) {
           // coordinates[i].elevation = elevation
@@ -40,29 +36,22 @@ console.log('coordinates: ', coordinates);
               url += `|`
             }
           }
-console.log("here 1");
-console.log("URL:  ", url);
           const { data: { results } } = await axios.get(url)
-console.log("here 2");
           const newCoords = results.map(result => ({ lat: result.location.lat, lng: result.location.lng, elevation: result.elevation }))
-console.log("here 3");
           enhancedCoordinates.push(...newCoords)
-console.log("here 4");
           await timeout(100);
-          console.log(`Fragment finished ${i + 1} out of ${fragments.length}`);
         }
-console.log("here 5");
 
         // // Create final trail variable to store
         const trail = JSON.stringify({ name, filename, coordinates: enhancedCoordinates })
         // Write trail file
-        fs.writeFile(`./trails/${filename}.json`, trail, 'utf8', () => {
+        fs.writeFile(`./trails/ReverseElevation/${filename}.json`, trail, 'utf8', () => {
           console.log(`Wrote ${filename} into a new file!`)
         });
 
        });
-    //})
-  //})
+    })
+  })
 }
 
 
