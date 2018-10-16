@@ -109,8 +109,6 @@ class Map extends React.Component {
     const zoomState = this.zoom
     const zoomLevel = this.props.map.zoom
     const trails = filterAction(this.props.trails, this.props.map.filters, zoomLevel)
-    console.log("map regions: ", regions)
-    regions.map((region, k) => { region.trail_count = 0; }) // set trail count to 0
     return (
       <GoogleMap
         zoom={this.props.map.zoom}
@@ -126,12 +124,6 @@ class Map extends React.Component {
       >
         {this.props.map.gps && <UserLocation />}
         {trails.map((trail, k) => {
-          // track number of trails per region so we can show count in region popup
-          console.log("trail region: ", trail);
-          var trail_region = trail.regions[0] - 2;
-          if (trail_region && regions[trail_region]) {
-            regions[trail_region].trail_count++;
-          }
           <RegionTrail onTrailToggle={this.onTrailToggle} trail={trail} key={k} metricType={this.props.metricType}  />
           }
         )}

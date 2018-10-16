@@ -174,7 +174,7 @@ class Region extends React.Component {
                 >
                   <div className="info_wrapper">
                     <h3>{region.regionName}</h3>
-                    <p>{region.trail_count} Trails</p>
+                    <p>{region.trailCount} Trails</p>
                     { region.regionImage &&
                       <img src={region.regionImage} alt=""/>
                     }
