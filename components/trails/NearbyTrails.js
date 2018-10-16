@@ -25,7 +25,11 @@ export default class NearbyTrails extends React.Component {
         <h2>Nearby Trails:</h2>
         <div className="nearby_trails">
           {this.state.trails && this.state.trails.length > 1 && this.state.trails.map((trail, k) => {
-            const recommendedUse = trail.custom_data.recommendedUse != "" ? trail.custom_data.recommendedUse : []
+            trail = trail.trail;
+            const recommendedUse = (trail.custom_data.recommendedUse && trail.custom_data.recommendedUse != "") ? trail.custom_data.recommendedUse : []
+            // const recommendedUse = 'hiking'
+            // console.log("nearby trail: ", trail)
+            // console.log("customd data: ", nearbyTrail)
             return (
               <div className="trail" key={k}>
                 <div className="details">
