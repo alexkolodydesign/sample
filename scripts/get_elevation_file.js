@@ -9,13 +9,13 @@ const timeout = ms => {
 };
 
 async function run() {
-  fs.readdir('./ReverseElevation/', function(err, files) {
+  fs.readdir('./GetElevation/', function(err, files) {
     if (err) {
       console.error("could not list dir: ", err);
       process.exit(1);
     }
     files.forEach(function(file, index) {
-      fs.readFile( "ReverseElevation/"+file, async (err, data) => {
+      fs.readFile( "GetElevation/"+file, async (err, data) => {
         const json = JSON.parse(data)
         const coordinates = json.features.map(feature => ({ lat: feature.attributes.POINT_Y, lng: feature.attributes.POINT_X }) )
         const name = json.features[0].attributes["TRAIL_NAME"] || json.features[0].attributes["Trail_Name"] || json.features[0].attributes["ROUTE_NAME"] || json.features[0].attributes["Route_Name"]
@@ -45,7 +45,7 @@ async function run() {
         // // Create final trail variable to store
         const trail = JSON.stringify({ name, filename, coordinates: enhancedCoordinates })
         // Write trail file
-        fs.writeFile(`./trails/ReverseElevation/${filename}.json`, trail, 'utf8', () => {
+        fs.writeFile(`./trails/${filename}.json`, trail, 'utf8', () => {
           console.log(`Wrote ${filename} into a new file!`)
         });
 
