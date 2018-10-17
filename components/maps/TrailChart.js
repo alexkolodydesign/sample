@@ -96,7 +96,7 @@ class TrailChart extends React.Component {
         bound.forEach(point => {
           newBounds.extend(new LatLng(point.lat, point.lng))
         })
-      } else {
+      } else if (bound !== null) {
         newBounds.extend(new LatLng(bound.lat, bound.lng))
       }
     })

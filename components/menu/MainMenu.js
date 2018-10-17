@@ -6,7 +6,7 @@ import Settings from './Settings'
 
 
 const MainMenu = props =>
-  <div className="menu">
+  <div className={props.trailPage ? 'trailMenu menu' : 'menu'}>
     <div className="colors">
       <div className="magenta"></div>
       <div className="orange"></div>
@@ -32,6 +32,9 @@ const MainMenu = props =>
     <style jsx>{`
       .menu {
         position: absolute;
+        &.trailMenu {
+          position: fixed;
+        }
         bottom: 0;
         left: 0;
         z-index: 2;
