@@ -8,6 +8,7 @@ export const defaultState = {
       mesa: true,
       alpine: true
     },
+    highlightRegion: "",
     mapStyle: "roadmap",
     metricType: "imperial",
     zoom: 8,

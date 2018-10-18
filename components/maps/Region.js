@@ -140,11 +140,12 @@ class Region extends React.Component {
                 strokeOpacity:1,
                 strokeWeight:3,
                 fillColor:"#ffffff",
-                fillOpacity:0
+                fillOpacity:0,
+                zIndex: this.props.highlightRegion == region.regionName ? "2" : "1",
               }}
               onMouseOver={function() { this.setOptions({fillOpacity: .5}) }}
               onMouseOut={function() { this.setOptions({fillOpacity: 0}) }}
-              onClick={() => this.props.zoom( 13, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng}, region.regionName )}
+              onClick={() => this.props.zoom( 11, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng}, region.regionName )}
             />
           </React.Fragment>
         }
