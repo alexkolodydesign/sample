@@ -82,7 +82,6 @@ class TrailChart extends React.Component {
     this.setState({marker: location})
   }
   shouldComponentUpdate(nextProps, nextState) {
-    console.log({nextProps, nextState})
     if (this.props !== nextProps) return true
     if (this.state === nextState) return false
     else return true
