@@ -238,16 +238,17 @@ class RegionTrail extends React.Component {
                     height: 100%;
                     grid-template-columns: 1fr 1fr;
                     grid-template-rows: 10% 45% 45%;
-                    grid-template-areas: "top top" "info info" "image icons";
+                    grid-template-areas: "top top top" "info info info" "image image icons";
                     min-width: 300px;
                     min-height: 250px;
                     width: 100%;
                     .top {
                       grid-area: top;
-
+                      margin: 0;
                     }
                     .info {
                       grid-area: info;
+                      padding-top: 1rem;
                     }
                     .image {
                       grid-area: image;

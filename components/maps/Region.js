@@ -16,7 +16,8 @@ import urbanCoordinates from '../../data/urban-coordinates'
 // Redux
 const mapStateToProps = (state, ownProps) => {
   return {
-    popupMenus: state.map.popupMenus
+    popupMenus: state.map.popupMenus,
+    highlightRegion: state.map.highlightRegion
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -135,15 +136,16 @@ class Region extends React.Component {
             <Polygon
               paths={coordinates}
               options={{
-                strokeColor:"#FFF",
+                strokeColor: this.props.highlightRegion == region.regionName ? "#000" : "#FFF",
                 strokeOpacity:1,
                 strokeWeight:3,
                 fillColor:"#ffffff",
-                fillOpacity:0
+                fillOpacity:0,
+                zIndex: this.props.highlightRegion == region.regionName ? "2" : "1",
               }}
               onMouseOver={function() { this.setOptions({fillOpacity: .5}) }}
               onMouseOut={function() { this.setOptions({fillOpacity: 0}) }}
-              onClick={() => this.props.zoom( 13, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}
+              onClick={() => this.props.zoom( 11.75, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng}, region.regionName )}
             />
           </React.Fragment>
         }
@@ -173,7 +175,10 @@ class Region extends React.Component {
                 >
                   <div className="info_wrapper">
                     <h3>{region.regionName}</h3>
-                    <img src={region.regionImage} alt=""/>
+                    <p>{region.trailCount} Trails</p>
+                    { region.regionImage &&
+                      <img src={region.regionImage} alt=""/>
+                    }
                     <p className="explore" onClick={() => this.props.zoom( 12, {lat: region.markerCoordinates.lat, lng: region.markerCoordinates.lng} )}>Explore Region</p>
                   </div>
                 </InfoWindow>

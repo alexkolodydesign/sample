@@ -6,6 +6,7 @@ import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js'
 
 import TrailChart from './TrailChart'
 import ShareButtons from '../layout/ShareButtons'
+import DownloadGPS from '../layout/DownloadGPS'
 import printStyle from './mapstyles/print'
 
 
@@ -34,6 +35,7 @@ export default class TrailMap extends React.Component {
     return true
   }
   render() {
+    const linkToTrailHead = `https://www.google.com/maps/place/${this.props.trail.custom_data.trailhead_latitude || ''},${this.props.trail.custom_data.trailhead_longitude || ''}`
     return (
       <div className="trail_map">
         <div className="map_container">
@@ -51,10 +53,7 @@ export default class TrailMap extends React.Component {
             <img src="/static/images/trail/share.svg" alt="Event List"/>
             <span>Share Trail</span>
           </button>
-          <button>
-            <img src="/static/images/trail/download.svg" alt="Event List"/>
-            <span>Download GPS</span>
-          </button>
+          <DownloadGPS trail={this.props.trail} />
           <button onClick={
             async () => {
               this.toggleMapStyle()
@@ -64,11 +63,12 @@ export default class TrailMap extends React.Component {
               this.toggleMapStyle()
             }
           }>
-            <img src="/static/images/trail/print.svg" alt="Print Map"/> Print Map</button>
-          <button>
+            <img src="/static/images/trail/print.svg" alt="Print Map"/> Print Map
+          </button>
+          <a href={linkToTrailHead} target="_blank">
             <img src="/static/images/menu/gps.svg" alt="Directions"/>
             <span>Directions to Trail Head</span>
-          </button>
+          </a>
         </div>
         <div className="share_buttons">
           {this.state.shareButtons && <ShareButtons />}
@@ -102,7 +102,7 @@ export default class TrailMap extends React.Component {
             .share_buttons {
               margin-top: 1.5rem;
             }
-            button {
+            button, a {
               border: none;
               border-radius: 1rem;
               background: #3fa9f5;
@@ -117,9 +117,8 @@ export default class TrailMap extends React.Component {
               &:hover {
                 background: #0d93f2;
               }
-              &:last-of-type {
+              &:last-of-type:not(button) {
                 background: #262727;
-
                 grid-column-start: 1;
                 grid-column-end: 2;
                 grid-row-start: 1;
@@ -144,9 +143,9 @@ export default class TrailMap extends React.Component {
             .buttons {
               margin-top: 1.5rem;
               grid-template: 1fr 1fr / 1fr 1fr 1fr;
-              button {
+              a {
                 &:last-of-type {
-
+                  text-decoration: none;
                   // grid-column-start: 1;
                   // grid-column-end: 4;
                   // grid-row-start: 2;

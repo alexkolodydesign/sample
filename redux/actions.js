@@ -43,6 +43,10 @@ export const resetMap = () => dispatch => {
   return dispatch({ type: 'RESET_MAP', zoom })
 }
 export const highlightTrail = slug => dispatch => dispatch({ type: 'HIGHLIGHT_TRAIL' , slug })
+export const highlightRegion = name => dispatch => {
+  if (!name) return
+  return dispatch({ type: 'HIGHLIGHT_REGION' , name })
+}
 export const toggleFirstTimeUser = status => dispatch => dispatch({ type: 'TOGGLE_FIRST_TIME_USER', status })
 export const changeMapStyle = style => dispatch => dispatch({ type: 'CHANGE_MAP_STYLE', style })
 export const updateTrailCoords = (coords, slug) => dispatch => {

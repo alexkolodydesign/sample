@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import {goToSystem} from '../../redux/actions'
+import { goToSystem, highlightRegion } from '../../redux/actions'
 import { connect } from 'react-redux'
 
 // Redux
@@ -11,24 +11,40 @@ const mapStateToProps = (state, ownProps) => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    goToSystem: (zoom, center) => dispatch(goToSystem(zoom, center))
+    goToSystem: (zoom, center) => dispatch(goToSystem(zoom, center)),
+    highlightRegion: name => dispatch(highlightRegion(name))
   }
 }
 const TrailSystemGuide = props => {
   return (
     <div className="systems">
       <div>
-        <a className={props.system == "zion-national-park" && "active"} onClick={() => props.goToSystem(12, { lat: 37.251888, lng: -112.962010 })}>
+        <a className={props.system == "zion-national-park" && "active"} onClick={
+          () => {
+            props.highlightRegion('Canyon')
+            props.goToSystem(12, { lat: 37.251888, lng: -112.962010 })
+          }
+        }>
           Zion <span>National Park</span>
         </a>
       </div>
       <div>
-        <a className={props.system == "snow-canyon-state-park" && "active"} onClick={() => props.goToSystem(12, { lat: 37.204665, lng: -113.644752 })}>
+        <a className={props.system == "snow-canyon-state-park" && "active"} onClick={
+          () => {
+            props.highlightRegion('Urban')
+            props.goToSystem(12, { lat: 37.204665, lng: -113.644752 })
+          }
+        }>
           Snow Canyon <span>State Park</span>
         </a>
       </div>
       <div>
-        <a className={props.system == "gooseberry-mesa" && "active"} onClick={() => props.goToSystem(12, { lat: 37.142663, lng: -113.190518 })}>
+        <a className={props.system == "gooseberry-mesa" && "active"} onClick={
+          () => {
+            props.highlightRegion('Mesa')
+            props.goToSystem(12, { lat: 37.142663, lng: -113.190518 })
+          }
+        }>
           Gooseberry <span>Mesa</span>
         </a>
       </div>

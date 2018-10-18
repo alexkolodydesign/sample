@@ -10,7 +10,7 @@ import NearbyTrails from '../../components/trails/NearbyTrails'
 import TrailMedia from '../../components/trails/TrailMedia'
 import ScrollToTop from 'react-scroll-up'
 import { BarLoader } from 'react-spinners'
-import TrailMainMenu from '../../components/menu/TrailMainMenu'
+import MainMenu from '../../components/menu/MainMenu'
 
 
 const Trail = props => {
@@ -50,7 +50,7 @@ const Trail = props => {
         <img width="20" height="20" src="/static/images/scrollup.svg" alt="scroll to top" />
       </ScrollToTop>
 
-      <TrailMainMenu />
+      <MainMenu trailPage={true} />
 
       <style jsx>{`
         @media screen {

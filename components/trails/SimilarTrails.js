@@ -26,6 +26,7 @@ export default class SimilarTrails extends React.Component {
         <h2>Similar to This Trail:</h2>
         <div className="similar_trails">
           {this.state.trails && this.state.trails.length > 1 && this.state.trails.map((trail, k) => {
+            trail = trail.trail;
             const recommendedUse = trail.custom_data.recommendedUse != "" ? trail.custom_data.recommendedUse : []
             return (
               <div className="trail" key={k}>

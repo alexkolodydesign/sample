@@ -6,7 +6,7 @@ import Settings from './Settings'
 
 
 const MainMenu = props =>
-  <div className="menu">
+  <div className={props.trailPage ? 'trailMenu menu' : 'menu'}>
     <div className="colors">
       <div className="magenta"></div>
       <div className="orange"></div>
@@ -15,19 +15,26 @@ const MainMenu = props =>
     </div>
     <div className="background"></div>
     <div className="wrapper">
-      <div className="utahElevated">
+      <div className="footerLogos">
         <img src="/static/images/UTAH_LIFE_ELEVATED_RGB_navy-web.png" alt="Utah Life Elevated" />
+        <img src="/static/images/washco-logo.png" alt="Washington County, Utah" />
       </div>
-      <SelectTrailType />
-      <FilterTrails />
-      <TrailList />
-      <GPS />
-      <Settings />
+      <div className='menuWrapper'>
+        { !props.trailPage && <SelectTrailType /> }
+        { !props.trailPage && <FilterTrails /> }
+        { props.trailPage && <div/> }
+        <TrailList />
+        <GPS />
+        <Settings />
+      </div>
 
     </div>
     <style jsx>{`
       .menu {
         position: absolute;
+        &.trailMenu {
+          position: fixed;
+        }
         bottom: 0;
         left: 0;
         z-index: 2;
@@ -35,15 +42,24 @@ const MainMenu = props =>
         padding: 1.5rem 0;
         .wrapper {
           display: grid;
-          grid-template-columns: 1fr 10rem 5rem 5rem 5rem 5rem;
+          grid-template-columns: 1fr;
           align-items: center;
           justify-items: center;
           position: relative;
+          .footerLogos {
+            grid-row-start: 2;
+          }
+          .menuWrapper {
+            display: grid;
+            grid-template-columns: 1fr 10rem 5rem 5rem 5rem 5rem;
+            align-items: center;
+            justify-items: center;
+          }
         }
       }
-      .utahElevated {
+      .footerLogos {
         position: relative;
-        z-index: 100;
+        z-index: 10;
         img {
           max-width: 80px;
           margin-right: 12px;
@@ -76,10 +92,12 @@ const MainMenu = props =>
         .menu {
           padding: 2rem 0;
           .wrapper {
-            grid-template-columns: 1fr 28rem repeat(2, 14rem) repeat(2, 6.5rem) 10px;
+            .menuWrapper {
+              grid-template-columns: 1fr 28rem repeat(2, 14rem) repeat(2, 6.5rem) 10px;
+            }
           }
         }
-        .utahElevated {
+        .footerLogos {
           img {
             max-width: 150px;
           }
@@ -89,7 +107,13 @@ const MainMenu = props =>
         .menu {
           padding: 2.5rem 0;
           .wrapper {
-            grid-template-columns: 1fr 28rem repeat(2, 14rem) repeat(2, 6.5rem) 10px;
+            grid-template-columns: 27% 1fr;
+            .footerLogos {
+              grid-row-start:1;
+            }
+            .menuWrapper {
+              grid-template-columns: ${!props.trailPage ? '1fr 28rem repeat(2, 14rem) repeat(2, 6.5rem) 10px' : '100% 14rem 6.5rem 6.5rem'};
+            }
           }
         }
       }

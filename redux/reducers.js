@@ -1,50 +1,53 @@
 import { combineReducers } from 'redux'
 
 export const defaultState = {
-  activeRegions: {
-    urban: true,
-    canyon: true,
-    mesa: true,
-    alpine: true
-  },
-  mapStyle: "roadmap",
-  metricType: "imperial",
-  zoom: 8,
-  gps: false,
-  center: {lat: 37.327059, lng: -113.445826},
-  filters: {
-    trailType: {
-      hiking: true,
-      biking: true,
-      ohv: true,
-      equestrian: true
+  map: {
+    activeRegions: {
+      urban: true,
+      canyon: true,
+      mesa: true,
+      alpine: true
     },
-    season: "",
-    difficulty: {
-      default: "",
-      biking: "",
-      hiking: "",
-      ohv: "",
-      equestrian: ""
+    highlightRegion: "",
+    mapStyle: "roadmap",
+    metricType: "imperial",
+    zoom: 8,
+    gps: false,
+    center: {lat: 37.327059, lng: -113.445826},
+    filters: {
+      trailType: {
+        hiking: true,
+        biking: true,
+        ohv: true,
+        equestrian: true
+      },
+      season: "",
+      difficulty: {
+        default: "",
+        biking: "",
+        hiking: "",
+        ohv: "",
+        equestrian: ""
+      },
+      trailLength: null,
+      trailTraffic: "",
+      routeType: "",
+      exclude: ""
     },
-    trailLength: null,
-    trailTraffic: "",
-    routeType: "",
-    exclude: ""
-  },
-  menus: {
-    filterTrailsMenu: false,
-    trailsListMenu: false,
-    optionsMenu: false
-  },
-  popupMenus: {
-    trailPopup: false,
-    regionPopup: false,
-    activeRegionPopup: '',
-    activeTrailPopup: '',
-    activePopupType: ''
-  },
-  firstTimeUser: true
+    menus: {
+      filterTrailsMenu: false,
+      trailsListMenu: false,
+      optionsMenu: false
+    },
+    popupMenus: {
+      trailPopup: false,
+      regionPopup: false,
+      activeRegionPopup: '',
+      activeTrailPopup: '',
+      activePopupType: ''
+    },
+    firstTimeUser: true
+  }
 }
 
 export const map = (state = defaultState, action) => {
@@ -75,6 +78,8 @@ export const map = (state = defaultState, action) => {
       return { ...defaultState, zoom: action.zoom }
     case 'HIGHLIGHT_TRAIL':
       return { ...state, highlightTrail: action.slug }
+    case 'HIGHLIGHT_REGION':
+      return { ...state, highlightRegion: action.name }
     case 'TOGGLE_MENUS':
       return { ...state, menus: action.menus }
     case 'TOGGLE_POPUPMENUS':

@@ -36,7 +36,8 @@ exports.getRegionData = async (req, res) => {
         markerIcon: region.custom_data.markerIcon,
         markerCoordinates: { lat, lng },
         regionImage: region.custom_data.regionImage,
-        overlayImage: region.custom_data.region_background_image
+        overlayImage: region.custom_data.region_background_image,
+        trailCount: region.count
       }
     })
     return res.json(regionsArray);
