@@ -124,7 +124,7 @@ class Map extends React.Component {
       >
         {this.props.map.gps && <UserLocation />}
         {trails.map((trail, k) => {
-          <RegionTrail onTrailToggle={this.onTrailToggle} trail={trail} key={k} metricType={this.props.metricType}  />
+          return <RegionTrail onTrailToggle={this.onTrailToggle} trail={trail} key={k} metricType={this.props.metricType}  />
           }
         )}
         {regions.map((region, k) => {
