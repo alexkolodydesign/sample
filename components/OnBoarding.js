@@ -148,7 +148,7 @@ class OnBoarding extends React.Component {
               },
               {
                 title: "Settings",
-                content: <p>Switch from imperial to metric system, change map view, and more.</p>,
+                content: <p>Switch from standard to metric system, change map view, and more.</p>,
                 placement: "auto",
                 disableBeacon: true,
                 styles: {
