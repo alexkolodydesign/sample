@@ -15,7 +15,6 @@ class Dashboard extends React.Component {
     this.state = {
       firstTimeUser: this.props.map.firstTimeUser == true || this.props.map.firstTimeUser == 'true' ? true : false
     }
-    console.log(this.props)
   }
   static getDerivedStateFromProps(props, state) {
     if (process.browser) {

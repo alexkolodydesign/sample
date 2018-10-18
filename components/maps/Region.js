@@ -141,6 +141,7 @@ class Region extends React.Component {
                 strokeWeight:3,
                 fillColor:"#ffffff",
                 fillOpacity:0,
+                clickable: this.props.highlightRegion !== region.regionName,
                 zIndex: this.props.highlightRegion == region.regionName ? "2" : "1",
               }}
               onMouseOver={function() { this.setOptions({fillOpacity: .5}) }}
