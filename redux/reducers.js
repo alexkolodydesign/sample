@@ -103,6 +103,14 @@ export const trails = (state = [], action) => {
       if (matchingTrail) matchingTrail.coordinates = action.data.coords || ''
       else newState.push({ slug: action.data.slug, coordinates: action.data.coords })
       return newState
+    case 'UPDATE_CONNECTOR_TRAIL_COORDINATES':
+      const connState = [...state]
+      let matchTrail = connState.find(trail => {
+        if (trail.slug == action.data.slug) return true
+      })
+      if (matchTrail) matchTrail.connector_coordinates = action.data.coords || ''
+      else connState.push({ slug: action.data.slug, connector_coordinates: action.data.coords })
+      return connState
     default:
       return state
   }

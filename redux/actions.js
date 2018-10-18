@@ -53,4 +53,8 @@ export const updateTrailCoords = (coords, slug) => dispatch => {
   const data = {coords, slug }
   return dispatch({ type: 'UPDATE_TRAIL_COORDINATES', data })
 }
+export const updateConnectorTrailCoords = (coords, slug) => dispatch => {
+  const data = {coords, slug }
+  return dispatch({ type: 'UPDATE_CONNECTOR_TRAIL_COORDINATES', data })
+}
 export const initStore = (initialState = defaultState) => createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)))
