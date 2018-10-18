@@ -6,6 +6,7 @@ import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js'
 
 import TrailChart from './TrailChart'
 import ShareButtons from '../layout/ShareButtons'
+import DownloadGPS from '../layout/DownloadGPS'
 import printStyle from './mapstyles/print'
 
 
@@ -52,10 +53,7 @@ export default class TrailMap extends React.Component {
             <img src="/static/images/trail/share.svg" alt="Event List"/>
             <span>Share Trail</span>
           </button>
-          <button>
-            <img src="/static/images/trail/download.svg" alt="Event List"/>
-            <span>Download GPS</span>
-          </button>
+          <DownloadGPS trail={this.props.trail} />
           <button onClick={
             async () => {
               this.toggleMapStyle()
