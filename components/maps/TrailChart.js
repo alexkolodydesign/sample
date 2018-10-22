@@ -46,7 +46,11 @@ class TrailChart extends React.Component {
     this.setConnectorTrailCoordinates = this.setConnectorTrailCoordinates.bind(this)
   }
   static getDerivedStateFromProps(props, state) {
-    return state.mapStyle = props.mapStyle
+    const newState = {...state}
+    newState.mapStyle = props.mapStyle
+    // TODO: refactor setConnectorTrailCoordinates and setCoordinates
+    // to work without 'this'
+    return newState
   }
   componentDidMount() {
     this._isMounted = true;
@@ -69,6 +73,7 @@ class TrailChart extends React.Component {
     }
     // If trail does not have json coordinates exit here
     if (
+      !this.props.trail.custom_data.connectorTrailJSON ||
       !this.props.trail.custom_data.connectorTrailJSON.url ||
       this.props.trail.custom_data.connectorTrailJSON.url === undefined ||
       this.props.trail.custom_data.connectorTrailJSON.url === 'undefined'
