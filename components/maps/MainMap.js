@@ -123,10 +123,14 @@ class Map extends React.Component {
         ref={this.washington_map}
       >
         {this.props.map.gps && <UserLocation />}
-        {trails.map((trail, k) => {
-          return <RegionTrail onTrailToggle={this.onTrailToggle} trail={trail} key={k} metricType={this.props.metricType}  />
-          }
-        )}
+        {this.props.firstTimeUser == false || this.props.firstTimeUser == 'false' &&
+          <React.Fragment>
+            {trails.map((trail, k) => {
+              return <RegionTrail onTrailToggle={this.onTrailToggle} trail={trail} key={k} metricType={this.props.metricType}  />
+              }
+            )}
+          </React.Fragment>
+        }
         {regions.map((region, k) => {
           return <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} onRegionToggle={this.onRegionToggle} firstTimeUser={this.props.firstTimeUser} />
         })}
