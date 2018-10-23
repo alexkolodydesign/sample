@@ -125,6 +125,17 @@ class TrailChart extends React.Component {
                     }}
                   />
               }
+              {
+                trail.custom_data.poi &&
+                  trail.custom_data.poi.map((poi, k) => {
+                    var poi_icon = poi.icon ? poi.icon : "/static/images/trailhead-icon.png";
+                    return <Marker key={k} position={{ "lat":Number(poi.latitude), "lng":Number(poi.longitude) }}
+                    icon={{
+                      url: poi_icon,
+                      scaledSize: new google.maps.Size(20 ,25)
+                    }}     />
+                  })
+              }
             </GoogleMap>
             {(trail.custom_data.recommendedUse[0] && trail.custom_data.recommendedUse[0].value != "ohv") &&
               <ElevationChart coordinates={coordinates.slice(0).reverse()} trail={trail} areaStrokeColor={trailColor} pathMarker={this.pathMarker} />
