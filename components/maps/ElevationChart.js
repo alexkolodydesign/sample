@@ -23,9 +23,6 @@ class ElevationChart extends React.Component {
     this.mouseMove = this.mouseMove.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
-  static getDerivedStateFromProps(props, state) {
-    return state
-  }
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
@@ -37,6 +34,8 @@ class ElevationChart extends React.Component {
     this.setState({ hasError: true });
   }
   shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.trail.slug !== nextProps.trail.slug) return true
+    if (this.state.loading !== nextState.loading) return true
     if (this.props === nextProps) return false
     else return true
   }
@@ -103,17 +102,15 @@ class ElevationChart extends React.Component {
           <div>
             <h2>Elevation</h2>
             <div className="chart">
-              {!this.state.loading &&
-                <Chart
-                  width={Number(this.state.width)}
-                  data={data}
-                  onMouseMove={this.mouseMove}
-                  domain={[Number(minElevation - 2) / 10, Number(maxElevation + 2) / 10]}
-                  metricType={this.props.metricType}
-                  renderTooltip={this.renderTooltip}
-                  areaStrokeColor={this.props.areaStrokeColor}
-                />
-              }
+              <Chart
+                width={Number(this.state.width)}
+                data={data}
+                onMouseMove={this.mouseMove}
+                domain={[Number(minElevation - 2) / 10, Number(maxElevation + 2) / 10]}
+                metricType={this.props.metricType}
+                renderTooltip={this.renderTooltip}
+                areaStrokeColor={this.props.areaStrokeColor}
+              />
             </div>
           </div>
           <div className="details">
@@ -203,7 +200,10 @@ class Chart extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       nextProps.width !== this.props.width ||
-      nextProps.metricType !== this.props.metricType
+      nextProps.metricType !== this.props.metricType ||
+      // If data changes, update elevation chart
+      this.props.data[0] !== nextProps.data[0] ||
+      this.props.data.length !== nextProps.data.length
     ) { return true }
     else { return false }
   }
