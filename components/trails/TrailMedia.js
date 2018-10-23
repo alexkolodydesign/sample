@@ -99,15 +99,19 @@ const TrailMedia = props =>
 
       .media {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         grid-column-gap: 3rem;
         padding-bottom: 12rem;
         h2 {
           grid-column-start: span 2;
         }
-      }
-      .photos {
-        grid-column-start:2;
+        .videos + .photos {
+          grid-column-start:2;
+        }
+        & > .photos:first-child {
+          max-width: 50%;
+          margin: 0 auto;
+        }
       }
     }
     @media print {

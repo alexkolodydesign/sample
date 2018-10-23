@@ -88,6 +88,10 @@ const TrailSidebar = props => {
         }</span></p></div>
       }
 
+      {trail.directions &&
+        <div className='trail_directions'><p>Directions</p><div className="description">{ReactHtmlParser(sanitizeHtml(trail.directions))}</div></div>
+      }
+
       {props.trail.content && props.trail.content.rendered &&
         <div className='trail_description'><p>Description</p><div className="description">{ReactHtmlParser(sanitizeHtml(props.trail.content.rendered))}</div></div>
       }
