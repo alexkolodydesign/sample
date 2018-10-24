@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { connect } from 'react-redux'
 import { filterAction } from '../../redux/filterAction'
 import { highlightTrail } from '../../redux/actions'
+import regions from '../../data/regions'
 
 // Redux
 const mapStateToProps = (state, ownProps) => {
@@ -9,6 +10,7 @@ const mapStateToProps = (state, ownProps) => {
     metricType: state.map.metricType,
     trails: state.trails,
     filters: state.map.filters,
+    highlightRegion: state.map.highlightRegion,
     ...ownProps
   };
 };
@@ -39,7 +41,7 @@ class TrailListMenu extends React.Component {
     return state
   }
   render() {
-    const trails = filterAction(this.props.trails, this.props.filters, true)
+    const selectedRegion = regions.regions.find(region => region.regionName === this.props.highlightRegion)
     return (
       <div className={this.props.menuState == "exiting" ? "exiting menu" : "menu"}>
         <h3>Trail List</h3>
@@ -50,7 +52,11 @@ class TrailListMenu extends React.Component {
           </form>
         </div>
         <div className="trails">
-          {this.state.filteredTrails.map( (trail, k) => <Trail trail={trail} key={k} highlightTrail={this.props.highlightTrail} metricType={this.props.metricType} /> )}
+          {this.state.filteredTrails.filter(trail => {
+            // Only show trails in selected region
+            if (selectedRegion) return trail.regions.includes(selectedRegion.id)
+            return true
+          }).map( (trail, k) => <Trail trail={trail} key={k} highlightTrail={this.props.highlightTrail} metricType={this.props.metricType} /> )}
         </div>
         <style jsx>{`
           h3 {text-transform: uppercase; margin: 0 0 0 1rem; color: #fff;}

@@ -49,6 +49,5 @@ export const filterAction = (trails, filters, zoomLevel) => {
       if (Number(zoomLevel) >= Number(trail.custom_data.zoomThreshold)) return true
       return false
     })
-
   return updatedTrails
 }
