@@ -93,6 +93,7 @@ class ElevationChart extends React.Component {
     const diff = Math.floor(Math.abs(maxElevation - minElevation))
     const data = coordinates.map(coordinate => {
       coordinate.elevation = Math.floor(coordinate.elevation)
+      coordinate.elevationMetric = Math.floor(coordinate.elevation * 0.3048)
       return coordinate
     })
     const elevationFlag = coordinates.some((el) => el.elevation)
@@ -226,7 +227,7 @@ class Chart extends React.Component {
           domain={[this.props.maxElevation, this.props.minElevation]}
         />
         <Tooltip content={this.props.renderTooltip} />
-        <Area type='monotone' dataKey='elevation' stroke={this.props.areaStrokeColor} strokeWidth={2} fill='rgba(197,196,188,0.8)' />
+        <Area type='monotone' dataKey={this.props.metricType === 'imperial' ? 'elevation' : 'elevationMetric'} stroke={this.props.areaStrokeColor} strokeWidth={2} fill='rgba(197,196,188,0.8)' />
       </AreaChart>
     )
   }
