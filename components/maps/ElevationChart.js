@@ -221,7 +221,7 @@ class Chart extends React.Component {
         <CartesianGrid strokeDasharray="3 3"/>
         <YAxis
           allowDecimals={false}
-          unit={this.props.metricType === 'imperial' ? " ft" : " meters"}
+          unit={this.props.metricType === 'imperial' ? " ft" : " m"}
           interval='preserveEnd'
           type='number'
           domain={[this.props.maxElevation, this.props.minElevation]}
