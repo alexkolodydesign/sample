@@ -106,7 +106,8 @@ class ElevationChart extends React.Component {
                 width={Number(this.state.width)}
                 data={data}
                 onMouseMove={this.mouseMove}
-                domain={[Number(minElevation - 2) / 10, Number(maxElevation + 2) / 10]}
+                maxElevation={maxElevation}
+                minElevation={minElevation}
                 metricType={this.props.metricType}
                 renderTooltip={this.renderTooltip}
                 areaStrokeColor={this.props.areaStrokeColor}
@@ -222,8 +223,7 @@ class Chart extends React.Component {
           unit={this.props.metricType === 'imperial' ? " ft" : " meters"}
           interval='preserveEnd'
           type='number'
-          //ticks={[(Math.round(minElevation/10)*10)-2, (Math.ceil(maxElevation/10)*10)+2]}
-          domain={this.props.domain}
+          domain={[this.props.maxElevation, this.props.minElevation]}
         />
         <Tooltip content={this.props.renderTooltip} />
         <Area type='monotone' dataKey='elevation' stroke={this.props.areaStrokeColor} strokeWidth={2} fill='rgba(197,196,188,0.8)' />
