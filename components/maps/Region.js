@@ -167,7 +167,7 @@ class Region extends React.Component {
           >
             {
               this.state.menu && this.props.popupMenus.regionPopup &&
-                <InfoWindow onCloseClick={() => {
+                <InfoWindow options={{'maxWidth' : 320}}  onCloseClick={() => {
                     this.props.onRegionToggle(this);
                     this.togglePopupMenu(region.regionName)
                     //this.setState({menu: false})
@@ -192,8 +192,19 @@ class Region extends React.Component {
             cursor: pointer;
             font-weight: 500;
           }
-          .info_wrapper img {
-            max-width: 150px;
+          .info_wrapper {
+            display: block;
+            min-width: 100%;
+            overflow-x: hidden;
+            img {
+              max-width: 150px;
+            }
+          }
+
+          @media screen and (min-width: 768px) {
+            .info_wrapper {
+              display: grid;
+            }
           }
         `}</style>
       </React.Fragment>

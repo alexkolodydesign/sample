@@ -109,6 +109,7 @@ class Map extends React.Component {
     const zoomState = this.zoom
     const zoomLevel = this.props.map.zoom
     const trails = filterAction(this.props.trails, this.props.map.filters, zoomLevel)
+    console.log("this map: ", this.props.map)
     return (
       <GoogleMap
         zoom={this.props.map.zoom}
@@ -116,7 +117,11 @@ class Map extends React.Component {
         onZoomChanged={function(e) {
           zoomState(this.getZoom(), null)
         }}
-        options={{ mapTypeId: this.props.map.mapStyle }}
+        options={{
+          mapTypeId: this.props.map.mapStyle,
+          zoomControl: true,
+          zoomControlOptions: { position: new google.maps.ControlPosition.RIGHT_CENTER }
+        }}
         defaultOptions={{
           streetViewControl: false
         }}

@@ -124,8 +124,6 @@ const TrailSidebar = props => {
                 grid-column-end: 3;
               }
 
-              // display: flex;
-              // flex-direction: column;
               p {
                 margin: 0 0 2rem 0;
                 text-transform: uppercase;

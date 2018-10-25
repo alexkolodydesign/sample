@@ -189,7 +189,7 @@ class RegionTrail extends React.Component {
                   }
                   {/* REVIEW: Is Difficulty being done correctly here? Also check TrailSidebar.js */}
                   {trail.custom_data.difficulty &&
-                    <Difficulty difficulty={trail.custom_data.difficulty} />
+                    <Difficulty difficulty={trail.custom_data.difficulty} mainMap={true}/>
                   }
                 </div>
                 <div className="image">
@@ -234,33 +234,16 @@ class RegionTrail extends React.Component {
                     }
                   }
                   .info_wrapper {
-                    display: grid;
-                    height: 100%;
-                    grid-template-columns: 1fr 1fr;
-                    grid-template-rows: 10% 45% 45%;
-                    grid-template-areas: "top top top" "info info info" "image image icons";
-                    min-width: 300px;
                     min-height: 250px;
                     width: 100%;
-                    .top {
-                      grid-area: top;
-                      margin: 0;
-                    }
-                    .info {
-                      grid-area: info;
-                      padding-top: 1rem;
-                    }
+                    overflow-x: hidden;
                     .image {
-                      grid-area: image;
                       img {
-                        padding: 1.5rem 0;
-                        max-width: 140px;
-                        height: auto;
+                        max-height: 150px;
                       }
                     }
                     .icons {
-                      padding-top: 1rem;
-                      grid-area: icons;
+                      padding-top: 2em;
                     }
                   }
                   a {
@@ -283,6 +266,39 @@ class RegionTrail extends React.Component {
                     grid-template: 2.5rem 2.5rem / 2.5rem 2.5rem;
                     align-self: center;
                     img {width: 3.5rem;}
+                  }
+
+                  @media screen and (min-width: 768px) {
+                    .info_wrapper {
+                      display: grid;
+                      height: 100%;
+                      grid-template-columns: 1fr 1fr;
+                      grid-template-rows: 10% 45% 45%;
+                      grid-template-areas: "top top top" "info info info" "image image icons";
+                      min-width: 300px;
+                      min-height: 250px;
+                      width: 100%;
+                      .top {
+                        grid-area: top;
+                        margin: 0;
+                      }
+                      .info {
+                        grid-area: info;
+                        padding-top: 1rem;
+                      }
+                      .image {
+                        grid-area: image;
+                        img {
+                          padding: 1.5rem 0;
+                          max-width: 140px;
+                          height: auto;
+                        }
+                      }
+                      .icons {
+                        padding-top: 1rem;
+                        grid-area: icons;
+                      }
+                    }
                   }
 
                 `}</style>
