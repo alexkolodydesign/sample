@@ -72,11 +72,13 @@ const Layout = props => (
       ::-webkit-scrollbar-thumb:window-inactive {
         background: rgba(77,78,78,0.4);
       }
+      /*
       @media(max-width: 768px) {
         .wrapper {
           max-width: 90%;
         }
       }
+      */
     `}</style>
     <style global jsx>
       {`

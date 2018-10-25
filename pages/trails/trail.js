@@ -26,7 +26,7 @@ export class Trail extends React.Component {
     return (
       <Layout nav={false} background="#f2f2f2" overflow={true}>
         <Head/>
-        <div className="wrapper">
+        <div className="wrapper headerWrapper">
           <Link href="/">
             <a className="back_button" style={{paddingTop: "3rem"}}>
               <button>
@@ -54,6 +54,9 @@ export class Trail extends React.Component {
 
         <style jsx>{`
           @media screen {
+            .headerWrapper {
+              padding: 0 1em;
+            }
             h1 {
               text-transform: uppercase;
               font-size: 3.5rem;
@@ -95,7 +98,7 @@ export class Trail extends React.Component {
           @media screen and (min-width: 768px) {
             .trail {
               display: grid;
-              grid-template-columns: 30rem 1fr;
+              grid-template-columns: 30rem minmax(0, 1fr);
               grid-gap: 3rem;
               .sidebar {
                 grid-column-start: 1;

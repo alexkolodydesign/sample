@@ -16,6 +16,13 @@ const mapDispatchToProps = dispatch => {
 
 const TrailSidebar = props => {
   const trail = props.trail.custom_data
+
+  var hasdifficulty = false;
+  for (var i in trail.difficulty) {
+    if (trail.difficulty[i].value !== "none") {
+      hasdifficulty = true
+    }
+  }
   return (
     <div className="sidebar">
       <div className="details background">
@@ -23,11 +30,10 @@ const TrailSidebar = props => {
           <div><p>Region<br/><span>{trail.region}</span></p></div>
         }
 
-        {trail.difficulty &&
-          <div>
-            <Difficulty difficulty={trail.difficulty} /><br/>
-          </div>
-
+        { hasdifficulty &&
+            <div>
+              <Difficulty difficulty={trail.difficulty} /><br/>
+            </div>
         }
 
         {trail.length &&
@@ -109,7 +115,7 @@ const TrailSidebar = props => {
             background-position: center;
             background-size: 29rem auto;
             &.details {
-              padding: 3rem;
+              padding: 1rem;
               display: grid;
               grid-template-columns: 1fr 1fr;
 
@@ -131,8 +137,13 @@ const TrailSidebar = props => {
               }
             }
           }
-          .description {
-            font-weight: 100;
+          .trail_description, .trail_directions {
+            grid-column-start: 1;
+            grid-column-end: 3;
+
+            .description  {
+              font-weight: 100;
+            }
           }
           .use-icon {
             max-width:30px;
@@ -175,6 +186,13 @@ const TrailSidebar = props => {
           .background {
             &.details {
               display: block;
+            }
+          }
+        }
+        @media screen and (min-width: 992px) {
+          .background {
+            &.details {
+              padding: 3rem;
             }
           }
         }

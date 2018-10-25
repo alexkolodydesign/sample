@@ -86,7 +86,7 @@ export default class TrailMap extends React.Component {
               background-image: linear-gradient(rgba(255,255,255,0.98),rgba(255,255,255,0.98)),url(/static/images/background-pattern.svg);
               background-position: center;
               background-size: 29rem auto;
-              padding: 3rem;
+              padding: 1rem;
             }
             .map {
               background: #eee;
@@ -96,7 +96,7 @@ export default class TrailMap extends React.Component {
             .buttons {
               margin-top: 3rem;
               display: grid;
-              grid-template: 1fr 1fr / 1fr 1fr;
+              grid-template: repeat(2, minmax(0,1fr)) / repeat(2, minmax(0,1fr));
               grid-gap: 1.5rem
             }
             .share_buttons {
@@ -123,6 +123,7 @@ export default class TrailMap extends React.Component {
                 grid-column-end: 2;
                 grid-row-start: 1;
                 grid-row-end: 2;
+                text-align: center;
 
                 &:hover {
                   background: #666666;
@@ -140,6 +141,9 @@ export default class TrailMap extends React.Component {
             }
           }
           @media screen and (min-width: 768px) {
+            .map_container {
+              padding: 1em;
+            }
             .buttons {
               margin-top: 1.5rem;
               grid-template: 1fr 1fr / 1fr 1fr 1fr;
@@ -159,6 +163,11 @@ export default class TrailMap extends React.Component {
             .trail_map {
               grid-column-start: 2;
               grid-column-end: 3;
+            }
+          }
+          @media screen and (min-width: 992px) {
+            .map_container {
+              padding: 3em;
             }
           }
           @media print {

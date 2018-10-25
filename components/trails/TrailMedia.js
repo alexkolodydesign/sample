@@ -61,7 +61,9 @@ const TrailMedia = props =>
         padding-top:3rem;
         font-size: 2rem;
       }
-
+      .media {
+        padding: 0 1rem 9rem;
+      }
       .videos, .photos {
         text-align: center;
         padding-bottom: 2.75rem;
@@ -99,7 +101,7 @@ const TrailMedia = props =>
 
       .media {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(50%, 1fr);
         grid-column-gap: 3rem;
         padding-bottom: 12rem;
         h2 {
@@ -109,9 +111,13 @@ const TrailMedia = props =>
           grid-column-start:2;
         }
         & > .photos:first-child {
-          max-width: 50%;
           margin: 0 auto;
         }
+      }
+    }
+    @media screen and (min-width: 992px) {
+      .media {
+        padding: 0 3rem 9rem;
       }
     }
     @media print {

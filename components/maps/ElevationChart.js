@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts'
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts'
 import { connect } from 'react-redux'
 import ErrorBoundary from '../ErrorBoundary'
 
@@ -21,14 +21,6 @@ class ElevationChart extends React.Component {
     this.state = { loading: true,  }
     this.renderTooltip = this.renderTooltip.bind(this)
     this.mouseMove = this.mouseMove.bind(this)
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
-  }
-  componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions);
-  }
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions);
   }
   componentDidCatch(error, info) {
     this.setState({ hasError: true });
@@ -38,12 +30,6 @@ class ElevationChart extends React.Component {
     if (this.state.loading !== nextState.loading) return true
     if (this.props === nextProps) return false
     else return true
-  }
-  updateWindowDimensions() {
-    let width
-    if (window.innerWidth <= 768) width = 400;
-    else width = 900;
-    this.setState({ loading: false, width })
   }
   renderTooltip(data) {
     const elevation = data.payload && data.payload[0] ? Number(data.payload[0].payload.elevation).toFixed(0) : false
@@ -211,9 +197,8 @@ class Chart extends React.Component {
   }
   render() {
     return (
+    <ResponsiveContainer width="100%" height={250}>
       <AreaChart
-        width={this.props.width}
-        height={250}
         data={this.props.data}
         onMouseMove={this.props.onMouseMove}
         margin={{top: 10, right: 20, left: 10, bottom: 20}}
@@ -229,6 +214,7 @@ class Chart extends React.Component {
         <Tooltip content={this.props.renderTooltip} />
         <Area type='monotone' dataKey={this.props.metricType === 'imperial' ? 'elevation' : 'elevationMetric'} stroke={this.props.areaStrokeColor} strokeWidth={2} fill='rgba(197,196,188,0.8)' />
       </AreaChart>
+    </ResponsiveContainer>
     )
   }
 }

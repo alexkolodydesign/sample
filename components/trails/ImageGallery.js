@@ -63,7 +63,7 @@ export default class ImageGallery extends React.Component {
                   width: 100%;
                   position: relative;
                   img {
-                    max-width:160px;
+                    max-width:100%;
                   }
                   p {
                     position:absolute;
@@ -88,9 +88,6 @@ export default class ImageGallery extends React.Component {
                 & > div {
                   width: 100%;
                   position: relative;
-                  img {
-                    max-width:181px;
-                  }
                   p {
                     position:absolute;
                     bottom:0;
