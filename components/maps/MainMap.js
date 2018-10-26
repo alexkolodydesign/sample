@@ -36,6 +36,7 @@ class Map extends React.Component {
     this.onRegionToggle = this.onRegionToggle.bind(this)
     this.onTrailToggle = this.onTrailToggle.bind(this)
     this.state = { activeRegion: {}, activeTrail: {} }
+    const google = window.google
   }
   zoom(zoom, center, regionName) {
     this.props.highlightRegion(regionName)
@@ -109,7 +110,6 @@ class Map extends React.Component {
     const zoomState = this.zoom
     const zoomLevel = this.props.map.zoom
     const trails = filterAction(this.props.trails, this.props.map.filters, zoomLevel)
-    console.log("this map: ", this.props.map)
     return (
       <GoogleMap
         zoom={this.props.map.zoom}
@@ -119,8 +119,12 @@ class Map extends React.Component {
         }}
         options={{
           mapTypeId: this.props.map.mapStyle,
-          zoomControl: true,
-          zoomControlOptions: { position: new google.maps.ControlPosition.RIGHT_CENTER }
+          mapTypeControl: true,
+          mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+            position: google.maps.ControlPosition.LEFT_BOTTOM
+          },
+          fullscreenControl: false
         }}
         defaultOptions={{
           streetViewControl: false

@@ -22,12 +22,12 @@ const MainMapSetup = props => {
           top: 0;
           left: 0;
           width: 100%;
-          height: calc(100% - 11.5rem);
+          height: calc(100% - 17.5rem);
           z-index: 1;
         }
         @media screen and (min-width: 768px) {
           .map {
-            height: calc(100% - 9.75rem);
+            height: calc(100% - 15.75rem);
           }
         }
         @media screen and (min-width: 992px) {
