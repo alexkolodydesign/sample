@@ -115,6 +115,9 @@ export class Trail extends React.Component {
             .back_button {
               display: none;
             }
+            *, *:before, *:after {
+              background: #FFF !important;
+            }
           }
 
         `}</style>

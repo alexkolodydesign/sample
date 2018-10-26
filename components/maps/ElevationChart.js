@@ -172,6 +172,9 @@ class ElevationChart extends React.Component {
               .details {
                 display: none;
               }
+              .chart {
+                background: #FFFFFF;
+              }
             }
           `}</style>
         </div>

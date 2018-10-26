@@ -194,11 +194,25 @@ const TrailSidebar = props => {
             }
           }
         }
+
         @media print {
+          .sidebar {
+            width: 30%;
+            float: left;
+          }
+          img {
+            display: none;
+          }
+          *, *:before, *:after {
+            background: #FFFFFF;
+          }
+          /*
           *, *:before, *:after {
             display: none;
           }
+          */
         }
+
       `}</style>
     </div>
   )

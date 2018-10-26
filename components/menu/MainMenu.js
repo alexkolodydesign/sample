@@ -129,6 +129,19 @@ const MainMenu = props =>
           }
         }
       }
+
+      @media print {
+        *, *:before, *:after {
+          background: #FFFFFF;
+        }
+        .menu {
+          .wrapper {
+            .menuWrapper {
+              display: none;
+            }
+          }
+        }
+      }
     `}</style>
   </div>
 
