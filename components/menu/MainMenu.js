@@ -17,7 +17,7 @@ const MainMenu = props =>
     <div className="wrapper">
       <div className="footerLogos">
         <img className='lifeLogo' src="/static/images/UTAH_LIFE_ELEVATED_RGB_navy-web.png" alt="Utah Life Elevated" />
-        <a href="https://www.visitstgeorge.com/" target="_blank" ><img src="/static/images/washco-logo.png" alt="Washington County, Utah" /></a>
+        <a href="https://www.visitstgeorge.com/" target="_blank" ><img src="/static/images/washco-logo-color.png" alt="Washington County, Utah" /></a>
       </div>
       <div className='menuWrapper'>
         { !props.trailPage && <SelectTrailType /> }
