@@ -23,7 +23,7 @@ Router.onRouteChangeError = () => removeLoader();
 
 const Layout = props => (
   <div>
-    <noscript dangerouslySetInnerHTML={{__html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5M5G3B3" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }} />` }} />
+    <noscript dangerouslySetInnerHTML={{__html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MFQ7DJ4" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }} />` }} />
     {props.nav == true ? <Header /> : null}
     <LoadingScreen />
     <main>
