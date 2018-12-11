@@ -16,7 +16,7 @@ const MainMenu = props =>
     <div className="background"></div>
     <div className="wrapper">
       <div className="footerLogos">
-        <img className='lifeLogo' src="/static/images/UTAH_LIFE_ELEVATED_RGB_navy-web.png" alt="Utah Life Elevated" />
+        <img className='lifeLogo' src="/static/images/UTAH_LIFE_ELEVATED.svg" alt="Utah Life Elevated" />
         <a href="https://www.visitstgeorge.com/" target="_blank" ><img src="/static/images/washco-logo.png" alt="Washington County, Utah" /></a>
       </div>
       <div className='menuWrapper'>
@@ -112,13 +112,14 @@ const MainMenu = props =>
             grid-template-columns: 27% minmax(0, 1fr);
             padding: 0 3rem;
             .footerLogos {
+              width: 100%;
               grid-row-start:1;
               display: block;
               margin-top: 0;
               img {
-                max-width: 46%;
-                &:first-child {
-                  margin-right: 1rem;
+                max-width: 48%;
+                &.lifeLogo {
+                  margin-right: 4%;
                 }
               }
             }

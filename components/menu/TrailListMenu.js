@@ -143,7 +143,7 @@ const Trail = props =>
     <Link href="/trails/trail" as={`/trails/${props.trail.slug}`}>
       <a className="trail" onMouseEnter={()=> props.highlightTrail(props.trail.slug)}>
         <div
-          style={{backgroundImage: `url(${props.trail.custom_data.media.pictures[0] ? props.trail.custom_data.media.pictures[0].sizes.medium : "/static/images/washco-logo.png"})`, backgroundPosition: "center", backgroundSize: "cover"}}
+          style={{backgroundImage: `url(${props.trail.custom_data.media.pictures[0] ? props.trail.custom_data.media.pictures[0].sizes.medium : "/static/images/washco-logo-color.png"})`, backgroundPosition: "center", backgroundSize: "cover"}}
         >
         </div>
         <div className="details">
