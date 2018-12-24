@@ -1,16 +1,21 @@
 import React from 'react';
 import App, { Container } from 'next/app';
 import { ThemeProvider } from 'emotion-theming';
+import { Provider } from 'react-redux';
+import { initStore } from '../redux/store';
 import theme from '../lib/theme';
 
 export class Washco extends App {
   render() {
     const { Component, pageProps } = this.props;
+    const store = initStore();
     return (
       <Container>
-        <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <Provider store={store}>
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </Provider>
         <style jsx global>
           {`
             html {
