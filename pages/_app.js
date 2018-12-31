@@ -2,6 +2,9 @@ import React from 'react';
 import App, { Container } from 'next/app';
 import { ThemeProvider } from 'emotion-theming';
 import { Provider } from 'react-redux';
+import Router from 'next/router';
+import Cookies from 'js-cookie';
+import LoadingScreen from '../components/shared/LoadingScreen';
 import { initStore } from '../redux/store';
 import theme from '../lib/theme';
 
@@ -14,6 +17,7 @@ export class Washco extends App {
       <Container>
         <Provider store={store}>
           <ThemeProvider theme={theme}>
+            <LoadingScreen />
             <Component {...pageProps} />
           </ThemeProvider>
         </Provider>
@@ -131,9 +135,29 @@ export class Washco extends App {
   }
 }
 
+// Configure Loader
+Router.onRouteChangeStart = url => {
+  document.getElementById('loader').style.display = 'flex';
+  document.documentElement.style.overflow = 'hidden';
+  document.getElementsByTagName('main')[0].style.opacity = '0.1';
+};
+function removeLoader() {
+  const loader = document.getElementById('loader');
+  document.getElementById('loader').style = 'none';
+  document.documentElement.style.overflow = 'inherit';
+  const main = document.getElementsByTagName('main');
+  if (main && main[0]) {
+    main[0].style.opacity = '1';
+  }
+}
+Router.onRouteChangeComplete = () => removeLoader();
+Router.onRouteChangeError = () => removeLoader();
+
 Washco.getInitialProps = async ({ Component, ctx }) => {
   // Make sure page components have their getInitialProps ran on server
-  const firstTimeUser = ctx.req.cookies.firstTimeUser || true;
+  const firstTimeUser = ctx.req
+    ? ctx.req.cookies.firstTimeUser
+    : Cookies.get('firstTimeUser') || true;
   let pageProps = {};
   if (Component.getInitialProps) pageProps = await Component.getInitialProps(ctx);
   pageProps.query = ctx.query;

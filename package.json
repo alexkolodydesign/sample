@@ -67,6 +67,7 @@
     "fs": "0.0.1-security",
     "google-map-react": "^1.1.2",
     "isomorphic-unfetch": "^3.0.0",
+    "js-cookie": "^2.2.0",
     "lightbox-react": "^0.3.7",
     "next": "^7.0.2",
     "next-connect-redux": "^0.1.5",
