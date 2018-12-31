@@ -7,8 +7,9 @@ import theme from '../lib/theme';
 
 export class Washco extends App {
   render() {
-    const { Component, pageProps } = this.props;
-    const store = initStore();
+    const { Component, pageProps, firstTimeUser } = this.props;
+    const isFirstTimeUser = firstTimeUser === true || firstTimeUser === 'true';
+    const store = initStore(isFirstTimeUser);
     return (
       <Container>
         <Provider store={store}>
@@ -129,4 +130,22 @@ export class Washco extends App {
     );
   }
 }
+
+Washco.getInitialProps = async ({ Component, ctx }) => {
+  // Make sure page components have their getInitialProps ran on server
+  const firstTimeUser = ctx.req.cookies.firstTimeUser || true;
+  let pageProps = {};
+  if (Component.getInitialProps) pageProps = await Component.getInitialProps(ctx);
+  pageProps.query = ctx.query;
+  if (ctx && ctx.req) {
+    return {
+      pageProps,
+      firstTimeUser
+    };
+  }
+  return {
+    pageProps
+  };
+};
+
 export default Washco;
