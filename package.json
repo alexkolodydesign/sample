@@ -94,7 +94,6 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.2.3",
-    "@zeit/next-typescript": "^1.1.1",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "babel-plugin-import": "^1.11.0",
@@ -121,8 +120,7 @@
     "nodemon": "^1.18.9",
     "prettier": "^1.15.3",
     "redux-devtools": "^3.5.0",
-    "redux-mock-store": "^1.5.3",
-    "typescript": "^3.2.2"
+    "redux-mock-store": "^1.5.3"
   },
   "postcss": {
     "plugins": {

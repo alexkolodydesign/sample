@@ -17,6 +17,12 @@ export class Washco extends App {
       <Container>
         <Provider store={store}>
           <ThemeProvider theme={theme}>
+            <noscript
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{
+                __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MFQ7DJ4" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }} />`
+              }}
+            />
             <LoadingScreen />
             <Component {...pageProps} />
           </ThemeProvider>
@@ -136,13 +142,12 @@ export class Washco extends App {
 }
 
 // Configure Loader
-Router.onRouteChangeStart = url => {
+Router.onRouteChangeStart = () => {
   document.getElementById('loader').style.display = 'flex';
   document.documentElement.style.overflow = 'hidden';
   document.getElementsByTagName('main')[0].style.opacity = '0.1';
 };
 function removeLoader() {
-  const loader = document.getElementById('loader');
   document.getElementById('loader').style = 'none';
   document.documentElement.style.overflow = 'inherit';
   const main = document.getElementsByTagName('main');

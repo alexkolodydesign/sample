@@ -2,16 +2,18 @@
   "env": {
     "browser": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "parser": "babel-eslint",
   "extends": ["airbnb", "prettier"],
-  "plugins": ["prettier", "babel"],
+  "plugins": ["prettier"],
   "rules": {
     "camelcase": 0,
     "prettier/prettier": "error",
     "react/jsx-filename-extension": 0,
     "react/jsx-one-expression-per-line": 0,
-    "jsx-a11y/label-has-for": 0
+    "jsx-a11y/label-has-for": 0,
+    "import/no-unresolved": 0
   }
 }
