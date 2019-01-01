@@ -4,12 +4,14 @@ import fetch from 'isomorphic-unfetch';
 import getHostUrl from '../utils/getHostUrl';
 import Head from '../components/shared/Head';
 import EventList from '../components/events/EventList';
+import MainMapSetup from '../components/maps/MainMapSetup';
+import { regionsShape } from '../lib/propTypes';
 
-const Dashboard = () => (
+const Dashboard = ({ regions }) => (
   <>
     <Head />
+    <MainMapSetup regions={regions} />
     <EventList />
-    <h1>Hello World!</h1>
   </>
 );
 
@@ -30,6 +32,10 @@ Dashboard.getInitialProps = async props => {
       error: true
     };
   }
+};
+
+Dashboard.propTypes = {
+  regions: regionsShape.isRequired
 };
 
 // Connect page to redux store & return firstTimeUser value
