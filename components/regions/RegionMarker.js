@@ -1,57 +1,35 @@
 import React from 'react';
-import { Marker, InfoWindow } from 'react-google-maps';
+import { Marker } from 'react-google-maps';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import dynamic from 'next/dynamic';
 import { regionShape } from '../../lib/propTypes';
 
-const RegionMarker = ({
-  togglePopups,
-  activeRegionPopup,
-  region: { markerCoordinates, markerIcon, regionName, trailCount, regionImage },
-  zoom
-}) => (
-  <Marker
-    className="region_popup"
-    position={{
-      lat: markerCoordinates.lat,
-      lng: markerCoordinates.lng
-    }}
-    icon={{
-      url: markerIcon,
-      scaledSize: new window.google.maps.Size(68, 68)
-    }}
-    onClick={() => {
-      togglePopups(regionName);
-    }}
-  >
-    {activeRegionPopup === regionName && (
-      <InfoWindow
-        options={{ maxWidth: 320 }}
-        onCloseClick={() => {
-          togglePopups('');
-        }}
-      >
-        <div className="info_wrapper">
-          <h3>{regionName}</h3>
-          <p>{trailCount} Trails</p>
-          {regionImage && <img src={regionImage} alt="" />}
-          <button
-            type="button"
-            className="explore"
-            onClick={() =>
-              zoom(12, {
-                lat: markerCoordinates.lat,
-                lng: markerCoordinates.lng
-              })
-            }
-          >
-            Explore Region
-          </button>
-        </div>
-      </InfoWindow>
-    )}
-  </Marker>
-);
+const RegionInfo = dynamic(() => import('./RegionInfo'));
+
+const RegionMarker = ({ togglePopups, activeRegionPopup, region, zoom }) => {
+  const { markerCoordinates, markerIcon, regionName } = region;
+  return (
+    <Marker
+      className="region_popup"
+      position={{
+        lat: markerCoordinates.lat,
+        lng: markerCoordinates.lng
+      }}
+      icon={{
+        url: markerIcon,
+        scaledSize: new window.google.maps.Size(68, 68)
+      }}
+      onClick={() => {
+        togglePopups(regionName);
+      }}
+    >
+      {activeRegionPopup === regionName && (
+        <RegionInfo region={region} zoom={zoom} togglePopups={togglePopups} />
+      )}
+    </Marker>
+  );
+};
 
 RegionMarker.propTypes = {
   togglePopups: PropTypes.func.isRequired,
