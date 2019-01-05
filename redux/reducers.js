@@ -8,7 +8,7 @@ export const defaultMapState = {
       mesa: true,
       alpine: true
     },
-    highlightRegion: '',
+    highlightedRegion: '',
     mapStyle: 'roadmap',
     metricType: 'imperial',
     zoom: 8,
@@ -43,8 +43,7 @@ export const defaultMapState = {
       trailPopup: false,
       regionPopup: false,
       activeRegionPopup: '',
-      activeTrailPopup: '',
-      activePopupType: ''
+      activeTrailPopup: ''
     },
     firstTimeUser: true
   }
@@ -89,7 +88,7 @@ export const map = (state = defaultMapState, action) => {
     case 'HIGHLIGHT_TRAIL':
       return { ...state, highlightTrail: action.slug };
     case 'HIGHLIGHT_REGION':
-      return { ...state, highlightRegion: action.name };
+      return { ...state, highlightedRegion: action.name };
     case 'TOGGLE_MENUS':
       return { ...state, menus: action.menus };
     case 'TOGGLE_POPUPMENUS':
