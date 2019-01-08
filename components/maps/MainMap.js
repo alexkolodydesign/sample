@@ -10,20 +10,6 @@ import UserLocation from '../gps/UserLocation';
 import { regionsShape, mapShape, trailsShape } from '../../lib/propTypes';
 
 class Map extends React.Component {
-  // state = { popupMenus: this.props.map.popupMenus };
-
-  // componentDidUpdate = previousProps => {
-  //   const {
-  //     map: { popupMenus: previousMenu }
-  //   } = previousProps;
-  //   const {
-  //     map: { popupMenus: currentMenu }
-  //   } = this.props;
-  //   if (previousMenu !== currentMenu) {
-  //     this.setState({ popupMenus: currentMenu });
-  //   }
-  // };
-
   static washington_map = React.createRef();
 
   componentDidMount = () => {

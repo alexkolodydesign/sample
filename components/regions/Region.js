@@ -1,9 +1,8 @@
-/* eslint-disable import/extensions */
 import React from 'react';
 import { Polygon, GroundOverlay } from 'react-google-maps';
 import PropTypes from 'prop-types';
-import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng.js';
-import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds.js';
+import LatLng from 'google-map-react/lib/utils/lib_geo/lat_lng';
+import LatLngBounds from 'google-map-react/lib/utils/lib_geo/lat_lng_bounds';
 import { connect } from 'react-redux';
 import alpineCoordinates from '../../data/alpine-coordinates';
 import desertCoordinates from '../../data/desert-coordinates';
