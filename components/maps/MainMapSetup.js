@@ -1,9 +1,9 @@
 import React from 'react';
 import { withScriptjs, withGoogleMap } from 'react-google-maps';
 import MainMap from './MainMap';
-import { regionsShape } from '../../lib/propTypes';
+import { regionsShape, trailsShape } from '../../lib/propTypes';
 
-const MainMapSetup = ({ regions }) => (
+const MainMapSetup = ({ regions, trails }) => (
   <div className="map">
     <MapContainer
       loadingElement={<div style={{ height: `100%` }} />}
@@ -11,6 +11,7 @@ const MainMapSetup = ({ regions }) => (
       mapElement={<div style={{ height: `100%` }} id="washington_map" />}
       googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqrxAbb0g9d1C9GgKjGZ5OU-TGowpZqWQ&v=3.exp&libraries=geometry,drawing,places"
       regions={regions}
+      trails={trails}
     />
     <style jsx>
       {`
@@ -40,11 +41,12 @@ const MainMapSetup = ({ regions }) => (
 );
 
 MainMapSetup.propTypes = {
-  regions: regionsShape.isRequired
+  regions: regionsShape.isRequired,
+  trails: trailsShape.isRequired
 };
 
 const MapContainer = withScriptjs(
-  withGoogleMap(({ regions }) => <MainMap regions={regions} />)
+  withGoogleMap(({ regions, trails }) => <MainMap regions={regions} trails={trails} />)
 );
 
 export default MainMapSetup;

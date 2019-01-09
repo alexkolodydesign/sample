@@ -5,12 +5,12 @@ import getHostUrl from '../utils/getHostUrl';
 import Head from '../components/shared/Head';
 import EventList from '../components/events/EventList';
 import MainMapSetup from '../components/maps/MainMapSetup';
-import { regionsShape } from '../lib/propTypes';
+import { regionsShape, trailsShape } from '../lib/propTypes';
 
-const Dashboard = ({ regions }) => (
+const Dashboard = ({ regions, trails }) => (
   <>
     <Head />
-    <MainMapSetup regions={regions} />
+    <MainMapSetup regions={regions} trails={trails} />
     <EventList />
   </>
 );
@@ -35,7 +35,8 @@ Dashboard.getInitialProps = async props => {
 };
 
 Dashboard.propTypes = {
-  regions: regionsShape.isRequired
+  regions: regionsShape.isRequired,
+  trails: trailsShape.isRequired
 };
 
 // Connect page to redux store & return firstTimeUser value
