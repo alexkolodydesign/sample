@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { eventsShape } from '../../lib/propTypes';
+import { eventsShape } from '../../utils/propTypes';
 import Event from './Event';
 
 const EventListMenu = ({ toggleMenu, menuState, events }) => (

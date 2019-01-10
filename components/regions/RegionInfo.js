@@ -1,7 +1,7 @@
 import React from 'react';
 import { InfoWindow } from 'react-google-maps';
 import PropTypes from 'prop-types';
-import { regionShape } from '../../lib/propTypes';
+import { regionShape } from '../../utils/propTypes';
 
 const RegionInfo = ({ togglePopups, region, zoom }) => {
   const { regionImage, regionName, markerCoordinates, trailCount } = region;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { withScriptjs, withGoogleMap } from 'react-google-maps';
 import MainMap from './MainMap';
-import { regionsShape, trailsShape } from '../../lib/propTypes';
+import { regionsShape, trailsShape } from '../../utils/propTypes';
 
 const MainMapSetup = ({ regions, trails }) => (
   <div className="map">

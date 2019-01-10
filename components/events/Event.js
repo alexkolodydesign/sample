@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { eventShape } from '../../lib/propTypes';
+import { eventShape } from '../../utils/propTypes';
 
 const Event = ({ event }) => (
   <div className="event">

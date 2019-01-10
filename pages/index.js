@@ -5,7 +5,7 @@ import getHostUrl from '../utils/getHostUrl';
 import Head from '../components/shared/Head';
 import EventList from '../components/events/EventList';
 import MainMapSetup from '../components/maps/MainMapSetup';
-import { regionsShape, trailsShape } from '../lib/propTypes';
+import { regionsShape, trailsShape } from '../utils/propTypes';
 
 const Dashboard = ({ regions, trails }) => (
   <>

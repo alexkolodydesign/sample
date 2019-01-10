@@ -2,8 +2,9 @@ import React from 'react';
 import { InfoWindow, Marker } from 'react-google-maps';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import Difficulty from './Difficulty';
-import { coordinateShape, trailShape } from '../../lib/propTypes';
+import { connect } from 'react-redux';
+import Difficulty from '../shared/Difficulty';
+import { coordinateShape, trailShape } from '../../utils/propTypes';
 
 const RegionTrailInfo = ({ menuCoords, togglePopups, trail, metricType }) => (
   <Marker position={menuCoords} icon={{ url: '' }}>
@@ -174,6 +175,25 @@ const RegionTrailInfo = ({ menuCoords, togglePopups, trail, metricType }) => (
   </Marker>
 );
 
+// Redux
+const mapStateToProps = state => ({
+  metricType: state.map.metricType,
+  menuCoords: state.map.popupMenus.menuCoords
+});
+const mapDispatchToProps = dispatch => ({
+  togglePopups: (trail, coords) =>
+    dispatch({
+      type: 'TOGGLE_POPUPMENUS',
+      popups: {
+        regionPopup: false,
+        activeRegionPopup: '',
+        trailPopup: true,
+        activeTrailPopup: trail,
+        menuCoords: coords
+      }
+    })
+});
+
 RegionTrailInfo.propTypes = {
   menuCoords: coordinateShape.isRequired,
   togglePopups: PropTypes.func.isRequired,
@@ -181,4 +201,7 @@ RegionTrailInfo.propTypes = {
   metricType: PropTypes.string.isRequired
 };
 
-export default RegionTrailInfo;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RegionTrailInfo);

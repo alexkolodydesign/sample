@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { difficultyShape } from '../../lib/propTypes';
+import { difficultyShape } from '../../utils/propTypes';
 
 const Difficulty = ({ difficulty, mainMap }) => (
   <div>

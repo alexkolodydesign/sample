@@ -7,7 +7,7 @@ import filterActions from '../../redux/filterActions';
 import Region from '../regions/Region';
 import RegionTrail from '../regions/RegionTrail';
 import UserLocation from '../gps/UserLocation';
-import { regionsShape, mapShape, trailsShape } from '../../lib/propTypes';
+import { regionsShape, mapShape, trailsShape } from '../../utils/propTypes';
 
 class Map extends React.Component {
   static washington_map = React.createRef();
@@ -27,7 +27,7 @@ class Map extends React.Component {
   };
 
   render() {
-    const { regions, map, trails, firstTimeUser, metricType } = this.props;
+    const { regions, map, trails, firstTimeUser } = this.props;
     const zoomState = this.zoom;
     const zoomLevel = map.zoom;
     const filteredTrails = filterActions(trails, map.filters, zoomLevel);
@@ -58,7 +58,7 @@ class Map extends React.Component {
         {firstTimeUser === false && (
           <>
             {filteredTrails.map(trail => (
-              <RegionTrail trail={trail} key={trail.slug} metricType={metricType} />
+              <RegionTrail trail={trail} key={trail.slug} />
             ))}
           </>
         )}
@@ -80,7 +80,6 @@ class Map extends React.Component {
 const mapStateToProps = state => ({
   map: state.map,
   trailCoordinates: state.trailCoordinates,
-  metricType: state.map.metricType,
   firstTimeUser: state.map.firstTimeUser
 });
 const mapDispatchToProps = dispatch => ({
@@ -98,8 +97,7 @@ Map.propTypes = {
   highlight: PropTypes.func.isRequired,
   goTo: PropTypes.func.isRequired,
   trails: trailsShape.isRequired,
-  firstTimeUser: PropTypes.bool.isRequired,
-  metricType: PropTypes.string.isRequired
+  firstTimeUser: PropTypes.bool.isRequired
 };
 
 export default connect(

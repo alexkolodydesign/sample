@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
+import { trailCoordinatesShape, trailShape } from '../../utils/propTypes';
 import Paths from '../trails/Paths';
-import { trailCoordinatesShape, trailShape, coordinateShape } from '../../lib/propTypes';
+import getTrailColor from '../../utils/getTrailColor';
 
 const RegionTrailInfo = dynamic(() => import('./RegionTrailInfo'));
 
@@ -44,48 +45,22 @@ class RegionTrail extends React.Component {
     const { loading } = this.state;
     if (loading) return null;
     // If coordinates loaded then proceed to create variables and render
-    const { trail, metricType, activeTrailPopup, togglePopups, menuCoords } = this.props;
+    const { trail, activeTrailPopup } = this.props;
     const { coordinates } = this.state;
     // Change Trail Color Based on the First Value of Recommended Use Array
-    let trailColor;
-    if (trail.custom_data.recommendedUse) {
-      switch (trail.custom_data.recommendedUse[0].value) {
-        case 'hiking':
-          trailColor = '#ed264c';
-          break;
-        case 'biking':
-          trailColor = '#ff9100';
-          break;
-        case 'equestrian':
-          trailColor = '#662f8e';
-          break;
-        case 'ohv':
-          trailColor = '#00a89c';
-          break;
-        default:
-          trailColor = '#ff0000';
-      }
-    } else {
-      trailColor = '#ff0000';
-    }
+    const trailColor = trail.custom_data.recommendedUse
+      ? getTrailColor(trail.custom_data.recommendedUse[0].value)
+      : '#ff0000';
     return (
-      <React.Fragment>
+      <>
         <Paths
           coordinates={coordinates}
           trail={trail}
           trailColor={trailColor}
           slug={trail.slug}
-          togglePopups={togglePopups}
         />
-        {activeTrailPopup === trail.slug && (
-          <RegionTrailInfo
-            trail={trail}
-            togglePopups={togglePopups}
-            menuCoords={menuCoords}
-            metricType={metricType}
-          />
-        )}
-      </React.Fragment>
+        {activeTrailPopup === trail.slug && <RegionTrailInfo trail={trail} />}
+      </>
     );
   }
 }
@@ -93,36 +68,20 @@ class RegionTrail extends React.Component {
 RegionTrail.propTypes = {
   trailCoordinates: trailCoordinatesShape.isRequired,
   trail: trailShape.isRequired,
-  metricType: PropTypes.string.isRequired,
   activeTrailPopup: PropTypes.string.isRequired,
-  menuCoords: coordinateShape.isRequired,
-  updateTrailCoords: PropTypes.func.isRequired,
-  togglePopups: PropTypes.func.isRequired
+  updateTrailCoords: PropTypes.func.isRequired
 };
 
 // Redux
 const mapStateToProps = state => ({
-  map: state.map,
   trailCoordinates: state.trailCoordinates,
-  activeTrailPopup: state.map.popupMenus.activeTrailPopup,
-  menuCoords: state.map.popupMenus.menuCoords
+  activeTrailPopup: state.map.popupMenus.activeTrailPopup
 });
 const mapDispatchToProps = dispatch => ({
   updateTrailCoords: (coords, slug) => {
     const data = { coords, slug };
     return dispatch({ type: 'UPDATE_TRAIL_COORDINATES', data });
-  },
-  togglePopups: (trail, coords) =>
-    dispatch({
-      type: 'TOGGLE_POPUPMENUS',
-      popups: {
-        regionPopup: false,
-        activeRegionPopup: '',
-        trailPopup: true,
-        activeTrailPopup: trail,
-        menuCoords: coords
-      }
-    })
+  }
 });
 
 export default connect(

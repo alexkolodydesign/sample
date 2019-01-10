@@ -3,7 +3,7 @@ import { Marker } from 'react-google-maps';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
-import { regionShape } from '../../lib/propTypes';
+import { regionShape } from '../../utils/propTypes';
 
 const RegionInfo = dynamic(() => import('./RegionInfo'));
 

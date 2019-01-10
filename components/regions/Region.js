@@ -9,7 +9,7 @@ import desertCoordinates from '../../data/desert-coordinates';
 import canyonCoordinates from '../../data/canyon-coordinates';
 import mesaCoordinates from '../../data/mesa-coordinates';
 import urbanCoordinates from '../../data/urban-coordinates';
-import { regionShape } from '../../lib/propTypes';
+import { regionShape } from '../../utils/propTypes';
 import RegionMarker from './RegionMarker';
 
 class Region extends React.Component {

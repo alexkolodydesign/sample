@@ -9,6 +9,7 @@ export const defaultMapState = {
       alpine: true
     },
     highlightedRegion: '',
+    highlightedTrail: '',
     mapStyle: 'roadmap',
     metricType: 'imperial',
     zoom: 8,

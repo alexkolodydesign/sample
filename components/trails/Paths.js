@@ -3,16 +3,17 @@ import { Polyline } from 'react-google-maps';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const Paths = ({ coordinates, trailColor, highlightTrail, slug, togglePopups }) => {
+const Paths = ({ coordinates, trailColor, highlightedTrail, slug, togglePopups }) => {
   if (!coordinates) return null;
   if (Array.isArray(coordinates[0])) {
     // If a trail has multiple paths
     return (
       <>
-        {coordinates.map(line => {
+        {coordinates.map((line, k) => {
           if (!line) return null;
           return (
-            <React.Fragment>
+            // eslint-disable-next-line react/no-array-index-key
+            <React.Fragment key={k}>
               <Polyline
                 path={line.map(point => ({
                   lat: Number(point.lat),
@@ -38,7 +39,7 @@ const Paths = ({ coordinates, trailColor, highlightTrail, slug, togglePopups }) 
                 options={{
                   strokeColor: trailColor,
                   strokeOpacity: 1,
-                  strokeWeight: highlightTrail === slug ? 6 : 3
+                  strokeWeight: highlightedTrail === slug ? 6 : 3
                 }}
                 onClick={e => {
                   const coords = { lat: e.latLng.lat(), lng: e.latLng.lng() };
@@ -70,7 +71,7 @@ const Paths = ({ coordinates, trailColor, highlightTrail, slug, togglePopups }) 
         options={{
           strokeColor: trailColor,
           strokeOpacity: 1,
-          strokeWeight: highlightTrail === slug ? 6 : 3
+          strokeWeight: highlightedTrail === slug ? 6 : 3
         }}
         onClick={e => {
           const coords = { lat: e.latLng.lat(), lng: e.latLng.lng() };
@@ -97,7 +98,7 @@ Paths.propTypes = {
     ])
   ),
   trailColor: PropTypes.string.isRequired,
-  highlightTrail: PropTypes.string.isRequired,
+  highlightedTrail: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
   togglePopups: PropTypes.func.isRequired
 };
@@ -108,10 +109,23 @@ Paths.defaultProps = {
 
 // Redux
 const mapStateToProps = state => ({
-  highlightTrail: state.map.highlightTrail
+  highlightedTrail: state.map.highlightedTrail
+});
+const mapDispatchToProps = dispatch => ({
+  togglePopups: (trail, coords) =>
+    dispatch({
+      type: 'TOGGLE_POPUPMENUS',
+      popups: {
+        regionPopup: false,
+        activeRegionPopup: '',
+        trailPopup: true,
+        activeTrailPopup: trail,
+        menuCoords: coords
+      }
+    })
 });
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Paths);

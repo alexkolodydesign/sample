@@ -6,7 +6,7 @@ import Router from 'next/router';
 import Cookies from 'js-cookie';
 import LoadingScreen from '../components/shared/LoadingScreen';
 import { initStore } from '../redux/store';
-import theme from '../lib/theme';
+import theme from '../utils/theme';
 
 export class Washco extends App {
   render() {
