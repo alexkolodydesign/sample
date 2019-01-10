@@ -28,6 +28,16 @@ const RegionInfo = ({ togglePopups, region, zoom }) => {
         >
           Explore Region
         </button>
+        <style jsx>
+          {`
+            button {
+              background: none;
+              border: none;
+              cursor: pointer;
+              padding: 1.5rem;
+            }
+          `}
+        </style>
       </div>
     </InfoWindow>
   );
