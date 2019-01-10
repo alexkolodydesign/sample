@@ -5,12 +5,14 @@ import getHostUrl from '../utils/getHostUrl';
 import Head from '../components/shared/Head';
 import EventList from '../components/events/EventList';
 import MainMapSetup from '../components/maps/MainMapSetup';
+import TrailSystemGuide from '../components/maps/TrailSystemGuide';
 import { regionsShape, trailsShape } from '../utils/propTypes';
 
 const Dashboard = ({ regions, trails }) => (
   <>
     <Head />
     <MainMapSetup regions={regions} trails={trails} />
+    <TrailSystemGuide />
     <EventList />
   </>
 );

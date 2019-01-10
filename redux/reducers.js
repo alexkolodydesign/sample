@@ -12,6 +12,7 @@ export const defaultMapState = {
     highlightedTrail: '',
     mapStyle: 'roadmap',
     metricType: 'imperial',
+    system: '',
     zoom: 8,
     gps: false,
     center: { lat: 37.327059, lng: -113.445826 },
