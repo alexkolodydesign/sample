@@ -43,7 +43,11 @@ export const defaultMapState = {
       trailPopup: false,
       regionPopup: false,
       activeRegionPopup: '',
-      activeTrailPopup: ''
+      activeTrailPopup: '',
+      menuCoords: {
+        lat: null,
+        lng: null
+      }
     },
     firstTimeUser: true
   }
@@ -102,7 +106,7 @@ export const map = (state = defaultMapState, action) => {
   }
 };
 
-export const trails = (state = [], action) => {
+export const trailCoordinates = (state = [], action) => {
   switch (action.type) {
     case 'UPDATE_TRAIL_COORDINATES': {
       const newState = [...state];
@@ -129,7 +133,7 @@ export const trails = (state = [], action) => {
 
 export const reducers = combineReducers({
   map,
-  trails
+  trailCoordinates
 });
 
 export default reducers;

@@ -50,7 +50,11 @@ const mapDispatchToProps = dispatch => ({
         regionPopup: true,
         activeRegionPopup: region,
         trailPopup: false,
-        activeTrailPopup: ''
+        activeTrailPopup: '',
+        menuCoords: {
+          lat: null,
+          lng: null
+        }
       }
     })
 });

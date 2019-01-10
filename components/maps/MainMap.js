@@ -79,7 +79,7 @@ class Map extends React.Component {
 // Redux
 const mapStateToProps = state => ({
   map: state.map,
-  trails: state.trails,
+  trailCoordinates: state.trailCoordinates,
   metricType: state.map.metricType,
   firstTimeUser: state.map.firstTimeUser
 });
