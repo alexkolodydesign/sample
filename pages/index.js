@@ -7,6 +7,7 @@ import EventList from '../components/events/EventList';
 import MainMapSetup from '../components/maps/MainMapSetup';
 import TrailSystemGuide from '../components/maps/TrailSystemGuide';
 import { regionsShape, trailsShape } from '../utils/propTypes';
+import MainMenu from '../components/menus/MainMenu';
 
 const Dashboard = ({ regions, trails }) => (
   <>
@@ -14,6 +15,7 @@ const Dashboard = ({ regions, trails }) => (
     <MainMapSetup regions={regions} trails={trails} />
     <TrailSystemGuide />
     <EventList />
+    <MainMenu />
   </>
 );
 
