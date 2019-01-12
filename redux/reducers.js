@@ -23,7 +23,6 @@ export const defaultMapState = {
         ohv: true,
         equestrian: true
       },
-      season: '',
       difficulty: {
         default: '',
         biking: '',

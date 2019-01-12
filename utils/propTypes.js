@@ -54,13 +54,15 @@ export const difficultyShape = PropTypes.shape({
   equestrian: PropTypes.string
 });
 
+export const trailTypeShape = PropTypes.shape({
+  hiking: PropTypes.bool,
+  biking: PropTypes.bool,
+  ohv: PropTypes.bool,
+  equestrian: PropTypes.bool
+});
+
 export const filtersShape = PropTypes.shape({
-  trailType: PropTypes.shape({
-    hiking: PropTypes.bool,
-    biking: PropTypes.bool,
-    ohv: PropTypes.bool,
-    equestrian: PropTypes.bool
-  }),
+  trailType: trailTypeShape,
   season: PropTypes.string,
   difficulty: difficultyShape,
   trailLength: PropTypes.number,

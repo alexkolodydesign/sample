@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SelectTrailType from './SelectTrailType';
-import FilterTrails from './FilterTrails';
+import dynamic from 'next/dynamic';
 import TrailList from './TrailList';
 import GPS from './GPS';
 import Settings from './Settings';
+
+const SelectTrailType = dynamic(() => import('./SelectTrailType'));
+const FilterTrails = dynamic(() => import('./filters/FilterTrails'));
 
 const MainMenu = ({ trailPage }) => (
   <div className={trailPage ? 'trailMenu menu' : 'menu'}>
@@ -22,7 +24,11 @@ const MainMenu = ({ trailPage }) => (
           src="/static/images/UTAH_LIFE_ELEVATED.svg"
           alt="Utah Life Elevated"
         />
-        <a href="https://www.visitstgeorge.com/" target="_blank">
+        <a
+          href="https://www.visitstgeorge.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img src="/static/images/washco-logo.png" alt="Washington County, Utah" />
         </a>
       </div>
@@ -177,10 +183,10 @@ const MainMenu = ({ trailPage }) => (
 
 MainMenu.propTypes = {
   trailPage: PropTypes.string
-}
+};
 
 MainMenu.defaultProps = {
   trailPage: ''
-}
+};
 
 export default MainMenu;
