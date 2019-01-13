@@ -2,29 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Marker } from 'react-google-maps';
 import { connect } from 'react-redux';
-import { goToSystem } from '../../redux/actions';
-
-// Redux
-const mapStateToProps = (state, ownProps) => ({
-  zoom: state.map.zoom,
-  ...ownProps
-});
-const mapDispatchToProps = dispatch => ({
-  goToSystem: (zoom, center) => dispatch(goToSystem(zoom, center))
-});
 
 class UserLocation extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userLocation: false
-    };
-  }
+  state = { userLocation: false };
 
-  componentDidMount() {
-    const { goToSystem: goTo, zoom } = this.props;
-    const setPosition = pos => this.setState({ userLocation: pos });
-    const goToPosition = pos => goTo(zoom, pos);
+  setPosition = pos => this.setState({ userLocation: pos });
+
+  goToPosition = pos => {
+    const { goToSystem, zoom } = this.props;
+    goToSystem(zoom, pos);
+  };
+
+  componentDidMount = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         position => {
@@ -32,9 +21,9 @@ class UserLocation extends React.Component {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
-          setPosition(pos);
+          this.setPosition(pos);
           // TODO: Locating Toast Message Appears & Disappears
-          goToPosition(pos);
+          this.goToPosition(pos);
         },
         () => {
           // console.log('User Location Not Found!');
@@ -43,22 +32,27 @@ class UserLocation extends React.Component {
     } else {
       // console.log("Browser doesn't support Geolocation");
     }
-  }
+  };
 
   render() {
     const { userLocation } = this.state;
-    return (
-      <React.Fragment>
-        {userLocation && <Marker position={userLocation} />}
-      </React.Fragment>
-    );
+    return <>{userLocation && <Marker position={userLocation} />}</>;
   }
 }
 
 UserLocation.propTypes = {
   goToSystem: PropTypes.func.isRequired,
-  zoom: PropTypes.func.isRequired
+  zoom: PropTypes.number.isRequired
 };
+
+// Redux
+const mapStateToProps = state => ({ zoom: state.map.zoom });
+const mapDispatchToProps = dispatch => ({
+  goToSystem: (zoom, center) => {
+    const location = { zoom, center };
+    return dispatch({ type: 'GO_TO_SYSTEM', location });
+  }
+});
 
 export default connect(
   mapStateToProps,
