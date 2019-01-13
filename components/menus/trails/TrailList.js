@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
-import { trailsShape } from '../../utils/propTypes';
+import { trailsShape } from '../../../utils/propTypes';
 
 const TrailListMenu = dynamic(() => import('./TrailListMenu'));
 

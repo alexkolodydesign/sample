@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
-import { trailShape } from '../../utils/propTypes';
+import { trailShape } from '../../../utils/propTypes';
 
 const Trail = ({ trail, highlightTrail, metricType }) => (
   <>
@@ -63,9 +63,9 @@ const Trail = ({ trail, highlightTrail, metricType }) => (
             src="/static/images/menu/hiking.svg"
             alt="Select Hiking Trails"
             className={
-              !trail.custom_data.recommendedUse === ''
-                ? !trail.custom_data.recommendedUse.some(el => el.value === 'hiking') &&
-                  'inactive'
+              trail.custom_data.recommendedUse.length > 0 &&
+              trail.custom_data.recommendedUse.some(el => el.value === 'hiking')
+                ? 'active'
                 : 'inactive'
             }
           />
@@ -73,9 +73,9 @@ const Trail = ({ trail, highlightTrail, metricType }) => (
             src="/static/images/menu/biking.svg"
             alt="Select Biking Trails"
             className={
-              !trail.custom_data.recommendedUse === ''
-                ? !trail.custom_data.recommendedUse.some(el => el.value === 'biking') &&
-                  'inactive'
+              trail.custom_data.recommendedUse.length > 0 &&
+              trail.custom_data.recommendedUse.some(el => el.value === 'biking')
+                ? 'active'
                 : 'inactive'
             }
           />
@@ -83,10 +83,9 @@ const Trail = ({ trail, highlightTrail, metricType }) => (
             src="/static/images/menu/equestrian.svg"
             alt="Select Equestrian Trails"
             className={
-              !trail.custom_data.recommendedUse === ''
-                ? !trail.custom_data.recommendedUse.some(
-                    el => el.value === 'equestrian'
-                  ) && 'inactive'
+              trail.custom_data.recommendedUse.length > 0 &&
+              trail.custom_data.recommendedUse.some(el => el.value === 'equestrian')
+                ? 'active'
                 : 'inactive'
             }
           />
@@ -94,9 +93,9 @@ const Trail = ({ trail, highlightTrail, metricType }) => (
             src="/static/images/menu/ohv.svg"
             alt="Select OHV Trails"
             className={
-              !trail.custom_data.recommendedUse === ''
-                ? !trail.custom_data.recommendedUse.some(el => el.value === 'ohv') &&
-                  'inactive'
+              trail.custom_data.recommendedUse.length > 0 &&
+              trail.custom_data.recommendedUse.some(el => el.value === 'ohv')
+                ? 'active'
                 : 'inactive'
             }
           />

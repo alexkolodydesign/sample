@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { trailsShape, filtersShape } from '../../utils/propTypes';
-import filterAction from '../../redux/filterActions';
-import regions from '../../data/regions';
+import { trailsShape, filtersShape } from '../../../utils/propTypes';
+import filterAction from '../../../redux/filterActions';
+import regions from '../../../data/regions';
 import Trail from './Trail';
 
 class TrailListMenu extends React.Component {

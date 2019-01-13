@@ -2,7 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
 import { trailsShape } from '../../utils/propTypes';
-import TrailList from './TrailList';
+import TrailList from './trails/TrailList';
 import GPS from './GPS';
 import Settings from './Settings';
 
