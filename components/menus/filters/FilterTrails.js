@@ -1,13 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import FilterTrailsMenu from './FilterTrailsMenu';
+import dynamic from 'next/dynamic';
+
+const FilterTrailsMenu = dynamic(() => import('./FilterTrailsMenu'));
 
 const FilterTrails = ({ toggleMenus, filterTrailsMenu }) => (
   <>
     <button
       type="button"
-      onClick={toggleMenus}
+      onClick={() => toggleMenus(!filterTrailsMenu)}
       className={filterTrailsMenu ? 'active filters' : 'filters'}
     >
       <img src="/static/images/menu/filter.svg" alt="Filter Trails" />
@@ -75,11 +77,11 @@ const mapStateToProps = state => ({
   filterTrailsMenu: state.map.menus.filterTrailsMenu
 });
 const mapDispatchToProps = dispatch => ({
-  toggleMenus: () =>
+  toggleMenus: filterTrailsMenu =>
     dispatch({
       type: 'TOGGLE_MENUS',
       menus: {
-        filterTrailsMenu: true,
+        filterTrailsMenu,
         trailsListMenu: false,
         optionsMenu: false
       }

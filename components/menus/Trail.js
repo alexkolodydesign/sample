@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import debounce from 'lodash.debounce';
 import { trailShape } from '../../utils/propTypes';
 
 const Trail = ({ trail, highlightTrail, metricType }) => (
@@ -9,10 +10,9 @@ const Trail = ({ trail, highlightTrail, metricType }) => (
     <Link href="/trails/trail" as={`/trails/${trail.slug}`}>
       <a
         className="trail"
-        onMouseEnter={() => {
-          // TODO: add debounce
-          highlightTrail(trail.slug);
-        }}
+        // This trail highlight feature is pretty costly, slows down the user experience
+        // Currently debounced this to only active at maximum once per 2.5 seconds
+        onMouseEnter={debounce(() => highlightTrail(trail.slug), 2500)}
         href="/trails/trail"
         as={`/trails/${trail.slug}`}
       >
