@@ -15,7 +15,7 @@ const Dashboard = ({ regions, trails }) => (
     <MainMapSetup regions={regions} trails={trails} />
     <TrailSystemGuide />
     <EventList />
-    <MainMenu />
+    <MainMenu trails={trails} />
   </>
 );
 

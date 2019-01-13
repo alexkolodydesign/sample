@@ -1,6 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
+import PropTypes from 'prop-types';
+import { trailsShape } from '../../utils/propTypes';
 import TrailList from './TrailList';
 import GPS from './GPS';
 import Settings from './Settings';
@@ -8,7 +9,7 @@ import Settings from './Settings';
 const SelectTrailType = dynamic(() => import('./SelectTrailType'));
 const FilterTrails = dynamic(() => import('./filters/FilterTrails'));
 
-const MainMenu = ({ trailPage }) => (
+const MainMenu = ({ trailPage, trails }) => (
   <div className={trailPage ? 'trailMenu menu' : 'menu'}>
     <div className="colors">
       <div className="magenta" />
@@ -40,7 +41,7 @@ const MainMenu = ({ trailPage }) => (
           </>
         )}
         {trailPage && <div />}
-        <TrailList />
+        <TrailList trails={trails} />
         <GPS />
         <Settings />
       </div>
@@ -182,7 +183,8 @@ const MainMenu = ({ trailPage }) => (
 );
 
 MainMenu.propTypes = {
-  trailPage: PropTypes.string
+  trailPage: PropTypes.string,
+  trails: trailsShape.isRequired
 };
 
 MainMenu.defaultProps = {

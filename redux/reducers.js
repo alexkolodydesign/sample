@@ -91,7 +91,7 @@ export const map = (state = defaultMapState, action) => {
     case 'RESET_MAP':
       return { ...defaultMapState.map, zoom: action.zoom };
     case 'HIGHLIGHT_TRAIL':
-      return { ...state, highlightTrail: action.slug };
+      return { ...state, highlightedTrail: action.slug };
     case 'HIGHLIGHT_REGION':
       return { ...state, highlightedRegion: action.name };
     case 'TOGGLE_MENUS':
