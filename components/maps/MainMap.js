@@ -80,7 +80,9 @@ class Map extends React.Component {
 const mapStateToProps = state => ({
   map: state.map,
   trailCoordinates: state.trailCoordinates,
-  firstTimeUser: state.map.firstTimeUser
+  firstTimeUser: state.map.firstTimeUser,
+  trails: state.trails,
+  regions: state.regions
 });
 const mapDispatchToProps = dispatch => ({
   goTo: (zoom, center) => {

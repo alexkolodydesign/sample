@@ -3,7 +3,6 @@ import ReactJoyride, { STATUS } from 'react-joyride';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MainMapSetup from './MainMapSetup';
-import { regionsShape, trailsShape } from '../../utils/propTypes';
 
 class OnBoarding extends React.Component {
   state = {
@@ -128,7 +127,6 @@ class OnBoarding extends React.Component {
 
   render() {
     const { run, showOnboardingMessage, loading, steps } = this.state;
-    const { regions, trails } = this.props;
     if (loading) return null;
     return (
       <div>
@@ -172,7 +170,7 @@ class OnBoarding extends React.Component {
             </div>
           </section>
         )}
-        <MainMapSetup regions={regions} trails={trails} />
+        <MainMapSetup />
         <style jsx>
           {`
             h1 {
@@ -224,9 +222,7 @@ class OnBoarding extends React.Component {
 
 OnBoarding.propTypes = {
   toggleFirstTimeUser: PropTypes.func.isRequired,
-  joyride: PropTypes.shape({}),
-  regions: regionsShape.isRequired,
-  trails: trailsShape.isRequired
+  joyride: PropTypes.shape({})
 };
 
 OnBoarding.defaultProps = {

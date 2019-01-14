@@ -2,11 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
-import { trailsShape } from '../../../utils/propTypes';
 
 const TrailListMenu = dynamic(() => import('./TrailListMenu'));
 
-const TrailList = ({ toggleMenus, trailsListMenu, trails }) => (
+const TrailList = ({ toggleMenus, trailsListMenu }) => (
   <>
     <button
       type="button"
@@ -68,19 +67,14 @@ const TrailList = ({ toggleMenus, trailsListMenu, trails }) => (
       </style>
     </button>
     {trailsListMenu && (
-      <TrailListMenu
-        toggleMenu={toggleMenus}
-        menuState={trailsListMenu}
-        trails={trails}
-      />
+      <TrailListMenu toggleMenu={toggleMenus} menuState={trailsListMenu} />
     )}
   </>
 );
 
 TrailList.propTypes = {
   toggleMenus: PropTypes.func.isRequired,
-  trailsListMenu: PropTypes.bool.isRequired,
-  trails: trailsShape.isRequired
+  trailsListMenu: PropTypes.bool.isRequired
 };
 
 // Redux

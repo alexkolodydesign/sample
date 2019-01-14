@@ -13,6 +13,7 @@ const HeadComponent = ({ title, description, ogImage, children, router }) => (
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <meta name="theme-color" content="#55a5dc" />
     <meta name="msapplication-TileColor" content="#55a5dc" />
+    {/* TODO: Add favicon link */}
 
     <meta property="og:description" content={description} />
     <meta property="og:title" content={title} />

@@ -162,7 +162,8 @@ TrailListMenu.propTypes = {
 const mapStateToProps = state => ({
   filters: state.map.filters,
   highlightedRegion: state.map.highlightedRegion,
-  trailsListMenu: state.map.menus.trailsListMenu
+  trailsListMenu: state.map.menus.trailsListMenu,
+  trails: state.trails
 });
 const mapDispatchToProps = dispatch => ({
   toggleMenus: () =>

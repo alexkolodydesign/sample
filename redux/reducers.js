@@ -111,6 +111,20 @@ export const map = (state = defaultMapState, action) => {
   }
 };
 
+export const regions = (state = [], action) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
+export const trails = (state = [], action) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
 export const trailCoordinates = (state = [], action) => {
   switch (action.type) {
     case 'UPDATE_TRAIL_COORDINATES': {
@@ -138,7 +152,9 @@ export const trailCoordinates = (state = [], action) => {
 
 export const reducers = combineReducers({
   map,
-  trailCoordinates
+  trailCoordinates,
+  trails,
+  regions
 });
 
 export default reducers;
