@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import fetch from 'isomorphic-unfetch';
+import PropTypes from 'prop-types';
+import dynamic from 'next/dynamic';
 import getHostUrl from '../utils/getHostUrl';
 import Head from '../components/shared/Head';
 import EventList from '../components/events/EventList';
@@ -9,10 +11,16 @@ import TrailSystemGuide from '../components/maps/TrailSystemGuide';
 import { regionsShape, trailsShape } from '../utils/propTypes';
 import MainMenu from '../components/menus/MainMenu';
 
-const Dashboard = ({ regions, trails }) => (
+const Onboarding = dynamic(() => import('../components/maps/Onboarding'));
+
+const Dashboard = ({ regions, trails, firstTimeUser }) => (
   <>
     <Head />
-    <MainMapSetup regions={regions} trails={trails} />
+    {firstTimeUser ? (
+      <Onboarding regions={regions} trails={trails} />
+    ) : (
+      <MainMapSetup regions={regions} trails={trails} />
+    )}
     <TrailSystemGuide />
     <EventList />
     <MainMenu trails={trails} />
@@ -40,10 +48,10 @@ Dashboard.getInitialProps = async props => {
 
 Dashboard.propTypes = {
   regions: regionsShape.isRequired,
-  trails: trailsShape.isRequired
+  trails: trailsShape.isRequired,
+  firstTimeUser: PropTypes.bool.isRequired
 };
 
-// Connect page to redux store & return firstTimeUser value
 const mapStateToProps = state => ({ firstTimeUser: state.map.firstTimeUser });
 export default connect(
   mapStateToProps,

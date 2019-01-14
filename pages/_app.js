@@ -160,6 +160,7 @@ Router.onRouteChangeError = () => removeLoader();
 
 Washco.getInitialProps = async ({ Component, ctx }) => {
   // Make sure page components have their getInitialProps ran on server
+  // First time users don't have a cookie
   const firstTimeUser = ctx.req
     ? ctx.req.cookies.firstTimeUser
     : Cookies.get('firstTimeUser') || true;
@@ -169,7 +170,7 @@ Washco.getInitialProps = async ({ Component, ctx }) => {
   if (ctx && ctx.req) {
     return {
       pageProps,
-      firstTimeUser
+      firstTimeUser: firstTimeUser === undefined ? true : firstTimeUser
     };
   }
   return {
