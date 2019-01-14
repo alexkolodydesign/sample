@@ -2,7 +2,6 @@ import React from 'react';
 import { GoogleMap } from 'react-google-maps';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { goToSystem, highlightRegion } from '../../redux/actions';
 import filterActions from '../../redux/filterActions';
 import Region from '../regions/Region';
 import RegionTrail from '../regions/RegionTrail';
@@ -86,10 +85,12 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
   goTo: (zoom, center) => {
-    dispatch(goToSystem(zoom, center));
+    const location = { zoom, center };
+    return dispatch({ type: 'GO_TO_SYSTEM', location });
   },
   highlight: name => {
-    dispatch(highlightRegion(name));
+    if (name) return dispatch({ type: 'HIGHLIGHT_REGION', name });
+    return null;
   }
 });
 

@@ -174,6 +174,11 @@ export const pictureShape = PropTypes.shape({
   })
 });
 
+export const mediaShape = PropTypes.shape({
+  videos: PropTypes.oneOfType([PropTypes.arrayOf(pictureShape), PropTypes.bool]),
+  pictures: PropTypes.oneOfType([PropTypes.arrayOf(pictureShape), PropTypes.bool])
+});
+
 export const trailShape = PropTypes.shape({
   slug: PropTypes.string,
   title: PropTypes.shape({
@@ -217,10 +222,7 @@ export const trailShape = PropTypes.shape({
     ]),
     similarTrails: PropTypes.string,
     trailsNearby: PropTypes.string,
-    media: PropTypes.shape({
-      videos: PropTypes.oneOfType([PropTypes.arrayOf(pictureShape), PropTypes.bool]),
-      pictures: PropTypes.oneOfType([PropTypes.arrayOf(pictureShape), PropTypes.bool])
-    }),
+    media: mediaShape,
     jsonCoordinates: PropTypes.oneOfType([jsonCoordinatesShape, PropTypes.bool]),
     region: PropTypes.string,
     icons: PropTypes.string,
