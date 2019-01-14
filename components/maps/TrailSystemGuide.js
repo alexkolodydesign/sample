@@ -53,7 +53,10 @@ const TrailSystemGuide = ({ system, highlightRegion, goToSystem }) => (
           justify-content: space-evenly;
           & > div {
             flex: 1;
-            &:nth-child(2) a {
+            &:first-child button {
+              border-bottom-left-radius: 1rem;
+            }
+            &:nth-child(2) button {
               border-left: 1px solid #959595;
               border-right: 1px solid #959595;
             }
@@ -64,7 +67,7 @@ const TrailSystemGuide = ({ system, highlightRegion, goToSystem }) => (
           border: none;
           border-radius: 0;
           background: #aaa;
-          padding: 0.5rem;
+          padding: 0.75rem 0.5rem;
           text-align: center;
           color: #fff;
           text-transform: uppercase;
