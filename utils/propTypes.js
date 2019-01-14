@@ -174,10 +174,13 @@ export const pictureShape = PropTypes.shape({
   })
 });
 
-export const mediaShape = PropTypes.shape({
-  videos: PropTypes.oneOfType([PropTypes.arrayOf(pictureShape), PropTypes.bool]),
-  pictures: PropTypes.oneOfType([PropTypes.arrayOf(pictureShape), PropTypes.bool])
-});
+export const mediaShape = PropTypes.oneOfType([
+  PropTypes.shape({
+    videos: PropTypes.oneOfType([PropTypes.arrayOf(pictureShape), PropTypes.bool]),
+    pictures: PropTypes.oneOfType([PropTypes.arrayOf(pictureShape), PropTypes.bool])
+  }),
+  PropTypes.string
+]);
 
 export const trailShape = PropTypes.shape({
   slug: PropTypes.string,

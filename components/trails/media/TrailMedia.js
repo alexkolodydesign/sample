@@ -1,11 +1,12 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import { trailShape, mediaShape } from '../../utils/propTypes';
+import PropTypes from 'prop-types';
+import { mediaShape } from '../../../utils/propTypes';
 
 const ImageGallery = dynamic(import('./ImageGallery'), { ssr: false });
 const VideoGallery = dynamic(import('./VideoGallery'), { ssr: false });
 
-const TrailMedia = ({ media, trail }) => (
+const TrailMedia = ({ media, trailName }) => (
   <div>
     <div className="background_pattern" style={{ position: 'relative' }}>
       <div
@@ -29,7 +30,7 @@ const TrailMedia = ({ media, trail }) => (
             <h3>Videos</h3>
             <hr />
             <div>
-              <VideoGallery trail={trail} videos={media.videos} />
+              <VideoGallery trail={trailName} videos={media.videos} />
             </div>
           </div>
         )}
@@ -38,7 +39,7 @@ const TrailMedia = ({ media, trail }) => (
             <h3>Pictures</h3>
             <hr />
             <div>
-              <ImageGallery trail={trail} images={media.pictures} />
+              <ImageGallery trail={trailName} images={media.pictures} />
             </div>
           </div>
         )}
@@ -139,7 +140,7 @@ const TrailMedia = ({ media, trail }) => (
 
 TrailMedia.propTypes = {
   media: mediaShape.isRequired,
-  trail: trailShape.isRequired
+  trailName: PropTypes.string.isRequired
 };
 
 export default TrailMedia;

@@ -14,7 +14,7 @@ import NearbyTrails from '../../components/trails/NearbyTrails';
 import TrailMedia from '../../components/trails/media/TrailMedia';
 import MainMenu from '../../components/menus/MainMenu';
 
-const Trail = (trail, trails, error) => (
+const Trail = ({ trail, trails, error }) => (
   <div>
     {error ? (
       <div className="wrapper">
@@ -34,7 +34,7 @@ const Trail = (trail, trails, error) => (
         </div>
         <div className="wrapper trail">
           <TrailSidebar trail={trail} />
-          <TrailMap trail={trail} />
+          {/* <TrailMap trail={trail} /> */}
         </div>
         <div className="wrapper more_trails">
           {trail.custom_data.similarTrails.length > 0 && (
@@ -44,7 +44,7 @@ const Trail = (trail, trails, error) => (
             <NearbyTrails nearbyTrails={trail.custom_data.trailsNearby} />
           )}
         </div>
-        <TrailMedia trail={trail.title.rendered} media={trail.custom_data.media} />
+        <TrailMedia trailName={trail.title.rendered} media={trail.custom_data.media} />
         <ScrollToTop
           showUnder={160}
           style={{ background: '#4d4e4e', padding: '0.75rem' }}
@@ -141,11 +141,10 @@ Trail.getInitialProps = async props => {
   const slug = props.asPath.split('/')[2];
   try {
     const res = await fetch(`${hostUrl}/api/trail/${slug}`);
-    const {
-      data: { trail }
-    } = await res.json();
+    const { trail } = await res.json();
     return { trail };
   } catch (e) {
+    // console.log(e);
     return { error: true };
   }
 };

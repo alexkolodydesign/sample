@@ -182,11 +182,11 @@ const MainMenu = ({ trailPage }) => (
 );
 
 MainMenu.propTypes = {
-  trailPage: PropTypes.string
+  trailPage: PropTypes.bool
 };
 
 MainMenu.defaultProps = {
-  trailPage: ''
+  trailPage: false
 };
 
 export default MainMenu;

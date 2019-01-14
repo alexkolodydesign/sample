@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 import sanitizeHtml from 'sanitize-html-react';
 import { connect } from 'react-redux';
-import Difficulty from '../maps/Difficulty';
+import Difficulty from '../shared/Difficulty';
 import { trailShape } from '../../utils/propTypes';
 
 const TrailSidebar = ({ trail: { custom_data: trail, content }, metricType }) => {

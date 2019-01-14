@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { trailShape } from '../../utils/propTypes';
+import { trailShape } from '../../../utils/propTypes';
 
 export default class VideoGallery extends React.Component {
   state = {
