@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
+import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 import sanitizeHtml from 'sanitize-html-react';
 import ScrollToTop from 'react-scroll-up';
@@ -13,9 +14,10 @@ import SimilarTrails from '../../components/trails/SimilarTrails';
 import NearbyTrails from '../../components/trails/NearbyTrails';
 import TrailMedia from '../../components/trails/media/TrailMedia';
 import MainMenu from '../../components/menus/MainMenu';
+import { trailShape } from '../../utils/propTypes';
 
-const Trail = ({ trail, trails, error }) => (
-  <div>
+const Trail = ({ trail, error }) => (
+  <main>
     {error ? (
       <div className="wrapper">
         It appears this Trail no longer exists or another error has occurred.
@@ -34,7 +36,7 @@ const Trail = ({ trail, trails, error }) => (
         </div>
         <div className="wrapper trail">
           <TrailSidebar trail={trail} />
-          {/* <TrailMap trail={trail} /> */}
+          <TrailMap trail={trail} />
         </div>
         <div className="wrapper more_trails">
           {trail.custom_data.similarTrails.length > 0 && (
@@ -133,7 +135,7 @@ const Trail = ({ trail, trails, error }) => (
         </style>
       </div>
     )}
-  </div>
+  </main>
 );
 
 Trail.getInitialProps = async props => {
@@ -147,6 +149,15 @@ Trail.getInitialProps = async props => {
     // console.log(e);
     return { error: true };
   }
+};
+
+Trail.propTypes = {
+  trail: trailShape.isRequired,
+  error: PropTypes.bool
+};
+
+Trail.defaultProps = {
+  error: false
 };
 
 // Redux

@@ -13,10 +13,12 @@ const Onboarding = dynamic(() => import('../components/maps/Onboarding'));
 const Dashboard = ({ firstTimeUser }) => (
   <>
     <Head />
-    {firstTimeUser ? <Onboarding /> : <MainMapSetup />}
-    <TrailSystemGuide />
-    <EventList />
-    <MainMenu />
+    <main>
+      {firstTimeUser ? <Onboarding /> : <MainMapSetup />}
+      <TrailSystemGuide />
+      <EventList />
+      <MainMenu />
+    </main>
   </>
 );
 

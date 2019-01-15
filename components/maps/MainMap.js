@@ -2,7 +2,7 @@ import React from 'react';
 import { GoogleMap } from 'react-google-maps';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import filterActions from '../../redux/filterActions';
+import filterActions from '../../utils/filterActions';
 import Region from '../regions/Region';
 import RegionTrail from '../regions/RegionTrail';
 import UserLocation from '../gps/UserLocation';

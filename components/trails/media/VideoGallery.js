@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { trailShape } from '../../../utils/propTypes';
 
 export default class VideoGallery extends React.Component {
   state = {
@@ -139,5 +138,5 @@ export default class VideoGallery extends React.Component {
 
 VideoGallery.propTypes = {
   videos: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  trail: trailShape.isRequired
+  trail: PropTypes.string.isRequired
 };

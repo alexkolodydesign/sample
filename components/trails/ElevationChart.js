@@ -6,15 +6,14 @@ import ErrorBoundary from './ErrorBoundary';
 import { trailShape, trailCoordinatesShape } from '../../utils/propTypes';
 
 class ElevationChart extends React.Component {
-  state = { loading: true };
+  state = {};
 
-  shouldComponentUpdate = (nextProps, nextState) => {
-    const { trail } = this.props;
-    const { loading } = this.state;
-    if (trail.slug !== nextProps.trail.slug) return true;
-    if (loading !== nextState.loading) return true;
-    if (this.props === nextProps) return false;
-    return true;
+  shouldComponentUpdate = nextprops => {
+    console.log(this.props);
+    const { trail, metricType } = this.props;
+    if (trail.slug !== nextprops.trail.slug) return true;
+    if (metricType !== nextprops.metricType) return true;
+    return false;
   };
 
   renderTooltip = data => {
@@ -74,11 +73,9 @@ class ElevationChart extends React.Component {
         ? Number(Math.min(...coordinates.map(o => o.elevation))).toFixed(0)
         : Number(Math.min(...coordinates.map(o => o.elevation * 0.3048))).toFixed(0);
     const data = coordinates.map(coordinate => {
-      return {
-        ...coordinate,
-        elevation: Math.floor(coordinate.elevation),
-        elevationMetric: Math.floor(coordinate.elevation * 0.3048)
-      };
+      const elevation = Math.floor(coordinate.elevation);
+      const elevationMetric = Math.floor(coordinate.elevation * 0.3048);
+      return { ...coordinate, elevation, elevationMetric };
     });
     return (
       <ErrorBoundary>
@@ -203,7 +200,9 @@ class ElevationChart extends React.Component {
 ElevationChart.propTypes = {
   trail: trailShape.isRequired,
   coordinates: trailCoordinatesShape.isRequired,
-  metricType: PropTypes.string.isRequired
+  metricType: PropTypes.string.isRequired,
+  areaStrokeColor: PropTypes.string.isRequired,
+  pathMarker: PropTypes.func.isRequired
 };
 
 // Redux
