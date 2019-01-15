@@ -95,6 +95,7 @@ export const map = (state = defaultMapState, action) => {
     case 'HIGHLIGHT_REGION':
       return { ...state, highlightedRegion: action.name };
     case 'TOGGLE_MENUS':
+      console.log({ ...state, menus: action.menus });
       return { ...state, menus: action.menus };
     case 'TOGGLE_POPUPMENUS':
       return { ...state, popupMenus: action.popups };

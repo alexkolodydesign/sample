@@ -167,7 +167,6 @@ class TrailChart extends React.Component {
                   );
                 })}
             </GoogleMap>
-            <h1>ID: {trail.id}</h1>
             {trail.custom_data.recommendedUse[0] &&
               trail.custom_data.recommendedUse[0].value !== 'ohv' && (
                 <ElevationChart

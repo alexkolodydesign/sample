@@ -6,16 +6,14 @@ import Router from 'next/router';
 import Cookies from 'js-cookie';
 import fetch from 'isomorphic-unfetch';
 import PropTypes from 'prop-types';
-import getHostUrl from '../utils/getHostUrl';
 import LoadingScreen from '../components/shared/LoadingScreen';
 import { initStore } from '../redux/store';
 import theme from '../utils/theme';
-import { trailsShape } from '../utils/propTypes';
 
 export class Washco extends App {
   render() {
-    const { Component, pageProps, firstTimeUser, trails, regions } = this.props;
-    const store = initStore({ firstTimeUser, regions, trails });
+    const { Component, pageProps, firstTimeUser } = this.props;
+    const store = initStore({ firstTimeUser });
     return (
       <Container>
         <Provider store={store}>
@@ -178,30 +176,14 @@ Washco.getInitialProps = async ({ Component, ctx }) => {
   if (Component.getInitialProps) pageProps = await Component.getInitialProps(ctx);
   pageProps.query = ctx.query;
   // Trails will be needed for all pages so call them here once and store in state
-  const hostUrl = getHostUrl(ctx);
-  const resTrails = await fetch(`${hostUrl}/api/trails/`);
-  const trails = await resTrails.json();
-  const res = await fetch(`${hostUrl}/api/region`);
-  const regions = await res.json();
   if (ctx && ctx.req) {
-    return {
-      pageProps,
-      firstTimeUser: firstTimeUserValue(firstTimeUser),
-      trails,
-      regions
-    };
+    return { pageProps, firstTimeUser: firstTimeUserValue(firstTimeUser) };
   }
-  return {
-    pageProps,
-    trails,
-    regions,
-    firstTimeUser: firstTimeUserValue(firstTimeUser)
-  };
+  return { pageProps, firstTimeUser: firstTimeUserValue(firstTimeUser) };
 };
 
 Washco.propTypes = {
-  firstTimeUser: PropTypes.bool.isRequired,
-  trails: trailsShape.isRequired
+  firstTimeUser: PropTypes.bool.isRequired
 };
 
 export default Washco;
