@@ -9,11 +9,12 @@ class ElevationChart extends React.Component {
   state = {};
 
   shouldComponentUpdate = nextprops => {
-    console.log(this.props);
+    // This makes sure the tooltip will still render and the chart updates on page change
     const { trail, metricType } = this.props;
-    if (trail.slug !== nextprops.trail.slug) return true;
-    if (metricType !== nextprops.metricType) return true;
-    return false;
+    if (this.props.coordinates.length !== nextprops.coordinates) return true;
+    if (trail.slug === nextprops.trail.slug || metricType === nextprops.metricType)
+      return false;
+    return true;
   };
 
   renderTooltip = data => {

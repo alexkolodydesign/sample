@@ -40,7 +40,6 @@ class TrailChart extends React.Component {
   };
 
   updateCoordinates = async (props, state) => {
-    const { trail } = this.props;
     const newState = { ...state };
     newState.mapStyle = props.mapStyle;
     // Get trail from redux store and add coordinate info if it doesn't exist
@@ -60,7 +59,7 @@ class TrailChart extends React.Component {
       props.trail.custom_data.trailhead_longitude
         ? {
             lat: Number(props.trail.custom_data.trailhead_latitude),
-            lng: Number(trail.custom_data.trailhead_longitude)
+            lng: Number(props.trail.custom_data.trailhead_longitude)
           }
         : false;
     // Update new bounding box
@@ -168,6 +167,7 @@ class TrailChart extends React.Component {
                   );
                 })}
             </GoogleMap>
+            <h1>ID: {trail.id}</h1>
             {trail.custom_data.recommendedUse[0] &&
               trail.custom_data.recommendedUse[0].value !== 'ohv' && (
                 <ElevationChart
