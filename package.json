@@ -54,6 +54,7 @@
     "@emotion/core": "^10.0.6",
     "@emotion/styled": "^10.0.6",
     "amdefine": "^1.0.1",
+    "apicache": "^1.2.3",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",

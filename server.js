@@ -2,6 +2,9 @@ require('dotenv').config({ path: 'variables.env' });
 // NPM packages
 const next = require('next');
 const express = require('express');
+const apicache = require('apicache');
+
+const cache = apicache.middleware;
 const compression = require('compression');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -27,12 +30,12 @@ app
     const router = require('express-promise-router')();
     server.use(router);
     // API
-    router.get('/api/region', trails.getRegionData);
-    router.get('/api/coordinates', trails.getCoordinates);
-    router.get('/api/trails/', trails.getTrails);
-    router.get('/api/trail/:trail', trails.getTrailData);
-    router.get('/api/trail/', trails.getTrailData);
-    router.get('/api/washco_event/', events.getEventData);
+    router.get('/api/region', cache('30 minutes'), trails.getRegionData);
+    router.get('/api/coordinates', cache('30 minutes'), trails.getCoordinates);
+    router.get('/api/trails/', cache('30 minutes'), trails.getTrails);
+    router.get('/api/trail/:trail', cache('30 minutes'), trails.getTrailData);
+    router.get('/api/trail/', cache('30 minutes'), trails.getTrailData);
+    router.get('/api/washco_event/', cache('5 minutes'), events.getEventData);
     // Handle All Routes
     server.get('/', (req, res) => app.render(req, res, '/'));
     server.get('/trail-systems/:system', (req, res) =>
