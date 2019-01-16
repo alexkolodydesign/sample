@@ -1,33 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { trailsShape, filtersShape } from '../../../utils/propTypes';
+import { BeatLoader } from 'react-spinners';
+import TrailsData from '../../services/TrailsData';
+import { filtersShape } from '../../../utils/propTypes';
 import filterAction from '../../../utils/filterActions';
 import regions from '../../../data/regions';
 import Trail from './Trail';
 
 class TrailListMenu extends React.Component {
-  state = { filteredTrails: [] };
-
-  componentDidMount = () => {
-    const { trails, filters } = this.props;
-    this.setState({
-      filteredTrails: filterAction(trails, filters, true)
-    });
-  };
+  state = { searchTerm: '' };
 
   search = e => {
-    const { trails, filters } = this.props;
     const searchTerm = e.target.value.toLowerCase();
-    const searchFilteredTrails = filterAction(trails, filters, true).filter(trail =>
-      trail.title.rendered.toLowerCase().includes(searchTerm)
-    );
-    this.setState({ filteredTrails: searchFilteredTrails });
+    this.setState({ searchTerm });
   };
 
   render() {
-    const { highlightedRegion, trailsListMenu, toggleMenus } = this.props;
-    const { filteredTrails } = this.state;
+    const { highlightedRegion, trailsListMenu, toggleMenus, filters } = this.props;
+    const { searchTerm } = this.state;
     const selectedRegion = regions.regions.find(
       region => region.regionName === highlightedRegion
     );
@@ -43,15 +34,25 @@ class TrailListMenu extends React.Component {
           </form>
         </div>
         <div className="trails">
-          {filteredTrails
-            .filter(trail => {
-              // Only show trails in selected region
-              if (selectedRegion) return trail.regions.includes(selectedRegion.id);
-              return true;
-            })
-            .map(trail => (
-              <Trail trail={trail} key={trail.slug} />
-            ))}
+          <TrailsData>
+            {({ loading, trails }) => {
+              if (loading) return <BeatLoader color="#0098e5" />;
+              const filteredTrails = filterAction(trails, filters, true);
+              return filteredTrails
+                .filter(trail => {
+                  // Only show trails in selected region
+                  if (selectedRegion) return trail.regions.includes(selectedRegion.id);
+                  return true;
+                })
+                .filter(
+                  trail =>
+                    // Filter by search term
+                    trail.title.rendered.toLowerCase().includes(searchTerm) ||
+                    searchTerm === ''
+                )
+                .map(trail => <Trail trail={trail} key={trail.slug} />);
+            }}
+          </TrailsData>
         </div>
         <style jsx>
           {`
@@ -152,7 +153,6 @@ class TrailListMenu extends React.Component {
 
 TrailListMenu.propTypes = {
   toggleMenus: PropTypes.func.isRequired,
-  trails: trailsShape.isRequired,
   filters: filtersShape.isRequired,
   highlightedRegion: PropTypes.string.isRequired,
   trailsListMenu: PropTypes.bool.isRequired
@@ -162,8 +162,7 @@ TrailListMenu.propTypes = {
 const mapStateToProps = state => ({
   filters: state.map.filters,
   highlightedRegion: state.map.highlightedRegion,
-  trailsListMenu: state.map.menus.trailsListMenu,
-  trails: state.trails
+  trailsListMenu: state.map.menus.trailsListMenu
 });
 const mapDispatchToProps = dispatch => ({
   toggleMenus: () =>

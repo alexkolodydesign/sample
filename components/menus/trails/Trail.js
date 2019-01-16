@@ -2,17 +2,19 @@ import React from 'react';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import debounce from 'lodash.debounce';
+import ReactHtmlParser from 'react-html-parser';
+import sanitizeHtml from 'sanitize-html-react';
+// import debounce from 'lodash.debounce';
 import { trailShape } from '../../../utils/propTypes';
-
-const Trail = ({ trail, highlightTrail, metricType }) => (
+// highlightTrail
+const Trail = ({ trail, metricType }) => (
   <>
     <Link href="/trails/trail" as={`/trails/${trail.slug}`}>
       <a
         className="trail"
         // This trail highlight feature is pretty costly, slows down the user experience
-        // Currently debounced this to only active at maximum once per 2.5 seconds
-        onMouseEnter={debounce(() => highlightTrail(trail.slug), 2500)}
+        // Could debounced this to only activate at maximum once per 2.5 seconds but still bad
+        // onMouseEnter={debounce(() => highlightTrail(trail.slug), 2500)}
         href="/trails/trail"
         as={`/trails/${trail.slug}`}
       >
@@ -28,7 +30,7 @@ const Trail = ({ trail, highlightTrail, metricType }) => (
           }}
         />
         <div className="details">
-          <h4 dangerouslySetInnerHTML={{ __html: trail.title.rendered }} />
+          <h4>{ReactHtmlParser(sanitizeHtml(trail.title.rendered))}</h4>
           <p>
             {metricType === 'imperial' ? (
               <span>{trail.custom_data.length} mi</span>
@@ -196,7 +198,7 @@ const Trail = ({ trail, highlightTrail, metricType }) => (
 
 Trail.propTypes = {
   trail: trailShape.isRequired,
-  highlightTrail: PropTypes.func.isRequired,
+  // highlightTrail: PropTypes.func.isRequired,
   metricType: PropTypes.string.isRequired
 };
 

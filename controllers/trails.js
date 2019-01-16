@@ -12,7 +12,7 @@ exports.getTrailData = async (req, res) => {
     } = await axios.get(
       `http://washcotrails.flitchbeta.com/wp-json/wp/v2/trails?slug=${trailHandle}`
     );
-    res.status(200).json({ trail });
+    return res.status(200).json({ trail });
   } catch (e) {
     // console.log("Issue arose.", e);
     return res.status(e.response.status).send('Error');
@@ -24,7 +24,7 @@ exports.getTrails = async (req, res) => {
     const { data: trails } = await axios.get(
       'http://washcotrails.flitchbeta.com/wp-json/wp/v2/trails?per_page=500&order=asc&fields=title,slug,custom_data,regions'
     );
-    res.status(200).json(trails);
+    return res.status(200).json(trails);
   } catch (e) {
     // console.log("Issue arose.", e);
     return res.status(e.response.status).send('Error');
@@ -60,7 +60,7 @@ exports.getRegionData = async (req, res) => {
 };
 
 exports.getCoordinates = async (req, res) => {
-  const url = req.query.url;
+  const { url } = req.query;
   if (!url) {
     res.statusMessage = 'Missing URL';
     return res.sendStatus(400);
@@ -70,7 +70,7 @@ exports.getCoordinates = async (req, res) => {
     return res.json({ trail });
   } catch (e) {
     // console.log("Issue arose.", e);
-    console.log('BROKEN URL', url);
+    // console.log('BROKEN URL', url);
     return res.status(e.response.status).send('Error');
   }
 };

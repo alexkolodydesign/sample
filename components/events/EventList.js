@@ -1,10 +1,12 @@
 import React from 'react';
+import { BeatLoader } from 'react-spinners';
 import dynamic from 'next/dynamic';
+import EventsData from '../services/EventsData';
 // Only load menu when user clicks
 const EventListMenu = dynamic(() => import('./EventListMenu'), { ssr: false });
 
 class EventList extends React.Component {
-  state = { loading: true, events: [] };
+  state = { menu: false };
 
   toggleMenu = () => {
     const { menu } = this.state;
@@ -16,19 +18,8 @@ class EventList extends React.Component {
     }
   };
 
-  componentDidMount = () => {
-    this.getEvents();
-  };
-
-  getEvents = async () => {
-    const events_data = await fetch('/api/washco_event');
-    const events = await events_data.json();
-    this.setState({ events, loading: false });
-  };
-
   render() {
-    const { loading, menu, events } = this.state;
-    if (loading) return <></>;
+    const { menu } = this.state;
     return (
       <>
         <button
@@ -94,9 +85,20 @@ class EventList extends React.Component {
             `}
           </style>
         </button>
-        {menu && events.length > 0 ? (
-          <EventListMenu events={events} toggleMenu={this.toggleMenu} menuState={menu} />
-        ) : null}
+        <EventsData>
+          {({ loading, events }) => {
+            if (loading) return <BeatLoader color="#0098e5" />;
+            if (menu && events.length > 0)
+              return (
+                <EventListMenu
+                  events={events}
+                  toggleMenu={this.toggleMenu}
+                  menuState={menu}
+                />
+              );
+            return null;
+          }}
+        </EventsData>
       </>
     );
   }

@@ -7,7 +7,8 @@ import Region from '../regions/Region';
 import RegionTrail from '../regions/RegionTrail';
 import UserLocation from '../gps/UserLocation';
 import RegionsData from '../services/RegionsData';
-import { mapShape, trailsShape } from '../../utils/propTypes';
+import TrailsData from '../services/TrailsData';
+import { mapShape } from '../../utils/propTypes';
 
 class Map extends React.Component {
   static washington_map = React.createRef();
@@ -27,10 +28,9 @@ class Map extends React.Component {
   };
 
   render() {
-    const { regions, map, trails, firstTimeUser } = this.props;
+    const { map, firstTimeUser } = this.props;
     const zoomState = this.zoom;
     const zoomLevel = map.zoom;
-    const filteredTrails = filterActions(trails, map.filters, zoomLevel);
     const { google } = window;
     return (
       <GoogleMap
@@ -56,11 +56,15 @@ class Map extends React.Component {
       >
         {map.gps && <UserLocation />}
         {firstTimeUser === false && (
-          <>
-            {filteredTrails.map(trail => (
-              <RegionTrail trail={trail} key={trail.slug} />
-            ))}
-          </>
+          <TrailsData>
+            {({ loading, trails }) => {
+              if (loading) return null;
+              const filteredTrails = filterActions(trails, map.filters, zoomLevel);
+              return filteredTrails.map(trail => (
+                <RegionTrail trail={trail} key={trail.slug} />
+              ));
+            }}
+          </TrailsData>
         )}
         <RegionsData>
           {regions =>
@@ -102,7 +106,6 @@ Map.propTypes = {
   map: mapShape.isRequired,
   highlight: PropTypes.func.isRequired,
   goTo: PropTypes.func.isRequired,
-  trails: trailsShape.isRequired,
   firstTimeUser: PropTypes.bool.isRequired
 };
 

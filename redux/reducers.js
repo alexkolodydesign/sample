@@ -95,7 +95,6 @@ export const map = (state = defaultMapState, action) => {
     case 'HIGHLIGHT_REGION':
       return { ...state, highlightedRegion: action.name };
     case 'TOGGLE_MENUS':
-      console.log({ ...state, menus: action.menus });
       return { ...state, menus: action.menus };
     case 'TOGGLE_POPUPMENUS':
       return { ...state, popupMenus: action.popups };
@@ -112,51 +111,7 @@ export const map = (state = defaultMapState, action) => {
   }
 };
 
-export const regions = (state = [], action) => {
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
-
-export const trails = (state = [], action) => {
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
-
-export const trailCoordinates = (state = [], action) => {
-  switch (action.type) {
-    case 'UPDATE_TRAIL_COORDINATES': {
-      const newState = [...state];
-      const matchingTrail = newState.find(trail => trail.slug === action.data.slug);
-      if (matchingTrail) matchingTrail.coordinates = action.data.coords || '';
-      else newState.push({ slug: action.data.slug, coordinates: action.data.coords });
-      return newState;
-    }
-    case 'UPDATE_CONNECTOR_TRAIL_COORDINATES': {
-      const connState = [...state];
-      const matchTrail = connState.find(trail => trail.slug === action.data.slug);
-      if (matchTrail) matchTrail.connector_coordinates = action.data.coords || '';
-      else
-        connState.push({
-          slug: action.data.slug,
-          connector_coordinates: action.data.coords
-        });
-      return connState;
-    }
-    default:
-      return state;
-  }
-};
-
-export const reducers = combineReducers({
-  map,
-  trailCoordinates,
-  trails,
-  regions
-});
+export const reducers = combineReducers({ map });
 
 export default reducers;
 

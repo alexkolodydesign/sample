@@ -64,6 +64,7 @@ const EventListMenu = ({ toggleMenu, menuState, events }) => (
         .close {
           color: #3fa9f5;
           background: #fff;
+          border: none;
           position: absolute;
           right: 3rem;
           top: 1rem;
