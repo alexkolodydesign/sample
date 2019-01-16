@@ -4,7 +4,6 @@ import { ThemeProvider } from 'emotion-theming';
 import { Provider } from 'react-redux';
 import Router from 'next/router';
 import Cookies from 'js-cookie';
-import fetch from 'isomorphic-unfetch';
 import PropTypes from 'prop-types';
 import LoadingScreen from '../components/shared/LoadingScreen';
 import { initStore } from '../redux/store';
