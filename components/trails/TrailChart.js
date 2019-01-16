@@ -14,9 +14,8 @@ class TrailChart extends React.Component {
 
   // componentDidUpdate = prevProps => {
   //   const { trail } = this.props;
-  //   if (trail.slug !== prevProps.trail.slug) {
-  //     this.updateCoordinates(this.props, this.state);
-  //   }
+  // console.log('LAST: ', prevProps.trail);
+  // console.log('CURRENT: ', trail);
   // };
 
   pathMarker = location => {
@@ -25,6 +24,7 @@ class TrailChart extends React.Component {
 
   render() {
     const { trail } = this.props;
+    console.log(trail);
     const trailhead =
       trail.custom_data.trailhead_latitude && trail.custom_data.trailhead_longitude
         ? {
