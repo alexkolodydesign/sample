@@ -68,7 +68,6 @@ const DownloadGPS = ({ trail }) => {
           >
             <img src="/static/images/trail/download.svg" alt="Event List" />
             <span>Download GPS</span>
-            <style jsx />
           </Button>
         );
       }}

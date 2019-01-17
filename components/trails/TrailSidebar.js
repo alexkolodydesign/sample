@@ -12,7 +12,7 @@ const TrailSidebar = ({ trail: { custom_data: trail, content }, metricType }) =>
     difficulty => difficulty.value !== 'none'
   );
   return (
-    <TrailSidebarStyles className="sidebar">
+    <TrailSidebarStyles>
       <div className="details background">
         {trail.region && (
           <div>

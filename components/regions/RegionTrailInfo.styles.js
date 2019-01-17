@@ -17,18 +17,16 @@ const RegionTrailInfoStyles = styled.div`
       margin-bottom: 10px;
     }
   }
-  .info_wrapper {
-    min-height: 250px;
-    width: 100%;
-    overflow-x: hidden;
-    .image {
-      img {
-        max-height: 150px;
-      }
+  min-height: 250px;
+  width: 100%;
+  overflow-x: hidden;
+  .image {
+    img {
+      max-height: 150px;
     }
-    .icons {
-      padding-top: 2em;
-    }
+  }
+  .icons {
+    padding-top: 2em;
   }
   a {
     text-decoration: none;
@@ -54,35 +52,33 @@ const RegionTrailInfoStyles = styled.div`
   }
 
   @media screen and (min-width: 768px) {
-    .info_wrapper {
-      display: grid;
-      height: 100%;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 10% 45% 45%;
-      grid-template-areas: 'top top top' 'info info info' 'image image icons';
-      min-width: 300px;
-      min-height: 250px;
-      width: 100%;
-      .top {
-        grid-area: top;
-        margin: 0;
+    display: grid;
+    height: 100%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 10% 45% 45%;
+    grid-template-areas: 'top top top' 'info info info' 'image image icons';
+    min-width: 300px;
+    min-height: 250px;
+    width: 100%;
+    .top {
+      grid-area: top;
+      margin: 0;
+    }
+    .info {
+      grid-area: info;
+      padding-top: 1rem;
+    }
+    .image {
+      grid-area: image;
+      img {
+        padding: 1.5rem 0;
+        max-width: 140px;
+        height: auto;
       }
-      .info {
-        grid-area: info;
-        padding-top: 1rem;
-      }
-      .image {
-        grid-area: image;
-        img {
-          padding: 1.5rem 0;
-          max-width: 140px;
-          height: auto;
-        }
-      }
-      .icons {
-        padding-top: 1rem;
-        grid-area: icons;
-      }
+    }
+    .icons {
+      padding-top: 1rem;
+      grid-area: icons;
     }
   }
 `;

@@ -1,14 +1,9 @@
 import styled from '@emotion/styled';
 
 const NearbyTrailsStyles = styled.div`
-  .container {
-    padding: 1.5rem 3rem 3rem 3rem;
-    background-image: linear-gradient(
-        rgba(255, 255, 255, 0.98),
-        rgba(255, 255, 255, 0.98)
-      ),
-      url(/static/images/background-pattern.svg);
-  }
+  padding: 1.5rem 3rem 3rem 3rem;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.98)),
+    url(/static/images/background-pattern.svg);
   .nearby_trails {
     height: 15rem;
     overflow-y: scroll;

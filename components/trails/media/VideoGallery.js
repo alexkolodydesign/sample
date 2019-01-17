@@ -20,7 +20,7 @@ export default class VideoGallery extends React.Component {
       display: showImage ? 'block' : 'none'
     };
     return (
-      <VideoGalleryStyles className="video-wrapper">
+      <VideoGalleryStyles>
         {videos.map(video => (
           <button
             className="video-container"

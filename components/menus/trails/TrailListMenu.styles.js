@@ -75,12 +75,10 @@ const TrailListMenuStyles = styled.div`
     }
   }
   @media screen and (min-width: 768px) {
-    .menu {
-      left: 0;
-      top: -45.5rem;
-      z-index: -1;
-      width: 30rem;
-    }
+    left: 0;
+    top: -45.5rem;
+    z-index: -1;
+    width: 30rem;
   }
 `;
 

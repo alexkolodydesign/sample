@@ -26,7 +26,7 @@ export default class NearbyTrails extends React.Component {
     const { trails } = this.state;
     if (!trails) return null;
     return (
-      <NearbyTrailsStyles className="container">
+      <NearbyTrailsStyles>
         <h2>Nearby Trails:</h2>
         <div className="nearby_trails">
           {trails &&

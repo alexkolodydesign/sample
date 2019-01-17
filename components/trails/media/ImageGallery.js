@@ -23,7 +23,7 @@ export default class ImageGallery extends React.Component {
     const { images, trail } = this.props;
     const gallery = images.map(image => image.url);
     return (
-      <ImageGalleryStyles className="gallery-wrapper">
+      <ImageGalleryStyles>
         <div>
           {images.map((picture, k) => (
             <button

@@ -12,12 +12,10 @@ const Trail = ({ trail, metricType }) => (
   <>
     <Link href="/trails/trail" as={`/trails/${trail.slug}`}>
       <TrailLink
-        className="trail"
         // This trail highlight feature is pretty costly, slows down the user experience
         // Could debounced this to only activate at maximum once per 2.5 seconds but still bad
         // onMouseEnter={debounce(() => highlightTrail(trail.slug), 2500)}
         href="/trails/trail"
-        as={`/trails/${trail.slug}`}
       >
         <div
           style={{

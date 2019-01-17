@@ -23,7 +23,7 @@ import ShareButtonsStyles from './ShareButtons.styles';
 const ShareButtons = ({ media }) => {
   const url = window.location.href;
   return (
-    <ShareButtonsStyles className="social">
+    <ShareButtonsStyles>
       <FacebookShareButton url={url}>
         <FacebookIcon size={32} round />
       </FacebookShareButton>

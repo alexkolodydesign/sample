@@ -26,7 +26,7 @@ export default class SimilarTrails extends React.Component {
     const { trails } = this.state;
     if (!trails) return null;
     return (
-      <SimilarTrailsStyles className="container">
+      <SimilarTrailsStyles>
         <h2>Similar to This Trail:</h2>
         <div className="similar_trails">
           {trails &&

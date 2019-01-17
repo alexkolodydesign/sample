@@ -26,7 +26,7 @@ class Option extends React.Component {
       <OptionStyles>
         <button type="button" className="title" onClick={this.toggleMenu}>
           <h4>
-            <span className={menu && 'active'}>{title}</span>
+            <span className={menu ? 'active' : undefined}>{title}</span>
           </h4>
           <p>
             <span>

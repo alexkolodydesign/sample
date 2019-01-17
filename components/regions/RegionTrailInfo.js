@@ -10,7 +10,7 @@ import RegionTrailInfoStyles from './RegionTrailInfo.styles';
 const RegionTrailInfo = ({ menuCoords, togglePopups, trail, metricType }) => (
   <Marker position={menuCoords} icon={{ url: '' }}>
     <InfoWindow options={{ maxWidth: 320 }} onCloseClick={() => togglePopups('')}>
-      <RegionTrailInfoStyles className="info_wrapper">
+      <RegionTrailInfoStyles>
         <h3
           className="top"
           // eslint-disable-next-line react/no-danger

@@ -94,10 +94,8 @@ const TrailSidebarStyles = styled.div`
   }
 
   @media print {
-    .sidebar {
-      width: 30%;
-      float: left;
-    }
+    width: 30%;
+    float: left;
     img {
       display: none;
     }
