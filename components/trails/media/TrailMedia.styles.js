@@ -70,7 +70,7 @@ const TrailMediaStyles = styled.div`
       .videos + .photos {
         grid-column-start: 2;
       }
-      & > .photos:first-child {
+      & > .photos:first-of-type {
         margin: 0 auto;
       }
     }

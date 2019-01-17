@@ -6,17 +6,17 @@ const EventStyles = styled.div`
   grid-template-columns: 7.5rem 1fr;
   margin: 1rem 0;
   animation-fill-mode: forwards;
-  &:nth-child(1) {
+  &:nth-of-type(1) {
     animation-name: slideUp;
     animation-duration: 500ms;
     animation-delay: 50ms;
   }
-  &:nth-child(2) {
+  &:nth-of-type(2) {
     animation-name: slideUp;
     animation-duration: 500ms;
     animation-delay: 100ms;
   }
-  &:nth-child(3) {
+  &:nth-of-type(3) {
     animation-name: slideUp;
     animation-duration: 500ms;
     animation-delay: 200ms;

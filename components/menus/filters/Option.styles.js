@@ -4,31 +4,31 @@ const OptionStyles = styled.div`
   background: #eee;
   margin: 1rem 0;
   animation-fill-mode: forwards;
-  &:nth-child(1) {
+  &:nth-of-type(1) {
     opacity: 0;
     animation-name: slideUp;
     animation-duration: 500ms;
     animation-delay: 50ms;
   }
-  &:nth-child(2) {
+  &:nth-of-type(2) {
     opacity: 0;
     animation-name: slideUp;
     animation-duration: 500ms;
     animation-delay: 100ms;
   }
-  &:nth-child(3) {
+  &:nth-of-type(3) {
     opacity: 0;
     animation-name: slideUp;
     animation-duration: 500ms;
     animation-delay: 200ms;
   }
-  &:nth-child(4) {
+  &:nth-of-type(4) {
     opacity: 0;
     animation-name: slideUp;
     animation-duration: 500ms;
     animation-delay: 300ms;
   }
-  &:nth-child(5) {
+  &:nth-of-type(5) {
     opacity: 0;
     animation-name: slideUp;
     animation-duration: 500ms;

@@ -11,10 +11,10 @@ const TrailSystemGuideStyles = styled.div`
   justify-content: space-evenly;
   & > div {
     flex: 1;
-    &:first-child button {
+    &:first-of-type button {
       border-bottom-left-radius: 1rem;
     }
-    &:nth-child(2) button {
+    &:nth-of-type(2) button {
       border-left: 1px solid #959595;
       border-right: 1px solid #959595;
     }
@@ -49,7 +49,7 @@ const TrailSystemGuideStyles = styled.div`
     left: initial;
     & > div {
       flex: 1;
-      &:first-child a {
+      &:first-of-type a {
         border-top-left-radius: 2rem;
         border-bottom-left-radius: 2rem;
       }

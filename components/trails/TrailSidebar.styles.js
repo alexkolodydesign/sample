@@ -63,7 +63,7 @@ const TrailSidebarStyles = styled.div`
       &:hover {
         background: #262727;
       }
-      &:first-child {
+      &:first-of-type {
         background: #3fa9f5;
         &:hover {
           background: #0d93f2;
