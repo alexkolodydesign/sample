@@ -91,6 +91,7 @@
     "redux-devtools-extension": "^2.13.7",
     "redux-thunk": "^2.3.0",
     "sanitize-html-react": "^1.13.0",
+    "styled-jsx": "^3.2.0",
     "styled-jsx-plugin-postcss": "^2.0.0",
     "xml2json": "^0.11.2"
   },
@@ -122,7 +123,8 @@
     "nodemon": "^1.18.9",
     "prettier": "^1.15.3",
     "redux-devtools": "^3.5.0",
-    "redux-mock-store": "^1.5.3"
+    "redux-mock-store": "^1.5.3",
+    "styled-jsx-plugin-sass": "^1.0.0"
   },
   "postcss": {
     "plugins": {

@@ -3,29 +3,29 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const ResetMap = ({ resetMap }) => (
-  <React.Fragment>
+  <>
     <button onClick={() => resetMap()} type="button">
       Reset Map
-    </button>
-    <style jsx>
-      {`
-        button {
-          margin: 1rem 0;
-          padding: 1rem;
-          color: #fff;
-          background: none;
-          border: 0.1rem solid #fff;
-          width: 100%;
-          text-transform: uppercase;
-          cursor: pointer;
-          transition: all 500ms;
-          &:hover {
-            background: #0d93f2;
+      <style jsx>
+        {`
+          button {
+            margin: 1rem 0;
+            padding: 1rem;
+            color: #fff;
+            background: none;
+            border: 0.1rem solid #fff;
+            width: 100%;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 500ms;
+            &:hover {
+              background: #0d93f2;
+            }
           }
-        }
-      `}
-    </style>
-  </React.Fragment>
+        `}
+      </style>
+    </button>
+  </>
 );
 
 // Redux

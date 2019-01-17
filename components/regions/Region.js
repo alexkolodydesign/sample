@@ -88,29 +88,6 @@ class Region extends React.Component {
           </React.Fragment>
         )}
         {zoomLevel < 12 && <RegionMarker region={region} zoom={zoom} />}
-        <style jsx>
-          {`
-            .explore {
-              color: #3fa9f5;
-              cursor: pointer;
-              font-weight: 500;
-            }
-            .info_wrapper {
-              display: block;
-              min-width: 100%;
-              overflow-x: hidden;
-              img {
-                max-width: 150px;
-              }
-            }
-
-            @media screen and (min-width: 768px) {
-              .info_wrapper {
-                display: grid;
-              }
-            }
-          `}
-        </style>
       </React.Fragment>
     );
   }
