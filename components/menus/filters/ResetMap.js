@@ -1,30 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ResetMapButton from './ResetMap.styles';
 
 const ResetMap = ({ resetMap }) => (
   <>
-    <button onClick={() => resetMap()} type="button">
+    <ResetMapButton onClick={() => resetMap()} type="button">
       Reset Map
-      <style jsx>
-        {`
-          button {
-            margin: 1rem 0;
-            padding: 1rem;
-            color: #fff;
-            background: none;
-            border: 0.1rem solid #fff;
-            width: 100%;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 500ms;
-            &:hover {
-              background: #0d93f2;
-            }
-          }
-        `}
-      </style>
-    </button>
+    </ResetMapButton>
   </>
 );
 

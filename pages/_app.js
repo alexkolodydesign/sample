@@ -4,8 +4,10 @@ import { Provider } from 'react-redux';
 import Router from 'next/router';
 import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
+import { ThemeProvider } from 'emotion-theming';
 import LoadingScreen from '../components/shared/LoadingScreen';
 import { initStore } from '../redux/store';
+import theme from '../utils/theme';
 
 export class Washco extends App {
   render() {
@@ -14,14 +16,16 @@ export class Washco extends App {
     return (
       <Container>
         <Provider store={store}>
-          <noscript
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{
-              __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MFQ7DJ4" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }} />`
-            }}
-          />
-          <LoadingScreen />
-          <Component {...pageProps} />
+          <ThemeProvider theme={theme}>
+            <noscript
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{
+                __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MFQ7DJ4" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }} />`
+              }}
+            />
+            <LoadingScreen />
+            <Component {...pageProps} />
+          </ThemeProvider>
           <style jsx global>
             {`
               html {

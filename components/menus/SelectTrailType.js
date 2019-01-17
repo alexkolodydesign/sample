@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import SelectTrailTypeStyles from './SelectTrailType.styles';
 
 const SelectTrailType = ({ changeTrailType, hiking, biking, equestrian, ohv }) => (
-  <div className="trails">
+  <SelectTrailTypeStyles>
     <button type="button" onClick={() => changeTrailType('hiking')}>
       <img
         src="/static/images/menu/hiking.svg"
@@ -32,41 +33,7 @@ const SelectTrailType = ({ changeTrailType, hiking, biking, equestrian, ohv }) =
         className={ohv ? null : 'inactive'}
       />
     </button>
-    <style jsx>
-      {`
-        button {
-          background: none;
-          border: none;
-        }
-        .trails {
-          grid-column-start: 2;
-        }
-        img {
-          width: 4rem;
-          cursor: pointer;
-          transition: all 500ms;
-          &:not(:last-child) {
-            margin-right: 1rem;
-          }
-          &:hover {
-            transform: scale(1.1);
-          }
-          &:focus,
-          &:active {
-            transform: scale(1);
-          }
-          &.inactive {
-            opacity: 0.2;
-          }
-        }
-        @media screen and (min-width: 768px) {
-          img {
-            width: 5.5rem;
-          }
-        }
-      `}
-    </style>
-  </div>
+  </SelectTrailTypeStyles>
 );
 
 // Redux

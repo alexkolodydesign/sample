@@ -1,6 +1,7 @@
 import React from 'react';
 import TrailCoordinatesData from '../services/TrailCoordinatesData';
 import { trailShape } from '../../utils/propTypes';
+import Button from '../shared/Button.styles';
 
 const DownloadGPS = ({ trail }) => {
   function generateGPX(coordinates) {
@@ -19,22 +20,22 @@ const DownloadGPS = ({ trail }) => {
   const { url } = trail.custom_data.jsonCoordinates;
   if (!url)
     return (
-      <button type="button" disabled>
+      <Button type="button" disabled>
         Download GPS
-      </button>
+      </Button>
     );
   return (
     <TrailCoordinatesData url={url}>
       {({ loading, coordinates }) => {
         if (loading)
           return (
-            <button type="button" disabled>
+            <Button type="button" disabled>
               Download GPS
-            </button>
+            </Button>
           );
         const gpxString = generateGPX(coordinates);
         return (
-          <button
+          <Button
             type="button"
             onClick={() => {
               function download(filename, text) {
@@ -67,29 +68,8 @@ const DownloadGPS = ({ trail }) => {
           >
             <img src="/static/images/trail/download.svg" alt="Event List" />
             <span>Download GPS</span>
-            <style jsx>
-              {`
-                button {
-                  border: none;
-                  border-radius: 1rem;
-                  background: #3fa9f5;
-                  padding: 1rem 2rem;
-                  color: #fff;
-                  font-size: 1.8rem;
-                  cursor: pointer;
-                  transition: all 500ms;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  img {
-                    width: 3rem;
-                    height: 3rem;
-                    margin-right: 1rem;
-                  }
-                }
-              `}
-            </style>
-          </button>
+            <style jsx />
+          </Button>
         );
       }}
     </TrailCoordinatesData>

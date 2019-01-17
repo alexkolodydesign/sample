@@ -18,11 +18,12 @@ import {
   EmailIcon
 } from 'react-share';
 import PropTypes from 'prop-types';
+import ShareButtonsStyles from './ShareButtons.styles';
 
 const ShareButtons = ({ media }) => {
   const url = window.location.href;
   return (
-    <div className="social">
+    <ShareButtonsStyles className="social">
       <FacebookShareButton url={url}>
         <FacebookIcon size={32} round />
       </FacebookShareButton>
@@ -48,21 +49,7 @@ const ShareButtons = ({ media }) => {
       <EmailShareButton url={url}>
         <EmailIcon size={32} round />
       </EmailShareButton>
-      <style jsx>
-        {`
-          .social {
-            display: flex;
-          }
-        `}
-      </style>
-      <style jsx global>
-        {`
-          .SocialMediaShareButton {
-            padding-right: 1rem;
-          }
-        `}
-      </style>
-    </div>
+    </ShareButtonsStyles>
   );
 };
 

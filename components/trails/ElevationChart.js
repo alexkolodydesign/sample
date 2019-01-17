@@ -4,14 +4,15 @@ import PropTypes from 'prop-types';
 import Chart from './Chart';
 import ErrorBoundary from './ErrorBoundary';
 import { trailShape, trailCoordinatesShape } from '../../utils/propTypes';
+import ElevationChartStyles from './ElevationChart.styles';
 
 class ElevationChart extends React.Component {
   state = {};
 
   shouldComponentUpdate = nextprops => {
     // This makes sure the tooltip will still render and the chart updates on page change
-    const { trail, metricType } = this.props;
-    if (this.props.coordinates.length !== nextprops.coordinates) return true;
+    const { trail, metricType, coordinates } = this.props;
+    if (coordinates.length !== nextprops.coordinates) return true;
     if (trail.slug === nextprops.trail.slug || metricType === nextprops.metricType)
       return false;
     return true;
@@ -25,30 +26,22 @@ class ElevationChart extends React.Component {
         : false;
     if (!elevation) return null;
     return (
-      <div className="custom-tooltip">
+      <div
+        className="custom-tooltip"
+        style={{ background: '#fff', padding: '0.5rem 1.5rem' }}
+      >
         {metricType === 'imperial' ? (
           <p>
-            Elevation <span>{elevation} ft</span>
+            Elevation <span style={{ fontWeight: '100' }}>{elevation} ft</span>
           </p>
         ) : (
           <p>
-            Elevation <span>{(elevation * 0.3048).toFixed(2)} meters</span>
+            Elevation{' '}
+            <span style={{ fontWeight: '100' }}>
+              {(elevation * 0.3048).toFixed(2)} meters
+            </span>
           </p>
         )}
-        <style jsx>
-          {`
-            div {
-              background: #fff;
-              padding: 0.5rem 1.5rem;
-            }
-
-            p {
-              span {
-                font-weight: 100;
-              }
-            }
-          `}
-        </style>
       </div>
     );
   };
@@ -80,7 +73,7 @@ class ElevationChart extends React.Component {
     });
     return (
       <ErrorBoundary>
-        <div>
+        <ElevationChartStyles>
           <div>
             <h2>Elevation</h2>
             <div className="chart">
@@ -141,58 +134,7 @@ class ElevationChart extends React.Component {
                 ))}
             </div>
           </div>
-          <style jsx>
-            {`
-              h2 {
-                margin: 3rem 0rem 1.5rem 0rem;
-              }
-              .chart {
-                background: #eee;
-                padding: 1.5rem 0;
-                width: 100%;
-              }
-              .details {
-                display: grid;
-                grid-template-columns: 1fr 11rem;
-                margin-top: 3rem;
-              }
-              .stats {
-                p {
-                  font-weight: 700;
-                  span {
-                    padding-left: 1rem;
-                    font-weight: 100;
-                  }
-                }
-              }
-              .map_type {
-                display: grid;
-                grid-template: repeat(2, 6rem) / repeat(2, 6rem);
-                img {
-                  width: 5rem;
-                }
-              }
-              .recharts-surface {
-                overflow-y: visible;
-              }
-              @media screen and (min-width: 768px) {
-                .details {
-                  display: grid;
-                  grid-template-columns: 1fr 15rem;
-                  margin-top: 3rem;
-                }
-              }
-              @media print {
-                .details {
-                  display: none;
-                }
-                .chart {
-                  background: #ffffff;
-                }
-              }
-            `}
-          </style>
-        </div>
+        </ElevationChartStyles>
       </ErrorBoundary>
     );
   }
