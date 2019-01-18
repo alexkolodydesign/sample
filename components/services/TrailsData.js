@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-
+// TODO: Create axios cancel token for unmounting early
 class TrailsData extends React.Component {
   state = { loading: true, trails: [] };
 

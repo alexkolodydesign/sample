@@ -7,18 +7,18 @@ import Region from '../regions/Region';
 import RegionTrail from '../regions/RegionTrail';
 import UserLocation from '../gps/UserLocation';
 import RegionsData from '../services/RegionsData';
-import TrailsData from '../services/TrailsData';
-import { mapShape } from '../../utils/propTypes';
+import { filtersShape } from '../../utils/propTypes';
+import { TrailsContext } from '../../pages/_app';
 
 class Map extends React.Component {
   static washington_map = React.createRef();
 
   componentDidMount = () => {
-    const { goTo, map } = this.props;
-    if (window.innerWidth >= 768 && window.innerWidth < 991) goTo(9, map.center);
-    else if (window.innerWidth >= 992 && window.innerWidth < 1500) goTo(10, map.center);
-    else if (window.innerWidth > 1500) goTo(11, map.center);
-    else goTo(8, map.center);
+    const { goTo, center } = this.props;
+    if (window.innerWidth >= 768 && window.innerWidth < 991) goTo(9, center);
+    else if (window.innerWidth >= 992 && window.innerWidth < 1500) goTo(10, center);
+    else if (window.innerWidth > 1500) goTo(11, center);
+    else goTo(8, center);
   };
 
   zoom = (zoom, center, regionName) => {
@@ -28,20 +28,20 @@ class Map extends React.Component {
   };
 
   render() {
-    const { map, firstTimeUser } = this.props;
+    const { mapStyle, zoom, center, gps, filters, firstTimeUser } = this.props;
     const zoomState = this.zoom;
-    const zoomLevel = map.zoom;
+    const zoomLevel = zoom;
     const { google } = window;
     return (
       <GoogleMap
-        zoom={map.zoom}
-        center={map.center}
+        zoom={zoom}
+        center={center}
         // eslint-disable-next-line react/jsx-no-bind
         onZoomChanged={function zoomChange() {
           zoomState(this.getZoom(), null);
         }}
         options={{
-          mapTypeId: map.mapStyle,
+          mapTypeId: mapStyle,
           mapTypeControl: true,
           mapTypeControlOptions: {
             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -54,17 +54,17 @@ class Map extends React.Component {
         }}
         ref={this.washington_map}
       >
-        {map.gps && <UserLocation />}
+        {gps && <UserLocation />}
         {firstTimeUser === false && (
-          <TrailsData>
+          <TrailsContext.Consumer>
             {({ loading, trails }) => {
               if (loading) return null;
-              const filteredTrails = filterActions(trails, map.filters, zoomLevel);
+              const filteredTrails = filterActions(trails, filters, zoomLevel);
               return filteredTrails.map(trail => (
                 <RegionTrail trail={trail} key={trail.slug} />
               ));
             }}
-          </TrailsData>
+          </TrailsContext.Consumer>
         )}
         <RegionsData>
           {regions =>
@@ -73,7 +73,7 @@ class Map extends React.Component {
                 region={region}
                 key={region.regionName}
                 zoom={this.zoom}
-                zoomLevel={map.zoom}
+                zoomLevel={zoom}
                 firstTimeUser={firstTimeUser}
               />
             ))
@@ -86,10 +86,12 @@ class Map extends React.Component {
 
 // Redux
 const mapStateToProps = state => ({
-  map: state.map,
-  trailCoordinates: state.trailCoordinates,
-  firstTimeUser: state.map.firstTimeUser,
-  trails: state.trails
+  mapStyle: state.map.mapStyle,
+  zoom: state.map.zoom,
+  center: state.map.center,
+  gps: state.map.gps,
+  filters: state.map.filters,
+  firstTimeUser: state.map.firstTimeUser
 });
 const mapDispatchToProps = dispatch => ({
   goTo: (zoom, center) => {
@@ -103,10 +105,21 @@ const mapDispatchToProps = dispatch => ({
 });
 
 Map.propTypes = {
-  map: mapShape.isRequired,
+  mapStyle: PropTypes.string.isRequired,
+  zoom: PropTypes.number.isRequired,
+  center: PropTypes.shape({
+    lat: PropTypes.number.isRequired,
+    lng: PropTypes.number.isRequired
+  }),
+  gps: PropTypes.bool.isRequired,
+  filters: filtersShape.isRequired,
   highlight: PropTypes.func.isRequired,
   goTo: PropTypes.func.isRequired,
   firstTimeUser: PropTypes.bool.isRequired
+};
+
+Map.defaultProps = {
+  center: { lat: 37.327059, lng: -113.445826 }
 };
 
 export default connect(

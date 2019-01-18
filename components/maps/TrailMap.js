@@ -52,7 +52,7 @@ export default class TrailMap extends React.Component {
           <button
             type="button"
             onClick={this.toggleShareButtons}
-            className={shareButtons && 'active'}
+            className={shareButtons ? 'active' : undefined}
           >
             <img src="/static/images/trail/share.svg" alt="Event List" />
             <span>Share Trail</span>

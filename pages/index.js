@@ -10,6 +10,8 @@ import MainMenu from '../components/menus/MainMenu';
 
 const Onboarding = dynamic(() => import('../components/maps/Onboarding'));
 
+export const TrailsContext = React.createContext();
+
 const Dashboard = ({ firstTimeUser }) => (
   <>
     <Head />

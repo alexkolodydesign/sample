@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { BeatLoader } from 'react-spinners';
-import TrailsData from '../../services/TrailsData';
 import { filtersShape } from '../../../utils/propTypes';
 import filterAction from '../../../utils/filterActions';
 import regions from '../../../data/regions';
 import Trail from './Trail';
+import { TrailsContext } from '../../../pages/_app';
 import TrailListMenuStyles from './TrailListMenu.styles';
 
 class TrailListMenu extends React.Component {
@@ -37,9 +36,9 @@ class TrailListMenu extends React.Component {
           </form>
         </div>
         <div className="trails">
-          <TrailsData>
+          <TrailsContext.Consumer>
             {({ loading, trails }) => {
-              if (loading) return <BeatLoader color="#0098e5" />;
+              if (loading) return null;
               const filteredTrails = filterAction(trails, filters, true);
               return filteredTrails
                 .filter(trail => {
@@ -55,7 +54,7 @@ class TrailListMenu extends React.Component {
                 )
                 .map(trail => <Trail trail={trail} key={trail.slug} />);
             }}
-          </TrailsData>
+          </TrailsContext.Consumer>
         </div>
       </TrailListMenuStyles>
     );
