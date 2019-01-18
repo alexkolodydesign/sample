@@ -15,12 +15,10 @@ const TrailSidebarStyles = styled.div`
         padding: 1rem;
         display: grid;
         grid-template-columns: 1fr 1fr;
-
         .trail_description {
           grid-column-start: 1;
           grid-column-end: 3;
         }
-
         p {
           margin: 0 0 2rem 0;
           text-transform: uppercase;
@@ -30,16 +28,16 @@ const TrailSidebarStyles = styled.div`
             text-transform: initial;
           }
         }
+        .description p {
+          font-weight: 100;
+          text-transform: initial;
+        }
       }
     }
     .trail_description,
     .trail_directions {
       grid-column-start: 1;
       grid-column-end: 3;
-
-      .description {
-        font-weight: 100;
-      }
     }
     .use-icon {
       max-width: 30px;

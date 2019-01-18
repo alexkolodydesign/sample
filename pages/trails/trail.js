@@ -16,6 +16,7 @@ import TrailMedia from '../../components/trails/media/TrailMedia';
 import MainMenu from '../../components/menus/MainMenu';
 import { trailShape } from '../../utils/propTypes';
 import TrailStyles from '../../components/trails/Trails.styles';
+import { BackButton } from '../../components/shared/Button.styles';
 
 const Trail = ({ trail, error }) => (
   <TrailStyles>
@@ -29,7 +30,7 @@ const Trail = ({ trail, error }) => (
         <div className="wrapper headerWrapper">
           <Link href="/">
             <a href="/" className="back_button" style={{ paddingTop: '3rem' }}>
-              <button type="button">&lt; Back to map</button>
+              <BackButton type="button">&lt; Back to map</BackButton>
             </a>
           </Link>
 

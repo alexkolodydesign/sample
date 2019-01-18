@@ -1,10 +1,7 @@
 import styled from '@emotion/styled';
 
 const MainMenuStyles = styled.div`
-  position: absolute;
-  &.trailMenu {
-    position: fixed;
-  }
+  position: ${({ trailPage }) => (trailPage ? 'fixed' : 'absolute')};
   bottom: 0;
   left: 0;
   z-index: 2;

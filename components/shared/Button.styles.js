@@ -19,4 +19,19 @@ const Button = styled.button`
   }
 `;
 
+export const BackButton = styled.button`
+  border: none;
+  border-radius: 0.25rem;
+  background: #262727;
+  padding: 0.5rem 2rem;
+  color: #fff;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: all 500ms;
+  margin-top: 1.5rem;
+  &:hover {
+    background: #666666;
+  }
+`;
+
 export default Button;

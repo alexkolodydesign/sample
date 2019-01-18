@@ -26,22 +26,6 @@ const TrailStyles = styled.main`
       grid-template-columns: 1fr;
       grid-gap: 3rem;
     }
-    button {
-      border: none;
-      border-radius: 0.25rem;
-      background: #262727;
-      padding: 0.5rem 2rem;
-      color: #fff;
-      font-size: 1.8rem;
-      cursor: pointer;
-      transition: all 500ms;
-      flex: 50%;
-      flex-wrap: wrap;
-      margin-top: 1.5rem;
-      &:hover {
-        background: #666666;
-      }
-    }
   }
   @media screen and (min-width: 768px) {
     .trail {
