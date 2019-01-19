@@ -15,10 +15,12 @@ const FilterTrailsMenu = ({
   changeRouteType,
   changeTrailType,
   changeExclude,
+  changeRegions,
   difficulty,
   trailTraffic,
   routeType,
   trailType,
+  regions,
   exclude
 }) => (
   <FilterTrailsMenuStyles filterMenu={filterMenu}>
@@ -65,6 +67,18 @@ const FilterTrailsMenu = ({
         action={changeTrailType}
       />
       <Option
+        title="Regions"
+        selected={Object.keys(regions)
+          .filter(key => {
+            if (regions[key] === true) return key;
+            return null;
+          })
+          .join(' ')}
+        regions={regions}
+        options={['Alpine', 'Desert', 'Canyon', 'Mesa', 'Urban']}
+        action={changeRegions}
+      />
+      <Option
         title="Exclude"
         selected={exclude ? 'On' : 'Off'}
         options={['On', 'Off']}
@@ -82,6 +96,7 @@ const mapStateToProps = state => ({
   trailTraffic: state.map.filters.trailTraffic,
   routeType: state.map.filters.routeType,
   trailType: state.map.filters.trailType,
+  regions: state.map.filters.regions,
   exclude: state.map.filters.exclude
 });
 
@@ -113,7 +128,8 @@ const mapDispatchToProps = dispatch => ({
         trailsListMenu: false,
         optionsMenu: false
       }
-    })
+    }),
+  changeRegions: regions => dispatch({ type: 'CHANGE_REGIONS', regions })
 });
 
 FilterTrailsMenu.propTypes = {
@@ -129,7 +145,14 @@ FilterTrailsMenu.propTypes = {
   changeDifficulty: PropTypes.func.isRequired,
   changeTrailLength: PropTypes.func.isRequired,
   changeExclude: PropTypes.func.isRequired,
-  toggleMenus: PropTypes.func.isRequired
+  toggleMenus: PropTypes.func.isRequired,
+  regions: PropTypes.shape({
+    urban: PropTypes.bool.isRequired,
+    canyon: PropTypes.bool.isRequired,
+    mesa: PropTypes.bool.isRequired,
+    alpine: PropTypes.bool.isRequired,
+    desert: PropTypes.bool.isRequired
+  }).isRequired
 };
 
 export default connect(

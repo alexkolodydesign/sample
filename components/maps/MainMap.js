@@ -22,8 +22,10 @@ class Map extends React.Component {
   };
 
   zoom = (zoom, center, regionName) => {
-    const { highlight, goTo } = this.props;
+    const { highlight, goTo, resetRegions } = this.props;
     highlight(regionName);
+    // If zoom lesser then
+    // if (zoom >= 4) resetRegions(zoom);
     goTo(zoom, center);
   };
 
@@ -101,6 +103,9 @@ const mapDispatchToProps = dispatch => ({
   highlight: name => {
     if (name) return dispatch({ type: 'HIGHLIGHT_REGION', name });
     return null;
+  },
+  resetRegions: () => {
+    return dispatch({ type: 'RESET_REGIONS' });
   }
 });
 
@@ -111,6 +116,7 @@ Map.propTypes = {
     lat: PropTypes.number.isRequired,
     lng: PropTypes.number.isRequired
   }),
+  resetRegions: PropTypes.func.isRequired,
   gps: PropTypes.bool.isRequired,
   filters: filtersShape.isRequired,
   highlight: PropTypes.func.isRequired,

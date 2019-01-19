@@ -2,12 +2,6 @@ import { combineReducers } from 'redux';
 
 export const defaultMapState = {
   map: {
-    activeRegions: {
-      urban: true,
-      canyon: true,
-      mesa: true,
-      alpine: true
-    },
     highlightedRegion: '',
     highlightedTrail: '',
     mapStyle: 'roadmap',
@@ -17,6 +11,13 @@ export const defaultMapState = {
     gps: false,
     center: { lat: 37.327059, lng: -113.445826 },
     filters: {
+      regions: {
+        urban: true,
+        canyon: true,
+        mesa: true,
+        alpine: true,
+        desert: true
+      },
       trailType: {
         hiking: true,
         biking: true,
@@ -61,6 +62,11 @@ export const map = (state = defaultMapState, action) => {
       trailTypes[action.trailType] = !trailTypes[action.trailType];
       return { ...state, filters: { ...state.filters, trailType: trailTypes } };
     }
+    case 'CHANGE_REGIONS': {
+      const regions = { ...state.filters.regions };
+      regions[action.regions] = !regions[action.regions];
+      return { ...state, filters: { ...state.filters, regions } };
+    }
     case 'CHANGE_SEASON':
       return { ...state, filters: { ...state.filters, season: action.filter } };
     case 'CHANGE_TRAIL_TRAFFIC':
@@ -90,6 +96,8 @@ export const map = (state = defaultMapState, action) => {
       return { ...state, gps: !state.gps };
     case 'RESET_MAP':
       return { ...defaultMapState.map, zoom: action.zoom };
+    case 'RESET_REGIONS':
+      return { ...state, map: { ...state.map, highlightedRegion: '' } };
     case 'HIGHLIGHT_TRAIL':
       return { ...state, highlightedTrail: action.slug };
     case 'HIGHLIGHT_REGION':

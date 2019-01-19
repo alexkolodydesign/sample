@@ -58,6 +58,25 @@ const filterActions = (trails, filters, zoomLevel) => {
       if (Number(zoomLevel) >= Number(trail.custom_data.zoomThreshold)) return true;
       return false;
     });
+  // .filter(trail => {
+  //   if (
+  //     trail.custom_data &&
+  //     trail.custom_data.region &&
+  //     trail.custom_data.region !== ''
+  //   ) {
+  // const trailTypes = trail.custom_data.recommendedUse.map(type => type.value);
+  // let match = false;
+  // for (let i = 0; i < recommendedUseFilter.length; i += 1) {
+  //   if (trailTypes.includes(recommendedUseFilter[i])) match = true;
+  // }
+  //   if (filters.exclude) {
+  //     if (trailTypes.join('') !== recommendedUseFilter.join('')) match = false;
+  //   }
+  //   if (match) return true;
+  //   return false;
+  // }
+  // return false;
+  // });
   return updatedTrails;
 };
 
