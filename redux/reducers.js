@@ -97,7 +97,7 @@ export const map = (state = defaultMapState, action) => {
     case 'RESET_MAP':
       return { ...defaultMapState.map, zoom: action.zoom };
     case 'RESET_REGIONS':
-      return { ...state, map: { ...state.map, highlightedRegion: '' } };
+      return { ...state, highlightedRegion: '' };
     case 'HIGHLIGHT_TRAIL':
       return { ...state, highlightedTrail: action.slug };
     case 'HIGHLIGHT_REGION':

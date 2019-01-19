@@ -24,8 +24,8 @@ class Map extends React.Component {
   zoom = (zoom, center, regionName) => {
     const { highlight, goTo, resetRegions } = this.props;
     highlight(regionName);
-    // If zoom lesser then
-    // if (zoom >= 4) resetRegions(zoom);
+    // Reset active regions if below 9 zoom
+    if (zoom <= 9) resetRegions(zoom);
     goTo(zoom, center);
   };
 
@@ -104,9 +104,7 @@ const mapDispatchToProps = dispatch => ({
     if (name) return dispatch({ type: 'HIGHLIGHT_REGION', name });
     return null;
   },
-  resetRegions: () => {
-    return dispatch({ type: 'RESET_REGIONS' });
-  }
+  resetRegions: () => dispatch({ type: 'RESET_REGIONS' })
 });
 
 Map.propTypes = {
