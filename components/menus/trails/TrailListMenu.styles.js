@@ -1,11 +1,6 @@
 import styled from '@emotion/styled';
 
 const TrailListMenuStyles = styled.div`
-  h3 {
-    text-transform: uppercase;
-    margin: 0 0 0 1rem;
-    color: #fff;
-  }
   left: -2rem;
   right: -2rem;
   bottom: -2.35rem;
@@ -22,6 +17,11 @@ const TrailListMenuStyles = styled.div`
   overflow: hidden;
   animation-name: slideUp;
   animation-duration: 500ms;
+  h3 {
+    text-transform: uppercase;
+    margin: 0 0 0 1rem;
+    color: #fff;
+  }
   @keyframes slideUp {
     from {
       transform: translateY(25rem);

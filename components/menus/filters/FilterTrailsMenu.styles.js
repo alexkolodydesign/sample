@@ -1,22 +1,15 @@
 import styled from '@emotion/styled';
 
 const FilterTrailsMenuStyles = styled.div`
-  h3 {
-    text-transform: uppercase;
-    margin: 0 0 0 1rem;
-    color: #fff;
-  }
   left: -2rem;
   right: -2rem;
   bottom: -2.35rem;
   top: initial;
-
   z-index: 10;
   padding: 1rem 0.5rem 3.5rem 0.5rem;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   background: #3fa9f5;
-
   height: 40rem;
   position: absolute;
   overflow: hidden;
@@ -31,6 +24,11 @@ const FilterTrailsMenuStyles = styled.div`
       transform: translateY(0);
       opacity: 1;
     }
+  }
+  h3 {
+    text-transform: uppercase;
+    margin: 0 0 0 1rem;
+    color: #fff;
   }
   .options {
     background-image: linear-gradient(
@@ -64,12 +62,10 @@ const FilterTrailsMenuStyles = styled.div`
     }
   }
   @media screen and (min-width: 768px) {
-    .menu {
-      left: 0;
-      top: -47rem;
-      z-index: -1;
-      width: 30rem;
-    }
+    left: 0;
+    top: -47rem;
+    z-index: -1;
+    width: 30rem;
   }
 `;
 
