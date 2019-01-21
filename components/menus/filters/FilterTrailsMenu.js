@@ -91,7 +91,7 @@ const FilterTrailsMenu = ({
 
 // Redux
 const mapStateToProps = state => ({
-  filterMenu: state.map.menus.filterTrailsMenu,
+  filterMenu: state.menus.filterTrailsMenu,
   difficulty: state.map.filters.difficulty.default,
   trailTraffic: state.map.filters.trailTraffic,
   routeType: state.map.filters.routeType,

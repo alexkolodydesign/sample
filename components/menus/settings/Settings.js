@@ -24,7 +24,7 @@ Settings.propTypes = {
 
 // Redux
 const mapStateToProps = state => ({
-  optionsMenu: state.map.menus.optionsMenu
+  optionsMenu: state.menus.optionsMenu
 });
 const mapDispatchToProps = dispatch => ({
   toggleMenus: optionsMenu =>

@@ -36,11 +36,6 @@ export const defaultMapState = {
       routeType: '',
       exclude: ''
     },
-    menus: {
-      filterTrailsMenu: false,
-      trailsListMenu: false,
-      optionsMenu: false
-    },
     popupMenus: {
       trailPopup: false,
       regionPopup: false,
@@ -102,8 +97,6 @@ export const map = (state = defaultMapState, action) => {
       return { ...state, highlightedTrail: action.slug };
     case 'HIGHLIGHT_REGION':
       return { ...state, highlightedRegion: action.name };
-    case 'TOGGLE_MENUS':
-      return { ...state, menus: action.menus };
     case 'TOGGLE_POPUPMENUS':
       return { ...state, popupMenus: action.popups };
     case 'TOGGLE_FIRST_TIME_USER':
@@ -119,7 +112,22 @@ export const map = (state = defaultMapState, action) => {
   }
 };
 
-export const reducers = combineReducers({ map });
+export const menus = (
+  state = { filterTrailsMenu: false, trailsListMenu: false, optionsMenu: false },
+  action
+) => {
+  switch (action.type) {
+    case 'TOGGLE_MENUS':
+      // return { ...state, ...action.menus };
+      return Object.assign({}, state, {
+        ...action.menus
+      });
+    default:
+      return state;
+  }
+};
+
+export const reducers = combineReducers({ map, menus });
 
 export default reducers;
 

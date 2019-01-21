@@ -25,7 +25,7 @@ const FilterTrails = ({ toggleMenus, filterTrailsMenu }) => (
 
 // Redux
 const mapStateToProps = state => ({
-  filterTrailsMenu: state.map.menus.filterTrailsMenu
+  filterTrailsMenu: state.menus.filterTrailsMenu
 });
 const mapDispatchToProps = dispatch => ({
   toggleMenus: filterTrailsMenu =>

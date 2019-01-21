@@ -56,7 +56,7 @@ Options.propTypes = {
 
 // Redux
 const mapStateToProps = state => ({
-  optionsMenu: state.map.menus.optionsMenu,
+  optionsMenu: state.menus.optionsMenu,
   metricType: state.map.metricType,
   mapStyle: state.map.mapStyle
 });

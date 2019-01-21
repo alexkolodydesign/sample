@@ -31,6 +31,7 @@ class TrailList extends React.Component {
     return (
       <>
         {console.log({ menu, trailsListMenu })}
+        {console.log('yea')}
         <TrailListButton
           type="button"
           onClick={this.toggleMenu}
@@ -51,9 +52,12 @@ TrailList.propTypes = {
 };
 
 // Redux
-const mapStateToProps = state => ({
-  trailsListMenu: state.map.menus.trailsListMenu
-});
+const mapStateToProps = state => {
+  console.log(state.menus);
+  return {
+    trailsListMenu: state.menus.trailsListMenu
+  };
+};
 const mapDispatchToProps = dispatch => ({
   toggleMenus: trailsListMenu => {
     console.log('DISPATCH: ', { trailsListMenu });
