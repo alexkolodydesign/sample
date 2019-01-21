@@ -19,9 +19,7 @@ const TrailList = ({ toggleMenus, trailsListMenu }) => (
       <img src="/static/images/menu/trail-list.svg" alt="Trail List" />
       <p>Trail List</p>
     </TrailListButton>
-    {trailsListMenu && (
-      <TrailListMenu toggleMenu={toggleMenus} menuState={trailsListMenu} />
-    )}
+    {trailsListMenu && <TrailListMenu />}
   </>
 );
 
