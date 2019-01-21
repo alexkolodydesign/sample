@@ -5,7 +5,7 @@ import ShareButtons from '../shared/ShareButtons';
 import DownloadGPS from '../trails/DownloadGPS';
 import printStyle from './mapstyles/print';
 import { trailShape } from '../../utils/propTypes';
-import TrailMapStyles from './TrailMap.styles';
+import TrailMapStyles, { Buttons } from './TrailMap.styles';
 
 const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -48,13 +48,22 @@ export default class TrailMap extends React.Component {
             mapStyle={mapStyle}
           />
         </div>
-        <div className="buttons">
+        <Buttons>
+          <a
+            href={linkToTrailHead}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ gridColumnEnd: '4' }}
+          >
+            <img src="/static/images/menu/gps.svg" alt="Directions" />
+            <span>Directions to Trail Head</span>
+          </a>
           <button
             type="button"
             onClick={this.toggleShareButtons}
             className={shareButtons ? 'active' : undefined}
           >
-            <img src="/static/images/trail/share.svg" alt="Event List" />
+            <img src="/static/images/trail/share.svg" alt="Share" />
             <span>Share Trail</span>
           </button>
           <DownloadGPS trail={trail} />
@@ -62,19 +71,15 @@ export default class TrailMap extends React.Component {
             type="button"
             onClick={async () => {
               this.toggleMapStyle();
-              await timeout(250);
+              await timeout(500);
               this.printMap();
-              await timeout(250);
+              await timeout(500);
               this.toggleMapStyle();
             }}
           >
             <img src="/static/images/trail/print.svg" alt="Print Map" /> Print Map
           </button>
-          <a href={linkToTrailHead} target="_blank" rel="noopener noreferrer">
-            <img src="/static/images/menu/gps.svg" alt="Directions" />
-            <span>Directions to Trail Head</span>
-          </a>
-        </div>
+        </Buttons>
         <div className="share_buttons">{shareButtons && <ShareButtons />}</div>
       </TrailMapStyles>
     );

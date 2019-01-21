@@ -6,7 +6,7 @@ import TrailListButton from './TrailList.styles';
 
 const TrailListMenu = dynamic(
   () => import(/* webpackChunkName: "TrailListMenu" */ './TrailListMenu'),
-  { loading: () => null }
+  { loading: () => null, ssr: false }
 );
 
 const TrailList = ({ toggleMenus, trailsListMenu }) => (
