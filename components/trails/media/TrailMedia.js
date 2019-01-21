@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import { mediaShape } from '../../../utils/propTypes';
 import TrailMediaStyles from './TrailMedia.styles';
 
-const ImageGallery = dynamic(import('./ImageGallery'), { ssr: false });
+const ImageGallery = dynamic(
+  import(/* webpackChunkName: "ImageGallery" */ './ImageGallery'),
+  { ssr: false }
+);
 const VideoGallery = dynamic(import('./VideoGallery'), { ssr: false });
 
 const TrailMedia = ({ media, trailName }) => (

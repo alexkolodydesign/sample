@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
 import { regionShape } from '../../utils/propTypes';
 
-const RegionInfo = dynamic(() => import('./RegionInfo'));
+const RegionInfo = dynamic(() =>
+  import(/* webpackChunkName: "RegionInfo" */ './RegionInfo')
+);
 
 const RegionMarker = ({ togglePopups, activeRegionPopup, region, zoom }) => {
   const { markerCoordinates, markerIcon, regionName } = region;

@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import { pictureShape } from '../../../utils/propTypes';
 import ImageGalleryStyles from './ImageGallery.styles';
 
-const Lightbox = dynamic(() => import('lightbox-react'));
+const Lightbox = dynamic(() =>
+  import(/* webpackChunkName: "lightbox-react" */ 'lightbox-react')
+);
 
 export default class ImageGallery extends React.Component {
   state = {

@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
 import TrailListButton from './TrailList.styles';
 
-const TrailListMenu = dynamic(() => import('./TrailListMenu'));
+const TrailListMenu = dynamic(
+  () => import(/* webpackChunkName: "TrailListMenu" */ './TrailListMenu'),
+  { loading: () => null }
+);
 
 const TrailList = ({ toggleMenus, trailsListMenu }) => (
   <>

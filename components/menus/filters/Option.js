@@ -14,9 +14,9 @@ class Option extends React.Component {
   };
 
   render() {
-    const { title, trailType, selected, range, action, options } = this.props;
+    const { title, trailType, selected, range, action, options, regions } = this.props;
     const { menu } = this.state;
-    const trailTypeSelections = select => (
+    const selections = select => (
       <span key={select}>
         {select}
         <br />
@@ -30,7 +30,7 @@ class Option extends React.Component {
           </h4>
           <p>
             <span>
-              {trailType ? selected.split(' ').map(trailTypeSelections) : selected}
+              {trailType || regions ? selected.split(' ').map(selections) : selected}
             </span>
           </p>
         </button>
@@ -47,6 +47,8 @@ class Option extends React.Component {
                       if (trailType)
                         style =
                           trailType[option.toLowerCase()] === true ? 'active' : null;
+                      if (regions)
+                        style = regions[option.toLowerCase()] === true ? 'active' : null;
                       else
                         style =
                           selected.toLowerCase() === option.toLowerCase()
@@ -80,11 +82,19 @@ Option.propTypes = {
   selected: PropTypes.string.isRequired,
   range: PropTypes.bool,
   action: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  regions: PropTypes.shape({
+    alpine: PropTypes.bool.isRequired,
+    desert: PropTypes.bool.isRequired,
+    canyon: PropTypes.bool.isRequired,
+    mesa: PropTypes.bool.isRequired,
+    urban: PropTypes.bool.isRequired
+  })
 };
 
 Option.defaultProps = {
   trailType: null,
+  regions: null,
   range: false
 };
 

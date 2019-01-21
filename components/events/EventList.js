@@ -4,7 +4,10 @@ import dynamic from 'next/dynamic';
 import EventsData from '../services/EventsData';
 import EventListButton from './EventList.styles';
 // Only load menu when user clicks
-const EventListMenu = dynamic(() => import('./EventListMenu'), { ssr: false });
+const EventListMenu = dynamic(
+  () => import(/* webpackChunkName: "EventListMenu" */ './EventListMenu'),
+  { ssr: false }
+);
 
 class EventList extends React.Component {
   state = { menu: false };

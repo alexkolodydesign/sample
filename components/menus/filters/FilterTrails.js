@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
 import FilterTrailsButton from './FilterTrails.styles';
 
-const FilterTrailsMenu = dynamic(() => import('./FilterTrailsMenu'));
+const FilterTrailsMenu = dynamic(
+  () => import(/* webpackChunkName: "FilterTrailsMenu" */ './FilterTrailsMenu'),
+  { loading: () => null }
+);
 
 const FilterTrails = ({ toggleMenus, filterTrailsMenu }) => (
   <>

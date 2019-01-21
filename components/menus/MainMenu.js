@@ -6,8 +6,12 @@ import GPS from './GPS';
 import Settings from './settings/Settings';
 import MainMenuStyles from './MainMenu.styles';
 
-const SelectTrailType = dynamic(() => import('./SelectTrailType'));
-const FilterTrails = dynamic(() => import('./filters/FilterTrails'));
+const SelectTrailType = dynamic(() =>
+  import(/* webpackChunkName: "SelectTrailType" */ './SelectTrailType')
+);
+const FilterTrails = dynamic(() =>
+  import(/* webpackChunkName: "FilterTrails" */ './filters/FilterTrails')
+);
 
 const MainMenu = ({ trailPage }) => (
   <MainMenuStyles trailPage={trailPage}>

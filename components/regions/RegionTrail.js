@@ -7,7 +7,9 @@ import TrailCoordinatesData from '../services/TrailCoordinatesData';
 import Paths from '../trails/Paths';
 import getTrailColor from '../../utils/getTrailColor';
 
-const RegionTrailInfo = dynamic(() => import('./RegionTrailInfo'));
+const RegionTrailInfo = dynamic(() =>
+  import(/* webpackChunkName: "RegionTrailInfo" */ './RegionTrailInfo')
+);
 
 const RegionTrail = ({ trail, activeTrailPopup }) => {
   const { url } = trail.custom_data.jsonCoordinates;
