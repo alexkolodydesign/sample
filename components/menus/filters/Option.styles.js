@@ -53,6 +53,7 @@ const OptionStyles = styled.div`
       flex: 1;
       span {
         position: relative;
+        color: #000;
         &:after {
           content: '';
           position: absolute;
@@ -77,12 +78,14 @@ const OptionStyles = styled.div`
       font-weight: 500;
     }
     p span {
+      color: #000;
       font-weight: 100;
     }
   }
 
   .options {
     & > button {
+      color: #000;
       padding: 2rem;
       width: 100%;
       text-align: left;

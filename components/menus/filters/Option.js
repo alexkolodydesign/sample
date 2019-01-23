@@ -47,7 +47,7 @@ class Option extends React.Component {
                       if (trailType)
                         style =
                           trailType[option.toLowerCase()] === true ? 'active' : null;
-                      if (regions)
+                      else if (regions)
                         style = regions[option.toLowerCase()] === true ? 'active' : null;
                       else
                         style =
