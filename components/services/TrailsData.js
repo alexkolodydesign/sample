@@ -1,16 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-// TODO: Create axios cancel token for unmounting early
+const CancelToken = axios.CancelToken;
+
 class TrailsData extends React.Component {
   state = { loading: true, trails: [] };
+
+  cancel = null;
 
   componentDidMount = () => {
     this.getTrailsData();
   };
 
+  componentWillUnmount = () => {
+    // Cancel Requests
+    this.cancel();
+  };
+
   getTrailsData = async () => {
-    const { data: trails } = await axios.get('/api/trails');
+    const { data: trails } = await axios.get('/api/trails', {
+      cancelToken: new CancelToken(c => {
+        this.cancel = c;
+      })
+    });
     this.setState({ loading: false, trails });
   };
 

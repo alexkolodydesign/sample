@@ -1,9 +1,9 @@
 import React from 'react';
 import App, { Container } from 'next/app';
+import withRedux from 'next-redux-wrapper';
 import { Provider } from 'react-redux';
 import Router from 'next/router';
 import Cookies from 'js-cookie';
-import PropTypes from 'prop-types';
 import { ThemeProvider } from 'emotion-theming';
 import LoadingScreen from '../components/shared/LoadingScreen';
 import { initStore } from '../redux/store';
@@ -15,8 +15,7 @@ export const TrailsContext = React.createContext();
 
 export class Washco extends App {
   render() {
-    const { Component, pageProps, firstTimeUser } = this.props;
-    const store = initStore({ firstTimeUser });
+    const { Component, pageProps, store } = this.props;
     return (
       <Container>
         <Provider store={store}>
@@ -71,19 +70,15 @@ Washco.getInitialProps = async ({ Component, ctx }) => {
     if (value === 'false') return false;
     return value;
   };
+  ctx.store.dispatch({
+    type: 'TOGGLE_FIRST_TIME_USER',
+    status: firstTimeUserValue(firstTimeUser)
+  });
   // Allow page components to get their requested getInitialProps
   let pageProps = {};
   if (Component.getInitialProps) pageProps = await Component.getInitialProps(ctx);
   pageProps.query = ctx.query;
-  // Trails will be needed for all pages so call them here once and store in state
-  if (ctx && ctx.req) {
-    return { pageProps, firstTimeUser: firstTimeUserValue(firstTimeUser) };
-  }
-  return { pageProps, firstTimeUser: firstTimeUserValue(firstTimeUser) };
+  return { pageProps };
 };
 
-Washco.propTypes = {
-  firstTimeUser: PropTypes.bool.isRequired
-};
-
-export default Washco;
+export default withRedux(initStore)(Washco);
