@@ -100,11 +100,7 @@ export const map = (state = defaultMapState, action) => {
     case 'TOGGLE_POPUPMENUS':
       return { ...state, popupMenus: action.popups };
     case 'TOGGLE_FIRST_TIME_USER':
-      return {
-        ...state,
-        firstTimeUser: action.status,
-        menus: { filterTrailsMenu: false, trailsListMenu: false, optionsMenu: false }
-      };
+      return { ...state, firstTimeUser: action.status };
     case 'CHANGE_MAP_STYLE':
       return { ...state, mapStyle: action.style };
     default:
@@ -118,10 +114,7 @@ export const menus = (
 ) => {
   switch (action.type) {
     case 'TOGGLE_MENUS':
-      // return { ...state, ...action.menus };
-      return Object.assign({}, state, {
-        ...action.menus
-      });
+      return { ...state, ...action.menus };
     default:
       return state;
   }

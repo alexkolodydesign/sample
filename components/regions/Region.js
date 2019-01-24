@@ -12,40 +12,39 @@ import urbanCoordinates from '../../data/urban-coordinates';
 import { regionShape } from '../../utils/propTypes';
 import RegionMarker from './RegionMarker';
 
-class Region extends React.Component {
-  render() {
-    const { region, zoomLevel, firstTimeUser, highlightedRegion, zoom } = this.props;
-    const { regionName, overlayImage, markerCoordinates } = region;
-    const { google } = window;
-    let coordinates;
-    switch (region.regionName) {
-      case 'Alpine':
-        coordinates = alpineCoordinates;
-        break;
-      case 'Desert':
-        coordinates = desertCoordinates;
-        break;
-      case 'Canyon':
-        coordinates = canyonCoordinates;
-        break;
-      case 'Mesa':
-        coordinates = mesaCoordinates;
-        break;
-      case 'Urban':
-        coordinates = urbanCoordinates;
-        break;
-      default:
-        coordinates = [];
-    }
-    // Make new bounds
-    const newBounds = new LatLngBounds();
-    // Add LatLng points to the new bounding area
-    coordinates.forEach(bound => newBounds.extend(new LatLng(bound.lat, bound.lng)));
-    if (!coordinates) return null;
-    return (
-      <React.Fragment>
-        {zoomLevel < 12 && (
-          <React.Fragment>
+const Region = ({ region, zoomLevel, firstTimeUser, highlightedRegion, zoom }) => {
+  const { regionName, overlayImage, markerCoordinates } = region;
+  const { google } = window;
+  let coordinates;
+  switch (regionName) {
+    case 'Alpine':
+      coordinates = alpineCoordinates;
+      break;
+    case 'Desert':
+      coordinates = desertCoordinates;
+      break;
+    case 'Canyon':
+      coordinates = canyonCoordinates;
+      break;
+    case 'Mesa':
+      coordinates = mesaCoordinates;
+      break;
+    case 'Urban':
+      coordinates = urbanCoordinates;
+      break;
+    default:
+      coordinates = [];
+  }
+  // Make new bounds
+  const newBounds = new LatLngBounds();
+  // Add LatLng points to the new bounding area
+  coordinates.forEach(bound => newBounds.extend(new LatLng(bound.lat, bound.lng)));
+  if (!coordinates) return null;
+  return (
+    <>
+      {zoomLevel < 12 && (
+        <>
+          {window && window.matchMedia('(min-width: 992px)').matches && (
             <GroundOverlay
               defaultUrl={overlayImage}
               defaultBounds={
@@ -56,42 +55,42 @@ class Region extends React.Component {
               }
               defaultOpacity={firstTimeUser === true ? 1 : 0}
             />
-            <Polygon
-              paths={coordinates}
-              options={{
-                strokeColor: highlightedRegion === regionName ? '#000' : '#FFF',
-                strokeOpacity: 1,
-                strokeWeight: 3,
-                fillColor: '#ffffff',
-                fillOpacity: 0,
-                clickable: highlightedRegion !== regionName,
-                zIndex: highlightedRegion === regionName ? '2' : '1'
-              }}
-              // eslint-disable-next-line react/jsx-no-bind
-              onMouseOver={function regionHoverOver() {
-                this.setOptions({ fillOpacity: 0.5 });
-              }}
-              onFocus={() => {}}
-              onBlur={() => {}}
-              // eslint-disable-next-line react/jsx-no-bind
-              onMouseOut={function regionHoverOut() {
-                this.setOptions({ fillOpacity: 0 });
-              }}
-              onClick={() =>
-                zoom(
-                  11.75,
-                  { lat: markerCoordinates.lat, lng: markerCoordinates.lng },
-                  regionName
-                )
-              }
-            />
-          </React.Fragment>
-        )}
-        {zoomLevel < 12 && <RegionMarker region={region} zoom={zoom} />}
-      </React.Fragment>
-    );
-  }
-}
+          )}
+          <Polygon
+            paths={coordinates}
+            options={{
+              strokeColor: highlightedRegion === regionName ? '#000' : '#FFF',
+              strokeOpacity: 1,
+              strokeWeight: 3,
+              fillColor: '#ffffff',
+              fillOpacity: 0,
+              clickable: highlightedRegion !== regionName,
+              zIndex: highlightedRegion === regionName ? '2' : '1'
+            }}
+            // eslint-disable-next-line react/jsx-no-bind
+            onMouseOver={function regionHoverOver() {
+              this.setOptions({ fillOpacity: 0.5 });
+            }}
+            onFocus={() => {}}
+            onBlur={() => {}}
+            // eslint-disable-next-line react/jsx-no-bind
+            onMouseOut={function regionHoverOut() {
+              this.setOptions({ fillOpacity: 0 });
+            }}
+            onClick={() =>
+              zoom(
+                11.75,
+                { lat: markerCoordinates.lat, lng: markerCoordinates.lng },
+                regionName
+              )
+            }
+          />
+        </>
+      )}
+      {zoomLevel < 12 && <RegionMarker region={region} zoom={zoom} />}
+    </>
+  );
+};
 
 Region.propTypes = {
   region: regionShape.isRequired,

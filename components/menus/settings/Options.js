@@ -63,7 +63,13 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   changeMetricType: metricType =>
     dispatch({ type: 'CHANGE_METRIC_TYPE', option: metricType }),
-  toggleFirstTimeUser: status => dispatch({ type: 'TOGGLE_FIRST_TIME_USER', status }),
+  toggleFirstTimeUser: status => {
+    dispatch({ type: 'TOGGLE_FIRST_TIME_USER', status });
+    dispatch({
+      type: 'TOGGLE_MENUS',
+      menus: { filterTrailsMenu: false, trailsListMenu: false, optionsMenu: false }
+    });
+  },
   changeMapStyle: style => dispatch({ type: 'CHANGE_MAP_STYLE', style }),
   toggleMenus: optionsMenu =>
     dispatch({
