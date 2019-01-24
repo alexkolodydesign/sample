@@ -1,12 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-const CancelToken = axios.CancelToken;
+
+const { CancelToken } = axios;
 
 class TrailCoordinatesData extends React.Component {
   state = { loading: true, coordinates: [], connectorCoordinates: [] };
 
   cancel = null;
+
+  componentDidUpdate = prevProps => {
+    const { url } = this.props;
+    // Given new url re-run call to get new coords
+    if (prevProps.url !== url) this.getTrailCoordinatesData();
+  };
 
   componentDidMount = () => {
     this.getTrailCoordinatesData();

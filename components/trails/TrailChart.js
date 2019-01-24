@@ -12,19 +12,12 @@ class TrailChart extends React.Component {
 
   mapLoaded = React.createRef();
 
-  // componentDidUpdate = prevProps => {
-  //   const { trail } = this.props;
-  // console.log('LAST: ', prevProps.trail);
-  // console.log('CURRENT: ', trail);
-  // };
-
   pathMarker = location => {
     this.setState({ marker: location });
   };
 
   render() {
     const { trail } = this.props;
-    console.log(trail);
     const trailhead =
       trail.custom_data.trailhead_latitude && trail.custom_data.trailhead_longitude
         ? {
