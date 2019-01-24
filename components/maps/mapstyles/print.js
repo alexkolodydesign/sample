@@ -1,43 +1,43 @@
 const printStyles = [
   {
-    "featureType": "poi.park",
-    "elementType": "geometry.fill",
-    "stylers": [
+    featureType: 'poi.park',
+    elementType: 'geometry.fill',
+    stylers: [
       {
-        "color": "#fefcff"
+        color: '#fefcff'
       }
     ]
   },
   {
-    "featureType": "road.local",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: 'road.local',
+    elementType: 'geometry',
+    stylers: [
       {
-        "color": "#000000"
+        color: '#000000'
       },
       {
-        "visibility": "on"
+        visibility: 'on'
       }
     ]
   },
   {
-    "featureType": "road.local",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: 'road.local',
+    elementType: 'labels.text.fill',
+    stylers: [
       {
-        "color": "#060606"
+        color: '#060606'
       }
     ]
   },
   {
-    "featureType": "road.local",
-    "elementType": "labels.text.stroke",
-    "stylers": [
+    featureType: 'road.local',
+    elementType: 'labels.text.stroke',
+    stylers: [
       {
-        "color": "#fcfffe"
+        color: '#fcfffe'
       }
     ]
   }
-]
+];
 
-export default printStyles
+export default printStyles;

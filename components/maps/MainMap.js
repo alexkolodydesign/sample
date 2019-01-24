@@ -1,124 +1,49 @@
-import axios from "axios"
-import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps"
-import { connect } from 'react-redux'
-import { goToSystem, highlightRegion } from '../../redux/actions'
-import { filterAction } from '../../redux/filterAction'
-import Region from './Region'
-import RegionTrail from './RegionTrail'
-import UserLocation from './UserLocation'
-
-// Redux
-const mapStateToProps = (state, ownProps) => {
-  return {
-    map: state.map,
-    trails: state.trails,
-    metricType: state.map.metricType,
-    firstTimeUser: state.map.firstTimeUser,
-    ...ownProps,
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    goToSystem: (zoom, center) => {
-      dispatch(goToSystem(zoom, center));
-    },
-    highlightRegion: name => {
-      dispatch(highlightRegion(name))
-    }
-  };
-};
+import React from 'react';
+import { GoogleMap } from 'react-google-maps';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import filterActions from '../../utils/filterActions';
+import Region from '../regions/Region';
+import RegionTrail from '../regions/RegionTrail';
+import UserLocation from '../gps/UserLocation';
+import RegionsData from '../services/RegionsData';
+import { filtersShape } from '../../utils/propTypes';
+import { TrailsContext } from '../../pages/_app';
 
 class Map extends React.Component {
-  constructor(props) {
-    super(props)
-    this.zoom = this.zoom.bind(this)
-    this.washington_map = React.createRef();
-    this.onRegionToggle = this.onRegionToggle.bind(this)
-    this.onTrailToggle = this.onTrailToggle.bind(this)
-    this.state = { activeRegion: {}, activeTrail: {} }
-    const google = window.google
-  }
-  zoom(zoom, center, regionName) {
-    this.props.highlightRegion(regionName)
-    this.props.goToSystem(zoom, center)
-  }
-  onRegionToggle(region) {
-    // if there is an active trail, close it
-    if (this.state.activeTrail.props) {
-      this.state.activeTrail.toggleMenu() // this closes the current popup
-      this.setState({activeTrail:{}})
-    }
+  static washington_map = React.createRef();
 
-    // if new is same as current, close
-    if (this.state.activeRegion.props && this.state.activeRegion.props.region.regionName == region.props.region.regionName) {
-      region.toggleMenu();
-      this.setState({activeRegion: {}})
-    }
-    // if current is set, but is not the one clicked, close the current and set to new
-    else if (this.state.activeRegion && this.state.activeRegion.state) {
-      this.state.activeRegion.toggleMenu() // this closes the current popup
-      this.state.activeRegion.togglePopupMenu(region.regionName); // this will compare the current active to the new and close if needed
-      this.setState({activeRegion:region})
-      this.state.activeRegion.toggleMenu() // this closes the current popup
-    }
-    // else there is none set, so start from beginning
-    else {
-      this.setState({activeRegion:region})
-      this.state.activeRegion.toggleMenu() // this closes the current popup
+  componentDidMount = () => {
+    const { goTo, center } = this.props;
+    if (window.innerWidth >= 768 && window.innerWidth < 991) goTo(9, center);
+    else if (window.innerWidth >= 992 && window.innerWidth < 1500) goTo(10, center);
+    else if (window.innerWidth > 1500) goTo(11, center);
+    else goTo(8, center);
+  };
 
-    }
-  }
-  onTrailToggle(trail, coord) {
-    // if there is an active region popup, close it
-    if (this.state.activeRegion.props) {
-      this.state.activeRegion.toggleMenu() // this closes the current popup
-      this.setState({activeRegion:{}})
-    }
+  zoom = (zoom, center, regionName) => {
+    const { highlight, goTo, resetRegions } = this.props;
+    highlight(regionName);
+    // Reset active regions if below 9 zoom
+    if (zoom <= 9) resetRegions(zoom);
+    goTo(zoom, center);
+  };
 
-    // if new is same as current, close
-    if (this.state.activeTrail.props && this.state.activeTrail.props.trail.slug == trail.props.trail.slug) {
-      trail.toggleMenu(coord);
-      this.setState({activeTrail: {}})
-    }
-    // if current is set, but is not the one clicked, close the current and set to new
-    else if (this.state.activeTrail && this.state.activeTrail.state) {
-      this.state.activeTrail.toggleMenu(coord) // this closes the current popup
-      this.state.activeTrail.togglePopupMenu(trail.slug); // this will compare the current active to the new and close if needed
-      this.setState({activeTrail:trail})
-      this.state.activeTrail.toggleMenu(coord) // this closes the current popup
-    }
-    // else there is none set, so start from beginning
-    else {
-      this.setState({activeTrail:trail})
-      this.state.activeTrail.toggleMenu(coord) // this closes the current popup
-
-    }
-  }
-  componentDidMount() {
-    if (window.innerWidth >= 768 && window.innerWidth < 991) {
-      this.props.goToSystem(9, this.props.map.center)
-    } else if (window.innerWidth >= 992 && window.innerWidth < 1500) {
-      this.props.goToSystem(10, this.props.map.center)
-    } else if (window.innerWidth > 1500) {
-      this.props.goToSystem(11, this.props.map.center)
-    } else {
-      this.props.goToSystem(8, this.props.map.center)
-    }
-  }
   render() {
-    const regions = this.props.regions
-    const zoomState = this.zoom
-    const zoomLevel = this.props.map.zoom
-    const trails = filterAction(this.props.trails, this.props.map.filters, zoomLevel)
+    const { mapStyle, zoom, center, gps, filters, firstTimeUser } = this.props;
+    const zoomState = this.zoom;
+    const zoomLevel = zoom;
+    const { google } = window;
     return (
       <GoogleMap
-        zoom={this.props.map.zoom}
-        center={this.props.map.center}
-        onZoomChanged={function(e) {
-          zoomState(this.getZoom(), null)
+        zoom={zoom}
+        center={center}
+        // eslint-disable-next-line react/jsx-no-bind
+        onZoomChanged={function zoomChange() {
+          zoomState(this.getZoom(), null);
         }}
         options={{
-          mapTypeId: this.props.map.mapStyle,
+          mapTypeId: mapStyle,
           mapTypeControl: true,
           mapTypeControlOptions: {
             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -131,21 +56,77 @@ class Map extends React.Component {
         }}
         ref={this.washington_map}
       >
-        {this.props.map.gps && <UserLocation />}
-        {this.props.firstTimeUser == false || this.props.firstTimeUser == 'false' &&
-          <React.Fragment>
-            {trails.map((trail, k) => {
-              return <RegionTrail onTrailToggle={this.onTrailToggle} trail={trail} key={k} metricType={this.props.metricType}  />
-              }
-            )}
-          </React.Fragment>
-        }
-        {regions.map((region, k) => {
-          return <Region region={region} key={k} zoom={this.zoom} zoomLevel={this.props.map.zoom} onRegionToggle={this.onRegionToggle} firstTimeUser={this.props.firstTimeUser} />
-        })}
+        {gps && <UserLocation />}
+        {firstTimeUser === false && (
+          <TrailsContext.Consumer>
+            {({ loading, trails }) => {
+              if (loading) return null;
+              const filteredTrails = filterActions(trails, filters, zoomLevel);
+              return filteredTrails.map(trail => (
+                <RegionTrail trail={trail} key={trail.slug} />
+              ));
+            }}
+          </TrailsContext.Consumer>
+        )}
+        <RegionsData>
+          {regions =>
+            regions.map(region => (
+              <Region
+                region={region}
+                key={region.regionName}
+                zoom={this.zoom}
+                zoomLevel={zoom}
+                firstTimeUser={firstTimeUser}
+              />
+            ))
+          }
+        </RegionsData>
       </GoogleMap>
-    )
+    );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Map)
+// Redux
+const mapStateToProps = state => ({
+  mapStyle: state.map.mapStyle,
+  zoom: state.map.zoom,
+  center: state.map.center,
+  gps: state.map.gps,
+  filters: state.map.filters,
+  firstTimeUser: state.map.firstTimeUser
+});
+const mapDispatchToProps = dispatch => ({
+  goTo: (zoom, center) => {
+    const location = { zoom, center };
+    return dispatch({ type: 'GO_TO_SYSTEM', location });
+  },
+  highlight: name => {
+    if (name) return dispatch({ type: 'HIGHLIGHT_REGION', name });
+    return null;
+  },
+  resetRegions: () => dispatch({ type: 'RESET_REGIONS' })
+});
+
+Map.propTypes = {
+  mapStyle: PropTypes.string.isRequired,
+  zoom: PropTypes.number.isRequired,
+  center: PropTypes.shape({
+    lat: PropTypes.number.isRequired,
+    lng: PropTypes.number.isRequired
+  }),
+  resetRegions: PropTypes.func.isRequired,
+  gps: PropTypes.bool.isRequired,
+  filters: filtersShape.isRequired,
+  highlight: PropTypes.func.isRequired,
+  goTo: PropTypes.func.isRequired,
+  firstTimeUser: PropTypes.bool.isRequired
+};
+
+Map.defaultProps = {
+  center: { lat: 37.327059, lng: -113.445826 }
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Map);
