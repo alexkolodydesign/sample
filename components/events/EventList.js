@@ -26,23 +26,25 @@ class EventList extends React.Component {
     const { menu } = this.state;
     return (
       <>
-        <EventListButton
-          type="button"
-          onClick={this.toggleMenu}
-          className={menu ? 'active' : null}
-        >
-          <img src="/static/images/menu/event_calendar.svg" alt="Event List" />
-        </EventListButton>
         <EventsData>
           {({ loading, events }) => {
             if (loading) return <BeatLoader color="#0098e5" />;
             if (menu && events.length > 0)
               return (
-                <EventListMenu
-                  events={events}
-                  toggleMenu={this.toggleMenu}
-                  menuState={menu}
-                />
+                <>
+                  <EventListButton
+                    type="button"
+                    onClick={this.toggleMenu}
+                    className={menu ? 'active' : null}
+                  >
+                    <img src="/static/images/menu/event_calendar.svg" alt="Event List" />
+                  </EventListButton>
+                  <EventListMenu
+                    events={events}
+                    toggleMenu={this.toggleMenu}
+                    menuState={menu}
+                  />
+                </>
               );
             return null;
           }}

@@ -26,7 +26,9 @@ class TrailChart extends React.Component {
           }
         : false;
     const { url } = trail.custom_data.jsonCoordinates;
-    const connectorUrl = trail.custom_data.connectorTrailJSON.url;
+    const connectorUrl = trail.custom_data.connectorTrailJSON
+      ? trail.custom_data.connectorTrailJSON.url
+      : '';
     if (!url) return 'No coordinates found.';
     const { mapStyle, marker } = this.state;
     const { google } = window;
