@@ -1,5 +1,6 @@
 import React from 'react';
 import { withScriptjs, withGoogleMap } from 'react-google-maps';
+import Modal from 'react-modal';
 import TrailChart from '../trails/TrailChart';
 import ShareButtons from '../shared/ShareButtons';
 import DownloadGPS from '../trails/DownloadGPS';
@@ -12,12 +13,14 @@ const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 export default class TrailMap extends React.Component {
   state = {
     mapStyle: 'roadmap',
-    shareButtons: false
+    shareModal: false
   };
 
-  toggleShareButtons = () => {
-    const { shareButtons } = this.state;
-    this.setState({ shareButtons: !shareButtons });
+  toggleShareModal = () => {
+    const { shareModal } = this.state;
+    this.setState({
+      shareModal: !shareModal
+    });
   };
 
   toggleMapStyle = () => {
@@ -33,9 +36,23 @@ export default class TrailMap extends React.Component {
 
   render() {
     const { trail } = this.props;
-    const { mapStyle, shareButtons } = this.state;
+    const { mapStyle, shareModal } = this.state;
     const linkToTrailHead = `https://www.google.com/maps/place/${trail.custom_data
       .trailhead_latitude || ''},${trail.custom_data.trailhead_longitude || ''}`;
+    const modalStyles = {
+      overlay: {
+        background: 'rgba(0,0,0,0.5)',
+        transition: 'opacity 0.2s linear'
+      },
+      content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)'
+      }
+    };
     return (
       <TrailMapStyles>
         <div className="map_container">
@@ -60,8 +77,8 @@ export default class TrailMap extends React.Component {
           </a>
           <button
             type="button"
-            onClick={this.toggleShareButtons}
-            className={shareButtons ? 'active' : undefined}
+            onClick={this.toggleShareModal}
+            className={shareModal ? 'active' : undefined}
           >
             <img src="/static/images/trail/share.svg" alt="Share" />
             <span>Share Trail</span>
@@ -80,7 +97,18 @@ export default class TrailMap extends React.Component {
             <img src="/static/images/trail/print.svg" alt="Print Map" /> Print Map
           </button>
         </Buttons>
-        <div className="share_buttons">{shareButtons && <ShareButtons />}</div>
+
+        <Modal
+          isOpen={shareModal}
+          onRequestClose={() => this.toggleShareModal()}
+          style={modalStyles}
+          contentLabel="Share"
+          closeTimeoutMS={200}
+        >
+          <div className="share_buttons">
+            <ShareButtons />
+          </div>
+        </Modal>
       </TrailMapStyles>
     );
   }
