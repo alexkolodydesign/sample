@@ -146,6 +146,7 @@ FilterTrailsMenu.propTypes = {
   changeTrailLength: PropTypes.func.isRequired,
   changeExclude: PropTypes.func.isRequired,
   toggleMenus: PropTypes.func.isRequired,
+  changeRegions: PropTypes.func.isRequired,
   regions: PropTypes.shape({
     urban: PropTypes.bool.isRequired,
     canyon: PropTypes.bool.isRequired,
