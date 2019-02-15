@@ -10,7 +10,7 @@ exports.getTrailData = async (req, res) => {
     const {
       data: [trail]
     } = await axios.get(
-      `https://api.swutahtrails.com/wp-json/wp/v2/trails?slug=${trailHandle}`
+      `${process.env.API_URL}/wp-json/wp/v2/trails?slug=${trailHandle}`
     );
     return res.status(200).json({ trail });
   } catch (e) {
@@ -22,7 +22,9 @@ exports.getTrailData = async (req, res) => {
 exports.getTrails = async (req, res) => {
   try {
     const { data: trails } = await axios.get(
-      'https://api.swutahtrails.com/wp-json/wp/v2/trails?per_page=500&order=asc&fields=title,slug,custom_data,regions'
+      `${
+        process.env.API_URL
+      }/wp-json/wp/v2/trails?per_page=500&order=asc&fields=title,slug,custom_data,regions`
     );
     return res.status(200).json(trails);
   } catch (e) {
@@ -34,7 +36,7 @@ exports.getTrails = async (req, res) => {
 exports.getRegionData = async (req, res) => {
   try {
     const { data: regions } = await axios.get(
-      'https://api.swutahtrails.com/wp-json/wp/v2/regions'
+      `${process.env.API_URL}/wp-json/wp/v2/regions`
     );
     const regionsArray = regions.map(region => {
       const lat = region.custom_data.markerCoordinates

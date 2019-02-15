@@ -3,7 +3,7 @@ const axios = require('axios');
 exports.getEventData = async (req, res) => {
   try {
     const { data: events } = await axios.get(
-      'https://api.swutahtrails.com/wp-json/wp/v2/washco_event?per_page=100'
+      `${process.env.API_URL}/wp-json/wp/v2/washco_event?per_page=100`
     );
     // console.log(events)
     res.status(200).json(events);
