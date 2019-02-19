@@ -29,6 +29,9 @@ class TrailChart extends React.Component {
     const connectorUrl = trail.custom_data.connectorTrailJSON
       ? trail.custom_data.connectorTrailJSON.url
       : '';
+    const connectorFiles = trail.custom_data.connectorTrailFiles
+      ? trail.custom_data.connectorTrailFiles
+      : '';
     if (!url) return 'No coordinates found.';
     const { mapStyle, marker } = this.state;
     const { google } = window;
@@ -55,7 +58,7 @@ class TrailChart extends React.Component {
       trailColor = '#ff0000';
     }
     return (
-      <TrailCoordinatesData url={url} connectorUrl={connectorUrl}>
+      <TrailCoordinatesData url={url} connectorUrl={connectorUrl} connectorFiles={connectorFiles}>
         {({ loading, coordinates, connectorCoordinates }) => {
           if (loading) return <BeatLoader color="#0098e5" />;
           if (!coordinates) return 'No coordinates found.';
@@ -64,6 +67,7 @@ class TrailChart extends React.Component {
             connectorCoordinates,
             trailhead
           );
+
           return (
             <>
               <GoogleMap

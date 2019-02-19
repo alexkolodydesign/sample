@@ -25,7 +25,7 @@ class TrailCoordinatesData extends React.Component {
   };
 
   getTrailCoordinatesData = async () => {
-    const { url, connectorUrl } = this.props;
+    const { url, connectorUrl, connectorFiles } = this.props;
     try {
       const {
         data: {
@@ -37,10 +37,14 @@ class TrailCoordinatesData extends React.Component {
         })
       });
       let connectorCoordinates = [];
-      if (connectorUrl) {
-        const { data: results } = await axios.get(`/api/coordinates?url=${connectorUrl}`);
-        connectorCoordinates = results.trail.coordinates;
+
+      if (connectorFiles) {
+        for (var cf = 0; cf < connectorFiles.length; cf++) {
+          const { data: cf_results } = await axios.get(`/api/coordinates?url=${connectorFiles[cf].connector_trail_json}`);
+          connectorCoordinates.push(cf_results.trail.coordinates)
+        }
       }
+
       this.setState({ loading: false, coordinates, connectorCoordinates });
     } catch (e) {
       // Coordinates have been cancelled

@@ -17,8 +17,11 @@ import MainMenu from '../../components/menus/MainMenu';
 import { trailShape } from '../../utils/propTypes';
 import TrailStyles from '../../components/trails/Trails.styles';
 import { BackButton } from '../../components/shared/Button.styles';
+import Region from '../../data/regions';
 
-const Trail = ({ trail, error }) => (
+var regions = Region.regions;
+
+const Trail = ({ trail, region_info, error }) => (
   <TrailStyles>
     {error ? (
       <div className="wrapper">
@@ -34,7 +37,8 @@ const Trail = ({ trail, error }) => (
             </a>
           </Link>
 
-          <h1>{ReactHtmlParser(sanitizeHtml(trail.title.rendered))}</h1>
+          <h1>{region_info && region_info.markerIcon ? ReactHtmlParser(`<img src='${region_info.markerIcon}' class='trail-region-icon' style='width:60px;vertical-align: middle;'} } />`) : "" } {ReactHtmlParser(sanitizeHtml(trail.title.rendered))}</h1>
+
         </div>
         <div className="wrapper trail">
           <TrailSidebar trail={trail} />
@@ -72,7 +76,10 @@ Trail.getInitialProps = async props => {
   try {
     const res = await fetch(`${hostUrl}/api/trail/${slug}`);
     const { trail } = await res.json();
-    return { trail };
+    const region_id = trail.regions[0];
+    let region_info = regions.filter(ri => ri.id === region_id)
+    region_info = region_info && region_info[0] ? region_info[0] : []
+    return { trail, region_info };
   } catch (e) {
     // console.log(e);
     return { error: true };
