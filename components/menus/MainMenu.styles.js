@@ -16,7 +16,8 @@ const MainMenuStyles = styled.div`
     .footerLogos {
       grid-row-start: 2;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: 100%;
       align-items: center;
       justify-items: center;
       margin-top: 10px;
@@ -27,15 +28,16 @@ const MainMenuStyles = styled.div`
         max-width: 100%;
       }
       .lifeLogo {
-        grid-column-start: 2;
+        grid-column-start: 1;
       }
     }
     .menuWrapper {
       display: grid;
-      grid-template-columns: ${({ trailPage }) =>
+      ${({ trailPage }) =>
         !trailPage
-          ? 'minmax(0, 1fr) 10rem 5rem 5rem 5rem 5rem;'
-          : '0 6.5rem 6.5rem 6.5rem'};
+          ? 'grid-template-columns: 1fr 5rem 5rem 5rem 5rem 1rem; width: 100%'
+          : 'grid-template-columns: 0 repeat(3,6.5rem); width: auto;'
+        };
       align-items: center;
       justify-items: center;
     }
@@ -73,13 +75,42 @@ const MainMenuStyles = styled.div`
     background-position: center;
     background-size: 29rem auto;
   }
+
+  @media screen and (min-width: 533px) {
+    .wrapper {
+      grid-template-columns: 22rem 1fr;
+      padding: 0 1rem;
+      .footerLogos {
+        grid-row-start: 1;
+        img {
+          margin-right: 10px;
+        }
+      }
+      .menuWrapper {
+        grid-template-columns: ${({ trailPage }) =>
+          !trailPage
+            ? '1fr 5rem 5rem 5rem 5rem;'
+            : 'repeat(4,6.5rem)'};
+      }
+    }
+  }
   @media screen and (min-width: 768px) {
     padding: 2rem 0;
     .wrapper {
       .menuWrapper {
         grid-template-columns: ${({ trailPage }) =>
           !trailPage
-            ? 'minmax(0, 1fr) 28rem repeat(2, 14rem) repeat(2, 6.5rem) 10px;'
+            ? '1fr repeat(2, 11rem) repeat(2, 5rem);'
+            : '0 14rem 6.5rem 6.5rem'};
+      }
+    }
+  }
+  @media screen and (min-width: 870px) {
+    .wrapper {
+      .menuWrapper {
+        grid-template-columns: ${({ trailPage }) =>
+          !trailPage
+            ? '1fr repeat(2, 12rem) repeat(2, 6rem);'
             : '0 14rem 6.5rem 6.5rem'};
       }
     }
@@ -105,9 +136,14 @@ const MainMenuStyles = styled.div`
         width: 100%;
         grid-template-columns: ${({ trailPage }) =>
           !trailPage
-            ? '1fr 28rem repeat(2, 14rem) repeat(2, 6.5rem) 10px'
+            ? '1fr repeat(2, 14rem) repeat(2, 6.5rem)'
             : '1fr 14rem 6.5rem 6.5rem'};
       }
+    }
+  }
+  @media screen and (min-width: 1140px) {
+    .wrapper {
+      grid-template-columns: 33% minmax(0, 1fr);
     }
   }
   @media print {

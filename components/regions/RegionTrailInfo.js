@@ -11,11 +11,14 @@ const RegionTrailInfo = ({ menuCoords, togglePopups, trail, metricType }) => (
   <Marker position={menuCoords} icon={{ url: '' }}>
     <InfoWindow options={{ maxWidth: 320 }} onCloseClick={() => togglePopups('')}>
       <RegionTrailInfoStyles>
-        <h3
-          className="top"
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: trail.title.rendered }}
-        />
+          <Link href={`/trails/${trail.slug}`}>
+            <a className="top" href={`/trails/${trail.slug}`}>
+              <h3
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{ __html: `${trail.title.rendered} >>` }}
+              />
+            </a>
+          </Link>
         <div className="info">
           {trail.custom_data.length && (
             <>
@@ -58,12 +61,13 @@ const RegionTrailInfo = ({ menuCoords, togglePopups, trail, metricType }) => (
         </div>
         <div className="image">
           {trail.custom_data.media.pictures[0] && (
-            <img src={trail.custom_data.media.pictures[0].sizes.medium} alt="" />
+            <Link href={`/trails/${trail.slug}`}>
+              <a href={`/trails/${trail.slug}`}>
+                <img src={trail.custom_data.media.pictures[0].sizes.medium} alt="" />
+              </a>
+            </Link>
           )}
           <br />
-          <Link href={`/trails/${trail.slug}`}>
-            <a href={`/trails/${trail.slug}`}> View Trail</a>
-          </Link>
         </div>
         <div className="icons">
           {trail.custom_data.recommendedUse && (

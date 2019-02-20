@@ -4,10 +4,10 @@ const SelectTrailTypeStyles = styled.div`
   button {
     background: none;
     border: none;
+    padding: 3px;
   }
-  grid-column-start: 2;
   img {
-    width: 4rem;
+    width: 3.25rem;
     cursor: pointer;
     transition: all 500ms;
     &:not(:last-child) {
@@ -24,7 +24,30 @@ const SelectTrailTypeStyles = styled.div`
       opacity: 0.2;
     }
   }
+  @media screen and (min-width: 620px) {
+    img {
+      width: 3.75rem;
+    }
+  }
+  @media screen and (min-width: 650px) {
+    img {
+      width: 4rem;
+    }
+  }
   @media screen and (min-width: 768px) {
+    button {
+      padding: 4px;
+    }
+  }
+  @media screen and (min-width: 870px) {
+    img {
+      width: 4.5rem;
+    }
+  }
+  @media screen and (min-width: 992px) {
+    button {
+      padding: 7px;
+    }
     img {
       width: 5.5rem;
     }

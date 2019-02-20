@@ -21,8 +21,8 @@ const TrailListButton = styled.button`
     background: #3fa9f5;
   }
   img {
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
     padding: 3px;
   }
   p {
@@ -36,12 +36,13 @@ const TrailListButton = styled.button`
       display: block;
     }
     img {
-      width: 4rem;
+      width: 3rem;
+      height: 3rem;
     }
   }
   @media screen and (min-width: 992px) {
     img {
-      width: 4.5rem;
+      width: 4rem;
     }
   }
 `;

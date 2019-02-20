@@ -1,10 +1,25 @@
 import styled from '@emotion/styled';
 
 const RegionTrailInfoStyles = styled.div`
-  h3 {
-    padding: 0 0 6px;
-    color: #777;
-    border-bottom: 1px solid #ccc;
+  .top {
+    background: #3fa9f5;
+    color: white;
+    text-align: center;
+    display: block;
+    padding: 1rem 0.75rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    transition: all 500ms;
+    h3 {
+      padding: 0;
+      margin: 0;
+    }
+
+    &:hover {
+      color: white;
+      background: #3a95d6;
+      transition: all 500ms;
+    }
   }
   p {
     font-weight: bold;
@@ -17,7 +32,6 @@ const RegionTrailInfoStyles = styled.div`
       margin-bottom: 10px;
     }
   }
-  min-height: 250px;
   width: 100%;
   overflow-x: hidden;
   .image {
@@ -26,13 +40,15 @@ const RegionTrailInfoStyles = styled.div`
     }
   }
   .icons {
-    padding-top: 2em;
+    padding-top: 1rem;
   }
   a {
     text-decoration: none;
     color: #3fa9f5;
     font-weight: bold;
     padding: 3px 0 0;
+    cursor: pointer;
+    display: inline-block;
     &:hover {
       text-decoration: none;
       color: #000;
@@ -43,42 +59,24 @@ const RegionTrailInfoStyles = styled.div`
     top: 5px;
   }
   .trail_type {
-    display: grid;
-    grid-template: 2.5rem 2.5rem / 2.5rem 2.5rem;
-    align-self: center;
+    display: flex;
     img {
-      width: 3.5rem;
+      max-width: 3.5rem;
+      max-height: 3.5rem;
+      margin-right: 1rem;
+      flex: 1 1 auto;
     }
   }
 
   @media screen and (min-width: 768px) {
-    display: grid;
-    height: 100%;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 10% 45% 45%;
-    grid-template-areas: 'top top top' 'info info info' 'image image icons';
-    min-width: 300px;
-    min-height: 250px;
+    min-width: 205px;
     width: 100%;
-    .top {
-      grid-area: top;
-      margin: 0;
-    }
-    .info {
-      grid-area: info;
-      padding-top: 1rem;
-    }
     .image {
-      grid-area: image;
       img {
-        padding: 1.5rem 0;
-        max-width: 140px;
+        padding: 0.5rem 0;
+        max-width: 100%;
         height: auto;
       }
-    }
-    .icons {
-      padding-top: 1rem;
-      grid-area: icons;
     }
   }
 `;
