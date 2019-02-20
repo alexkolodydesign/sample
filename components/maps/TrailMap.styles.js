@@ -8,13 +8,6 @@ const TrailMapStyles = styled.div`
     grid-row-end: 2;
     .map_container {
       background: #fff;
-      background-image: linear-gradient(
-          rgba(255, 255, 255, 0.98),
-          rgba(255, 255, 255, 0.98)
-        ),
-        url(/static/images/background-pattern.svg);
-      background-position: center;
-      background-size: 29rem auto;
       padding: 1rem;
     }
     .map {
@@ -56,6 +49,7 @@ const TrailMapStyles = styled.div`
 `;
 
 export const Buttons = styled.div`
+  padding: 1rem;
   margin-top: 3rem;
   display: grid;
   grid-template: repeat(2, minmax(0, 1fr)) / repeat(2, minmax(0, 1fr));
@@ -67,7 +61,7 @@ export const Buttons = styled.div`
     background: #3fa9f5;
     padding: 1rem 2rem;
     color: #fff;
-    font-size: 1.8rem;
+    font-size: 1.25rem;
     cursor: pointer;
     transition: all 500ms;
     display: flex;
@@ -92,25 +86,35 @@ export const Buttons = styled.div`
       background-color: #00a89c;
     }
     img {
-      width: 3rem;
-      height: 3rem;
+      width: 2rem;
+      height: 2rem;
       margin-right: 1rem;
     }
   }
   @media screen and (min-width: 768px) {
     margin-top: 1.5rem;
     grid-template: 1fr 1fr / 1fr 1fr 1fr;
+    padding: 0 1rem 0 0;
+    button,
     a {
+      font-size: 1.8rem;
+      img {
+        width: 3rem;
+        height: 3rem;
+      }
       &:last-of-type {
         text-decoration: none;
         // grid-column-start: 1;
         // grid-column-end: 4;
         // grid-row-start: 2;
         // grid-row-end: 3;
-        grid-column: 1 / span 3;
-        grid-row: 2;
+        // grid-column: 1 / span 3;
+        // grid-row: 2;
       }
     }
+  }
+  @media screen and (min-width: 1200px) {
+    padding: 0;
   }
   @media print {
     display: none;

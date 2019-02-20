@@ -55,7 +55,7 @@ export default class TrailMap extends React.Component {
     };
     return (
       <TrailMapStyles>
-        <div className="map_container">
+        <div className="map_container box_shadow">
           <MapContainer
             loadingElement={<div style={{ height: `40rem` }} />}
             containerElement={<div style={{ height: `100%` }} id="washington_map" />}

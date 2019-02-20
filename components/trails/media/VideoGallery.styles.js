@@ -6,6 +6,8 @@ const VideoGalleryStyles = styled.div`
   grid-gap: 1rem;
   .video-container {
     position: relative;
+    background: transparent;
+    border: none;
     iframe {
       max-width: 100%;
     }

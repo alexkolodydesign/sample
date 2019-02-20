@@ -2,15 +2,8 @@ import styled from '@emotion/styled';
 
 const TrailSidebarStyles = styled.div`
   @media screen {
-    .background {
+    .trail_sidebar {
       background: #fff;
-      background-image: linear-gradient(
-          rgba(255, 255, 255, 0.98),
-          rgba(255, 255, 255, 0.98)
-        ),
-        url(/static/images/background-pattern.svg);
-      background-position: center;
-      background-size: 29rem auto;
       &.details {
         padding: 1rem;
         display: grid;
@@ -26,11 +19,25 @@ const TrailSidebarStyles = styled.div`
           span {
             font-weight: 100;
             text-transform: initial;
+            display: inline-block;
+            margin-top: 0.5rem;
+          }
+        }
+        .trail_directions,
+        .trail_description {
+          & > p {
+            margin-bottom: 1rem;
           }
         }
         .description p {
           font-weight: 100;
           text-transform: initial;
+        }
+        .recommended_use_detail {
+          display: inline;
+          img {
+            margin-top: 0.5rem;
+          }
         }
       }
     }
@@ -77,14 +84,14 @@ const TrailSidebarStyles = styled.div`
     }
   }
   @media screen and (min-width: 768px) {
-    .background {
+    .trail_sidebar {
       &.details {
         display: block;
       }
     }
   }
   @media screen and (min-width: 992px) {
-    .background {
+    .trail_sidebar {
       &.details {
         padding: 3rem;
       }

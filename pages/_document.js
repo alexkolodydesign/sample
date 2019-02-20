@@ -37,6 +37,10 @@ export default class MyDocument extends Document {
                 font-size: 1.4rem;
                 padding: 0;
                 margin: 0;
+                background: #f2f2f2;
+                background-image: linear-gradient( rgba(255,255,255,0.98), rgba(255,255,255,0.98) ), url(/static/images/background-pattern.svg);
+                background-position: center;
+                background-size: 29rem auto;
               }
               main {
                 min-height: calc(100vh - 74.4rem);
@@ -44,6 +48,10 @@ export default class MyDocument extends Document {
               .wrapper {
                 max-width: 120rem;
                 margin: 0 auto;
+              }
+              .box_shadow {
+                background: white;
+                box-shadow: 0px 0px 15px -5px #828282;
               }
               ::-webkit-scrollbar {
                 width: 12px;
