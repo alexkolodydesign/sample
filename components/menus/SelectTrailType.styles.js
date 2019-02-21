@@ -7,7 +7,7 @@ const SelectTrailTypeStyles = styled.div`
     padding: 3px;
   }
   img {
-    width: 3.25rem;
+    width: 3rem;
     cursor: pointer;
     transition: all 500ms;
     &:not(:last-child) {
