@@ -66,18 +66,18 @@ const RegionTrailInfo = ({ menuCoords, togglePopups, trail, metricType }) => (
           </Link>
         </div>
         <div className="icons">
-          {trail.custom_data.recommendedUse && (
+          {trail.custom_data.trailType && (
             <div className="trail_type">
-              {trail.custom_data.recommendedUse.some(el => el.value === 'hiking') && (
+              {trail.custom_data.trailType.some(el => el.value === 'hiking') && (
                 <img src="/static/images/menu/hiking.svg" alt="Hiking Trail" />
               )}
-              {trail.custom_data.recommendedUse.some(el => el.value === 'biking') && (
+              {trail.custom_data.trailType.some(el => el.value === 'biking') && (
                 <img src="/static/images/menu/biking.svg" alt="Biking Trail" />
               )}
-              {trail.custom_data.recommendedUse.some(el => el.value === 'equestrian') && (
+              {trail.custom_data.trailType.some(el => el.value === 'equestrian') && (
                 <img src="/static/images/menu/equestrian.svg" alt="Equestrian Trail" />
               )}
-              {trail.custom_data.recommendedUse.some(el => el.value === 'ohv') && (
+              {trail.custom_data.trailType.some(el => el.value === 'ohv') && (
                 <img src="/static/images/menu/ohv.svg" alt="OHV Trail" />
               )}
             </div>
