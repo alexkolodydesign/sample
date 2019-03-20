@@ -27,14 +27,14 @@ const filterActions = (trails, filters, zoomLevel) => {
     trailType => !!filters.trailType[trailType]
   );
   const updatedTrails = trails
-    // Filter by Recommended Use
+    // Filter by Trail Type
     .filter(trail => {
       if (
         trail.custom_data &&
-        trail.custom_data.recommendedUse &&
-        trail.custom_data.recommendedUse !== ''
+        trail.custom_data.trailType &&
+        trail.custom_data.trailType !== ''
       ) {
-        const trailTypes = trail.custom_data.recommendedUse.map(type => type.value);
+        const trailTypes = trail.custom_data.trailType.map(type => type.value);
         let match = false;
         for (let i = 0; i < recommendedUseFilter.length; i += 1) {
           if (trailTypes.includes(recommendedUseFilter[i])) match = true;

@@ -64,8 +64,8 @@ const Trail = ({ trail, metricType }) => (
             src="/static/images/menu/hiking.svg"
             alt="Select Hiking Trails"
             className={
-              trail.custom_data.recommendedUse.length > 0 &&
-              trail.custom_data.recommendedUse.some(el => el.value === 'hiking')
+              trail.custom_data.trailType.length > 0 &&
+              trail.custom_data.trailType.some(el => el.value === 'hiking')
                 ? 'active'
                 : 'inactive'
             }
@@ -74,8 +74,8 @@ const Trail = ({ trail, metricType }) => (
             src="/static/images/menu/biking.svg"
             alt="Select Biking Trails"
             className={
-              trail.custom_data.recommendedUse.length > 0 &&
-              trail.custom_data.recommendedUse.some(el => el.value === 'biking')
+              trail.custom_data.trailType.length > 0 &&
+              trail.custom_data.trailType.some(el => el.value === 'biking')
                 ? 'active'
                 : 'inactive'
             }
@@ -84,8 +84,8 @@ const Trail = ({ trail, metricType }) => (
             src="/static/images/menu/equestrian.svg"
             alt="Select Equestrian Trails"
             className={
-              trail.custom_data.recommendedUse.length > 0 &&
-              trail.custom_data.recommendedUse.some(el => el.value === 'equestrian')
+              trail.custom_data.trailType.length > 0 &&
+              trail.custom_data.trailType.some(el => el.value === 'equestrian')
                 ? 'active'
                 : 'inactive'
             }
@@ -94,8 +94,8 @@ const Trail = ({ trail, metricType }) => (
             src="/static/images/menu/ohv.svg"
             alt="Select OHV Trails"
             className={
-              trail.custom_data.recommendedUse.length > 0 &&
-              trail.custom_data.recommendedUse.some(el => el.value === 'ohv')
+              trail.custom_data.trailType.length > 0 &&
+              trail.custom_data.trailType.some(el => el.value === 'ohv')
                 ? 'active'
                 : 'inactive'
             }

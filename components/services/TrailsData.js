@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-const CancelToken = axios.CancelToken;
+
+const { CancelToken } = axios;
 
 class TrailsData extends React.Component {
   state = { loading: true, trails: [] };

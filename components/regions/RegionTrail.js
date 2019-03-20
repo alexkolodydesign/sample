@@ -15,6 +15,7 @@ const RegionTrail = ({ trail, activeTrailPopup }) => {
   const { url } = trail.custom_data.jsonCoordinates;
   if (!trail.custom_data.jsonCoordinates.url) return null;
   // Change Trail Color Based on the First Value of Recommended Use Array
+  // TODO: Change to be based on what trailTypes are filtered out
   const trailColor = trail.custom_data.recommendedUse
     ? getTrailColor(trail.custom_data.recommendedUse[0].value)
     : '#ff0000';
