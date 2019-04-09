@@ -8,11 +8,13 @@ const DownloadGPS = ({ trail }) => {
     let gpxString = '';
     if (coordinates) {
       for (let i = 0; i < coordinates.length; i += 1) {
-        gpxString += `
-            <trkpt lat="${coordinates[i].lat}" lon="${coordinates[i].lng}">
-              <ele>${coordinates[i].elevation}</ele>
-            </trkpt>
-          `;
+        if (coordinates[i] && coordinates[i].lat && coordinates[i].lng) {
+          gpxString += `
+              <trkpt lat="${coordinates[i].lat}" lon="${coordinates[i].lng}">
+                <ele>${coordinates[i].elevation}</ele>
+              </trkpt>
+            `;
+        }
       }
     }
     return gpxString;
