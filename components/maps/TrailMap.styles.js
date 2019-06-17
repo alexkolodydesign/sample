@@ -32,19 +32,17 @@ const TrailMapStyles = styled.div`
     }
   }
   @media print {
-    *,
-    *:before,
-    *:after {
-      background: #ffffff;
-    }
-    width: 55%;
-    float: left;
-    margin-left: 4%;
+    width: 100%;
+
     .map_container,
-    .gm-style,
-    .gm-style * {
+    .gm-style {
       max-width: 100%;
+      width: 100%;
+      height: 400px;
     }
+    // .gm-style * {
+    //   max-width: 100%;
+    // }
   }
 `;
 

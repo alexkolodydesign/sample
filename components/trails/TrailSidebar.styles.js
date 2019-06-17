@@ -99,8 +99,20 @@ const TrailSidebarStyles = styled.div`
   }
 
   @media print {
-    width: 30%;
-    float: left;
+    width: 100%;
+    .trail_sidebar {
+      padding: 3rem;
+
+      &.details {
+        padding: 1rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        .trail_directions {
+          grid-column-start: 1;
+          grid-column-end: 2;
+        }
+      }
+    }
     img {
       display: none;
     }
@@ -109,11 +121,6 @@ const TrailSidebarStyles = styled.div`
     *:after {
       background: #ffffff;
     }
-    /*
-  *, *:before, *:after {
-    display: none;
-  }
-  */
   }
 `;
 

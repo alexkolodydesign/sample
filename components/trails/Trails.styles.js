@@ -47,11 +47,23 @@ const TrailStyles = styled.main`
     .back_button {
       display: none;
     }
-    *,
-    *:before,
-    *:after {
-      background: #fff !important;
+
+    .trail {
+      display:flex;
+      flex-direction:column-reverse;
+      & > div {
+        height:100vh;
+      }
+      & > div:first-of-type {
+        page-break-after: always;
+        break-after:always;
+      }
     }
+    // *,
+    // *:before,
+    // *:after {
+    //   background: #fff !important;
+    // }
   }
 `;
 
