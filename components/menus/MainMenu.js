@@ -30,11 +30,11 @@ const MainMenu = ({ trailPage }) => (
           alt="Utah Life Elevated"
         />
         <a
-          href="https://www.visitstgeorge.com/"
+          href="https://www.greaterzion.com/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src="/static/images/washco-logo.png" alt="Washington County, Utah" />
+          <img src="/static/images/greaterzion-horizontal-black.png" alt="Greater Zion, Utah" />
         </a>
       </div>
       <div className="menuWrapper">
