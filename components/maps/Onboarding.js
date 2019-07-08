@@ -147,7 +147,7 @@ class OnBoarding extends React.Component {
                 <h1>
                   Welcome to
                   <br />
-                  <span>Washington County Trails</span>
+                  <span>Greater Zion Trails</span>
                 </h1>
                 <button className="cta" onClick={this.handleClickStart} type="button">
                   Explore Our Trails
