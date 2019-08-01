@@ -37,7 +37,7 @@ const TrailSidebar = ({ trail: { custom_data: trail, content }, metricType }) =>
                 <p>
                   Length
                   <br />
-                  <span>{trail.length} mi</span>
+                  <span>{Number(trail.length).toFixed(2)} mi</span>
                 </p>
               </div>
             ) : (
