@@ -32,7 +32,7 @@ const Trail = ({ trail, metricType }) => (
           <h4>{ReactHtmlParser(sanitizeHtml(trail.title.rendered))}</h4>
           <p>
             {metricType === 'imperial' ? (
-              <span>{trail.custom_data.length} mi</span>
+              <span>{Number(trail.custom_data.length).toFixed(2)} mi</span>
             ) : (
               <span>{(trail.custom_data.length * 1.60934).toFixed(2)} km</span>
             )}
