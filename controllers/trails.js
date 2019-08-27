@@ -22,9 +22,7 @@ exports.getTrailData = async (req, res) => {
 exports.getTrails = async (req, res) => {
   try {
     const { data: trails } = await axios.get(
-      `${
-        process.env.API_URL
-      }/wp-json/wp/v2/trails?per_page=500&order=asc&fields=title,slug,custom_data,regions`
+      `${process.env.API_URL}/wp-json/wp/v2/trails?per_page=500&order=asc&orderby=title&fields=title,slug,custom_data,regions`
     );
     return res.status(200).json(trails);
   } catch (e) {
