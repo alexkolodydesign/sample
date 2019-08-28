@@ -29,13 +29,14 @@ app
     ConfigureExpress(server);
 
     const router = require('express-promise-router')();
+    server.use(router);
 
     if (process.env.NODE_ENV === 'production') {
-      var enforce = require('express-sslifyd');
-      server.use(enforce.HTTPS({ trustProtoHeader: true }));
+      var enforce = require('express-sslify');
+      server.use(enforce.HTTPS());
     }
 
-    server.use(router);
+
     // API
     router.get('/api/region', cache('30 minutes'), trails.getRegionData);
     router.get('/api/coordinates', cache('30 minutes'), trails.getCoordinates);
@@ -50,6 +51,7 @@ app
     );
     server.get('/trails/:trail', (req, res) => app.render(req, res, '/trails/trail'));
     server.get('*', (req, res) => handle(req, res));
+
     // Start Server
     server.listen(port, err => {
       if (err) throw err;
