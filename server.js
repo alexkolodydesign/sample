@@ -33,9 +33,8 @@ app
 
     if (process.env.NODE_ENV === 'production') {
       var enforce = require('express-sslify');
-      server.use(enforce.HTTPS());
+      server.use(enforce.HTTPS({ trustProtoHeader: true }));
     }
-
 
     // API
     router.get('/api/region', cache('30 minutes'), trails.getRegionData);
