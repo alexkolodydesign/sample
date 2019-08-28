@@ -27,7 +27,14 @@ app
   .then(() => {
     const server = express();
     ConfigureExpress(server);
+
     const router = require('express-promise-router')();
+
+    if (process.env.NODE_ENV === 'production') {
+      var enforce = require('express-sslifyd');
+      server.use(enforce.HTTPS({ trustProtoHeader: true }));
+    }
+
     server.use(router);
     // API
     router.get('/api/region', cache('30 minutes'), trails.getRegionData);
