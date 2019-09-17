@@ -50,6 +50,7 @@ const MainMenu = ({ trailPage }) => (
         <Settings />
       </div>
     </div>
+    <img src="//tag.yieldoptimizer.com/ps/analytics?pxid=54383&" width='1' height='1'>
   </MainMenuStyles>
 );
 
