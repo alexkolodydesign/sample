@@ -14,7 +14,7 @@ const FilterTrails = dynamic(() =>
   import(/* webpackChunkName: "FilterTrails" */ './filters/FilterTrails')
 );
 
-const MainMenu = ({ trailPage }) => (
+const MainMenu = ({ trailPage, showSEO }) => (
   <MainMenuStyles trailPage={trailPage}>
     <div className="colors">
       <div className="magenta" />
@@ -50,7 +50,7 @@ const MainMenu = ({ trailPage }) => (
         <Settings />
       </div>
     </div>
-    <GeneralData />
+    {showSEO && <GeneralData />}
     <img
       src="//tag.yieldoptimizer.com/ps/analytics?pxid=54383&"
       width="1"
@@ -61,11 +61,13 @@ const MainMenu = ({ trailPage }) => (
 );
 
 MainMenu.propTypes = {
-  trailPage: PropTypes.bool
+  trailPage: PropTypes.bool,
+  showSEO: PropTypes.bool
 };
 
 MainMenu.defaultProps = {
-  trailPage: false
+  trailPage: false,
+  showSEO: false
 };
 
 export default MainMenu;

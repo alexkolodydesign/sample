@@ -19,7 +19,7 @@ const Dashboard = ({ firstTimeUser }) => (
       {firstTimeUser ? <Onboarding /> : <MainMapSetup />}
       <TrailSystemGuide />
       <EventList />
-      <MainMenu />
+      <MainMenu showSEO />
     </main>
   </>
 );
