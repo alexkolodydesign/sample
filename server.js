@@ -21,6 +21,7 @@ const staticFileOptions = {
 // Trails API
 const trails = require('./controllers/trails');
 const events = require('./controllers/events');
+const general_data = require('./controllers/general_data');
 /* eslint-disable */
 app
   .prepare()
@@ -43,6 +44,8 @@ app
     router.get('/api/trail/:trail', cache('30 minutes'), trails.getTrailData);
     router.get('/api/trail/', cache('30 minutes'), trails.getTrailData);
     router.get('/api/washco_event/', cache('5 minutes'), events.getEventData);
+    router.get('/api/general_data/', cache('5 minutes'), general_data.getGeneralData);
+
     // Handle All Routes
     server.get('/', (req, res) => app.render(req, res, '/'));
     server.get('/trail-systems/:system', (req, res) =>

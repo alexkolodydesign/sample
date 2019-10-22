@@ -5,6 +5,7 @@ import TrailList from './trails/TrailList';
 import GPS from './GPS';
 import Settings from './settings/Settings';
 import MainMenuStyles from './MainMenu.styles';
+import GeneralData from '../maps/GeneralData';
 
 const SelectTrailType = dynamic(() =>
   import(/* webpackChunkName: "SelectTrailType" */ './SelectTrailType')
@@ -29,12 +30,11 @@ const MainMenu = ({ trailPage }) => (
           src="/static/images/UTAH_LIFE_ELEVATED.svg"
           alt="Utah Life Elevated"
         />
-        <a
-          href="https://www.greaterzion.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="/static/images/greaterzion-horizontal-black.png" alt="Greater Zion, Utah" />
+        <a href="https://www.greaterzion.com/" target="_blank" rel="noopener noreferrer">
+          <img
+            src="/static/images/greaterzion-horizontal-black.png"
+            alt="Greater Zion, Utah"
+          />
         </a>
       </div>
       <div className="menuWrapper">
@@ -50,6 +50,7 @@ const MainMenu = ({ trailPage }) => (
         <Settings />
       </div>
     </div>
+    <GeneralData />
   </MainMenuStyles>
 );
 
