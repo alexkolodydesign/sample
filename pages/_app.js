@@ -74,6 +74,21 @@ Washco.getInitialProps = async ({ Component, ctx }) => {
     type: 'TOGGLE_FIRST_TIME_USER',
     status: firstTimeUserValue(firstTimeUser)
   });
+  // SEO Data
+  const showSEOMessage = ctx.req
+    ? ctx.req.cookies.showSEOMessage
+    : Cookies.get('showSEOMessage') || true;
+  const showSEOMessageValue = value => {
+    if (value === undefined) return true;
+    if (value === 'true') return true;
+    if (value === 'false') return false;
+    return value;
+  };
+  ctx.store.dispatch({
+    type: 'TOGGLE_SEO_MESSAGE',
+    status: showSEOMessageValue(showSEOMessage)
+  });
+
   // Allow page components to get their requested getInitialProps
   let pageProps = {};
   if (Component.getInitialProps) pageProps = await Component.getInitialProps(ctx);

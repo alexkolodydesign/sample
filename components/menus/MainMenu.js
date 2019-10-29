@@ -5,6 +5,7 @@ import TrailList from './trails/TrailList';
 import GPS from './GPS';
 import Settings from './settings/Settings';
 import MainMenuStyles from './MainMenu.styles';
+import GeneralData from '../maps/GeneralData';
 
 const SelectTrailType = dynamic(() =>
   import(/* webpackChunkName: "SelectTrailType" */ './SelectTrailType')
@@ -13,7 +14,7 @@ const FilterTrails = dynamic(() =>
   import(/* webpackChunkName: "FilterTrails" */ './filters/FilterTrails')
 );
 
-const MainMenu = ({ trailPage }) => (
+const MainMenu = ({ trailPage, showSEO }) => (
   <MainMenuStyles trailPage={trailPage}>
     <div className="colors">
       <div className="magenta" />
@@ -29,12 +30,11 @@ const MainMenu = ({ trailPage }) => (
           src="/static/images/UTAH_LIFE_ELEVATED.svg"
           alt="Utah Life Elevated"
         />
-        <a
-          href="https://www.greaterzion.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="/static/images/greaterzion-horizontal-black.png" alt="Greater Zion, Utah" />
+        <a href="https://www.greaterzion.com/" target="_blank" rel="noopener noreferrer">
+          <img
+            src="/static/images/greaterzion-horizontal-black.png"
+            alt="Greater Zion, Utah"
+          />
         </a>
       </div>
       <div className="menuWrapper">
@@ -50,16 +50,24 @@ const MainMenu = ({ trailPage }) => (
         <Settings />
       </div>
     </div>
-    <img src="//tag.yieldoptimizer.com/ps/analytics?pxid=54383&" width='1' height='1' />
+    {showSEO && <GeneralData />}
+    <img
+      src="//tag.yieldoptimizer.com/ps/analytics?pxid=54383&"
+      width="1"
+      height="1"
+      alt="optimizerpx"
+    />
   </MainMenuStyles>
 );
 
 MainMenu.propTypes = {
-  trailPage: PropTypes.bool
+  trailPage: PropTypes.bool,
+  showSEO: PropTypes.bool
 };
 
 MainMenu.defaultProps = {
-  trailPage: false
+  trailPage: false,
+  showSEO: false
 };
 
 export default MainMenu;

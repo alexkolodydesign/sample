@@ -46,7 +46,8 @@ export const defaultMapState = {
         lng: null
       }
     },
-    firstTimeUser: true
+    firstTimeUser: true,
+    showSEOMessage: true
   }
 };
 
@@ -101,6 +102,8 @@ export const map = (state = defaultMapState, action) => {
       return { ...state, popupMenus: action.popups };
     case 'TOGGLE_FIRST_TIME_USER':
       return { ...state, firstTimeUser: action.status };
+    case 'TOGGLE_SEO_MESSAGE':
+      return { ...state, showSEOMessage: action.status };
     case 'CHANGE_MAP_STYLE':
       return { ...state, mapStyle: action.style };
     default:
