@@ -11,6 +11,10 @@ const TrailSidebar = ({ trail: { custom_data: trail, content }, metricType }) =>
   const hasdifficulty = Object.values(trail.difficulty).some(
     difficulty => difficulty.value !== 'none'
   );
+  const trail_label = trail.alternate_traffic_label
+    ? trail.alternate_traffic_label
+    : 'Trail Traffic';
+
   return (
     <TrailSidebarStyles>
       <div className="details trail_sidebar box_shadow">
@@ -55,7 +59,7 @@ const TrailSidebar = ({ trail: { custom_data: trail, content }, metricType }) =>
         {trail.trailTraffic && (
           <div>
             <p>
-              Trail Traffic
+              {trail_label}
               <br />
               <span>{trail.trailTraffic.label}</span>
             </p>
@@ -140,16 +144,16 @@ const TrailSidebar = ({ trail: { custom_data: trail, content }, metricType }) =>
             <p>
               Recommended Use
               <br />
-                {trail.recommendedUse.map(use => (
-                  <span className='recommended_use_detail' key={use.value}>
-                    <img
-                      className="use-icon"
-                      src={`/static/images/menu/${use.value}.svg`}
-                      alt={use.label}
-                    />
-                    <span>{use.label}</span>
-                  </span>
-                ))}
+              {trail.recommendedUse.map(use => (
+                <span className="recommended_use_detail" key={use.value}>
+                  <img
+                    className="use-icon"
+                    src={`/static/images/menu/${use.value}.svg`}
+                    alt={use.label}
+                  />
+                  <span>{use.label}</span>
+                </span>
+              ))}
             </p>
           </div>
         )}
