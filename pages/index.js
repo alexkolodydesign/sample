@@ -8,6 +8,8 @@ import MainMapSetup from '../components/maps/MainMapSetup';
 import TrailSystemGuide from '../components/maps/TrailSystemGuide';
 import MainMenu from '../components/menus/MainMenu';
 
+// Update heroku stack
+
 const Onboarding = dynamic(() => import('../components/maps/Onboarding'));
 
 export const TrailsContext = React.createContext();
